@@ -8,4 +8,12 @@ namespace CombatWorld.Utility
 		Walkable,
 		UnWalkable,
 	}
+
+	public enum Direction
+	{
+		North,
+		East, 
+		South,
+		West,
+	}
 }

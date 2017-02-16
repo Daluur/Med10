@@ -33,5 +33,27 @@ namespace CombatWorld.Utility
 		{
 			return "{" + x + "," + y + "}";
 		}
+
+		#region Needed for use in dictionaries etc.
+		public override bool Equals(object obj)
+		{
+			if (obj == null)
+				return false;
+			if (ReferenceEquals(this, obj))
+				return true;
+			if (obj.GetType() != typeof(Vec2i))
+				return false;
+			Vec2i other = (Vec2i)obj;
+			return x == other.x && y == other.y;
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return x.GetHashCode() ^ y.GetHashCode();
+			}
+		}
+		#endregion
 	}
 }
