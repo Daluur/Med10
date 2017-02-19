@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 23164785571381232}
   - component: {fileID: 114036611269258668}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: Unwalkable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 96e60ec73eca49f4fbf262e06829fb66, type: 2}
+  - {fileID: 2100000, guid: dd064e935dfcb8b49b0dcde1700ebe53, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,5 +133,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027c45072c4acf541a1fc6097abfc351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   occupantPos: {fileID: 4155109828118438}

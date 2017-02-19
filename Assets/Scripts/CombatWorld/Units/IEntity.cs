@@ -4,9 +4,10 @@ using CombatWorld.Utility;
 
 namespace CombatWorld
 {
-	public interface ITile
+	public interface IEntity
 	{
-		Tile GetNeighbour(Direction dir);
-		void AssignNeighbour(Direction dir, Tile tile);
+		void Setup(Tile tile);
+		void Move(Tile tile);
+		Tile GetTile();
 	}
 }
