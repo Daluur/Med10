@@ -16,4 +16,12 @@ namespace CombatWorld.Utility
 		South,
 		West,
 	}
+
+	public enum Highlight
+	{
+		None,
+		UnSelectable,
+		Simple,
+		Special,
+	}
 }

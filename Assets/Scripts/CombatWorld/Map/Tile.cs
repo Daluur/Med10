@@ -8,11 +8,13 @@ namespace CombatWorld
 {
 	public class Tile : MonoBehaviour, ITile
 	{
-		private Dictionary<Direction, Tile> neighbours = new Dictionary<Direction, Tile>();
-		Vec2i pos;
 		public TileType type;
 		public Transform occupantPos;
+		public Highlighter highlightHandler;
+
+		private Dictionary<Direction, Tile> neighbours = new Dictionary<Direction, Tile>();
 		Entity occupant;
+		Vec2i pos;
 
 		public void Setup(Vec2i pos, TileType type)
 		{
