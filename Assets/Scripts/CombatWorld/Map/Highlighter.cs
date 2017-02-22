@@ -8,8 +8,19 @@ namespace CombatWorld
 		Highlight highlight;
 		public GameObject[] highlights;
 
+		void Awake()
+		{
+			GetComponent<Tile>().SubscribeToHighlightChange(SetHighlight);
+		}
+
+		void Start()
+		{
+			InputManager.instance.SubscribeToEndTurn(RemoveHighlight);
+		}
+
 		public void SetHighlight(Highlight highlight)
 		{
+			RemoveHighlight();
 			this.highlight = highlight;
 			switch (this.highlight)
 			{
@@ -37,6 +48,11 @@ namespace CombatWorld
 			{
 				item.SetActive(false);
 			}
+		}
+
+		void OnDestroy()
+		{
+			InputManager.instance.UnsubscribeToEndTurn(RemoveHighlight);
 		}
 
 	}

@@ -5,7 +5,7 @@ using CombatWorld.Utility;
 
 namespace CombatWorld
 {
-	public class GridMap : MonoBehaviour
+	public class GridMap : Singleton<GridMap>
 	{
 		public Dictionary<Vec2i, Tile> tileMap = new Dictionary<Vec2i, Tile>();
 		private Vec2i size;
@@ -32,7 +32,7 @@ namespace CombatWorld
 				{
 					temp = new Vec2i(x, y);
 					tile = Instantiate(tilePrefabs[Random.Range(0,tilePrefabs.Length)], new Vector3(x, 0, y), Quaternion.identity, transform).GetComponent<Tile>();
-					tile.Setup(temp, TileType.Walkable);
+					tile.Setup(temp);
 					tileMap[temp] = tile;
 				}
 			}
@@ -75,21 +75,31 @@ namespace CombatWorld
 
 		void SpawnEntity()
 		{
-			Vec2i pos = new Vec2i(0, 2);
-			Entity ent = Instantiate(entity).GetComponent<Entity>();
-			ent.Setup(tileMap[pos]);
-			InputManager.instance.SetEntity(ent);
-
+			SpawnEntity(new Vec2i(0, 2));
 			SpawnEntity(new Vec2i(0, 1));
 			SpawnEntity(new Vec2i(2, 1));
 			SpawnEntity(new Vec2i(3, 4));
 			SpawnEntity(new Vec2i(9, 4));
+			InputManager.instance.StartGame();
 		}
 
 		void SpawnEntity(Vec2i pos)
 		{
 			Entity ent = Instantiate(entity).GetComponent<Entity>();
 			ent.Setup(tileMap[pos]);
+			InputManager.instance.AddEntity(ent);
+		}
+
+		public void SelectTiles(Vec2i pos, int dist)
+		{
+			var tiles = tileMap[pos].GetAllNeighbours();
+			foreach (Tile item in tiles)
+			{
+				if (item.CanBeMovedTo())
+				{
+					item.SetHighlight(Highlight.Simple);
+				}
+			}
 		}
 	}
 }

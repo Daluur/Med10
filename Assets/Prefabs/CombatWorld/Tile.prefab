@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4713660199919666}
   - component: {fileID: 33778464901113710}
-  - component: {fileID: 65372425158364446}
   - component: {fileID: 23218054343204066}
   m_Layer: 0
   m_Name: Cube
@@ -38,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4163348594576916}
   - component: {fileID: 33618127074285734}
-  - component: {fileID: 65541398759364000}
   - component: {fileID: 23462409246234150}
   m_Layer: 0
   m_Name: Cube (1)
@@ -71,7 +69,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4206719353766978}
   - component: {fileID: 33138273151525852}
-  - component: {fileID: 65259704537585730}
   - component: {fileID: 23734854792171252}
   m_Layer: 0
   m_Name: Cube (2)
@@ -137,8 +134,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1448014284953834}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33333334, y: 0.66666675, z: 0.33333337}
-  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_LocalPosition: {x: 0, y: 0.6666667, z: 0}
+  m_LocalScale: {x: 1, y: 0.33333334, z: 1}
   m_Children: []
   m_Father: {fileID: 4071308568560912}
   m_RootOrder: 2
@@ -150,8 +147,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1745453220521608}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33333337, y: 0.6666668, z: -0.33333334}
-  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_LocalPosition: {x: 0, y: 0.6666667, z: 0}
+  m_LocalScale: {x: 1, y: 0.33333334, z: 1}
   m_Children: []
   m_Father: {fileID: 4071308568560912}
   m_RootOrder: 3
@@ -163,8 +160,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1300742658597446}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.33333334, y: 0.6666667, z: 0.33333334}
-  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_LocalPosition: {x: 0, y: 0.6666667, z: 0}
+  m_LocalScale: {x: 1, y: 0.33333334, z: 1}
   m_Children: []
   m_Father: {fileID: 4071308568560912}
   m_RootOrder: 1
@@ -213,7 +210,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 96e60ec73eca49f4fbf262e06829fb66, type: 2}
+  - {fileID: 2100000, guid: c8f710747ce019e46ab440d835d5cae8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -321,48 +318,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1300742658597446}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65259704537585730
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1745453220521608}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65292719832210624
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1773441504159684}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65372425158364446
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1300742658597446}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65541398759364000
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1448014284953834}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -382,7 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   occupantPos: {fileID: 4155109828118438}
-  highlightHandler: {fileID: 0}
+  highlightHandler: {fileID: 114797032045656886}
 --- !u!114 &114797032045656886
 MonoBehaviour:
   m_ObjectHideFlags: 1

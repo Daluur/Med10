@@ -6,7 +6,7 @@ using System;
 
 namespace CombatWorld
 {
-	public class Tile : MonoBehaviour, ITile
+	public class Tile : MonoBehaviour
 	{
 		public TileType type;
 		public Transform occupantPos;
@@ -16,10 +16,28 @@ namespace CombatWorld
 		Entity occupant;
 		Vec2i pos;
 
-		public void Setup(Vec2i pos, TileType type)
+		Action<Highlight> highlightChange;
+
+		bool acceptsInput = false;
+
+		public void Setup(Vec2i pos)
 		{
 			this.pos = pos;
-			//this.type = type;
+		}
+
+		public Vec2i GetWorldPos()
+		{
+			return pos;
+		}
+
+		public IEnumerable<Tile> GetAllNeighbours()
+		{
+			List<Tile> tiles = new List<Tile>();
+			foreach (KeyValuePair<Direction,Tile> pair in neighbours)
+			{
+				tiles.Add(pair.Value);
+			}
+			return tiles;
 		}
 
 		/// <summary>
@@ -39,7 +57,29 @@ namespace CombatWorld
 
 		void OnMouseDown()
 		{
+			if (!acceptsInput)
+			{
+				return;
+			}
 			InputManager.instance.GotInput(this);
+		}
+
+		void OnMouseEnter()
+		{
+			if (!acceptsInput)
+			{
+				return;
+			}
+			highlightChange(Highlight.Special);
+		}
+
+		void OnMouseExit()
+		{
+			if (!acceptsInput)
+			{
+				return;
+			}
+			SetHighlight(Highlight.Simple);
 		}
 
 		/// <summary>
@@ -84,6 +124,38 @@ namespace CombatWorld
 		public bool CanBeMovedTo()
 		{
 			return type == TileType.Walkable && !HasOccupant();
+		}
+
+		public void SetHighlight(Highlight highlight)
+		{
+			switch (highlight)
+			{
+				case Highlight.None:
+					acceptsInput = false;
+					break;
+				case Highlight.UnSelectable:
+					acceptsInput = false;
+					break;
+				case Highlight.Simple:
+					acceptsInput = true;
+					break;
+				default:
+					break;
+			}
+			if(highlightChange != null)
+			{
+				highlightChange(highlight);
+			}
+		}
+
+		public void SubscribeToHighlightChange(Action<Highlight> cb)
+		{
+			highlightChange += cb;
+		}
+
+		public void UnsubscribeToHighlightChange(Action<Highlight> cb)
+		{
+			highlightChange -= cb;
 		}
 	}
 }
