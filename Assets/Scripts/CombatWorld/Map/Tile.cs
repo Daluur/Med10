@@ -23,6 +23,7 @@ namespace CombatWorld
 		public void Setup(Vec2i pos)
 		{
 			this.pos = pos;
+			InputManager.instance.SubscribeToEndTurn(TurnEnded);
 		}
 
 		public Vec2i GetWorldPos()
@@ -148,6 +149,11 @@ namespace CombatWorld
 			}
 		}
 
+		void TurnEnded()
+		{
+			acceptsInput = false;
+		}
+
 		public void SubscribeToHighlightChange(Action<Highlight> cb)
 		{
 			highlightChange += cb;
@@ -156,6 +162,11 @@ namespace CombatWorld
 		public void UnsubscribeToHighlightChange(Action<Highlight> cb)
 		{
 			highlightChange -= cb;
+		}
+
+		void OnDestroy()
+		{
+			InputManager.instance.UnsubscribeToEndTurn(TurnEnded);
 		}
 	}
 }
