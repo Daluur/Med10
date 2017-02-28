@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CombatWorld.Utility
+﻿namespace CombatWorld.Utility
 {
-	public enum TileType
+	public enum Team
 	{
-		Walkable,
-		UnWalkable,
+		Player,
+		AI,
 	}
 
-	public enum Direction
+	public enum HighlightState
 	{
-		North,
-		East, 
-		South,
-		West,
+		None,
+		Selectable,
+		Moveable,
+		NotMoveable,
+		Attackable,
 	}
 }
