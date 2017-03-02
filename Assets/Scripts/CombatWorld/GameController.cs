@@ -10,11 +10,36 @@ namespace CombatWorld
 	public class GameController : Singleton<GameController>
 	{
 		List<Node> allNodes = new List<Node>();
+		List<SummonNode> playerSummonNodes = new List<SummonNode>();
+		List<SummonNode> AISummonNodes = new List<SummonNode>();
 		Team currentTeam;
+
+		void Start()
+		{
+			Invoke("StartGame", 1);
+		}
+
+		void StartGame()
+		{
+			currentTeam = Team.Player;
+			SelectTeamNodes();
+		}
 
 		public void AddNode(Node node)
 		{
 			allNodes.Add(node);
+		}
+
+		public void AddTeamNode(SummonNode node, Team team)
+		{
+			if(team == Team.Player)
+			{
+				playerSummonNodes.Add(node);
+			}
+			else
+			{
+				AISummonNodes.Add(node);
+			}
 		}
 
 		public void EndTurn()
@@ -49,6 +74,16 @@ namespace CombatWorld
 				if (node.HasOccupant() && node.GetOccupant().GetTeam() == currentTeam)
 				{
 					node.SetState(HighlightState.Selectable);
+				}
+			}
+			if (currentTeam == Team.Player)
+			{
+				foreach (SummonNode node in playerSummonNodes)
+				{
+					if (!node.HasOccupant())
+					{
+						node.SetState(HighlightState.Selectable);
+					}
 				}
 			}
 		}

@@ -8,23 +8,25 @@ namespace CombatWorld.Units
 {
 	public class Entity : MonoBehaviour
 	{
-		int moves;
-		int movesLeft;
+		//TODO implement health.
 
-		Team team;
-		Node currentNode;
-
-		public void Move(Node node)
-		{
-			currentNode.RemoveOccupant();
-			node.SetOccupant(this);
-			currentNode = node;
-		}
+		protected Team team;
+		protected Node currentNode;
 
 		public Team GetTeam()
 		{
 			return team;
 		}
 
+		#region spawn
+
+		public void SpawnEntity(Node node)
+		{
+			currentNode = node;
+			transform.position = node.transform.position + new Vector3(0, 1, 0);
+			node.SetOccupant(this);
+		}
+
+		#endregion
 	}
 }

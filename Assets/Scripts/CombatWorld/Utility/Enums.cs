@@ -4,6 +4,7 @@
 	{
 		Player,
 		AI,
+		NONE,
 	}
 
 	public enum HighlightState

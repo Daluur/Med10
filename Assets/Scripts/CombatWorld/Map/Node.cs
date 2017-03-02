@@ -13,7 +13,21 @@ namespace CombatWorld.Map
 
 		Entity occupant;
 
-		HighlightState state;
+		protected HighlightState state;
+
+		#region setup
+
+		void Start()
+		{
+			Setup();
+		}
+
+		protected virtual void Setup()
+		{
+			GameController.instance.AddNode(this);
+		}
+
+		#endregion
 
 		#region neighbours
 
@@ -53,19 +67,67 @@ namespace CombatWorld.Map
 		public void SetState(HighlightState state)
 		{
 			this.state = state;
-			//TODO: visual
+			switch (state)
+			{
+				case HighlightState.None:
+					GetComponentInChildren<Renderer>().material.color = Color.gray;
+					break;
+				case HighlightState.Selectable:
+					GetComponentInChildren<Renderer>().material.color = Color.yellow;
+					break;
+				case HighlightState.Moveable:
+					GetComponentInChildren<Renderer>().material.color = Color.green;
+					break;
+				case HighlightState.NotMoveable:
+					GetComponentInChildren<Renderer>().material.color = Color.black;
+					break;
+				case HighlightState.Attackable:
+					GetComponentInChildren<Renderer>().material.color = Color.red;
+					break;
+				default:
+					break;
+			}
 		}
 
 		public void ResetState()
 		{
-			state = HighlightState.None;
+			SetState(HighlightState.None);
+		}
+
+		#endregion
+
+		#region input
+
+		void OnMouseDown()
+		{
+			HandleInput();
+		}
+
+		protected virtual void HandleInput()
+		{
+			Debug.Log("here");
+			switch (state)
+			{
+				case HighlightState.None:
+					break;
+				case HighlightState.Selectable:
+					break;
+				case HighlightState.Moveable:
+					break;
+				case HighlightState.NotMoveable:
+					break;
+				case HighlightState.Attackable:
+					break;
+				default:
+					break;
+			}
 		}
 
 		#endregion
 
 		void OnDrawGizmos()
 		{
-			if(neighbours.Count == 0)
+			if(neighbours == null || neighbours.Count == 0)
 			{
 				return;
 			}
