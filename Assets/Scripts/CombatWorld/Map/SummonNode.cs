@@ -10,8 +10,6 @@ namespace CombatWorld.Map
 	{
 		public Team team;
 
-		public GameObject unit;
-
 		protected override void Setup()
 		{
 			GameController.instance.AddTeamNode(this, team);
@@ -27,16 +25,10 @@ namespace CombatWorld.Map
 				case HighlightState.None:
 					break;
 				case HighlightState.Selectable:
-					if (HasOccupant())
-					{
-						GameController.instance.SelectedUnit(GetOccupant());
-					}
-					else {
-						SummonUnit();
-					}
+					GameController.instance.SelectedUnit(GetOccupant());
 					break;
 				case HighlightState.Moveable:
-					GameController.instance.GetSelectedUnit().Move(this);
+					GameController.instance.SummonNodeClickHandler(this);
 					break;
 				case HighlightState.NotMoveable:
 					break;
@@ -46,16 +38,6 @@ namespace CombatWorld.Map
 					break;
 			}
 			GameController.instance.GotInput();
-		}
-
-		#endregion
-
-		#region summmon
-
-		void SummonUnit()
-		{
-			GameObject spawnedUnit = Instantiate(unit, transform.position + new Vector3(0, 1, 0), Quaternion.identity) as GameObject;
-			spawnedUnit.GetComponent<Unit>().SpawnEntity(this);
 		}
 
 		#endregion

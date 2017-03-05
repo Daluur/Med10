@@ -74,44 +74,79 @@ namespace CombatWorld
 		{
 			if (selectedUnit == null)
 			{
-				foreach (Node node in allNodes)
-				{
-					if (node.HasOccupant() && node.GetOccupant().GetTeam() == currentTeam)
-					{
-						node.SetState(HighlightState.Selectable);
-					}
-				}
-				if (currentTeam == Team.Player)
-				{
-					foreach (SummonNode node in playerSummonNodes)
-					{
-						if (!node.HasOccupant())
-						{
-							node.SetState(HighlightState.Selectable);
-						}
-					}
-				}
+				HighlightSelectableUnits();
 			}
 			else
 			{
-				foreach (Node node in selectedUnit.GetNode().GetNeighbours())
+				HighlightMoveableNodes();
+			}
+		}
+
+		void HighlightSelectableUnits()
+		{
+			foreach (Node node in allNodes)
+			{
+				if (node.HasOccupant() && node.GetOccupant().GetTeam() == currentTeam)
 				{
-					if (node.HasOccupant())
+					if (node.GetOccupant().HasMovesLeft())
 					{
-						if (node.GetOccupant().GetTeam() == currentTeam)
-						{
-							node.SetState(HighlightState.NotMoveable);
-						}
-						else
-						{
-							node.SetState(HighlightState.Attackable);
-						}
+						node.SetState(HighlightState.Selectable);
 					}
 					else
+					{
+						node.SetState(HighlightState.NoMoreMoves);
+					}
+				}
+			}
+		}
+
+		void HighlightMoveableNodes()
+		{
+			foreach (Node node in selectedUnit.GetNode().GetNeighbours())
+			{
+				if (node.HasOccupant())
+				{
+					if (node.GetOccupant().GetTeam() == currentTeam)
+					{
+						node.SetState(HighlightState.NotMoveable);
+					}
+					else
+					{
+						node.SetState(HighlightState.Attackable);
+					}
+				}
+				else
+				{
+					node.SetState(HighlightState.Moveable);
+				}
+			}
+		}
+
+		public void HighlightSummonNodes()
+		{
+			selectedUnit = null;
+			ResetAllNodes();
+			if (currentTeam == Team.Player)
+			{
+				foreach (SummonNode node in playerSummonNodes)
+				{
+					if (!node.HasOccupant())
 					{
 						node.SetState(HighlightState.Moveable);
 					}
 				}
+			}
+		}
+
+		public void SummonNodeClickHandler(SummonNode node)
+		{
+			if(selectedUnit != null)
+			{
+				selectedUnit.Move(node);
+			}
+			else
+			{
+				SummonHandler.instance.SummonUnit(node);
 			}
 		}
 

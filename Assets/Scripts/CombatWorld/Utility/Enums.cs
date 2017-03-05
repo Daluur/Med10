@@ -12,6 +12,7 @@
 		None,
 		Selectable,
 		Selected,
+		NoMoreMoves,
 		Moveable,
 		NotMoveable,
 		Attackable,

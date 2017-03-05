@@ -11,21 +11,29 @@ namespace CombatWorld.Units
 		int moves;
 		int movesLeft;
 
+		bool attacked = false;
+
 		public void Move(Node node)
 		{
 			currentNode.RemoveOccupant();
 			node.SetOccupant(this);
 			currentNode = node;
 			GameController.instance.UnitMadeAction();
-			transform.position = node.transform.position + new Vector3(0, 1, 0);
+			transform.position = node.transform.position + new Vector3(0, 0.5f, 0);
+			movesLeft--;
+		}
+
+		public bool HasMovesLeft()
+		{
+			return movesLeft > 0;
 		}
 
 		#region spawn
 
 		public void SpawnEntity(Node node)
 		{
+			moves = movesLeft = 3;
 			currentNode = node;
-			transform.position = node.transform.position + new Vector3(0, 1, 0);
 			node.SetOccupant(this);
 		}
 

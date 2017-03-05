@@ -78,6 +78,9 @@ namespace CombatWorld.Map
 				case HighlightState.Moveable:
 					GetComponentInChildren<Renderer>().material.color = Color.green;
 					break;
+				case HighlightState.NoMoreMoves:
+					GetComponentInChildren<Renderer>().material.color = Color.blue;
+					break;
 				case HighlightState.NotMoveable:
 					GetComponentInChildren<Renderer>().material.color = Color.black;
 					break;
