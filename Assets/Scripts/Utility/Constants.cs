@@ -9,4 +9,5 @@ public static class LayerConstants {
 
 public static class TagConstants {
 	public const string OVERWORLDPLAYER = "PlayerOW";
+	public const string CONTEXTUNITMENU = "ContextUnitMenu";
 }
