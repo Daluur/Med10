@@ -11,6 +11,7 @@
 	{
 		None,
 		Selectable,
+		Selected,
 		Moveable,
 		NotMoveable,
 		Attackable,

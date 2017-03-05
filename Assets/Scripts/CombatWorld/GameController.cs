@@ -14,6 +14,8 @@ namespace CombatWorld
 		List<SummonNode> AISummonNodes = new List<SummonNode>();
 		Team currentTeam;
 
+		Unit selectedUnit;
+
 		void Start()
 		{
 			Invoke("StartGame", 1);
@@ -22,6 +24,7 @@ namespace CombatWorld
 		void StartGame()
 		{
 			currentTeam = Team.Player;
+			ResetAllNodes();
 			SelectTeamNodes();
 		}
 
@@ -69,23 +72,68 @@ namespace CombatWorld
 
 		void SelectTeamNodes()
 		{
-			foreach (Node node in allNodes)
+			if (selectedUnit == null)
 			{
-				if (node.HasOccupant() && node.GetOccupant().GetTeam() == currentTeam)
+				foreach (Node node in allNodes)
 				{
-					node.SetState(HighlightState.Selectable);
-				}
-			}
-			if (currentTeam == Team.Player)
-			{
-				foreach (SummonNode node in playerSummonNodes)
-				{
-					if (!node.HasOccupant())
+					if (node.HasOccupant() && node.GetOccupant().GetTeam() == currentTeam)
 					{
 						node.SetState(HighlightState.Selectable);
 					}
 				}
+				if (currentTeam == Team.Player)
+				{
+					foreach (SummonNode node in playerSummonNodes)
+					{
+						if (!node.HasOccupant())
+						{
+							node.SetState(HighlightState.Selectable);
+						}
+					}
+				}
 			}
+			else
+			{
+				foreach (Node node in selectedUnit.GetNode().GetNeighbours())
+				{
+					if (node.HasOccupant())
+					{
+						if (node.GetOccupant().GetTeam() == currentTeam)
+						{
+							node.SetState(HighlightState.NotMoveable);
+						}
+						else
+						{
+							node.SetState(HighlightState.Attackable);
+						}
+					}
+					else
+					{
+						node.SetState(HighlightState.Moveable);
+					}
+				}
+			}
+		}
+
+		public void GotInput()
+		{
+			ResetAllNodes();
+			SelectTeamNodes();
+		}
+
+		public void UnitMadeAction()
+		{
+			selectedUnit = null;
+		}
+
+		public void SelectedUnit(Unit unit)
+		{
+			selectedUnit = unit;
+		}
+
+		public Unit GetSelectedUnit()
+		{
+			return selectedUnit;
 		}
 
 	}

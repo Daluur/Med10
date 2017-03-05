@@ -18,15 +18,9 @@ namespace CombatWorld.Units
 			return team;
 		}
 
-		#region spawn
-
-		public void SpawnEntity(Node node)
+		public Node GetNode()
 		{
-			currentNode = node;
-			transform.position = node.transform.position + new Vector3(0, 1, 0);
-			node.SetOccupant(this);
+			return currentNode;
 		}
-
-		#endregion
 	}
 }

@@ -11,7 +11,7 @@ namespace CombatWorld.Map
 	{
 		public List<Node> neighbours;
 
-		Entity occupant;
+		Unit occupant;
 
 		protected HighlightState state;
 
@@ -40,7 +40,7 @@ namespace CombatWorld.Map
 
 		#region occupantCode
 
-		public void SetOccupant(Entity occupant)
+		public void SetOccupant(Unit occupant)
 		{
 			this.occupant = occupant;
 		}
@@ -55,7 +55,7 @@ namespace CombatWorld.Map
 			return occupant;
 		}
 
-		public Entity GetOccupant()
+		public Unit GetOccupant()
 		{
 			return occupant;
 
@@ -105,14 +105,15 @@ namespace CombatWorld.Map
 
 		protected virtual void HandleInput()
 		{
-			Debug.Log("here");
 			switch (state)
 			{
 				case HighlightState.None:
 					break;
 				case HighlightState.Selectable:
+					GameController.instance.SelectedUnit(GetOccupant());
 					break;
 				case HighlightState.Moveable:
+					GameController.instance.GetSelectedUnit().Move(this);
 					break;
 				case HighlightState.NotMoveable:
 					break;
@@ -121,6 +122,7 @@ namespace CombatWorld.Map
 				default:
 					break;
 			}
+			GameController.instance.GotInput();
 		}
 
 		#endregion

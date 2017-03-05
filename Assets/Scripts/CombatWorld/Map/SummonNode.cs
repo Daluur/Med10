@@ -22,15 +22,21 @@ namespace CombatWorld.Map
 
 		protected override void HandleInput()
 		{
-			Debug.Log("here2");
 			switch (state)
 			{
 				case HighlightState.None:
 					break;
 				case HighlightState.Selectable:
-					SummonUnit();
+					if (HasOccupant())
+					{
+						GameController.instance.SelectedUnit(GetOccupant());
+					}
+					else {
+						SummonUnit();
+					}
 					break;
 				case HighlightState.Moveable:
+					GameController.instance.GetSelectedUnit().Move(this);
 					break;
 				case HighlightState.NotMoveable:
 					break;
@@ -39,6 +45,7 @@ namespace CombatWorld.Map
 				default:
 					break;
 			}
+			GameController.instance.GotInput();
 		}
 
 		#endregion
