@@ -12,8 +12,13 @@ namespace Overworld {
 		public float distanceToOpen = 5f;
 
 		public GameObject[] units;
+		private bool isRunning = false;
+		private bool meClicked;
 
-		public Unit[] containingUnits;
+		//public Unit[] containingUnits;
+
+		//TODO: Add custom editor to the tower behaviour so that it is possible to write in editor how many units of each the tower should have
+		public Dictionary<GameObject, int>[] containing;
 
 		// Use this for initialization
 		void Start () {
@@ -25,9 +30,9 @@ namespace Overworld {
 				playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
 			}
 
-			for(int i=0;i<units.Length;i++) {
-				containingUnits[i] = units[i].GetComponent<Unit>();
-			}
+			//for(int i=0;i<units.Length;i++) {
+			//	containingUnits[i] = units[i].GetComponent<Unit>();
+			//}
 
 
 
@@ -40,12 +45,15 @@ namespace Overworld {
 		}
 
 		private void OnMouseDown() {
-			Debug.Log("Here");
+			meClicked = true;
+			if (!isRunning)
+				StartCoroutine(IsCloseEnough());
+			//if(CanOpenMenu())
+			//	OpenMenu();
 		}
 
 		private void OpenMenu() {
-		//	if(CanOpenMenu())
-			//	contextMenu.GetComponent<ContextPopUp>().DisplayMenu();
+			contextMenu.GetComponent<ContextPopUp>().DisplayMenu(units);
 		}
 
 		private bool CanOpenMenu() {
@@ -54,6 +62,19 @@ namespace Overworld {
 			return false;
 		}
 
+		private IEnumerator IsCloseEnough() {
+			isRunning = true;
+			while (meClicked) {
+				if (CanOpenMenu()) {
+					OpenMenu();
+					isRunning = false;
+					yield break;
+				}
+				yield return new WaitForSeconds(0.3f);
+			}
+			isRunning = false;
+			yield return null;
+		}
 
 	}
 

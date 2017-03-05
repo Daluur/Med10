@@ -13,7 +13,7 @@ namespace Overworld {
 		public float speed = 1.0f;
 		private Text[] myTexts;
 
-		private Coroutine isRunning;
+		private bool isRunningShow, isRunningHide;
 
 		void Start() {
 			menu = GetComponent<Image>();
@@ -25,11 +25,18 @@ namespace Overworld {
 				//DisplayMenu();
 		}
 
-		public void DisplayMenu(string[] units) {
-			if(isRunning!=null)
+		public void DisplayMenu(GameObject[] units) {
+			if (isRunningShow) {
 				return;
-			isRunning = StartCoroutine(ShowMenu());
-			PopulateUnitSlots(units);
+			}
+			StartCoroutine(ShowMenu());
+			PopulateUnitSlots(ConvertUnitsToStringArr(units));
+		}
+
+		public void CloseMenu() {
+			if(isRunningHide)
+				return;
+			StartCoroutine(HideMenu());
 		}
 
 		private void PopulateUnitSlots(string[] units) {
@@ -42,7 +49,15 @@ namespace Overworld {
 			}
 		}
 
+		private void UnpopulateUnitSlots() {
+			for (int i = 0; i < myTexts.Length; i++) {
+				if(myTexts[i].tag != TagConstants.BUTTONTEXT)
+					myTexts[i].text = "Empty";
+			}
+		}
+
 		private IEnumerator ShowMenu() {
+			isRunningShow = true;
 			var startTime = Time.time;
 			var initScale = new Vector2(menu.transform.localScale.x, menu.transform.localScale.y);
 			var scalingLength = Vector2.Distance(initScale, size);
@@ -56,8 +71,39 @@ namespace Overworld {
 				menu.transform.localScale = new Vector3(toScale.x, toScale.y, menu.transform.localScale.z);
 				yield return new WaitForEndOfFrame();
 			}
+			isRunningShow = false;
 			yield return null;
 		}
+
+		private IEnumerator HideMenu() {
+			isRunningHide = true;
+			var startTime = Time.time;
+			var initScale = new Vector2(menu.transform.localScale.x, menu.transform.localScale.y);
+			var scalingLength = Vector2.Distance(initScale, Vector2.zero);
+			var fracScaling = 0f;
+
+
+			while (fracScaling < 1) {
+				var distCovered = (Time.time - startTime) * speed;
+				fracScaling = distCovered / scalingLength;
+				var toScale = Vector2.Lerp(initScale, Vector2.zero, fracScaling);
+				menu.transform.localScale = new Vector3(toScale.x, toScale.y, menu.transform.localScale.z);
+				yield return new WaitForEndOfFrame();
+			}
+			UnpopulateUnitSlots();
+			isRunningHide = false;
+			yield return null;
+		}
+
+		private string[] ConvertUnitsToStringArr(GameObject[] units) {
+			string[] tmp = new string[units.Length];
+			for (int i = 0; i < units.Length; i++) {
+				tmp[i] = units[i].GetComponent<Unit>().name;
+			}
+			return tmp;
+		}
+
+
 
 	}
 }
