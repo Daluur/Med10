@@ -7,6 +7,8 @@ namespace Overworld {
 		public Texture2D icon;
 		public int amount;
 		private UnitDescription unit;
+		public UnitType type;
+		public string name = "temp";
 		
 		public struct UnitDescription {
 			public float damage;
