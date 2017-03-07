@@ -5,15 +5,17 @@ using UnityEngine;
 
 namespace Overworld {
 
-	public class TowerBehavior : MonoBehaviour {
+	public class TowerBehavior : InputSubscriber, IInteractable {
 
 		public GameObject contextMenu;
 		public GameObject playerOW;
 		public float distanceToOpen = 5f;
 
 		public GameObject[] units;
+		public int[] amountOfUnits;
 		private bool isRunning = false;
 		private bool meClicked;
+
 
 		//public Unit[] containingUnits;
 
@@ -22,6 +24,9 @@ namespace Overworld {
 
 		// Use this for initialization
 		void Start () {
+
+			Register(this, KeyCode.Mouse0);
+
 			if (contextMenu == null) {
 				contextMenu = GameObject.FindGameObjectWithTag(TagConstants.CONTEXTUNITMENU);
 			}
@@ -29,22 +34,14 @@ namespace Overworld {
 			if (playerOW == null) {
 				playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
 			}
-
-			//for(int i=0;i<units.Length;i++) {
-			//	containingUnits[i] = units[i].GetComponent<Unit>();
-			//}
-
-
-
 		}
-
 
 		// Update is called once per frame
 		void Update () {
 
 		}
 
-		private void OnMouseDown() {
+		private void CheckDistance() {
 			meClicked = true;
 			if (!isRunning)
 				StartCoroutine(IsCloseEnough());
@@ -76,6 +73,12 @@ namespace Overworld {
 			yield return null;
 		}
 
+		public void DoAction() {
+		}
+
+		public void DoAction<T>(T param) {
+			CheckDistance();
+		}
 	}
 
 
