@@ -1,0 +1,86 @@
+[
+	{
+		"id": 0,
+		"title": "Fire Unit",
+		"type": "Fire",
+		"transform": "None",
+		"stats": {
+			"attack": 1,
+			"health": 4,
+			"moves": 2
+			},
+		"description": "Unit made of fire",
+		"stackable": false,
+		"slug": "fire_unit"
+	},
+	{
+		"id": 1,
+		"title": "Water Unit",
+		"type": "Water",
+		"transform": "None",
+		"stats": {
+			"attack": 2,
+			"health": 3,
+			"moves": 3
+			},
+		"description": "Unit made of water",
+		"stackable": false,
+		"slug": "water_unit"
+	},
+		{
+		"id": 2,
+		"title": "Electric Unit",
+		"type": "Electric",
+		"transform": "None",
+		"stats": {
+			"attack": 5,
+			"health": 2,
+			"moves": 1
+			},
+		"description": "Unit made of electricity",
+		"stackable": false,
+		"slug": "electric_unit"
+	},
+		{
+		"id": 3,
+		"title": "Nature Unit",
+		"type": "Nature",
+		"transform": "None",
+		"stats": {
+			"attack": 2,
+			"health": 3,
+			"moves": 3
+			},
+		"description": "Unit made of nature",
+		"stackable": false,
+		"slug": "nature_unit"
+	},
+		{
+		"id": 4,
+		"title": "Normal Stone Unit",
+		"type": "Normal",
+		"transform": "Stone",
+		"stats": {
+			"attack": 2,
+			"health": 3,
+			"moves": 3
+			},
+		"description": "Unit made of normal, that can turn to stone",
+		"stackable": false,
+		"slug": "normal_stone_unit"
+	},
+		{
+		"id": 1,
+		"title": "Shadow Unit",
+		"type": "Shadow",
+		"transform": "None",
+		"stats": {
+			"attack": 2,
+			"health": 3,
+			"moves": 3
+			},
+		"description": "Unit made of shadow",
+		"stackable": false,
+		"slug": "shadow_unit"
+	}
+]
