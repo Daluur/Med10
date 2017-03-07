@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
@@ -55,18 +54,20 @@ public class Inventory : MonoBehaviour {
 			for (int i = 0; i < items.Count; i++) {
 				if (items[i].ID == -1) {
 					items [i] = itemToAdd;
-					GameObject itemObject = Instantiate (inventoryItem);
+					GameObject itemObject = Instantiate (inventoryItem,slots[i].transform,false);
 					itemObject.GetComponent<ItemData> ().item = itemToAdd;
 					itemObject.GetComponent<ItemData> ().slot = i;
-					itemObject.transform.SetParent (slots[i].transform);
-					itemObject.transform.position = Vector2.zero;
 					itemObject.GetComponent<Image> ().sprite = itemToAdd.Sprite;
 					itemObject.name = itemToAdd.Title;
 					ItemData data = slots[i].transform.GetChild (0).GetComponent<ItemData> ();
 					data.amount = 1;
 					break;
-				}
+				} 
 			}
+
+			if (!items.Exists(x => x.ID == -1)) {
+				Debug.Log ("No more room in inventory - create popup message here");
+			} 
 		}
 	}
 
