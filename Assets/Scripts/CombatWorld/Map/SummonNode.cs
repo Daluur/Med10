@@ -4,38 +4,34 @@ using UnityEngine;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 
-namespace CombatWorld.Map
-{
-	public class SummonNode : Node
-	{
+namespace CombatWorld.Map {
+	public class SummonNode : Node {
 		public Team team;
 
-		protected override void Setup()
-		{
+		protected override void Setup() {
 			GameController.instance.AddTeamNode(this, team);
 			base.Setup();
 		}
 
 		#region input
 
-		protected override void HandleInput()
-		{
-			switch (state)
-			{
-				case HighlightState.None:
-					break;
+		public override void HandleInput() {
+			switch (state) {
 				case HighlightState.Selectable:
-					GameController.instance.SelectedUnit(GetOccupant());
+					GameController.instance.SetSelectedUnit(GetOccupant());
 					break;
 				case HighlightState.Moveable:
 					GameController.instance.SummonNodeClickHandler(this);
 					break;
+				case HighlightState.NoMoreMoves:
+					GameController.instance.SetSelectedUnit(GetOccupant());
+					break;
+				case HighlightState.None:
 				case HighlightState.NotMoveable:
-					break;
 				case HighlightState.Attackable:
-					break;
 				default:
-					break;
+					base.HandleInput();
+					return;
 			}
 			GameController.instance.GotInput();
 		}

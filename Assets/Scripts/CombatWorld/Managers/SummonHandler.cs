@@ -14,7 +14,7 @@ namespace CombatWorld
 		public void SummonUnit(SummonNode node)
 		{
 			GameObject unit = Instantiate(UnitToSummon, node.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity) as GameObject;
-			unit.GetComponent<Unit>().SpawnEntity(node);
+			unit.GetComponent<Unit>().SpawnEntity(node, Team.Player);
 		}
 
 		public void SummonButtonPressed()

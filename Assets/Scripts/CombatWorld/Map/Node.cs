@@ -5,10 +5,8 @@ using CombatWorld;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 
-namespace CombatWorld.Map
-{
-	public class Node : MonoBehaviour
-	{
+namespace CombatWorld.Map {
+	public class Node : MonoBehaviour {
 		public List<Node> neighbours;
 
 		Unit occupant;
@@ -17,13 +15,11 @@ namespace CombatWorld.Map
 
 		#region setup
 
-		void Start()
-		{
+		void Awake() {
 			Setup();
 		}
 
-		protected virtual void Setup()
-		{
+		protected virtual void Setup() {
 			GameController.instance.AddNode(this);
 		}
 
@@ -31,32 +27,27 @@ namespace CombatWorld.Map
 
 		#region neighbours
 
-		public List<Node> GetNeighbours()
-		{
+		public List<Node> GetNeighbours() {
 			return neighbours;
 		}
-		
+
 		#endregion
 
 		#region occupantCode
 
-		public void SetOccupant(Unit occupant)
-		{
+		public void SetOccupant(Unit occupant) {
 			this.occupant = occupant;
 		}
 
-		public void RemoveOccupant()
-		{
+		public void RemoveOccupant() {
 			occupant = null;
 		}
 
-		public bool HasOccupant()
-		{
+		public bool HasOccupant() {
 			return occupant;
 		}
 
-		public Unit GetOccupant()
-		{
+		public Unit GetOccupant() {
 			return occupant;
 
 		}
@@ -64,11 +55,9 @@ namespace CombatWorld.Map
 
 		#region states
 
-		public void SetState(HighlightState state)
-		{
+		public void SetState(HighlightState state) {
 			this.state = state;
-			switch (state)
-			{
+			switch (state) {
 				case HighlightState.None:
 					GetComponentInChildren<Renderer>().material.color = Color.gray;
 					break;
@@ -92,8 +81,7 @@ namespace CombatWorld.Map
 			}
 		}
 
-		public void ResetState()
-		{
+		public void ResetState() {
 			SetState(HighlightState.None);
 		}
 
@@ -101,26 +89,23 @@ namespace CombatWorld.Map
 
 		#region input
 
-		void OnMouseDown()
-		{
-			HandleInput();
-		}
-
-		protected virtual void HandleInput()
-		{
-			switch (state)
-			{
+		public virtual void HandleInput() {
+			switch (state) {
 				case HighlightState.None:
 					break;
 				case HighlightState.Selectable:
-					GameController.instance.SelectedUnit(GetOccupant());
+					GameController.instance.SetSelectedUnit(GetOccupant());
 					break;
 				case HighlightState.Moveable:
 					GameController.instance.GetSelectedUnit().Move(this);
 					break;
+				case HighlightState.NoMoreMoves:
+					GameController.instance.SetSelectedUnit(GetOccupant());
+					break;
 				case HighlightState.NotMoveable:
 					break;
 				case HighlightState.Attackable:
+					GameController.instance.GetSelectedUnit().Attack(GetOccupant());
 					break;
 				default:
 					break;
@@ -130,14 +115,11 @@ namespace CombatWorld.Map
 
 		#endregion
 
-		void OnDrawGizmos()
-		{
-			if(neighbours == null || neighbours.Count == 0)
-			{
+		void OnDrawGizmos() {
+			if (neighbours == null || neighbours.Count == 0) {
 				return;
 			}
-			foreach (var item in neighbours)
-			{
+			foreach (var item in neighbours) {
 				Gizmos.color = Color.cyan;
 				Gizmos.DrawLine(transform.position + new Vector3(0, 0.5f, 0), item.transform.position - new Vector3(0, 0.5f, 0));
 			}

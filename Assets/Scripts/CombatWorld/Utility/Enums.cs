@@ -1,14 +1,11 @@
-﻿namespace CombatWorld.Utility
-{
-	public enum Team
-	{
+﻿namespace CombatWorld.Utility {
+	public enum Team {
 		Player,
 		AI,
 		NONE,
 	}
 
-	public enum HighlightState
-	{
+	public enum HighlightState {
 		None,
 		Selectable,
 		Selected,
@@ -16,5 +13,13 @@
 		Moveable,
 		NotMoveable,
 		Attackable,
+	}
+
+	public enum ElementalTypes {
+		NONE,
+		Fire,
+		Water,
+		Earth,
+		Ligthning,
 	}
 }
