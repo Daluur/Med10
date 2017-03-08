@@ -1,16 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Overworld {
-	public class PlayerMovementOW : MonoBehaviour {
+	public class PlayerMovementOW : InputSubscriber, IInteractable {
 
 		private NavMeshAgent agent;
-		private LayerMask layerMask;
+
+
 
 		void Start() {
-			layerMask = ( 1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER) );
+
+			Register(this, KeyCode.Mouse0);
+
 			agent = GetComponent<NavMeshAgent>();
 			if (agent == null) {
 				Debug.LogError("The Player character needs a nav mesh agent to move around!!!!");
@@ -23,18 +28,19 @@ namespace Overworld {
 			}
 		}
 
-		void Update() {
-			if (Input.GetMouseButton(0)) {
-				PlayerMoveToMouseInput(Input.mousePosition);
-			}
+		void PlayerMoveToMouseInput(Vector3 hitPoint) {
+			agent.SetDestination(hitPoint);
 		}
 
-		void PlayerMoveToMouseInput(Vector3 mousePos) {
-			Ray ray = Camera.main.ScreenPointToRay(mousePos);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit, 500f, layerMask)) {
-				agent.SetDestination(hit.point);
+		public void DoAction() {
+		}
+
+		public void DoAction<T>(T param) {
+			if (param.GetType() != typeof(Vector3)) {
+				Debug.LogError("To move the character give it a Vector3 to move to");
+				return;
 			}
+			PlayerMoveToMouseInput((Vector3)(param as Vector3?));
 		}
 	}
 }
