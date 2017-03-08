@@ -16,7 +16,8 @@ public static class TagConstants {
 	public const string VERYIMPORTANTOBJECT = "VeryImportantObject";
 }
 
-public static class DamageMultipliers {
+public static class DamageConstants {
 	public const int EFFECTIVEMULTIPLIER = 2;
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
+	public const bool ALLOWRETALIATIONAFTERDEATH = true;
 }

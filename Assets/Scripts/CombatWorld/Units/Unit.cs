@@ -40,10 +40,18 @@ namespace CombatWorld.Units {
 			attacked = false;
 		}
 
-		public void Attack(Entity entity) {
-			entity.TakeDamage(new DamagePackage(damage));
+		public void Attack(Entity entity, bool retaliation = false) {
+			entity.TakeDamage(new DamagePackage(damage, this, type, retaliation));
 			attacked = moved = true;
 			GameController.instance.UnitMadeAction();
+		}
+
+		public override void TakeDamage(DamagePackage damage) {
+			base.TakeDamage(damage);
+			if(!damage.WasRetaliation() && (health > 0 || DamageConstants.ALLOWRETALIATIONAFTERDEATH)) {
+				Debug.Log("Made retaliation attack.");
+				Attack(damage.GetSource(), true);
+			}
 		}
 
 		#region spawn

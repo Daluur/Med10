@@ -21,7 +21,7 @@ namespace CombatWorld.Units {
 			return currentNode;
 		}
 
-		public void TakeDamage(DamagePackage damage) {
+		public virtual void TakeDamage(DamagePackage damage) {
 			health -= damage.CalculateDamageAgainst(type);
 			if(health <= 0) {
 				Die();
