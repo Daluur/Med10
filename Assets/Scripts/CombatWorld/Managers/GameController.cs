@@ -11,6 +11,7 @@ namespace CombatWorld {
 	public class GameController : Singleton<GameController> {
 		public GameObject winLosePanel;
 		public Text winLoseText;
+		public Button endTurnButton;
 
 		List<Node> allNodes = new List<Node>();
 		List<SummonNode> playerSummonNodes = new List<SummonNode>();
@@ -66,6 +67,7 @@ namespace CombatWorld {
 		public void EndTurn() {
 			switch (currentTeam) {
 				case Team.Player:
+					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
 					AIController.instance.GiveSummonPoints(2);
@@ -79,6 +81,7 @@ namespace CombatWorld {
 					CheckWinLose();
 					StartTurn();
 					SelectTeamNodes();
+					endTurnButton.interactable = true;
 					break;
 				default:
 					break;
