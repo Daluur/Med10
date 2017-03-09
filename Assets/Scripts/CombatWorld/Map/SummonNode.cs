@@ -18,13 +18,13 @@ namespace CombatWorld.Map {
 		public override void HandleInput() {
 			switch (state) {
 				case HighlightState.Selectable:
-					GameController.instance.SetSelectedUnit(GetOccupant());
+					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
 				case HighlightState.Moveable:
 					GameController.instance.SummonNodeClickHandler(this);
 					break;
 				case HighlightState.NoMoreMoves:
-					GameController.instance.SetSelectedUnit(GetOccupant());
+					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
 				case HighlightState.None:
 				case HighlightState.NotMoveable:

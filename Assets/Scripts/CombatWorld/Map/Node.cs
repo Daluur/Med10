@@ -9,7 +9,7 @@ namespace CombatWorld.Map {
 	public class Node : MonoBehaviour {
 		public List<Node> neighbours;
 
-		Unit occupant;
+		Entity occupant;
 
 		protected HighlightState state;
 
@@ -35,7 +35,7 @@ namespace CombatWorld.Map {
 
 		#region occupantCode
 
-		public void SetOccupant(Unit occupant) {
+		public void SetOccupant(Entity occupant) {
 			this.occupant = occupant;
 		}
 
@@ -47,10 +47,22 @@ namespace CombatWorld.Map {
 			return occupant;
 		}
 
-		public Unit GetOccupant() {
+		public Entity GetOccupant() {
 			return occupant;
-
 		}
+
+		public bool HasUnit() {
+
+			if(occupant != null && occupant.GetType() == typeof(Unit)) {
+				return true;
+			}
+			return false;
+		}
+
+		public Unit GetUnit() {
+			return (Unit)occupant;
+		}
+
 		#endregion
 
 		#region states
@@ -94,13 +106,13 @@ namespace CombatWorld.Map {
 				case HighlightState.None:
 					break;
 				case HighlightState.Selectable:
-					GameController.instance.SetSelectedUnit(GetOccupant());
+					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
 				case HighlightState.Moveable:
 					GameController.instance.GetSelectedUnit().Move(this);
 					break;
 				case HighlightState.NoMoreMoves:
-					GameController.instance.SetSelectedUnit(GetOccupant());
+					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
 				case HighlightState.NotMoveable:
 					break;

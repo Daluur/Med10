@@ -14,9 +14,11 @@ public static class TagConstants {
 	public const string CONTEXTUNITMENU = "ContextUnitMenu";
 	public const string BUTTONTEXT = "ButtonText";
 	public const string VERYIMPORTANTOBJECT = "VeryImportantObject";
+	public const string OWEVENTSYSTEM = "OWEventSystem";
 }
 
-public static class DamageMultipliers {
+public static class DamageConstants {
 	public const int EFFECTIVEMULTIPLIER = 2;
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
+	public const bool ALLOWRETALIATIONAFTERDEATH = true;
 }

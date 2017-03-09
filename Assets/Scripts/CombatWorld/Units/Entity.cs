@@ -7,11 +7,14 @@ using CombatWorld.Utility;
 namespace CombatWorld.Units {
 	public class Entity : MonoBehaviour {
 
+		[SerializeField]
 		protected int health;
-		protected ElementalTypes type;
-
+		[SerializeField]
 		protected Team team;
+		[SerializeField]
 		protected Node currentNode;
+
+		protected ElementalTypes type;
 
 		public Team GetTeam() {
 			return team;
@@ -21,16 +24,22 @@ namespace CombatWorld.Units {
 			return currentNode;
 		}
 
-		public void TakeDamage(DamagePackage damage) {
+		public virtual void TakeDamage(DamagePackage damage) {
 			health -= damage.CalculateDamageAgainst(type);
 			if(health <= 0) {
 				Die();
 			}
 		}
 
-		void Die() {
+		public virtual void Die() {
+			GameController.instance.UnitDied(team);
 			currentNode.RemoveOccupant();
+			GameController.instance.UnitMadeAction();
 			Destroy(gameObject);
+		}
+
+		public int GetHealth() {
+			return health;
 		}
 	}
 }

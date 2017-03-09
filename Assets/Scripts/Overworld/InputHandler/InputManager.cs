@@ -11,15 +11,14 @@ namespace Overworld {
 		private LayerMask layerMaskPlayer, layerMaskInteractable;
 		private List<IInteractable> distributeTo = new List<IInteractable>();
 		private Dictionary<KeyCode, List<IInteractable>> registerTo = new Dictionary<KeyCode, List<IInteractable>>();
-		KeyValuePair<IInteractable,KeyCode> reg = new KeyValuePair<IInteractable, KeyCode>();
 		private Vector3 playerMoveTo;
+		private GameObject evtSystem;
 
 		// Use this for initialization
 		void Start () {
 			layerMaskPlayer = (1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER));
 			layerMaskInteractable = ( 1 << LayerMask.NameToLayer(LayerConstants.INTERACTABLELAYER) );
-
-
+			evtSystem = GameObject.FindGameObjectWithTag(TagConstants.OWEVENTSYSTEM);
 		}
 
 		// Update is called once per frame
@@ -40,6 +39,8 @@ namespace Overworld {
 				case KeyCode.Mouse0:
 					if (!uiMouseLock) {
 						var mousePos = Input.mousePosition;
+						FillDistributer(keyCode);
+						DistributeAction();
 						WhatIsHit(mousePos);
 						DistributeAction(playerMoveTo);
 					}
