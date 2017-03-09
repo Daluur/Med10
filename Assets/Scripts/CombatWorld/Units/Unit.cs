@@ -14,6 +14,12 @@ namespace CombatWorld.Units {
 		bool moved = true;
 		bool attacked = true;
 
+		AnimationHelper animHelp;
+
+		void Start() {
+			animHelp = GetComponentInChildren<AnimationHelper>();
+		}
+
 		public void Move(Node node) {
 			GameController.instance.WaitForAction();
 			currentNode.RemoveOccupant();
@@ -43,21 +49,34 @@ namespace CombatWorld.Units {
 
 		public void Attack(Entity entity) {
 			GameController.instance.WaitForAction();
-			entity.TakeDamage(new DamagePackage(damage, this, type));
 			attacked = moved = true;
-			Invoke("FinishedAction", 0.2f);
+			animHelp.Attack(entity.transform, DealDamage, new DamagePackage(damage, this, type), entity);
 		}
 
 		void RetaliationAttack(Entity entity) {
 			GameController.instance.WaitForAction();
-			entity.TakeDamage(new DamagePackage(damage, this, type, true));
+			animHelp.Attack(entity.transform, DealDamage, new DamagePackage(damage, this, type, true), entity);
+		}
+
+		void DealDamage(DamagePackage damage, Entity entity) {
+			entity.TakeDamage(damage);
+			FinishedAction();
 		}
 
 		public override void TakeDamage(DamagePackage damage) {
+			animHelp.TakeDamage(TookDamage, damage);
 			base.TakeDamage(damage);
-			if(!damage.WasRetaliation() && (health > 0 || DamageConstants.ALLOWRETALIATIONAFTERDEATH)) {
+		}
+
+		void TookDamage(DamagePackage damage) {
+			if (!damage.WasRetaliation() && (health > 0 || DamageConstants.ALLOWRETALIATIONAFTERDEATH)) {
 				RetaliationAttack(damage.GetSource());
 			}
+		}
+
+		public override void Die() {
+			animHelp.Die(Death);
+			base.Die();
 		}
 
 		public int GetAttackValue() {
