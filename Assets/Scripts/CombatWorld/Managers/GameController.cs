@@ -5,6 +5,7 @@ using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 using CombatWorld.AI;
+using UnityEngine.SceneManagement;
 
 namespace CombatWorld {
 	public class GameController : Singleton<GameController> {
@@ -168,6 +169,10 @@ namespace CombatWorld {
 			selectedUnit = null;
 			ResetAllNodes();
 			SelectTeamNodes();
+		}
+
+		public void Forfeit() {
+			SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 		}
 
 		#region AI THINGS
