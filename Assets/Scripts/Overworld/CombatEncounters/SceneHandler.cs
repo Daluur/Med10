@@ -17,7 +17,7 @@ namespace Overworld {
 			eventSystem = GameObject.FindGameObjectWithTag(TagConstants.OWEVENTSYSTEM);
 			OWCam = Camera.main;
 		}
-		
+
 		public void LoadScene(int type) {
 			DisableObjectsCombatLoad();
 			SceneManager.LoadScene(1,LoadSceneMode.Additive);

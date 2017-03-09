@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23125365896608340}
   - component: {fileID: 195366736645193752}
   - component: {fileID: 114577629066926778}
+  - component: {fileID: 54887531876181524}
   m_Layer: 0
   m_Name: OverWorldPlayer
   m_TagString: PlayerOW
@@ -82,6 +83,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710159462820168}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54887531876181524
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1710159462820168}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &114577629066926778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea04c2e59c5c7fc499bc3023d77d0fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
 --- !u!136 &136462329235290028
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -114,7 +131,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1710159462820168}
   m_Enabled: 1
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5.16
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

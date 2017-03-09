@@ -15,6 +15,7 @@ namespace Overworld {
 		void Start () {
 			Register(this, KeyCode.Mouse0);
 			sceneHandler = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<SceneHandler>();
+			playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
 		}
 
 		// Update is called once per frame

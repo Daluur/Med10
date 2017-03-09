@@ -7,24 +7,16 @@ namespace Overworld {
 	public class ContextInteraction : InputSubscriber {
 
 		public GameObject playerOW;
+		[HideInInspector]
 		public bool isRunning = false;
+		[HideInInspector]
 		public bool meClicked = false;
 		public float distanceToOpen = 5f;
 
 
-		// Use this for initialization
-	/*	void Start () {
-			//if (playerOW == null) {
-				playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
-			//}
-		}
-*/
-
 		public void CheckDistance() {
 			if (!isRunning)
 				StartCoroutine(IsCloseEnough());
-			//if(CanOpenMenu())
-			//	OpenMenu();
 		}
 
 		private IEnumerator IsCloseEnough() {
