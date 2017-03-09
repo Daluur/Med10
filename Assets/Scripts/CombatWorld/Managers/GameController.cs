@@ -320,6 +320,10 @@ namespace CombatWorld {
 			winLosePanel.SetActive(true);
 		}
 
+		public void GiveUp() {
+			Lost();
+		}
+
 		#endregion
 
 		#region AI THINGS
