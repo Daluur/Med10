@@ -6,16 +6,23 @@ namespace CombatWorld.Units {
 	public class DamagePackage {
 
 		int damage;
-		ElementalTypes damageType;
+		ElementalTypes damageType = ElementalTypes.NONE;
+		Unit source;
+		bool wasRetaliation = false;
 
-		public DamagePackage(int damage) {
+		public DamagePackage(int damage, Unit source, ElementalTypes type = ElementalTypes.NONE, bool retaliation = false) {
 			this.damage = damage;
-			damageType = ElementalTypes.NONE;
+			this.source = source;
+			damageType = type;
+			wasRetaliation = retaliation;
+		}
+		
+		public Unit GetSource() {
+			return source;
 		}
 
-		public DamagePackage(int damage, ElementalTypes type) {
-			this.damage = damage;
-			damageType = type;
+		public bool WasRetaliation() {
+			return wasRetaliation;
 		}
 
 		public int CalculateDamageAgainst(ElementalTypes type) {
@@ -24,34 +31,34 @@ namespace CombatWorld.Units {
 					break;
 				case ElementalTypes.Fire:
 					if(damageType == ElementalTypes.Water) {
-						return damage * DamageMultipliers.EFFECTIVEMULTIPLIER;
+						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if(damageType == ElementalTypes.Earth) {
-						return (int)(damage * DamageMultipliers.INEFFECTIVEMULTIPLIER);
+						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
 				case ElementalTypes.Water:
 					if (damageType == ElementalTypes.Ligthning) {
-						return damage * DamageMultipliers.EFFECTIVEMULTIPLIER;
+						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if (damageType == ElementalTypes.Fire) {
-						return (int)(damage * DamageMultipliers.INEFFECTIVEMULTIPLIER);
+						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
 				case ElementalTypes.Earth:
 					if (damageType == ElementalTypes.Fire) {
-						return damage * DamageMultipliers.EFFECTIVEMULTIPLIER;
+						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if (damageType == ElementalTypes.Ligthning) {
-						return (int)(damage * DamageMultipliers.INEFFECTIVEMULTIPLIER);
+						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
 				case ElementalTypes.Ligthning:
 					if (damageType == ElementalTypes.Earth) {
-						return damage * DamageMultipliers.EFFECTIVEMULTIPLIER;
+						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if (damageType == ElementalTypes.Water) {
-						return (int)(damage * DamageMultipliers.INEFFECTIVEMULTIPLIER);
+						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
 				default:
