@@ -10,34 +10,60 @@ namespace CombatWorld.AI {
 
 		public GameObject unitToSummon;
 
+		public CombatData data;
+
 		List<Unit> units = new List<Unit>();
 
 		Team team = Team.AI;
 
 		Pathfinding pathfinding = new Pathfinding();
 
+		int summonPoints = 3;
+
 		public void MyTurn() {
 			CheckForDeadUnits();
-			SummonUnit();
-			AttackWithUnits();
-			MoveUnits();
-			GameController.instance.EndTurn();
+			StartCoroutine(SummonUnit());
+			
 		}
 
-		void SummonUnit() {
+		IEnumerator SummonUnit() {
 			List<SummonNode> nodes = GameController.instance.GetAISummonNodes();
 			foreach (Node node in nodes) {
 				if (!node.HasOccupant()) {
 					GameObject unit = Instantiate(unitToSummon, node.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity) as GameObject;
-					unit.GetComponent<Unit>().SpawnEntity(node, team);
+					unit.GetComponent<Unit>().SpawnEntity(node, team, data);
 					units.Add(unit.GetComponent<Unit>());
-					return;
+					break;
 				}
 			}
+			yield return new WaitForSeconds(0.5f);
+			StartCoroutine(AttackWithUnits());
 		}
 
-		void MoveUnits() {
+		IEnumerator AttackWithUnits() {
 			foreach (Unit unit in units) {
+				while (GameController.instance.WaitingForAction()) {
+					yield return new WaitForSeconds(0.1f);
+				}
+				if (!unit.CanAttack()) {
+					continue;
+				}
+				foreach (Node neighbour in unit.GetNode().GetNeighbours()) {
+					if (neighbour.HasOccupant() && neighbour.GetOccupant().GetTeam() != team) {
+						unit.Attack(neighbour.GetOccupant());
+						break;
+					}
+				}
+			}
+			yield return new WaitForSeconds(0.5f);
+			StartCoroutine(MoveUnits());
+		}
+
+		IEnumerator MoveUnits() {
+			foreach (Unit unit in units) {
+				while (GameController.instance.WaitingForAction()) {
+					yield return new WaitForSeconds(0.1f);
+				}
 				if (unit.CanMove()) {
 					var possibleNodes = pathfinding.GetAllNodesWithinDistance(unit.GetNode(), unit.GetMoveDistance());
 					for (int i = possibleNodes.Count-1; i > 0; i--) {
@@ -50,17 +76,7 @@ namespace CombatWorld.AI {
 					}
 				}
 			}
-		}
-
-		void AttackWithUnits() {
-			foreach (Unit unit in units) {
-				foreach (Node neighbour in unit.GetNode().GetNeighbours()) {
-					if(neighbour.HasOccupant() && neighbour.GetOccupant().GetTeam() != team) {
-						unit.Attack(neighbour.GetOccupant());
-						break;
-					}
-				}
-			}
+			GameController.instance.EndTurn();
 		}
 
 		void CheckForDeadUnits() {
@@ -69,6 +85,14 @@ namespace CombatWorld.AI {
 					units.RemoveAt(i);
 				}
 			}
+		}
+
+		void UseSummonPoints(int amount) {
+			summonPoints -= amount;
+		}
+
+		public void GiveSummonPoints(int amount) {
+			summonPoints += amount;
 		}
 	}
 }

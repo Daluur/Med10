@@ -15,12 +15,13 @@ namespace CombatWorld.Units {
 		bool attacked = true;
 
 		public void Move(Node node) {
+			GameController.instance.WaitForAction();
 			currentNode.RemoveOccupant();
 			node.SetOccupant(this);
 			currentNode = node;
-			GameController.instance.UnitMadeAction();
 			transform.position = node.transform.position + new Vector3(0, 0.5f, 0);
 			moved = true;
+			Invoke("FinishedAction", 0.2f);
 		}
 
 		public bool CanMove() {
@@ -40,27 +41,40 @@ namespace CombatWorld.Units {
 			attacked = false;
 		}
 
-		public void Attack(Entity entity, bool retaliation = false) {
-			entity.TakeDamage(new DamagePackage(damage, this, type, retaliation));
+		public void Attack(Entity entity) {
+			GameController.instance.WaitForAction();
+			entity.TakeDamage(new DamagePackage(damage, this, type));
 			attacked = moved = true;
-			GameController.instance.UnitMadeAction();
+			Invoke("FinishedAction", 0.2f);
+		}
+
+		void RetaliationAttack(Entity entity) {
+			GameController.instance.WaitForAction();
+			entity.TakeDamage(new DamagePackage(damage, this, type, true));
 		}
 
 		public override void TakeDamage(DamagePackage damage) {
 			base.TakeDamage(damage);
 			if(!damage.WasRetaliation() && (health > 0 || DamageConstants.ALLOWRETALIATIONAFTERDEATH)) {
-				Debug.Log("Made retaliation attack.");
-				Attack(damage.GetSource(), true);
+				RetaliationAttack(damage.GetSource());
 			}
+		}
+
+		public int GetAttackValue() {
+			return damage;
+		}
+
+		void FinishedAction() {
+			GameController.instance.UnitMadeAction();
 		}
 
 		#region spawn
 
-		public void SpawnEntity(Node node, Team team) {
-			moveDistance = 2;
-			damage = 2;
-			type = ElementalTypes.NONE;
-			health = 4;
+		public void SpawnEntity(Node node, Team team, CombatData data) {
+			moveDistance = data.moveDistance;
+			damage = data.attackValue;
+			type = data.type;
+			health = data.healthValue;
 			this.team = team;
 			currentNode = node;
 			node.SetOccupant(this);
