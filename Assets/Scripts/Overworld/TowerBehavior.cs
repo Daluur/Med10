@@ -5,16 +5,12 @@ using UnityEngine;
 
 namespace Overworld {
 
-	public class TowerBehavior : InputSubscriber, IInteractable {
+	public class TowerBehavior : ContextInteraction, IInteractable {
 
 		public GameObject contextMenu;
-		public GameObject playerOW;
-		public float distanceToOpen = 5f;
 
 		public GameObject[] units;
 		public int[] amountOfUnits;
-		private bool isRunning = false;
-		private bool meClicked;
 
 
 		//public Unit[] containingUnits;
@@ -30,10 +26,6 @@ namespace Overworld {
 			if (contextMenu == null) {
 				contextMenu = GameObject.FindGameObjectWithTag(TagConstants.CONTEXTUNITMENU);
 			}
-
-			if (playerOW == null) {
-				playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
-			}
 		}
 
 		// Update is called once per frame
@@ -41,43 +33,28 @@ namespace Overworld {
 
 		}
 
-		private void CheckDistance() {
-			meClicked = true;
-			if (!isRunning)
-				StartCoroutine(IsCloseEnough());
-			//if(CanOpenMenu())
-			//	OpenMenu();
-		}
+
 
 		private void OpenMenu() {
 			contextMenu.GetComponent<ContextPopUp>().DisplayMenu(units);
 		}
 
-		private bool CanOpenMenu() {
-			if (Vector3.Distance(playerOW.transform.position, gameObject.transform.position) < distanceToOpen)
-				return true;
-			return false;
-		}
+		//private bool CanOpenMenu() {
 
-		private IEnumerator IsCloseEnough() {
-			isRunning = true;
-			while (meClicked) {
-				if (CanOpenMenu()) {
-					OpenMenu();
-					isRunning = false;
-					yield break;
-				}
-				yield return new WaitForSeconds(0.3f);
-			}
-			isRunning = false;
-			yield return null;
+//		}
+
+		public override void PerformClosenessAction() {
+			OpenMenu();
 		}
 
 		public void DoAction() {
+			meClicked = false;
 		}
 
 		public void DoAction<T>(T param) {
+			meClicked = true;
 			CheckDistance();
+//CheckDistance();
 		}
 	}
 
