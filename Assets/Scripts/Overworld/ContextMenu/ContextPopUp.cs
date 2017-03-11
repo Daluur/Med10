@@ -1,68 +1,107 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Overworld {
 
-	public class ContextPopUp : InputSubscriber, IInteractable {
+	public class ContextPopUp : ControlUIElement, IInteractable {
 
 		private Image menu;
-		public Vector2 size = new Vector2(10f, 20f);
-		public float speed = 1.0f;
 		private Text[] myTexts;
-		private bool isShowing = false;
+		private Text[] myUnitTexts;
 		public Sprite defaultEmptyIcon;
-
-		private bool isRunningShow, isRunningHide;
+		private List<Unit> units = new List<Unit>();
+		private Button[] myButtons;
+		private Inventory inventory;
 
 		void Start() {
 			Register(this, KeyCode.Escape);
 			menu = GetComponent<Image>();
 			myTexts = GetComponentsInChildren<Text>();
+			InitUnitTexts();
+			InitRecruitButtons();
+			myButtons = GetComponentsInChildren<Button>();
+			CloseElement(gameObject);
+			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 		}
 
-		private void Update() {
+		private void InitRecruitButtons() {
+			var tmp = GameObject.FindGameObjectsWithTag(TagConstants.RECRUITBUTTON);
+			myButtons = new Button[tmp.Length];
+			for(int i=0;i<tmp.Length;i++) {
+				myButtons[i] = tmp[i].GetComponent<Button>();
+			}
+		}
+
+		private void InitUnitTexts() {
+			List<Text> ids = new List<Text>();
+			foreach (var s in myTexts) {
+				if (s.gameObject.tag.Equals(TagConstants.BUTTONTEXT)) {
+					continue;
+				}
+				ids.Add(s);
+			}
+			myUnitTexts = ids.ToArray();
 		}
 
 		public void DisplayMenu(GameObject[] units) {
-			if (isRunningShow || isShowing) {
+			if (isRunning || isShowing) {
 				return;
 			}
-			gameObject.SetActive(true);
-			StartCoroutine(ShowMenu());
+			UnpopulateUnitSlots();
+			OpenElement(gameObject, size, true);
 			PopulateUnitSlots(units);
 		}
 
 		public void CloseMenu() {
-			if(isRunningHide || !isShowing)
+			if(isRunning || !isShowing)
 				return;
-			StartCoroutine(HideMenu());
+			CloseElement(gameObject);
 		}
 
 		private void PopulateUnitSlots(GameObject[] units) {
-			if (units.Length > myTexts.Length) {
+			if (units.Length > myUnitTexts.Length) {
 				Debug.LogError("There are too few icons to accomodate the different types of units, add more text elements to the context menu");
 				return;
 			}
 			for(int i=0;i<units.Length;i++) {
-				myTexts[i].text = units[i].GetComponent<Unit>().unitName;
-				myTexts[i].GetComponentInChildren<Image>().sprite = units[i].GetComponent<Unit>().icon;
+				this.units.Add(units[i].GetComponent<Unit>());
+				myUnitTexts[i].text = this.units[i].unitName;
+				myUnitTexts[i].GetComponentInChildren<Image>().sprite = this.units[i].icon;
+				AddListener(i, this.units[i]);
+
 			}
 		}
 
 		private void UnpopulateUnitSlots() {
-			for (int i = 0; i < myTexts.Length; i++) {
-				if (!myTexts[i].tag.Equals(TagConstants.BUTTONTEXT)) {
-					myTexts[i].text = "Empty";
-					myTexts[i].GetComponentInChildren<Image>().sprite = defaultEmptyIcon;
-				}
+			for (int i = 0; i < myUnitTexts.Length; i++) {
+				myUnitTexts[i].text = "Empty";
+				myUnitTexts[i].GetComponentInChildren<Image>().sprite = defaultEmptyIcon;
+				units.Clear();
 			}
 		}
 
-		private IEnumerator ShowMenu() {
+		private void AddListener(int index, Unit unit) {
+			myButtons[index].onClick.AddListener(() => { AddItem((int) unit.type); });
+		}
+
+		private void AddItem(int type) {
+			inventory.AddItem(type);
+		}
+
+		public void DoAction() {
+			CloseMenu();
+		}
+
+		public void DoAction<T>(T param) {
+		}
+
+		//Refactored, not using anymore, keeping just in case
+		/*private IEnumerator ShowMenu() {
 			isShowing = true;
 			inputManager.BlockMouseUI();
 			isRunningShow = true;
@@ -73,9 +112,7 @@ namespace Overworld {
 
 
 			while (fracScaling < 1) {
-				var distCovered = (Time.time - startTime) * speed;
-				fracScaling = distCovered / scalingLength;
-				var toScale = Vector2.Lerp(initScale, size, fracScaling);
+				var toScale = CalculateScalingUI(initScale, size, startTime, scalingLength, speed, out fracScaling);
 				menu.transform.localScale = new Vector3(toScale.x, toScale.y, menu.transform.localScale.z);
 				yield return new WaitForEndOfFrame();
 			}
@@ -93,9 +130,7 @@ namespace Overworld {
 
 
 			while (fracScaling < 1) {
-				var distCovered = (Time.time - startTime) * speed;
-				fracScaling = distCovered / scalingLength;
-				var toScale = Vector2.Lerp(initScale, Vector2.zero, fracScaling);
+				var toScale = CalculateScalingUI(initScale, Vector2.zero, startTime, scalingLength, speed, out fracScaling);
 				menu.transform.localScale = new Vector3(toScale.x, toScale.y, menu.transform.localScale.z);
 				yield return new WaitForEndOfFrame();
 			}
@@ -104,22 +139,14 @@ namespace Overworld {
 			isRunningHide = false;
 			gameObject.SetActive(false);
 			yield return null;
-		}
+		}*/
 
-		private string[] ConvertUnitsToStringArr(GameObject[] units) {
+		/*private string[] ConvertUnitsToStringArr(GameObject[] units) {
 			string[] tmp = new string[units.Length];
 			for (int i = 0; i < units.Length; i++) {
 				tmp[i] = units[i].GetComponent<Unit>().name;
 			}
 			return tmp;
-		}
-
-
-		public void DoAction() {
-			CloseMenu();
-		}
-
-		public void DoAction<T>(T param) {
-		}
+		}*/
 	}
 }

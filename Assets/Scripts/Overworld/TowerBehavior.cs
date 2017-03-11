@@ -18,7 +18,6 @@ namespace Overworld {
 		//TODO: Add custom editor to the tower behaviour so that it is possible to write in editor how many units of each the tower should have
 		public Dictionary<GameObject, int>[] containing;
 
-		// Use this for initialization
 		void Start () {
 
 			Register(this, KeyCode.Mouse0);
@@ -28,20 +27,9 @@ namespace Overworld {
 			}
 		}
 
-		// Update is called once per frame
-		void Update () {
-
-		}
-
-
-
 		private void OpenMenu() {
 			contextMenu.GetComponent<ContextPopUp>().DisplayMenu(units);
 		}
-
-		//private bool CanOpenMenu() {
-
-//		}
 
 		public override void PerformClosenessAction() {
 			OpenMenu();
@@ -54,9 +42,6 @@ namespace Overworld {
 		public void DoAction<T>(T param) {
 			meClicked = true;
 			CheckDistance();
-//CheckDistance();
 		}
 	}
-
-
 }

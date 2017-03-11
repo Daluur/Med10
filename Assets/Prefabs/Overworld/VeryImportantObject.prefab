@@ -22,6 +22,9 @@ GameObject:
   - component: {fileID: 114601646615364422}
   - component: {fileID: 114917023096490568}
   - component: {fileID: 114993255846305656}
+  - component: {fileID: 114980917915369518}
+  - component: {fileID: 114526695235150586}
+  - component: {fileID: 114002056606622020}
   m_Layer: 0
   m_Name: VeryImportantObject
   m_TagString: VeryImportantObject
@@ -42,6 +45,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114002056606622020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820582562428308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940e23cde0e97a14c8dbae931c5781d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114526695235150586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820582562428308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 354192b3bb0f1e840acea31588abc346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySlot: {fileID: 1652284982558694, guid: 72cf5ad4eeb24de4bb6e0a5ecacee8ec,
+    type: 2}
+  inventoryItem: {fileID: 1297539712334914, guid: 29fa6ab235250dd4696db88f4679ba64,
+    type: 2}
+  slots: []
 --- !u!114 &114601646615364422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -62,6 +92,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 244ad5826c121c64db4d280484609906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114980917915369518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820582562428308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f43403552f31d340bca2d10a5a75c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114993255846305656
