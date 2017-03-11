@@ -10,21 +10,22 @@ namespace Overworld {
 
 	public class ContextPopUp : ControlUIElement, IInteractable {
 
-		private Image menu;
-		private Text[] myTexts;
 		private Text[] myUnitTexts;
 		public Sprite defaultEmptyIcon;
 		private List<Unit> units = new List<Unit>();
 		private Button[] myButtons;
+		private Image[] myIconImages;
 		private Inventory inventory;
+
+
+		public string buttonText = "Recruit for: ";
 
 		void Start() {
 			Register(this, KeyCode.Escape);
-			menu = GetComponent<Image>();
-			myTexts = GetComponentsInChildren<Text>();
-			InitUnitTexts();
+			InitUnitTexts(GetComponentsInChildren<Text>());
 			InitRecruitButtons();
 			myButtons = GetComponentsInChildren<Button>();
+			InitUnitIconImages(GameObject.FindGameObjectsWithTag(TagConstants.ICONIMAGE));
 			CloseElement(gameObject);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 		}
@@ -37,7 +38,14 @@ namespace Overworld {
 			}
 		}
 
-		private void InitUnitTexts() {
+		private void InitUnitIconImages(GameObject[] myImages) {
+			myIconImages = new Image[myImages.Length];
+			for (int i = 0; i < myImages.Length; i++) {
+				myIconImages[i] = myImages[i].GetComponent<Image>();
+			}
+		}
+
+		private void InitUnitTexts(Text[] myTexts) {
 			List<Text> ids = new List<Text>();
 			foreach (var s in myTexts) {
 				if (s.gameObject.tag.Equals(TagConstants.BUTTONTEXT)) {
@@ -71,7 +79,7 @@ namespace Overworld {
 			for(int i=0;i<units.Length;i++) {
 				this.units.Add(units[i].GetComponent<Unit>());
 				myUnitTexts[i].text = this.units[i].unitName;
-				myUnitTexts[i].GetComponentInChildren<Image>().sprite = this.units[i].icon;
+				myIconImages[i].sprite = this.units[i].icon;
 				AddListener(i, this.units[i]);
 
 			}
@@ -80,17 +88,21 @@ namespace Overworld {
 		private void UnpopulateUnitSlots() {
 			for (int i = 0; i < myUnitTexts.Length; i++) {
 				myUnitTexts[i].text = "Empty";
-				myUnitTexts[i].GetComponentInChildren<Image>().sprite = defaultEmptyIcon;
+				myIconImages[i].sprite = defaultEmptyIcon;
 				units.Clear();
 			}
 		}
 
 		private void AddListener(int index, Unit unit) {
-			myButtons[index].onClick.AddListener(() => { AddItem((int) unit.type); });
+			myButtons[index].GetComponentInChildren<Text>().text = buttonText + unit.price;
+			myButtons[index].onClick.AddListener(() => { AddItem(unit); });
 		}
 
-		private void AddItem(int type) {
-			inventory.AddItem(type);
+		private void AddItem(Unit unit) {
+			if (!CurrencyHandler.RemoveCurrency(unit.price)) {
+				return;
+			}
+			inventory.AddItem((int)unit.type);
 		}
 
 		public void DoAction() {

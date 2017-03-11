@@ -17,6 +17,9 @@ public static class TagConstants {
 	public const string OWEVENTSYSTEM = "OWEventSystem";
 	public const string OWCANVAS = "OWCanvas";
 	public const string RECRUITBUTTON = "RecruitButton";
+	public const string CURRENCYPICKUP = "CurrencyPickup";
+	public const string BUTTONIMAGE = "ButtonImage";
+	public const string ICONIMAGE = "IconImage";
 }
 
 public static class DamageConstants {
