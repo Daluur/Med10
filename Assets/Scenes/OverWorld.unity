@@ -220,7 +220,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 92767878}
   m_LocalRotation: {x: 0.37898856, y: -0, z: -0, w: 0.92540133}
-  m_LocalPosition: {x: 5.45266, y: 12.36, z: -10}
+  m_LocalPosition: {x: 5.45266, y: 12, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -239,6 +239,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   following: {fileID: 0}
   offSet: 12
+  maxZoom: 25
+  minZoom: 5
 --- !u!1 &113298671 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1938128115173776, guid: 79489d05c4ffe2a44a3ba042ef1e4586,
