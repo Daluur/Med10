@@ -10,12 +10,14 @@ namespace Overworld {
 		private Camera OWCam;
 		private InputManager inputManager;
 		private GameObject eventSystem;
+		private GameObject OWCanvas;
 
 		// Use this for initialization
 		void Start () {
 			inputManager = gameObject.GetComponent<InputManager>();
 			eventSystem = GameObject.FindGameObjectWithTag(TagConstants.OWEVENTSYSTEM);
 			OWCam = Camera.main;
+			OWCanvas = GameObject.FindGameObjectWithTag(TagConstants.OWCANVAS);
 		}
 
 		public void LoadScene(int type) {
@@ -44,12 +46,14 @@ namespace Overworld {
 		private void DisableObjectsCombatLoad() {
 			OWCam.gameObject.SetActive(false);
 			eventSystem.SetActive(false);
+			OWCanvas.SetActive(false);
 		}
 
 		private void EnabeleObjectsCombatLoad() {
 			OWCam.gameObject.SetActive(true);
 			inputManager.gameObject.SetActive(true);
 			eventSystem.SetActive(true);
+			OWCanvas.SetActive(true);
 		}
 
 

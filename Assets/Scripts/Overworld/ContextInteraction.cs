@@ -43,6 +43,13 @@ namespace Overworld {
 			Debug.Log("Missing implementation of action when player is close enough to object");
 		}
 
+		public static Vector2 CalculateScalingUI(Vector2 startScale, Vector2 endScale, float startTime, float length, float speed, out float fracScaling) {
+			var distCovered = ( Time.time - startTime ) * speed;
+			fracScaling = distCovered / length;
+			var toScale = Vector2.Lerp(startScale, endScale, fracScaling);
+			return toScale;
+		}
+
 
 	}
 }

@@ -9,6 +9,7 @@ namespace Overworld {
 		private UnitDescription unit;
 		public UnitType type;
 		public string unitName;
+		public int price = 1;
 		
 		public struct UnitDescription {
 			public float damage;

@@ -7,7 +7,7 @@ public class TrashItem : MonoBehaviour, IDropHandler  {
 	private Inventory inv;
 
 	void Start() {
-		inv = GameObject.Find ("Inventory").GetComponent<Inventory> ();
+		inv = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory> ();
 	}
 
 	public void OnDrop(PointerEventData eventData) {
