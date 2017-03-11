@@ -10,6 +10,7 @@ namespace Overworld {
 		public float offSet = 12f;
 		private Vector3 camPos;
 		private Camera cam;
+		public float maxZoom = 25.5f, minZoom = 5.5f;
 
 		void Start () {
 			cam = Camera.main;
@@ -22,6 +23,23 @@ namespace Overworld {
 
 		void Update () {
 			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x,camPos.y,following.transform.position.z - offSet);
+			CameraZoom();
+		}
+
+		void CameraZoom() {
+			var displacment = Input.mouseScrollDelta.y;
+			if (displacment < 0f) {
+				if(camPos.y + 1f  <= maxZoom){
+					offSet += 1f;
+					camPos += new Vector3(0f, 1f, offSet);
+				}
+			}
+			if (displacment > 0f) {
+				if(( camPos.y - 1 ) > minZoom){
+					offSet -= 1f;
+					camPos -= new Vector3(0f, 1f, offSet);
+				}
+			}
 		}
 	}
 }
