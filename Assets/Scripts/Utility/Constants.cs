@@ -27,3 +27,11 @@ public static class DamageConstants {
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
 	public const bool ALLOWRETALIATIONAFTERDEATH = true;
 }
+
+public static class GameNotificationConstants {
+	public const string NOTENOUGHGOLD = "Not enough gold to perform this action";
+	public const string AREAISOBSTRUCTED = "The area is obstructed it is not possible to move here";
+	public const string NOTENOUGHINVENTORYSPACE = "There is no more room in the inventory";
+	public const string TOOFARAWAY = "This cannot be done, it is too far away";
+	public const string OBSTRUCTEDNODE = "I cannot move there";
+}

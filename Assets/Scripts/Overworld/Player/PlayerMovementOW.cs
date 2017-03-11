@@ -48,7 +48,6 @@ namespace Overworld {
 			while (Vector3.Distance(gameObject.transform.position,agent.destination)>distanceToStopRunAnimation) {
 				yield return new WaitForEndOfFrame();
 			}
-			Debug.Log("Here");
 			animator.SetTrigger("Run");
 			isRunning = false;
 		}

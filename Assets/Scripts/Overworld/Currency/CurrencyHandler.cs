@@ -21,7 +21,7 @@ namespace Overworld {
 
 		public static bool RemoveCurrency(int amountToRemove) {
 			if (amountToRemove > amountOfCurrency) {
-				Debug.Log("You do not have enough currency");
+				GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.NOTENOUGHGOLD);
 				return false;
 			}
 			amountOfCurrency -= amountToRemove;
