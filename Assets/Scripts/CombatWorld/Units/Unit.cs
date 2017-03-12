@@ -1,23 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CombatWorld.Map;
 using CombatWorld.Utility;
 
 namespace CombatWorld.Units {
-	public class Unit : Entity {
+	public class Unit : MonoBehaviour, IEntity {
 
-		int moveDistance;
+		private int health;
+		private Team team;
+		private Node currentNode;
 
-		int damage;
+		private ElementalTypes type;
 
-		bool moved = true;
-		bool attacked = true;
+		private int moveDistance;
 
-		AnimationHelper animHelp;
+		private int damage;
+
+		private bool moved = true;
+		private bool attacked = true;
+
+		private AnimationHandler animHelp;
 
 		void Start() {
-			animHelp = GetComponentInChildren<AnimationHelper>();
+			animHelp = GetComponentInChildren<AnimationHandler>();
 		}
 
 		public void Move(Node node) {
@@ -27,69 +34,82 @@ namespace CombatWorld.Units {
 			currentNode = node;
 			transform.position = node.transform.position + new Vector3(0, 0.5f, 0);
 			moved = true;
+			//Misses animation.
+			//should not use Invoke.
 			Invoke("FinishedAction", 0.2f);
+		}
+
+		#region Getters
+
+		public int GetHealth() {
+			return health;
+		}
+
+		public Node GetNode() {
+			return currentNode;
+		}
+
+		public Team GetTeam() {
+			return team;
 		}
 
 		public bool CanMove() {
 			return !moved;
 		}
 
-		public bool CanAttack() {
-			return !attacked;
-		}
-
 		public int GetMoveDistance() {
 			return moveDistance;
 		}
 
-		public void newTurn() {
-			moved = false;
-			attacked = false;
+		public bool CanAttack() {
+			return !attacked;
 		}
 
-		Entity target = null;
+		public int GetAttackValue() {
+			return damage;
+		}
 
-		public void Attack(Entity entity) {
-			GameController.instance.WaitForAction();
+		public Transform GetTransform() {
+			return transform;
+		}
+
+		#endregion
+
+		public void NewTurn() {
+			moved = attacked = false;
+		}
+
+		public void Attack(IEntity target) {
 			attacked = moved = true;
-			target = entity;
-			animHelp.Attack(entity.transform, DealDamage);
+			DealDamage(target, new DamagePackage(damage, this, type));
 		}
 
-		void RetaliationAttack(Entity entity) {
+		void RetaliationAttack(IEntity target) {
+			DealDamage(target, new DamagePackage(damage, this, type, true));
+		}
+
+		void DealDamage(IEntity target, DamagePackage damage) {
 			GameController.instance.WaitForAction();
-			target = entity;
-			animHelp.Attack(entity.transform, DealRtaliationDamage);
-		}
-
-		void DealRtaliationDamage() {
-			target.TakeDamage(new DamagePackage(damage, this, type, true));
-			target = null;
-			if(health <= 0) {
-				Die();
-				return;
+			if (damage.WasRetaliation() && health <= 0) {
+				animHelp.Attack(target.GetTransform(), Die);
 			}
-			FinishedAction();
-		}
-
-		void DealDamage() {
-			target.TakeDamage(new DamagePackage(damage, this, type));
-			target = null;
-			FinishedAction();
+			else {
+				animHelp.Attack(target.GetTransform(), FinishedAction);
+			}
+			target.TakeDamage(damage);
 		}
 
 		DamagePackage damageIntake = null;
 
-		public override void TakeDamage(DamagePackage damage) {
+		public void TakeDamage(DamagePackage damage) {
 			damageIntake = damage;
+			health -= damageIntake.CalculateDamageAgainst(type);
 			animHelp.TakeDamage(TookDamage);
 		}
 
 		void TookDamage() {
-			health -= damageIntake.CalculateDamageAgainst(type);
-
 			if(health <= 0) {
-				//Died
+				//Die unless it can do retaliation.
 				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH) {
 					RetaliationAttack(damageIntake.GetSource());
 				}
@@ -97,33 +117,27 @@ namespace CombatWorld.Units {
 					Die();
 				}
 			}
-			else {
-				//Didn't die
-				if (!damageIntake.WasRetaliation()) {
-					RetaliationAttack(damageIntake.GetSource());
-				}
+			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
+			else if(!damageIntake.WasRetaliation()) {
+				RetaliationAttack(damageIntake.GetSource());
 			}
 			damageIntake = null;
 		}
 
-		public override void Die() {
+		public void Die() {
 			animHelp.Die(Death);
 		}
 
 		void Death() {
+			GameController.instance.UnitDied(team, currentNode);
+			currentNode.RemoveOccupant();
 			FinishedAction();
-			base.Die();
-		}
-
-		public int GetAttackValue() {
-			return damage;
+			Destroy(gameObject);
 		}
 
 		void FinishedAction() {
 			GameController.instance.UnitMadeAction();
 		}
-
-		#region spawn
 
 		public void SpawnEntity(Node node, Team team, CombatData data) {
 			moveDistance = data.moveDistance;
@@ -134,8 +148,5 @@ namespace CombatWorld.Units {
 			currentNode = node;
 			node.SetOccupant(this);
 		}
-
-		#endregion
-
 	}
 }

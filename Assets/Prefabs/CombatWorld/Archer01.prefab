@@ -219,7 +219,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4272231433912274}
-  - component: {fileID: 114132069980244414}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -281,6 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4224334208518038}
   - component: {fileID: 95942010296704066}
+  - component: {fileID: 114149352769235542}
   m_Layer: 0
   m_Name: Archer Female 01
   m_TagString: Untagged
@@ -1465,15 +1465,15 @@ Animator:
     Motion'\n\tand more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114132069980244414
+--- !u!114 &114149352769235542
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1251003560916316}
+  m_GameObject: {fileID: 1336152492385098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18949ab889ea0af4e9883377eecbae6f, type: 3}
+  m_Script: {fileID: 11500000, guid: 62e513cbf973a9341b7469eedf772b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114216481598485902
@@ -1489,7 +1489,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 114796601412043696}
   attack: {fileID: 114356809001080058}
-  source: {fileID: 114426716426091564}
 --- !u!114 &114266672200183250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1550,9 +1549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca93806752ae1c4fb8592e0d857be49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  team: 0
-  currentNode: {fileID: 0}
 --- !u!114 &114550733303500252
 MonoBehaviour:
   m_ObjectHideFlags: 1

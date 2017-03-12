@@ -229,7 +229,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4629450857983458}
-  - component: {fileID: 114326407535941802}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -357,6 +356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4866413105413614}
   - component: {fileID: 95770944790429362}
+  - component: {fileID: 114908542551113174}
   m_Layer: 0
   m_Name: Warrior Male 06
   m_TagString: Untagged
@@ -1576,9 +1576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca93806752ae1c4fb8592e0d857be49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  team: 0
-  currentNode: {fileID: 0}
 --- !u!114 &114128410740848138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1595,17 +1592,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114326407535941802
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1309284632523130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18949ab889ea0af4e9883377eecbae6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114432811203652108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1683,6 +1669,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1
+--- !u!114 &114908542551113174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477067504099122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e513cbf973a9341b7469eedf772b38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114977639984703082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1696,7 +1693,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 114755846248276238}
   attack: {fileID: 114556121076447040}
-  source: {fileID: 114027159778918546}
 --- !u!114 &114981868005897366
 MonoBehaviour:
   m_ObjectHideFlags: 1

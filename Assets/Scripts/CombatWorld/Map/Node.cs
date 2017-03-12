@@ -9,7 +9,7 @@ namespace CombatWorld.Map {
 	public class Node : MonoBehaviour {
 		public List<Node> neighbours;
 
-		Entity occupant;
+		protected IEntity occupant;
 
 		protected HighlightState state;
 
@@ -35,7 +35,7 @@ namespace CombatWorld.Map {
 
 		#region occupantCode
 
-		public void SetOccupant(Entity occupant) {
+		public void SetOccupant(IEntity occupant) {
 			this.occupant = occupant;
 		}
 
@@ -44,15 +44,14 @@ namespace CombatWorld.Map {
 		}
 
 		public bool HasOccupant() {
-			return occupant;
+			return occupant != null;
 		}
 
-		public Entity GetOccupant() {
+		public IEntity GetOccupant() {
 			return occupant;
 		}
 
 		public bool HasUnit() {
-
 			if(occupant != null && occupant.GetType() == typeof(Unit)) {
 				return true;
 			}

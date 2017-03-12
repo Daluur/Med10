@@ -232,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4227871848123042}
   - component: {fileID: 95714972442939202}
+  - component: {fileID: 114859204142190680}
   m_Layer: 0
   m_Name: Mage Female 01
   m_TagString: Untagged
@@ -493,7 +494,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4484300110899498}
-  - component: {fileID: 114446973161449944}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -1438,9 +1438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca93806752ae1c4fb8592e0d857be49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  team: 0
-  currentNode: {fileID: 0}
 --- !u!114 &114208869118433550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1501,17 +1498,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1
---- !u!114 &114446973161449944
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1600468027801052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18949ab889ea0af4e9883377eecbae6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114593406192822320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1545,6 +1531,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1
+--- !u!114 &114859204142190680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1280653336280396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e513cbf973a9341b7469eedf772b38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114925688501895596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1558,7 +1555,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 114593406192822320}
   attack: {fileID: 114440599928527692}
-  source: {fileID: 114157725706257800}
 --- !u!114 &114940688261129800
 MonoBehaviour:
   m_ObjectHideFlags: 1

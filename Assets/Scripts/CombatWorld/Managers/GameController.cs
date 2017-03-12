@@ -97,7 +97,7 @@ namespace CombatWorld {
 		void StartTurn() {
 			foreach (Node node in allNodes) {
 				if (node.HasUnit() && node.GetOccupant().GetTeam() == currentTeam){
-					node.GetUnit().newTurn();
+					node.GetUnit().NewTurn();
 				}
 			}
 		}
@@ -203,9 +203,6 @@ namespace CombatWorld {
 		}
 
 		public Unit GetSelectedUnit() {
-			if(selectedUnit == null) {
-				var i = 1;
-			}
 			return selectedUnit;
 		}
 

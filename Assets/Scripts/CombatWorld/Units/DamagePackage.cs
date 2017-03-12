@@ -7,17 +7,17 @@ namespace CombatWorld.Units {
 
 		int damage;
 		ElementalTypes damageType = ElementalTypes.NONE;
-		Unit source;
+		IEntity source;
 		bool wasRetaliation = false;
 
-		public DamagePackage(int damage, Unit source, ElementalTypes type = ElementalTypes.NONE, bool retaliation = false) {
+		public DamagePackage(int damage, IEntity source, ElementalTypes type = ElementalTypes.NONE, bool retaliation = false) {
 			this.damage = damage;
 			this.source = source;
 			damageType = type;
 			wasRetaliation = retaliation;
 		}
 		
-		public Unit GetSource() {
+		public IEntity GetSource() {
 			return source;
 		}
 
@@ -25,7 +25,7 @@ namespace CombatWorld.Units {
 			return wasRetaliation;
 		}
 
-		public int CalculateDamageAgainst(ElementalTypes type) {
+		public int CalculateDamageAgainst(ElementalTypes type = ElementalTypes.NONE) {
 			switch (type) {
 				case ElementalTypes.NONE:
 					break;
