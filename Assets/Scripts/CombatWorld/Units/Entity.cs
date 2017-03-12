@@ -32,12 +32,8 @@ namespace CombatWorld.Units {
 		}
 
 		public virtual void Die() {
-			GameController.instance.UnitDied(team);
+			GameController.instance.UnitDied(team, currentNode);
 			currentNode.RemoveOccupant();
-			//GameController.instance.UnitMadeAction();
-		}
-
-		protected void Death() {
 			Destroy(gameObject);
 		}
 

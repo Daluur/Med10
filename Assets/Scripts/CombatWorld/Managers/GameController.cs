@@ -66,6 +66,11 @@ namespace CombatWorld {
 		#endregion
 
 		public void EndTurn() {
+			StartCoroutine(prepEndTurn());
+		}
+
+		IEnumerator prepEndTurn() {
+			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
 					endTurnButton.interactable = false;
@@ -224,13 +229,14 @@ namespace CombatWorld {
 
 		#region SummonPoints
 
-		public void UnitDied(Team team) {
+		public void UnitDied(Team team, Node node) {
 			if(team == Team.AI) {
 				SummonHandler.instance.GivePoints(2);
 			}
 			else {
 				AIController.instance.GiveSummonPoints(2);
 			}
+			node.ResetState();
 		}
 
 		#endregion

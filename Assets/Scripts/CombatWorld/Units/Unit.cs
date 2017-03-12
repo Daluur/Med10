@@ -47,35 +47,71 @@ namespace CombatWorld.Units {
 			attacked = false;
 		}
 
+		Entity target = null;
+
 		public void Attack(Entity entity) {
 			GameController.instance.WaitForAction();
 			attacked = moved = true;
-			animHelp.Attack(entity.transform, DealDamage, new DamagePackage(damage, this, type), entity);
+			target = entity;
+			animHelp.Attack(entity.transform, DealDamage);
 		}
 
 		void RetaliationAttack(Entity entity) {
 			GameController.instance.WaitForAction();
-			animHelp.Attack(entity.transform, DealDamage, new DamagePackage(damage, this, type, true), entity);
+			target = entity;
+			animHelp.Attack(entity.transform, DealRtaliationDamage);
 		}
 
-		void DealDamage(DamagePackage damage, Entity entity) {
-			entity.TakeDamage(damage);
+		void DealRtaliationDamage() {
+			target.TakeDamage(new DamagePackage(damage, this, type, true));
+			target = null;
+			if(health <= 0) {
+				Die();
+				return;
+			}
 			FinishedAction();
 		}
 
-		public override void TakeDamage(DamagePackage damage) {
-			animHelp.TakeDamage(TookDamage, damage);
-			base.TakeDamage(damage);
+		void DealDamage() {
+			target.TakeDamage(new DamagePackage(damage, this, type));
+			target = null;
+			FinishedAction();
 		}
 
-		void TookDamage(DamagePackage damage) {
-			if (!damage.WasRetaliation() && (health > 0 || DamageConstants.ALLOWRETALIATIONAFTERDEATH)) {
-				RetaliationAttack(damage.GetSource());
+		DamagePackage damageIntake = null;
+
+		public override void TakeDamage(DamagePackage damage) {
+			damageIntake = damage;
+			animHelp.TakeDamage(TookDamage);
+		}
+
+		void TookDamage() {
+			health -= damageIntake.CalculateDamageAgainst(type);
+
+			if(health <= 0) {
+				//Died
+				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH) {
+					RetaliationAttack(damageIntake.GetSource());
+				}
+				else {
+					Die();
+				}
 			}
+			else {
+				//Didn't die
+				if (!damageIntake.WasRetaliation()) {
+					RetaliationAttack(damageIntake.GetSource());
+				}
+			}
+			damageIntake = null;
 		}
 
 		public override void Die() {
 			animHelp.Die(Death);
+		}
+
+		void Death() {
+			FinishedAction();
 			base.Die();
 		}
 
