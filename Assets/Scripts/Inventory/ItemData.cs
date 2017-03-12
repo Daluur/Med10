@@ -13,7 +13,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 	private Tooltip tooltip;
 
 	void Start() {
-		inv = GameObject.Find ("Inventory").GetComponent<Inventory> ();
+		inv = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory> ();
 		tooltip = inv.GetComponent<Tooltip> ();
 	}
 

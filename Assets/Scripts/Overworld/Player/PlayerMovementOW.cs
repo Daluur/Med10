@@ -9,6 +9,10 @@ namespace Overworld {
 	public class PlayerMovementOW : InputSubscriber, IInteractable {
 
 		private NavMeshAgent agent;
+		private Animator animator;
+		private bool isRunning = false;
+		public GameObject clickMoveToObject;
+		public float distanceToStopRunAnimation = 1f;
 
 
 
@@ -26,10 +30,26 @@ namespace Overworld {
 			if (gameObject.tag != TagConstants.OVERWORLDPLAYER) {
 				Debug.LogError("The player is missing the tag: " + TagConstants.OVERWORLDPLAYER);
 			}
+			animator = GetComponentInChildren<Animator>();
 		}
 
 		void PlayerMoveToMouseInput(Vector3 hitPoint) {
-			agent.SetDestination(hitPoint);
+			if (agent.SetDestination(hitPoint)) {
+				Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
+				if (!isRunning) {
+					StartCoroutine(MovementAnimation());
+				}
+			}
+		}
+
+		private IEnumerator MovementAnimation() {
+			isRunning = true;
+			animator.SetTrigger("Run");
+			while (Vector3.Distance(gameObject.transform.position,agent.destination)>distanceToStopRunAnimation) {
+				yield return new WaitForEndOfFrame();
+			}
+			animator.SetTrigger("Run");
+			isRunning = false;
 		}
 
 		public void DoAction() {
