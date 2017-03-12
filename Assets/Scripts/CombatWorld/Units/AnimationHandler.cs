@@ -6,6 +6,7 @@ using UnityEngine;
 namespace CombatWorld.Units {
 	public class AnimationHandler : MonoBehaviour {
 
+		public string attackName = "Melee Right Attack 01";
 		bool playingAnimation;
 
 		Animator anim;
@@ -21,7 +22,7 @@ namespace CombatWorld.Units {
 		public void Attack(Transform target, Action cb) {
 			transform.LookAt(target, Vector3.up);
 			nextCB.Enqueue(cb);
-			QueueAnim("Melee Right Attack 01");
+			QueueAnim(attackName);
 		}
 
 		public void FinishedAttack() {
