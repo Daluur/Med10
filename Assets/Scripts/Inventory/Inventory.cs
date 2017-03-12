@@ -66,7 +66,8 @@ public class Inventory : MonoBehaviour {
 			}
 
 			if (!items.Exists(x => x.ID == -1)) {
-				Debug.Log ("No more room in inventory - create popup message here");
+				GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.NOTENOUGHINVENTORYSPACE);
+				//Debug.Log ("No more room in inventory - create popup message here");
 			} 
 		}
 	}
