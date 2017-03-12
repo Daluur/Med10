@@ -607,6 +607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4077257848990926}
   - component: {fileID: 95346457125429200}
+  - component: {fileID: 114826794777095772}
   m_Layer: 0
   m_Name: Warrior Male 02
   m_TagString: Untagged
@@ -1568,6 +1569,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1
+--- !u!114 &114826794777095772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1922504642655466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e513cbf973a9341b7469eedf772b38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackName: Melee Right Attack 02
 --- !u!114 &114850312965967536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1581,7 +1594,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 114817752982953848}
   attack: {fileID: 114031925934803936}
-  source: {fileID: 114034107034654398}
 --- !u!114 &114901919097528370
 MonoBehaviour:
   m_ObjectHideFlags: 1

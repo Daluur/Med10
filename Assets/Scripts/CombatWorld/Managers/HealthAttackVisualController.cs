@@ -9,7 +9,11 @@ namespace CombatWorld {
 
 		public Text health;
 		public Text attack;
-		public Entity source;
+		public IEntity source;
+
+		void Start() {
+			source = GetComponentInParent<IEntity>();
+		}
 
 		private void Start() {
 			source = GetComponentInParent<Entity>();
