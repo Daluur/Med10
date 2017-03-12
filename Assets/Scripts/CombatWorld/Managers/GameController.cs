@@ -12,6 +12,7 @@ namespace CombatWorld {
 	public class GameController : Singleton<GameController> {
 		public GameObject winLosePanel;
 		public Text winLoseText;
+		public Button endTurnButton;
 
 		List<Node> allNodes = new List<Node>();
 		List<SummonNode> playerSummonNodes = new List<SummonNode>();
@@ -65,8 +66,14 @@ namespace CombatWorld {
 		#endregion
 
 		public void EndTurn() {
+			StartCoroutine(prepEndTurn());
+		}
+
+		IEnumerator prepEndTurn() {
+			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
+					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
 					AIController.instance.GiveSummonPoints(2);
@@ -80,6 +87,7 @@ namespace CombatWorld {
 					CheckWinLose();
 					StartTurn();
 					SelectTeamNodes();
+					endTurnButton.interactable = true;
 					break;
 				default:
 					break;
@@ -89,7 +97,7 @@ namespace CombatWorld {
 		void StartTurn() {
 			foreach (Node node in allNodes) {
 				if (node.HasUnit() && node.GetOccupant().GetTeam() == currentTeam){
-					node.GetUnit().newTurn();
+					node.GetUnit().NewTurn();
 				}
 			}
 		}
@@ -195,9 +203,6 @@ namespace CombatWorld {
 		}
 
 		public Unit GetSelectedUnit() {
-			if(selectedUnit == null) {
-				var i = 1;
-			}
 			return selectedUnit;
 		}
 
@@ -221,13 +226,14 @@ namespace CombatWorld {
 
 		#region SummonPoints
 
-		public void UnitDied(Team team) {
+		public void UnitDied(Team team, Node node) {
 			if(team == Team.AI) {
 				SummonHandler.instance.GivePoints(2);
 			}
 			else {
 				AIController.instance.GiveSummonPoints(2);
 			}
+			node.ResetState();
 		}
 
 		#endregion
@@ -315,6 +321,10 @@ namespace CombatWorld {
 		void Lost() {
 			winLoseText.text = "YOU LOST!";
 			winLosePanel.SetActive(true);
+		}
+
+		public void GiveUp() {
+			Lost();
 		}
 
 		#endregion

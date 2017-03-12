@@ -232,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4227871848123042}
   - component: {fileID: 95714972442939202}
+  - component: {fileID: 114859204142190680}
   m_Layer: 0
   m_Name: Mage Female 01
   m_TagString: Untagged
@@ -1530,6 +1531,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1
+--- !u!114 &114859204142190680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1280653336280396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e513cbf973a9341b7469eedf772b38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackName: Left Punch Attack
 --- !u!114 &114925688501895596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1543,7 +1556,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 114593406192822320}
   attack: {fileID: 114440599928527692}
-  source: {fileID: 114157725706257800}
 --- !u!114 &114940688261129800
 MonoBehaviour:
   m_ObjectHideFlags: 1
