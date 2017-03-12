@@ -15,7 +15,7 @@ namespace CombatWorld
 		public Text summonPointText;
 		int currentlySelectedToSummon = 0;
 
-		int summonPoints = 3;
+		int summonPoints = 67;
 
 		private void Start() {
 			UpdateButtonsAndText();
@@ -32,6 +32,10 @@ namespace CombatWorld
 		{
 			currentlySelectedToSummon = i;
 			GameController.instance.HighlightSummonNodes();
+		}
+
+		public void SetCurrentSelectedToSummon(int i) {
+			currentlySelectedToSummon = i;
 		}
 
 		void SpendPoints(int amount) {

@@ -14,7 +14,7 @@ namespace CombatWorld.Units {
 		[SerializeField]
 		protected Node currentNode;
 
-		protected ElementalTypes type;
+		public ElementalTypes type;
 
 		public Team GetTeam() {
 			return team;

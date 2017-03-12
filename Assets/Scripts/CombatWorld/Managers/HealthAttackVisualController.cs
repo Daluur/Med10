@@ -11,6 +11,10 @@ namespace CombatWorld {
 		public Text attack;
 		public Entity source;
 
+		private void Start() {
+			source = GetComponentInParent<Entity>();
+		}
+
 		// Update is called once per frame
 		void Update() {
 			health.text = source.GetHealth().ToString();
