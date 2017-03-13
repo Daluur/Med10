@@ -15,10 +15,6 @@ namespace CombatWorld {
 			source = GetComponentInParent<IEntity>();
 		}
 
-		private void Start() {
-			source = GetComponentInParent<Entity>();
-		}
-
 		// Update is called once per frame
 		void Update() {
 			health.text = source.GetHealth().ToString();
