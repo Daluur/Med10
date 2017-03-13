@@ -167,7 +167,7 @@ namespace CombatWorld {
 			if (currentTeam == Team.Player) {
 				foreach (SummonNode node in playerSummonNodes) {
 					if (!node.HasOccupant()) {
-						node.SetState(HighlightState.Moveable);
+						node.SetState(HighlightState.Summon);
 					}
 					else {
 						node.SetState(HighlightState.NotMoveable);
@@ -177,12 +177,11 @@ namespace CombatWorld {
 		}
 
 		public void SummonNodeClickHandler(SummonNode node) {
-			if (selectedUnit != null) {
-				selectedUnit.Move(node);
-			}
-			else {
-				SummonHandler.instance.SummonUnit(node);
-			}
+			SummonHandler.instance.SummonUnit(node);
+		}
+
+		public void MoveUnit(Node node) {
+			selectedUnit.Move(pathfinding.GetPathTo(node));
 		}
 
 		public void GotInput() {

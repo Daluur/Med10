@@ -31,16 +31,13 @@ namespace CombatWorld.Units {
 			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName);
 		}
 
-		public void Move(Node node) {
+		public void Move(List<Node> node) {
 			GameController.instance.WaitForAction();
 			currentNode.RemoveOccupant();
-			node.SetOccupant(this);
-			currentNode = node;
-			transform.position = node.transform.position;
+			currentNode = node[0];
+			currentNode.SetOccupant(this);
+			StartCoroutine(MoveTo(node));
 			moved = true;
-			//Misses animation.
-			//should not use Invoke.
-			Invoke("FinishedAction", 0.2f);
 		}
 
 		#region Getters
@@ -101,7 +98,8 @@ namespace CombatWorld.Units {
 
 		void DealDamage() {
 			GameController.instance.WaitForAction();
-			animHelp.Attack(target.GetTransform(), SpawnProjectile);
+			transform.LookAt(target.GetTransform());
+			animHelp.Attack(SpawnProjectile);
 		}
 
 		void SpawnProjectile() {
@@ -164,6 +162,26 @@ namespace CombatWorld.Units {
 			this.team = team;
 			currentNode = node;
 			node.SetOccupant(this);
+		}
+
+		IEnumerator MoveTo(List<Node> target) {
+			animHelp.StartWalk();
+			target.Reverse();
+			for (int i = 0; i < target.Count; i++) {
+				transform.LookAt(target[i].transform);
+				bool moving = true;
+				while (moving) {
+					transform.position += (target[i].transform.position - transform.position).normalized * 5 * Time.deltaTime;
+					if ((transform.position - target[i].transform.position).magnitude < 0.1f) {
+						moving = false;
+						
+					}
+					yield return new WaitForEndOfFrame();
+				}
+			}
+			transform.position = target[target.Count-1].transform.position;
+			animHelp.EndWalk();
+			FinishedAction();
 		}
 	}
 }

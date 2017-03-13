@@ -72,7 +72,8 @@ namespace CombatWorld.AI {
 						}
 					}
 					if (possibleNodes.Count > 0) {
-						unit.Move(possibleNodes[Random.Range(0, possibleNodes.Count)]);
+
+						unit.Move(pathfinding.GetPathTo(possibleNodes[Random.Range(0, possibleNodes.Count)]));
 					}
 				}
 			}

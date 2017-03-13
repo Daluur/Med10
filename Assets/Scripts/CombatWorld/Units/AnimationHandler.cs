@@ -19,13 +19,20 @@ namespace CombatWorld.Units {
 			anim = GetComponent<Animator>();
 		}
 
+		public void StartWalk() {
+			anim.SetBool("Run",true);
+		}
+
+		public void EndWalk() {
+			anim.SetBool("Run", false);
+		}
+
 		public AnimationHandler Setup(string attackName) {
 			this.attackName = attackName;
 			return this;
 		}
 
-		public void Attack(Transform target, Action cb) {
-			transform.LookAt(target, Vector3.up);
+		public void Attack(Action cb) {
 			nextCB.Enqueue(cb);
 			QueueAnim(attackName);
 		}
