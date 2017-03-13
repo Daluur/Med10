@@ -12,6 +12,7 @@
 		NoMoreMoves,
 		Moveable,
 		NotMoveable,
+		Summon,
 		Attackable,
 	}
 
