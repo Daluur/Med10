@@ -30,7 +30,7 @@ namespace CombatWorld.AI {
 			List<SummonNode> nodes = GameController.instance.GetAISummonNodes();
 			foreach (Node node in nodes) {
 				if (!node.HasOccupant()) {
-					GameObject unit = Instantiate(unitToSummon, node.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity) as GameObject;
+					GameObject unit = Instantiate(unitToSummon, node.transform.position, Quaternion.identity) as GameObject;
 					unit.GetComponent<Unit>().SpawnEntity(node, team, data);
 					units.Add(unit.GetComponent<Unit>());
 					break;

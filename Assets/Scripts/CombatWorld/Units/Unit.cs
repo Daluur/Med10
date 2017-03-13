@@ -8,6 +8,10 @@ using CombatWorld.Utility;
 namespace CombatWorld.Units {
 	public class Unit : MonoBehaviour, IEntity {
 
+		[Tooltip("Name of the trigger. Useable: \nMelee Right Attack 01 \nMelee Right Attack 02 \nMelee Right Attack 03 \nMelee Left Attack 01 \nLeft Punch Attack \nRight Punch Attack ")]
+		public string attackName = "Melee Right Attack 01";
+		public GameObject projectile;
+
 		private int health;
 		private Team team;
 		private Node currentNode;
@@ -24,7 +28,7 @@ namespace CombatWorld.Units {
 		private AnimationHandler animHelp;
 
 		void Start() {
-			animHelp = GetComponentInChildren<AnimationHandler>();
+			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName);
 		}
 
 		public void Move(Node node) {
@@ -32,7 +36,7 @@ namespace CombatWorld.Units {
 			currentNode.RemoveOccupant();
 			node.SetOccupant(this);
 			currentNode = node;
-			transform.position = node.transform.position + new Vector3(0, 0.5f, 0);
+			transform.position = node.transform.position;
 			moved = true;
 			//Misses animation.
 			//should not use Invoke.
@@ -79,24 +83,33 @@ namespace CombatWorld.Units {
 			moved = attacked = false;
 		}
 
+		IEntity target;
+		DamagePackage damagePack;
+
 		public void Attack(IEntity target) {
+			this.target = target;
 			attacked = moved = true;
-			DealDamage(target, new DamagePackage(damage, this, type));
+			damagePack = new DamagePackage(damage, this, type);
+			DealDamage();
 		}
 
 		void RetaliationAttack(IEntity target) {
-			DealDamage(target, new DamagePackage(damage, this, type, true));
+			this.target = target;
+			damagePack = new DamagePackage(damage, this, type, true);
+			DealDamage();
 		}
 
-		void DealDamage(IEntity target, DamagePackage damage) {
+		void DealDamage() {
 			GameController.instance.WaitForAction();
-			if (damage.WasRetaliation() && health <= 0) {
-				animHelp.Attack(target.GetTransform(), Die);
+			animHelp.Attack(target.GetTransform(), SpawnProjectile);
+		}
+
+		void SpawnProjectile() {
+			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Projectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack);
+			target = null;
+			if(health <= 0) {
+				Die();
 			}
-			else {
-				animHelp.Attack(target.GetTransform(), FinishedAction);
-			}
-			target.TakeDamage(damage);
 		}
 
 		DamagePackage damageIntake = null;
@@ -112,16 +125,20 @@ namespace CombatWorld.Units {
 				//Die unless it can do retaliation.
 				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH) {
 					RetaliationAttack(damageIntake.GetSource());
+					return;
 				}
 				else {
 					Die();
+					return;
 				}
 			}
 			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
 			else if(!damageIntake.WasRetaliation()) {
 				RetaliationAttack(damageIntake.GetSource());
+				return;
 			}
 			damageIntake = null;
+			FinishedAction();
 		}
 
 		public void Die() {

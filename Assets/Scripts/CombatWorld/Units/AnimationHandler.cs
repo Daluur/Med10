@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CombatWorld.Units {
 	public class AnimationHandler : MonoBehaviour {
 
-		public string attackName = "Melee Right Attack 01";
+		string attackName = "Melee Right Attack 01";
 		bool playingAnimation;
 
 		Animator anim;
@@ -17,6 +17,11 @@ namespace CombatWorld.Units {
 		// Use this for initialization
 		void Start() {
 			anim = GetComponent<Animator>();
+		}
+
+		public AnimationHandler Setup(string attackName) {
+			this.attackName = attackName;
+			return this;
 		}
 
 		public void Attack(Transform target, Action cb) {

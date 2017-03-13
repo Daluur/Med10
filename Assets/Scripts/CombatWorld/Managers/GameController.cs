@@ -196,6 +196,7 @@ namespace CombatWorld {
 			if (currentTeam == Team.Player) {
 				SelectTeamNodes();
 			}
+			endTurnButton.interactable = true;
 		}
 
 		public void SetSelectedUnit(Unit unit) {
@@ -217,6 +218,7 @@ namespace CombatWorld {
 		}
 
 		public void WaitForAction() {
+			endTurnButton.interactable = false;
 			waitingForAction = true;
 		}
 
