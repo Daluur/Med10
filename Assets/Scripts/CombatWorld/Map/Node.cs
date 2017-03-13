@@ -75,6 +75,7 @@ namespace CombatWorld.Map {
 				case HighlightState.Selectable:
 					GetComponentInChildren<Renderer>().material.color = Color.yellow;
 					break;
+				case HighlightState.Summon:
 				case HighlightState.Moveable:
 					GetComponentInChildren<Renderer>().material.color = Color.green;
 					break;
@@ -102,18 +103,14 @@ namespace CombatWorld.Map {
 
 		public virtual void HandleInput() {
 			switch (state) {
-				case HighlightState.None:
-					break;
 				case HighlightState.Selectable:
 					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
 				case HighlightState.Moveable:
-					GameController.instance.GetSelectedUnit().Move(this);
+					GameController.instance.MoveUnit(this);
 					break;
 				case HighlightState.NoMoreMoves:
 					GameController.instance.SetSelectedUnit(GetUnit());
-					break;
-				case HighlightState.NotMoveable:
 					break;
 				case HighlightState.Attackable:
 					GameController.instance.GetSelectedUnit().Attack(GetOccupant());

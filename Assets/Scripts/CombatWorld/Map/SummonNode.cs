@@ -20,12 +20,13 @@ namespace CombatWorld.Map {
 				case HighlightState.Selectable:
 					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
-				case HighlightState.Moveable:
+				case HighlightState.Summon:
 					GameController.instance.SummonNodeClickHandler(this);
 					break;
 				case HighlightState.NoMoreMoves:
 					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
+				case HighlightState.Moveable:
 				case HighlightState.None:
 				case HighlightState.NotMoveable:
 				case HighlightState.Attackable:
