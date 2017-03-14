@@ -260,6 +260,16 @@ namespace CombatWorld {
 			}
 		}
 
+		public List<Node> GetTowersForTeam(Team team) {
+			List<Node> toReturn = new List<Node>();
+			foreach (Node node in allNodes) {
+				if(node.HasOccupant() && !node.HasUnit() && node.GetOccupant().GetTeam() == team) {
+					toReturn.Add(node);
+				}
+			}
+			return toReturn;
+		}
+
 		#endregion
 
 		#region WinLose

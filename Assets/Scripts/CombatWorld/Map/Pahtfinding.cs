@@ -60,5 +60,44 @@ namespace CombatWorld.Map {
 				}
 			}
 		}
+
+		public List<Node> GetPathFromTo(Node start, Node end) {
+			 return GetAllNodesWithinDistance(start, end);
+		}
+
+		public List<Node> GetAllNodesWithinDistance(Node start, Node end) {
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			Node current = start;
+			path.Add(start, null);
+			foreach (Node neighbour in current.neighbours) {
+				if (!path.ContainsKey(neighbour)) {
+					q.Enqueue(neighbour);
+					path.Add(neighbour, current);
+					if (neighbour == end) {
+						return GetPathTo(end);
+					}
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+				if (current.HasOccupant()) {
+					continue;
+				}
+				foreach (Node neighbour in current.neighbours) {
+					if (!path.ContainsKey(neighbour)) {
+						q.Enqueue(neighbour);
+						path.Add(neighbour, current);
+						if (neighbour == end) {
+							return GetPathTo(end);
+						}
+					}
+				}
+			}
+			throw new System.NullReferenceException("Could not reach the target node!");
+		}
 	}
 }
