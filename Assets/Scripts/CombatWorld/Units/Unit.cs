@@ -8,7 +8,7 @@ using CombatWorld.Utility;
 namespace CombatWorld.Units {
 	public class Unit : MonoBehaviour, IEntity {
 
-		[Tooltip("Name of the trigger. Useable: \nMelee Right Attack 01 \nMelee Right Attack 02 \nMelee Right Attack 03 \nMelee Left Attack 01 \nLeft Punch Attack \nRight Punch Attack ")]
+		[Tooltip("Name of the trigger. Useable: \nMelee Right Attack 01 \nMelee Right Attack 02 \nMelee Right Attack 03 \nMelee Left Attack 01 \nLeft Punch Attack \nRight Punch Attack \nProjectile Right Attack 01 \nCrossbow Attack \nCast Spell 01 \nCast Spell 02")]
 		public string attackName = "Melee Right Attack 01";
 		public GameObject projectile;
 
