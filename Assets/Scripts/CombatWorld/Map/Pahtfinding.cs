@@ -44,6 +44,43 @@ namespace CombatWorld.Map {
 			return new List<Node>(distance.Keys);
 		}
 
+		public List<Node> GetAllNodesWithinDistanceWithhoutOccupants(Node start, int dist) {
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			distance.Add(start, 0);
+
+			Node current = start;
+			path.Add(start, null);
+			foreach (Node neighbour in current.neighbours) {
+				if (!distance.ContainsKey(neighbour) && !neighbour.HasOccupant()) {
+					q.Enqueue(neighbour);
+					distance.Add(neighbour, distance[current] + 1);
+					path.Add(neighbour, current);
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+				if (distance[current] >= dist) {
+					continue;
+				}
+				if (current.HasOccupant()) {
+					continue;
+				}
+				foreach (Node neighbour in current.neighbours) {
+					if (!distance.ContainsKey(neighbour) && !neighbour.HasOccupant()) {
+						q.Enqueue(neighbour);
+						distance.Add(neighbour, distance[current] + 1);
+						path.Add(neighbour, current);
+					}
+				}
+			}
+			distance.Remove(start);
+			return new List<Node>(distance.Keys);
+		}
+
 		public List<Node> GetPathTo(Node node) {
 			List<Node> toReturn = new List<Node>();
 			toReturn.Add(node);
@@ -62,10 +99,6 @@ namespace CombatWorld.Map {
 		}
 
 		public List<Node> GetPathFromTo(Node start, Node end) {
-			 return GetAllNodesWithinDistance(start, end);
-		}
-
-		public List<Node> GetAllNodesWithinDistance(Node start, Node end) {
 			q = new Queue<Node>();
 			distance = new Dictionary<Node, int>();
 			path = new Dictionary<Node, Node>();
@@ -73,7 +106,7 @@ namespace CombatWorld.Map {
 			Node current = start;
 			path.Add(start, null);
 			foreach (Node neighbour in current.neighbours) {
-				if (!path.ContainsKey(neighbour)) {
+				if (!path.ContainsKey(neighbour) && !neighbour.HasOccupant()) {
 					q.Enqueue(neighbour);
 					path.Add(neighbour, current);
 					if (neighbour == end) {
@@ -88,7 +121,7 @@ namespace CombatWorld.Map {
 					continue;
 				}
 				foreach (Node neighbour in current.neighbours) {
-					if (!path.ContainsKey(neighbour)) {
+					if (!path.ContainsKey(neighbour) && !neighbour.HasOccupant()) {
 						q.Enqueue(neighbour);
 						path.Add(neighbour, current);
 						if (neighbour == end) {

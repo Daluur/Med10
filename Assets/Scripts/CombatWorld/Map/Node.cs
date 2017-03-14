@@ -13,7 +13,7 @@ namespace CombatWorld.Map {
 
 		protected HighlightState state;
 
-		#region setup
+		#region Setup
 
 		void Awake() {
 			Setup();
@@ -25,7 +25,7 @@ namespace CombatWorld.Map {
 
 		#endregion
 
-		#region neighbours
+		#region Neighbours
 
 		public List<Node> GetNeighbours() {
 			return neighbours;
@@ -64,7 +64,7 @@ namespace CombatWorld.Map {
 
 		#endregion
 
-		#region states
+		#region States
 
 		public void SetState(HighlightState state) {
 			this.state = state;
@@ -99,7 +99,7 @@ namespace CombatWorld.Map {
 
 		#endregion
 
-		#region input
+		#region Input
 
 		public virtual void HandleInput() {
 			switch (state) {

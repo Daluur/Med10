@@ -7,8 +7,10 @@
 		"stats": {
 			"attack": 1,
 			"health": 4,
-			"moves": 2
+			"moves": 2,
+			"summonCost": 1
 			},
+		"goldCost": 5,
 		"description": "Unit made of fire",
 		"stackable": false,
 		"slug": "fire_unit"
@@ -21,8 +23,10 @@
 		"stats": {
 			"attack": 2,
 			"health": 3,
-			"moves": 3
+			"moves": 3,
+			"summonCost": 2
 			},
+		"goldCost": 5,
 		"description": "Unit made of water",
 		"stackable": false,
 		"slug": "water_unit"
@@ -35,11 +39,13 @@
 		"stats": {
 			"attack": 5,
 			"health": 2,
-			"moves": 1
+			"moves": 1,
+			"summonCost": 3
 			},
+		"goldCost": 5,
 		"description": "Unit made of electricity",
 		"stackable": false,
-		"slug": "electric_unit"
+		"slug": "lightning_unit"
 	},
 		{
 		"id": 3,
@@ -49,8 +55,10 @@
 		"stats": {
 			"attack": 2,
 			"health": 3,
-			"moves": 3
+			"moves": 3,
+			"summonCost": 5
 			},
+		"goldCost": 5,
 		"description": "Unit made of nature",
 		"stackable": false,
 		"slug": "nature_unit"
@@ -63,22 +71,26 @@
 		"stats": {
 			"attack": 2,
 			"health": 3,
-			"moves": 3
+			"moves": 3,
+			"summonCost": 2
 			},
+		"goldCost": 5,
 		"description": "Unit made of normal, that can turn to stone",
 		"stackable": false,
 		"slug": "normal_stone_unit"
 	},
 		{
-		"id": 1,
+		"id": 5,
 		"title": "Shadow Unit",
 		"type": "Shadow",
 		"transform": "None",
 		"stats": {
 			"attack": 2,
 			"health": 3,
-			"moves": 3
+			"moves": 3,
+			"summonCost": 2
 			},
+		"goldCost": 5,
 		"description": "Unit made of shadow",
 		"stackable": false,
 		"slug": "shadow_unit"
