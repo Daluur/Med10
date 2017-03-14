@@ -5,28 +5,30 @@ using CombatWorld.Units;
 using CombatWorld.Utility;
 using UnityEngine;
 
-public class AIUnit : AITask {
+public class AIUnit {
 
-	//private List<AICalculateScore.PossibleTasks> possibleTasks = new List<AICalculateScore.PossibleTasks>();
-	private Dictionary<AICalculateScore.PossibleTasks, Node> possibleTasks = new Dictionary<AICalculateScore.PossibleTasks, Node>();
-	private Pathfinding pathFinding = new Pathfinding();
+	public AIUnit(Unit unit, Pathfinding pathfinding) {
+		myUnit = unit;
+		this.pathFinding = pathfinding;
+	}
+
+	private List<AITask> possibleTasks = new List<AITask>();
+	private AITask taskToDo;
+
+	public Pathfinding pathFinding = new Pathfinding();
+
 	private List<Node> possibleMoveTo = new List<Node>();
+
+	public Unit myUnit;
+
 	private Node moveTo;
 	private List<AICalculateScore.PossibleTasks> waitingTasks = new List<AICalculateScore.PossibleTasks>();
 	public bool taskCompleted = false;
 
 	public AICalculateScore AICalcScore;
 
-	private void Start() {
-		if (AICalcScore == null) {
-			AICalcScore = GameObject.Find("EventSystem").GetComponent<AICalculateScore>();
-			AICalcScore.AddAIUnit(this);
-			//Debug.LogError("You need to add AICalcScore on AI units");
-		}
-	}
-
 	public void MyTasks() {
-		possibleMoveTo = pathFinding.GetAllNodesWithinDistance(currentNode, this.GetMoveDistance());
+		possibleMoveTo = pathFinding.GetAllNodesWithinDistance(myUnit.GetNode(), myUnit.GetMoveDistance());
 		OffensiveMove();
 		DefensiveMove();
 
@@ -34,16 +36,18 @@ public class AIUnit : AITask {
 
 	private void OffensiveMove() {
 		//foreach (var node in possibleMoveTo) {
-			if(!possibleTasks.ContainsKey(AICalculateScore.PossibleTasks.MoveOffensive)){
-				possibleTasks.Add(AICalculateScore.PossibleTasks.MoveOffensive, possibleMoveTo[1]);
-			}
+		Debug.Log(possibleMoveTo[0]);
+		if(possibleMoveTo.Count > 0)
+			possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveOffensive, possibleMoveTo[1]));
+			//if(AICalculateScore.PossibleTasks.MoveOffensive == FindTaskByName(AICalculateScore.PossibleTasks.MoveOffensive).task){
+			//	possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveOffensive, possibleMoveTo[1]));
+			//}
 		//}
-		if(CanMove()&&CanAttack()){
+		if(myUnit.CanMove()&&myUnit.CanAttack()){
 			foreach (var node in possibleMoveTo) {
 				if (node.HasOccupant()) {
 					if (node.GetOccupant().GetTeam() != Team.AI) {
-						possibleTasks.Add(AICalculateScore.PossibleTasks.Attack, node);
-						continue;
+						possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.Attack, node));
 					}
 				}
 				else if (!node.HasOccupant()) {
@@ -51,7 +55,7 @@ public class AIUnit : AITask {
 						if (neighborNode.HasOccupant()) {
 							if (neighborNode.GetOccupant().GetTeam() != Team.AI) {
 								moveTo = node;
-								possibleTasks.Add(AICalculateScore.PossibleTasks.MoveAttack, neighborNode);
+								possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveAttack, neighborNode));
 							}
 						}
 					}
@@ -66,7 +70,7 @@ public class AIUnit : AITask {
 	}
 
 	private void DefensiveMove() {
-		if (CanMove()) {
+		if (myUnit.CanMove()) {
 			foreach (var node in possibleMoveTo) {
 				//TODO: Get any enemies that can attack now, also see if what I move to is in range of any of the other teams units on the next turn to see if they can attack me?
 				//TODO: Where on the map is a node, I want to move closer to tower to defend, but no way of finding it ATM
@@ -74,31 +78,61 @@ public class AIUnit : AITask {
 		}
 	}
 
-	public void PerformTask(AICalculateScore.PossibleTasks task) {
-		DoTask(task);
+	public void PerformTask(AITask task) {
+		AITaskImplementations.DoAIAction(this, task);
+		//DoTask(task.task);
 	}
 
 	//TODO: Implement task completion.
 	private void DoTask(AICalculateScore.PossibleTasks task) {
 		Node node;
+		AITask taskToDo;
 		Debug.Log(task.ToString());
 		switch (task) {
 			case AICalculateScore.PossibleTasks.MoveAttack:
-				possibleTasks.TryGetValue(task, out node);
-				AITaskImplementations.MoveToAndAttack(moveTo, node, node.GetUnit());
+				taskToDo = FindTaskByName(possibleTasks, AICalculateScore.PossibleTasks.MoveAttack);
+				AITaskImplementations.DoAIAction(this, taskToDo);
 				break;
 			case AICalculateScore.PossibleTasks.MoveOffensive:
 				Debug.Log("Got it");
-				possibleTasks.TryGetValue(task, out node);
-				AITaskImplementations.MoveTo(node, this);
+				taskToDo = FindTaskByName(possibleTasks, AICalculateScore.PossibleTasks.MoveOffensive);
+				AITaskImplementations.DoAIAction(this, taskToDo);
 				break;
 		}
-		Debug.Log(this.gameObject.name + " wants to do: " + task.ToString());
+		Debug.Log(myUnit.gameObject.name + " wants to do: " + task.ToString());
 		taskCompleted = true;
 	}
 
-	public Dictionary<AICalculateScore.PossibleTasks, Node> GetTasks() {
+	public List<AITask> GetTasks() {
 		return possibleTasks;
+	}
+
+	public AITask FindTaskByName(AICalculateScore.PossibleTasks inTask) {
+		foreach (var task in possibleTasks) {
+			if (task.task == inTask) {
+				return task;
+			}
+		}
+		Debug.LogError("Something went wrong should never reach here, the specified task does not exist in the possible tasks for this unit");
+		return null;
+	}
+
+	private AITask FindTaskByName(List<AITask> possibleTasks, AICalculateScore.PossibleTasks inTask) {
+		foreach (var task in possibleTasks) {
+			if (task.task == inTask) {
+				return task;
+			}
+		}
+		Debug.LogError("Something went wrong should never reach here, the specified task does not exist in the possible tasks for this unit");
+		return null;
+	}
+
+	public void ClearTasks() {
+		possibleTasks.Clear();
+	}
+
+	public void SetTaskToDo(AITask task) {
+		taskToDo = task;
 	}
 
 }

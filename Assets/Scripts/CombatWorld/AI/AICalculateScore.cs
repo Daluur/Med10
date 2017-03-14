@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
 using CombatWorld;
 using CombatWorld.AI;
 using CombatWorld.Map;
@@ -9,10 +8,24 @@ using CombatWorld.Utility;
 using UnityEngine;
 
 public class AICalculateScore : MonoBehaviour {
-	private List<AIUnit> aiUnits = new List<AIUnit>();
+
+	private Dictionary<Unit, AIUnit> aiUnits = new Dictionary<Unit, AIUnit>();
+
+	private Pathfinding pathfinding = new Pathfinding();
+
+	public GameObject unitToSummon;
+	public CombatData data;
+
+	//private List<AIUnit> aiUnits = new List<AIUnit>();
 	private List<Unit> playerUnits = new List<Unit>();
 	private Team aiTeam = Team.AI;
-	private Tower aiTower;
+	private List<Node> aiTowers = new List<Node>();
+	private List<Node> playerTowers = new List<Node>();
+
+	private void Start() {
+		aiTowers = GameController.instance.GetTowersForTeam(aiTeam);
+		playerTowers = GameController.instance.GetTowersForTeam(Team.Player);
+	}
 
 
 	private void Update() {
@@ -21,14 +34,18 @@ public class AICalculateScore : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.S)) {
 			EvaluateTasksAllUnits();
+			foreach (var unit in aiUnits) {
+				unit.Value.ClearTasks();
+			}
 		}
 	}
 
 	private void EvaluateTasksAllUnits() {
 		foreach (var unit in aiUnits) {
-			unit.MyTasks();
-			var task = EvaluateTasks(unit);
-			PerformTask(unit, task);
+			unit.Value.MyTasks();
+			var task = EvaluateTasks(unit.Value);
+			//unit.Value.SetTaskToDo(task);
+			PerformTask(unit.Value, unit.Value.FindTaskByName(task));
 		}
 	}
 
@@ -40,7 +57,7 @@ public class AICalculateScore : MonoBehaviour {
 	private void EvaluateTasksForUnit(AIUnit unit) {
 		unit.MyTasks();
 		var task = EvaluateTasks(unit);
-		PerformTask(unit, task);
+		PerformTask(unit, unit.FindTaskByName(task));
 	}
 
 	private void SpawnUnits() {
@@ -48,18 +65,23 @@ public class AICalculateScore : MonoBehaviour {
 		var type = EvaluateUnitToSpawn();
 		foreach (var node in summonNodes) {
 			if (node.HasOccupant() && node.GetOccupant().GetTeam() == aiTeam) {
-				var unit = node.GetUnit().GetComponent<AIUnit>();
-				EvaluateTasksForUnit(unit);
-				unit.StartCoroutine(WaitForCompletedTask(unit));
+				var unit = node.GetUnit().GetComponent<Unit>();
+				AIUnit aiUnit;
+				aiUnits.TryGetValue(unit, out aiUnit);
+				EvaluateTasksForUnit(aiUnit);
+				unit.StartCoroutine(WaitForCompletedTask(aiUnit));
 				SpawnUnit(node, type);
 			}
 			SpawnUnit(node, type);
+			return;
 		}
 	}
 
 	private void SpawnUnit(SummonNode node, int type) {
-		SummonHandler.instance.SetCurrentSelectedToSummon(type);
-		SummonHandler.instance.SummonUnit(node);
+		GameObject unit = Instantiate(unitToSummon, node.transform.position, Quaternion.identity) as GameObject;
+		unit.GetComponent<Unit>().SpawnEntity(node, Team.AI, data);
+		AddAIUnit(unit.GetComponent<Unit>());
+
 	}
 
 	private int EvaluateUnitToSpawn() {
@@ -81,7 +103,7 @@ public class AICalculateScore : MonoBehaviour {
 			if (go.GetComponent<Unit>().GetTeam() != aiTeam) {
 				var unit = go.GetComponent<Unit>();
 				totalHealth += unit.GetHealth();
-				switch (unit.type) {
+				switch (unit.GetType()) {
 					case ElementalTypes.NONE:
 						amountOfTypes[0]++;
 						break;
@@ -131,17 +153,17 @@ public class AICalculateScore : MonoBehaviour {
 		}
 	}
 
-	public void PerformTask(AIUnit unit, PossibleTasks task) {
+	public void PerformTask(AIUnit unit, AITask task) {
 		Debug.Log("Here");
 		unit.PerformTask(task);
 	}
 
-	public void AddAIUnit(AIUnit unit) {
-		aiUnits.Add(unit);
+	public void AddAIUnit(Unit unit) {
+		aiUnits.Add(unit, new AIUnit(unit, pathfinding));
 	}
 
 	public void SetTower(Tower tower) {
-		aiTower = tower;
+		//aiTower = tower;
 	}
 
 	public void AddPlayerUnit(Unit unit) {
@@ -149,8 +171,8 @@ public class AICalculateScore : MonoBehaviour {
 	}
 
 	private PossibleTasks EvaluateTasks(AIUnit unit) {
-		if (unit.GetTasks().ContainsKey(PossibleTasks.MoveAttack)) {
-			return PossibleTasks.MoveAttack;
+		if (unit.FindTaskByName(PossibleTasks.MoveOffensive).task == PossibleTasks.MoveOffensive) {
+			return PossibleTasks.MoveOffensive;
 		}
 		return PossibleTasks.MoveOffensive;
 	}

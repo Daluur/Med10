@@ -1,13 +1,26 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using CombatWorld.Map;
 using CombatWorld.Units;
 using UnityEngine;
 
-public class AITask : Unit {
+public class AITask {
+
+	public AITask(float score, AICalculateScore.PossibleTasks task, Node endNode) {
+		this.score = score;
+		this.task = task;
+		this.endNode = endNode;
+	}
+	public AITask(float score, AICalculateScore.PossibleTasks task, Node endNode, Node toAttack) {
+		this.score = score;
+		this.task = task;
+		this.endNode = endNode;
+		this.toAttack = toAttack;
+	}
+
+
+
 	public float score;
 	public AICalculateScore.PossibleTasks task;
-
-
-
+	public Node endNode;
+	public Node toAttack;
 }
