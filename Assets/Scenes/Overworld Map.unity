@@ -90,7 +90,7 @@ NavMeshSettings:
     manualCellSize: 0
     cellSize: 0.16666667
     accuratePlacement: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 69aa44a50a7f5624f97cf179fed68c95, type: 2}
 --- !u!1 &119554265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,6 +1398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2084707967}
   - component: {fileID: 2084707966}
+  - component: {fileID: 2084707968}
   m_Layer: 0
   m_Name: Water4AdvancedReflectionSceneCamera
   m_TagString: Untagged
@@ -1445,10 +1446,18 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2084707965}
-  m_LocalRotation: {x: 0.07955629, y: 0.90589553, z: 0.36658445, w: -0.19657071}
-  m_LocalPosition: {x: 1026.7676, y: -571.16907, z: 1869.1631}
+  m_LocalRotation: {x: -0.00843798, y: 0.9145066, z: 0.40403065, w: 0.019125279}
+  m_LocalPosition: {x: 762.67706, y: -99.808136, z: 1430.1388}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &2084707968
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2084707965}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
