@@ -20,7 +20,7 @@
 		NONE,
 		Fire,
 		Water,
-		Earth,
-		Ligthning,
+		Nature,
+		Lightning,
 	}
 }

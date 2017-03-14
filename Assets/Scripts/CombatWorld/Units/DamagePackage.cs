@@ -33,28 +33,28 @@ namespace CombatWorld.Units {
 					if(damageType == ElementalTypes.Water) {
 						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
-					else if(damageType == ElementalTypes.Earth) {
+					else if(damageType == ElementalTypes.Nature) {
 						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
 				case ElementalTypes.Water:
-					if (damageType == ElementalTypes.Ligthning) {
+					if (damageType == ElementalTypes.Lightning) {
 						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if (damageType == ElementalTypes.Fire) {
 						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
-				case ElementalTypes.Earth:
+				case ElementalTypes.Nature:
 					if (damageType == ElementalTypes.Fire) {
 						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
-					else if (damageType == ElementalTypes.Ligthning) {
+					else if (damageType == ElementalTypes.Lightning) {
 						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
-				case ElementalTypes.Ligthning:
-					if (damageType == ElementalTypes.Earth) {
+				case ElementalTypes.Lightning:
+					if (damageType == ElementalTypes.Nature) {
 						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if (damageType == ElementalTypes.Water) {

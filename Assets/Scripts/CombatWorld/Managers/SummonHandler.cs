@@ -10,27 +10,51 @@ namespace CombatWorld
 {
 	public class SummonHandler : Singleton<SummonHandler>
 	{
-		public SummonData[] data;
-		public Button[] buttons;
 		public Text summonPointText;
-		int currentlySelectedToSummon = 0;
+		public GameObject ButtonTemplate;
+		public GameObject buttonPanel;
+
+		List<UnitButton> buttons = new List<UnitButton>();
+		CombatData currentlySelectedData;
+		ItemDatabase database;
 
 		int summonPoints = 3;
 
 		private void Start() {
+			database = new ItemDatabase();
+			GameObject inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT);
+			if (inventory != null) {
+				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(4));
+			}
+			else {
+				SetupButtonsAndData(CombatNotStartedFromOverWorld());
+			}
 			UpdateButtonsAndText();
+		}
+
+		List<Item> CombatNotStartedFromOverWorld() {
+			List<Item> toReturn = new List<Item>();
+			for (int i = 0; i < 3; i++) {
+				toReturn.Add(database.FetchItemByID(i));
+			}
+			return toReturn;
+		}
+
+		void SetupButtonsAndData(List<Item> units) {
+			foreach (Item item in units) {
+				buttons.Add(Instantiate(ButtonTemplate, buttonPanel.transform).GetComponent<UnitButton>().Setup(item, SummonButtonPressed));
+			}
 		}
 
 		public void SummonUnit(SummonNode node)
 		{
-			SpendPoints(data[currentlySelectedToSummon].Cost);
-			GameObject unit = Instantiate(data[currentlySelectedToSummon].Unit, node.transform.position, Quaternion.identity) as GameObject;
-			unit.GetComponent<Unit>().SpawnEntity(node, Team.Player,data[currentlySelectedToSummon].data);
+			SpendPoints(currentlySelectedData.cost);
+			GameObject unit = Instantiate(currentlySelectedData.model, node.transform.position, Quaternion.identity) as GameObject;
+			unit.GetComponent<Unit>().SpawnEntity(node, Team.Player, currentlySelectedData);
 		}
 
-		public void SummonButtonPressed(int i)
-		{
-			currentlySelectedToSummon = i;
+		public void SummonButtonPressed(CombatData CD) {
+			currentlySelectedData = CD;
 			GameController.instance.HighlightSummonNodes();
 		}
 
@@ -45,24 +69,27 @@ namespace CombatWorld
 		}
 
 		void UpdateButtonsAndText() {
-			for (int i = 0; i < data.Length; i++) {
-				if (data[i].Cost > summonPoints) {
-					buttons[i].interactable = false;
-				}
-				else {
-					buttons[i].interactable = true;
-				}
+			foreach (UnitButton item in buttons) {
+				item.CheckCost(summonPoints);
 			}
 			summonPointText.text = "Summon points: " + summonPoints;
 		}
 
 		public bool HasPointsToSummon() {
-			for (int i = 0; i < data.Length; i++) {
-				if(summonPoints >= data[i].Cost) {
-					return true;
+			foreach (UnitButton item in buttons) {
+				if (!item.CanAfford(summonPoints)) {
+					return false;
 				}
 			}
-			return false;
+			return true;
+		}
+
+		public Unit SummonAIUnitByID(SummonNode node, int id) {
+			Item item = database.FetchItemByID(id);
+			CombatData data = new CombatData(item);
+			GameObject unit = Instantiate(data.model, node.transform.position, Quaternion.identity) as GameObject;
+			unit.GetComponent<Unit>().SpawnEntity(node, Team.AI, data);
+			return unit.GetComponent<Unit>();
 		}
 	}
 }
