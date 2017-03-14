@@ -54,6 +54,10 @@ namespace CombatWorld.Units {
 			return team;
 		}
 
+		public ElementalTypes GetType() {
+			return type;
+		}
+
 		public bool CanMove() {
 			return !moved;
 		}
