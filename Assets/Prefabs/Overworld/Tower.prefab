@@ -92,9 +92,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdfb5319593f9424f8779d5441eed2af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contextMenu: {fileID: 0}
+  inputManager: {fileID: 0}
   playerOW: {fileID: 0}
+  isRunning: 0
+  meClicked: 0
   distanceToOpen: 5
+  contextMenu: {fileID: 0}
   units:
   - {fileID: 0}
   - {fileID: 0}
@@ -108,7 +111,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1207210865841040}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2

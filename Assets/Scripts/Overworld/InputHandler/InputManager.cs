@@ -7,19 +7,19 @@ using UnityEngine;
 namespace Overworld {
 	public class InputManager : MonoBehaviour {
 
-		private bool uiMouseLock = false;
+		private List<bool> uiMouseLock = new List<bool>();
+		private bool isMouseBlocked = false;
 		private LayerMask layerMaskPlayer, layerMaskInteractable;
 		private List<IInteractable> distributeTo = new List<IInteractable>();
 		private Dictionary<KeyCode, List<IInteractable>> registerTo = new Dictionary<KeyCode, List<IInteractable>>();
-		KeyValuePair<IInteractable,KeyCode> reg = new KeyValuePair<IInteractable, KeyCode>();
 		private Vector3 playerMoveTo;
+		private GameObject evtSystem;
 
 		// Use this for initialization
 		void Start () {
 			layerMaskPlayer = (1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER));
 			layerMaskInteractable = ( 1 << LayerMask.NameToLayer(LayerConstants.INTERACTABLELAYER) );
-
-
+			evtSystem = GameObject.FindGameObjectWithTag(TagConstants.OWEVENTSYSTEM);
 		}
 
 		// Update is called once per frame
@@ -38,13 +38,19 @@ namespace Overworld {
 		private void HandleSpecificKeys(KeyCode keyCode) {
 			switch (keyCode) {
 				case KeyCode.Mouse0:
-					if (!uiMouseLock) {
+					if (!isMouseBlocked) {
 						var mousePos = Input.mousePosition;
+						FillDistributer(keyCode);
+						DistributeAction();
 						WhatIsHit(mousePos);
 						DistributeAction(playerMoveTo);
 					}
 					break;
 				case KeyCode.Escape:
+					FillDistributer(keyCode);
+					DistributeAction();
+					break;
+				case KeyCode.B:
 					FillDistributer(keyCode);
 					DistributeAction();
 					break;
@@ -102,15 +108,21 @@ namespace Overworld {
 		}
 
 		public void BlockMouseUI() {
-			uiMouseLock = true;
+			uiMouseLock.Add(true);
+			isMouseBlocked = true;
 		}
 
 		public void UnblockMouseUI() {
-			uiMouseLock = false;
+			uiMouseLock.Remove(true);
+			if (uiMouseLock.Count <= 0)
+				isMouseBlocked = false;
+			else {
+				isMouseBlocked = true;
+			}
 		}
 
 		public bool GetMouseBlocked() {
-			return uiMouseLock;
+			return isMouseBlocked;
 		}
 	}
 }

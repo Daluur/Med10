@@ -9,7 +9,7 @@ namespace CombatWorld.Map {
 	public class Node : MonoBehaviour {
 		public List<Node> neighbours;
 
-		Unit occupant;
+		protected IEntity occupant;
 
 		protected HighlightState state;
 
@@ -35,7 +35,7 @@ namespace CombatWorld.Map {
 
 		#region occupantCode
 
-		public void SetOccupant(Unit occupant) {
+		public void SetOccupant(IEntity occupant) {
 			this.occupant = occupant;
 		}
 
@@ -44,13 +44,24 @@ namespace CombatWorld.Map {
 		}
 
 		public bool HasOccupant() {
+			return occupant != null;
+		}
+
+		public IEntity GetOccupant() {
 			return occupant;
 		}
 
-		public Unit GetOccupant() {
-			return occupant;
-
+		public bool HasUnit() {
+			if(occupant != null && occupant.GetType() == typeof(Unit)) {
+				return true;
+			}
+			return false;
 		}
+
+		public Unit GetUnit() {
+			return (Unit)occupant;
+		}
+
 		#endregion
 
 		#region states
@@ -64,6 +75,7 @@ namespace CombatWorld.Map {
 				case HighlightState.Selectable:
 					GetComponentInChildren<Renderer>().material.color = Color.yellow;
 					break;
+				case HighlightState.Summon:
 				case HighlightState.Moveable:
 					GetComponentInChildren<Renderer>().material.color = Color.green;
 					break;
@@ -91,18 +103,14 @@ namespace CombatWorld.Map {
 
 		public virtual void HandleInput() {
 			switch (state) {
-				case HighlightState.None:
-					break;
 				case HighlightState.Selectable:
-					GameController.instance.SetSelectedUnit(GetOccupant());
+					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
 				case HighlightState.Moveable:
-					GameController.instance.GetSelectedUnit().Move(this);
+					GameController.instance.MoveUnit(this);
 					break;
 				case HighlightState.NoMoreMoves:
-					GameController.instance.SetSelectedUnit(GetOccupant());
-					break;
-				case HighlightState.NotMoveable:
+					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
 				case HighlightState.Attackable:
 					GameController.instance.GetSelectedUnit().Attack(GetOccupant());

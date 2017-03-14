@@ -10,10 +10,13 @@ public class ItemDatabase : MonoBehaviour {
 	private JsonData itemData;
 
 	void Start() {
+		/* -- Read text from Items.json into the JsonData object for temporary storage -- //
+		// -- and then constructs the item database from this data					   -- */
 		itemData = JsonMapper.ToObject (File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
 		ConstructItemDtabase ();
 	}
 
+	/* -- A function which fetches item information from the database based on an input id -- */
 	public Item FetchItemByID(int id) {
 		for (int i = 0; i < database.Count; i++) {
 			if (database[i].ID == id) {
@@ -23,6 +26,8 @@ public class ItemDatabase : MonoBehaviour {
 		return null;
 	}
 
+	/* -- Construction of the item database 					 -- //
+	// -- Adds a new entry into the database list from json data -- */
 	void ConstructItemDtabase() {
 		for (int i = 0; i < itemData.Count; i++) {
 			database.Add(new Item(
@@ -41,6 +46,7 @@ public class ItemDatabase : MonoBehaviour {
 	}
 }
 
+/* -- Class for the item itself (unit) -- */
 public class Item {
 	public int ID { get; set; }
 	public string Title { get; set; }
@@ -54,7 +60,7 @@ public class Item {
 	public string Slug { get; set; }
 	public Sprite Sprite { get; set; }
 
-
+	/* -- Constructor which also loads the appropriate sprite from the Resources folder -- */
 	public Item(int id, string tit, string typ, string tra, int att, int hp, int mov, string des, bool stack, string slug) {
 		this.ID = id;
 		this.Title = tit;
@@ -69,6 +75,7 @@ public class Item {
 		this.Sprite = Resources.Load<Sprite> ("Art/2D/Units/" + slug);
 	}
 
+	/* -- Set to -1 to have an empty item slot in the inventory -- */
 	public Item() {
 		this.ID = -1;
 	}
