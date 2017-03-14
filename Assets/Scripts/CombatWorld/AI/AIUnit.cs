@@ -28,7 +28,7 @@ public class AIUnit {
 	public AICalculateScore AICalcScore;
 
 	public void MyTasks() {
-		possibleMoveTo = pathFinding.GetAllNodesWithinDistance(myUnit.GetNode(), myUnit.GetMoveDistance());
+		possibleMoveTo = pathFinding.GetAllNodesWithinDistanceWithhoutOccupants(myUnit.GetNode(), myUnit.GetMoveDistance());
 		OffensiveMove();
 		DefensiveMove();
 
@@ -38,7 +38,7 @@ public class AIUnit {
 		//foreach (var node in possibleMoveTo) {
 		Debug.Log(possibleMoveTo[0]);
 		if(possibleMoveTo.Count > 0)
-			possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveOffensive, possibleMoveTo[1]));
+			possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveOffensive, possibleMoveTo[0]));
 			//if(AICalculateScore.PossibleTasks.MoveOffensive == FindTaskByName(AICalculateScore.PossibleTasks.MoveOffensive).task){
 			//	possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveOffensive, possibleMoveTo[1]));
 			//}

@@ -58,10 +58,6 @@ namespace CombatWorld
 			GameController.instance.HighlightSummonNodes();
 		}
 
-		public void SetCurrentSelectedToSummon(int i) {
-			currentlySelectedToSummon = i;
-		}
-
 		void SpendPoints(int amount) {
 			summonPoints -= amount;
 			UpdateButtonsAndText();

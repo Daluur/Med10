@@ -13,8 +13,7 @@ public class AICalculateScore : MonoBehaviour {
 
 	private Pathfinding pathfinding = new Pathfinding();
 
-	public GameObject unitToSummon;
-	public CombatData data;
+	public int unitToSummon;
 
 	//private List<AIUnit> aiUnits = new List<AIUnit>();
 	private List<Unit> playerUnits = new List<Unit>();
@@ -78,10 +77,7 @@ public class AICalculateScore : MonoBehaviour {
 	}
 
 	private void SpawnUnit(SummonNode node, int type) {
-		GameObject unit = Instantiate(unitToSummon, node.transform.position, Quaternion.identity) as GameObject;
-		unit.GetComponent<Unit>().SpawnEntity(node, Team.AI, data);
-		AddAIUnit(unit.GetComponent<Unit>());
-
+		AddAIUnit(SummonHandler.instance.SummonAIUnitByID(node, type));
 	}
 
 	private int EvaluateUnitToSpawn() {
@@ -107,13 +103,13 @@ public class AICalculateScore : MonoBehaviour {
 					case ElementalTypes.NONE:
 						amountOfTypes[0]++;
 						break;
-					case ElementalTypes.Earth:
+					case ElementalTypes.Nature:
 						amountOfTypes[1]++;
 						break;
 					case ElementalTypes.Fire:
 						amountOfTypes[2]++;
 						break;
-					case ElementalTypes.Ligthning:
+					case ElementalTypes.Lightning:
 						amountOfTypes[3]++;
 						break;
 					case ElementalTypes.Water:
