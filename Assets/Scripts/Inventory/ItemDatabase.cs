@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
-using System.Collections.Generic;
 using System.IO;
 
-public class ItemDatabase : MonoBehaviour {
+public class ItemDatabase {
 	private List<Item> database = new List<Item>();
 	private JsonData itemData;
 
-	void Start() {
+	public ItemDatabase() {
 		/* -- Read text from Items.json into the JsonData object for temporary storage -- //
 		// -- and then constructs the item database from this data					   -- */
 		itemData = JsonMapper.ToObject (File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
@@ -37,7 +36,9 @@ public class ItemDatabase : MonoBehaviour {
 			itemData[i]["transform"].ToString(),
 			(int)itemData[i]["stats"]["attack"], 
 			(int)itemData[i]["stats"]["health"], 
-			(int)itemData[i]["stats"]["moves"], 
+			(int)itemData[i]["stats"]["moves"],
+			(int)itemData[i]["stats"]["summonCost"],
+			(int)itemData[i]["goldCost"],
 			itemData[i]["description"].ToString(),
 			(bool)itemData[i]["stackable"], 
 			itemData[i]["slug"].ToString()
@@ -55,13 +56,16 @@ public class Item {
 	public int Attack { get; set; }
 	public int Health { get; set; }
 	public int Moves { get; set; }
+	public int SummonCost { get; set; }
+	public int GoldCost { get; set; }
 	public string Description { get; set; }
 	public bool Stackable { get; set; }
 	public string Slug { get; set; }
 	public Sprite Sprite { get; set; }
+	public GameObject Model { get; set; }
 
 	/* -- Constructor which also loads the appropriate sprite from the Resources folder -- */
-	public Item(int id, string tit, string typ, string tra, int att, int hp, int mov, string des, bool stack, string slug) {
+	public Item(int id, string tit, string typ, string tra, int att, int hp, int mov, int summonCost, int goldCost, string des, bool stack, string slug) {
 		this.ID = id;
 		this.Title = tit;
 		this.Type = typ;
@@ -71,8 +75,11 @@ public class Item {
 		this.Description = des;
 		this.Stackable = stack;
 		this.Moves = mov;
+		this.SummonCost = summonCost;
+		this.GoldCost = GoldCost;
 		this.Slug = slug;
 		this.Sprite = Resources.Load<Sprite> ("Art/2D/Units/" + slug);
+		this.Model = Resources.Load<GameObject>("Art/3D/Units/" + slug);
 	}
 
 	/* -- Set to -1 to have an empty item slot in the inventory -- */
