@@ -25,6 +25,14 @@ public class ItemDatabase {
 		return null;
 	}
 
+	/// <summary>
+	/// Returns all the items in the database, used for the editor tool.
+	/// </summary>
+	/// <returns></returns>
+	public List<Item> GetAllItems() {
+		return database;
+	}
+
 	/* -- Construction of the item database 					 -- //
 	// -- Adds a new entry into the database list from json data -- */
 	void ConstructItemDtabase() {
