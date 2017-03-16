@@ -207,7 +207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 114229668245128920}
   attack: {fileID: 114572812006723484}
-  source: {fileID: 114300978235774340}
 --- !u!114 &114229668245128920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -268,7 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b684c1ef756bd46b9d85c10d5887c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
   team: 1
   currentNode: {fileID: 0}
 --- !u!114 &114572812006723484
