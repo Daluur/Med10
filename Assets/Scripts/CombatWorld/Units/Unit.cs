@@ -90,7 +90,7 @@ namespace CombatWorld.Units {
 		}
 
 		public bool IsRockUnit() {
-			return true;
+			return rockUnit;
 		}
 
 		#endregion
