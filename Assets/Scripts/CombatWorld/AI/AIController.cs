@@ -18,9 +18,12 @@ namespace CombatWorld.AI {
 
 		Pathfinding pathfinding = new Pathfinding();
 
-		int summonPoints = 3;
+		public int summonPoints = 3;
 
 		public void MyTurn() {
+			if (GameController.playerVSPlayer) {
+				return;
+			}
 			CheckForDeadUnits();
 			StartCoroutine(SummonUnit());
 			
