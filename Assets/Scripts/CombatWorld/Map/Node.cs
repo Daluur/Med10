@@ -123,6 +123,8 @@ namespace CombatWorld.Map {
 
 		#endregion
 
+		#region InEditorThings
+
 		void OnDrawGizmos() {
 			if (neighbours == null || neighbours.Count == 0) {
 				return;
@@ -169,5 +171,6 @@ namespace CombatWorld.Map {
 			}
 		}
 
+		#endregion
 	}
 }
