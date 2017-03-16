@@ -3,7 +3,7 @@
 namespace CombatWorld {
 	public class CombatCameraController : MonoBehaviour {
 
-		float speed = 20.0f;
+		float speed = 40.0f;
 
 		void LateUpdate() {
 			if (Input.GetMouseButton(1)) {

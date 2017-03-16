@@ -30,6 +30,7 @@ namespace CombatWorld.Map {
 				case HighlightState.None:
 				case HighlightState.NotMoveable:
 				case HighlightState.Attackable:
+				case HighlightState.SelfClick:
 				default:
 					base.HandleInput();
 					return;

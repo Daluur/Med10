@@ -13,9 +13,12 @@ namespace CombatWorld.Map {
 
 		protected HighlightState state;
 
+		protected Color basicColor;
+
 		#region Setup
 
 		void Awake() {
+			basicColor = GetComponentInChildren<Renderer>().material.color;
 			Setup();
 		}
 
@@ -70,7 +73,7 @@ namespace CombatWorld.Map {
 			this.state = state;
 			switch (state) {
 				case HighlightState.None:
-					GetComponentInChildren<Renderer>().material.color = Color.gray;
+					GetComponentInChildren<Renderer>().material.color = basicColor;
 					break;
 				case HighlightState.Selectable:
 					GetComponentInChildren<Renderer>().material.color = Color.yellow;
@@ -87,6 +90,9 @@ namespace CombatWorld.Map {
 					break;
 				case HighlightState.Attackable:
 					GetComponentInChildren<Renderer>().material.color = Color.red;
+					break;
+				case HighlightState.SelfClick:
+					GetComponentInChildren<Renderer>().material.color = Color.magenta;
 					break;
 				default:
 					break;
@@ -114,6 +120,9 @@ namespace CombatWorld.Map {
 					break;
 				case HighlightState.Attackable:
 					GameController.instance.GetSelectedUnit().Attack(GetOccupant());
+					break;
+				case HighlightState.SelfClick:
+					GameController.instance.NodeGotSelfClick();
 					break;
 				default:
 					break;

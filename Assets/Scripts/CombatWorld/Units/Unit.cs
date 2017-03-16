@@ -12,6 +12,13 @@ namespace CombatWorld.Units {
 		public string attackName = "Melee Right Attack 01";
 		public GameObject projectile;
 
+		[SerializeField]
+		private bool shadowUnit = false;
+
+		[SerializeField]
+		private bool rockUnit = false;
+		bool turnedToStone = false;
+
 		private int health;
 		private Team team;
 		private Node currentNode;
@@ -28,7 +35,7 @@ namespace CombatWorld.Units {
 		private AnimationHandler animHelp;
 
 		void Start() {
-			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName);
+			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName, shadowUnit);
 		}
 
 		public void Move(List<Node> node) {
@@ -54,7 +61,7 @@ namespace CombatWorld.Units {
 			return team;
 		}
 
-		public ElementalTypes GetType() {
+		public ElementalTypes GetElementalType() {
 			return type;
 		}
 
@@ -78,9 +85,20 @@ namespace CombatWorld.Units {
 			return transform;
 		}
 
+		public bool IsShadowUnit() {
+			return shadowUnit;
+		}
+
+		public bool IsRockUnit() {
+			return rockUnit;
+		}
+
 		#endregion
 
 		public void NewTurn() {
+			if (turnedToStone) {
+				return;
+			}
 			moved = attacked = false;
 		}
 
@@ -125,7 +143,7 @@ namespace CombatWorld.Units {
 		void TookDamage() {
 			if(health <= 0) {
 				//Die unless it can do retaliation.
-				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH) {
+				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && !turnedToStone) {
 					RetaliationAttack(damageIntake.GetSource());
 					return;
 				}
@@ -135,7 +153,7 @@ namespace CombatWorld.Units {
 				}
 			}
 			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
-			else if(!damageIntake.WasRetaliation()) {
+			else if(!damageIntake.WasRetaliation() && !turnedToStone) {
 				RetaliationAttack(damageIntake.GetSource());
 				return;
 			}
@@ -187,5 +205,18 @@ namespace CombatWorld.Units {
 			animHelp.EndWalk();
 			FinishedAction();
 		}
+
+		public void TurnToRock() {
+			if (!rockUnit) {
+				Debug.Log("You cannot turn this unit to stone!");
+				return;
+			}
+			health += damage;
+			damage = 0;
+			moveDistance = 0;
+			moved = attacked = true;
+			turnedToStone = true;
+		}
+
 	}
 }

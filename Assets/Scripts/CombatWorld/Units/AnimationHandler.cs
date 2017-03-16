@@ -8,6 +8,10 @@ namespace CombatWorld.Units {
 
 		string attackName = "Melee Right Attack 01";
 		bool playingAnimation;
+		bool shadowUnit = false;
+		string walkTrigger = "Run";
+		string takeDamageTrigger = "Take Damage";
+		string dieTrigger = "Die";
 
 		Animator anim;
 
@@ -15,21 +19,27 @@ namespace CombatWorld.Units {
 		Queue<string> nextAnim = new Queue<string>();
 
 		// Use this for initialization
-		void Start() {
+		void Awake() {
 			anim = GetComponent<Animator>();
 		}
 
+		public AnimationHandler Setup(string attackName, bool shadowUnit) {
+			if (shadowUnit) {
+				anim.SetBool("Fly Idle", true);
+				walkTrigger = "Fly Forward";
+				takeDamageTrigger = "Fly Take Damage";
+				dieTrigger = "Fly Die";
+			}
+			this.attackName = attackName;
+			return this;
+		}
+
 		public void StartWalk() {
-			anim.SetBool("Run",true);
+			anim.SetBool(walkTrigger,true);
 		}
 
 		public void EndWalk() {
-			anim.SetBool("Run", false);
-		}
-
-		public AnimationHandler Setup(string attackName) {
-			this.attackName = attackName;
-			return this;
+			anim.SetBool(walkTrigger, false);
 		}
 
 		public void Attack(Action cb) {
@@ -43,7 +53,7 @@ namespace CombatWorld.Units {
 
 		public void TakeDamage(Action cb) {
 			nextCB.Enqueue(cb);
-			QueueAnim("Take Damage");
+			QueueAnim(takeDamageTrigger);
 		}
 
 		public void FinishedTakeDamage() {
@@ -52,7 +62,7 @@ namespace CombatWorld.Units {
 
 		public void Die(Action cb) {
 			nextCB.Enqueue(cb);
-			QueueAnim("Die");
+			QueueAnim(dieTrigger);
 		}
 
 		public void FinishedDie() {
