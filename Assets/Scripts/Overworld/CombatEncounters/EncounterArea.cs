@@ -11,7 +11,7 @@ namespace Overworld {
 		}
 
 		public void OnTriggerEnter(Collider other) {
-			if (other.tag != TagConstants.OVERWORLDPLAYER) {
+			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER) {
 				return;
 			}
 			randomEncounter.RandomEncounterOn(type);
