@@ -138,7 +138,12 @@ namespace CombatWorld.Units {
 
 		public void TakeDamage(DamagePackage damage) {
 			damageIntake = damage;
-			health -= damageIntake.CalculateDamageAgainst(type);
+			if (turnedToStone && DamageConstants.ROCKUNITONLYTAKES1DMG) {
+				health -= 1;
+			}
+			else {
+				health -= damageIntake.CalculateDamageAgainst(type);
+			}
 			animHelp.TakeDamage(TookDamage);
 		}
 
@@ -213,7 +218,9 @@ namespace CombatWorld.Units {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
-			health += damage;
+			if (DamageConstants.ROCKUNITSGETSATTACKASHEALTH) {
+				health += damage;
+			}
 			damage = 0;
 			moveDistance = 0;
 			moved = attacked = true;
