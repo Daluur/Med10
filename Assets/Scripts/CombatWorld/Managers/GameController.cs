@@ -139,9 +139,16 @@ namespace CombatWorld {
 					else {
 						HighlightMoveableNodes(pathfinding.GetAllNodesWithinDistance(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
 					}
+					if (selectedUnit.IsRockUnit()) {
+						selectedUnit.GetNode().SetState(HighlightState.SelfClick);
+					}
 				}
+
 				if (selectedUnit.CanAttack()) {
 					HighlightAttackableNodes();
+					if (selectedUnit.IsRockUnit()) {
+						selectedUnit.GetNode().SetState(HighlightState.SelfClick);
+					}
 				}
 			}
 		}
@@ -224,6 +231,10 @@ namespace CombatWorld {
 
 		public void MoveUnit(Node node) {
 			selectedUnit.Move(pathfinding.GetPathTo(node));
+		}
+
+		public void NodeGotSelfClick() {
+			selectedUnit.TurnToRock();
 		}
 
 		public void GotInput() {

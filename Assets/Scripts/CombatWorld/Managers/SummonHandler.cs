@@ -39,6 +39,7 @@ namespace CombatWorld
 				toReturn.Add(database.FetchItemByID(i));
 			}
 			toReturn.Add(database.FetchItemByID(5));
+			toReturn.Add(database.FetchItemByID(4));
 			return toReturn;
 		}
 
