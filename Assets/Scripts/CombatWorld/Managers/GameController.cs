@@ -14,6 +14,8 @@ namespace CombatWorld {
 		public Text winLoseText;
 		public Button endTurnButton;
 
+		public GameObject map;
+
 		List<Node> allNodes = new List<Node>();
 		List<SummonNode> playerSummonNodes = new List<SummonNode>();
 		List<SummonNode> AISummonNodes = new List<SummonNode>();
@@ -30,6 +32,7 @@ namespace CombatWorld {
 
 		void Start() {
 			pathfinding = new Pathfinding();
+			Instantiate(map,new Vector3(3,-1039,0),Quaternion.identity);
 			StartGame();
 		}
 
@@ -117,7 +120,13 @@ namespace CombatWorld {
 			}
 			else {
 				if (selectedUnit.CanMove()) {
-					HighlightMoveableNodes(pathfinding.GetAllNodesWithinDistance(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
+					if (selectedUnit.IsShadowUnit()) {
+						Debug.Log("is shadow");
+						HighlightMoveableNodes(pathfinding.GetAllReachableNodes(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
+					}
+					else {
+						HighlightMoveableNodes(pathfinding.GetAllNodesWithinDistance(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
+					}
 				}
 				if (selectedUnit.CanAttack()) {
 					HighlightAttackableNodes();
