@@ -35,11 +35,9 @@ namespace CombatWorld
 
 		List<Item> CombatNotStartedFromOverWorld() {
 			List<Item> toReturn = new List<Item>();
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 14; i++) {
 				toReturn.Add(database.FetchItemByID(i));
 			}
-			toReturn.Add(database.FetchItemByID(5));
-			toReturn.Add(database.FetchItemByID(4));
 			return toReturn;
 		}
 

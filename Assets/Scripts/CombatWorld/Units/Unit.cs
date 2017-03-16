@@ -32,6 +32,8 @@ namespace CombatWorld.Units {
 		private bool moved = true;
 		private bool attacked = true;
 
+		private float moveSpeed = 12.5f;
+
 		private AnimationHandler animHelp;
 
 		void Start() {
@@ -193,8 +195,8 @@ namespace CombatWorld.Units {
 				transform.LookAt(target[i].transform);
 				bool moving = true;
 				while (moving) {
-					transform.position += (target[i].transform.position - transform.position).normalized * 5 * Time.deltaTime;
-					if ((transform.position - target[i].transform.position).magnitude < 0.1f) {
+					transform.position += (target[i].transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
+					if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
 						moving = false;
 						
 					}
