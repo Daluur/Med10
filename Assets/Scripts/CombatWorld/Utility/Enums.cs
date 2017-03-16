@@ -14,6 +14,7 @@
 		NotMoveable,
 		Summon,
 		Attackable,
+		SelfClick,
 	}
 
 	public enum ElementalTypes {

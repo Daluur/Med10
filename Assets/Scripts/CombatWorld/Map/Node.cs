@@ -91,6 +91,9 @@ namespace CombatWorld.Map {
 				case HighlightState.Attackable:
 					GetComponentInChildren<Renderer>().material.color = Color.red;
 					break;
+				case HighlightState.SelfClick:
+					GetComponentInChildren<Renderer>().material.color = Color.magenta;
+					break;
 				default:
 					break;
 			}
@@ -117,6 +120,9 @@ namespace CombatWorld.Map {
 					break;
 				case HighlightState.Attackable:
 					GameController.instance.GetSelectedUnit().Attack(GetOccupant());
+					break;
+				case HighlightState.SelfClick:
+					GameController.instance.NodeGotSelfClick();
 					break;
 				default:
 					break;

@@ -15,6 +15,10 @@ namespace CombatWorld.Units {
 		[SerializeField]
 		private bool shadowUnit = false;
 
+		[SerializeField]
+		private bool rockUnit = false;
+		bool turnedToStone = false;
+
 		private int health;
 		private Team team;
 		private Node currentNode;
@@ -85,9 +89,16 @@ namespace CombatWorld.Units {
 			return shadowUnit;
 		}
 
+		public bool IsRockUnit() {
+			return true;
+		}
+
 		#endregion
 
 		public void NewTurn() {
+			if (turnedToStone) {
+				return;
+			}
 			moved = attacked = false;
 		}
 
@@ -132,7 +143,7 @@ namespace CombatWorld.Units {
 		void TookDamage() {
 			if(health <= 0) {
 				//Die unless it can do retaliation.
-				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH) {
+				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && !turnedToStone) {
 					RetaliationAttack(damageIntake.GetSource());
 					return;
 				}
@@ -142,7 +153,7 @@ namespace CombatWorld.Units {
 				}
 			}
 			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
-			else if(!damageIntake.WasRetaliation()) {
+			else if(!damageIntake.WasRetaliation() && !turnedToStone) {
 				RetaliationAttack(damageIntake.GetSource());
 				return;
 			}
@@ -194,5 +205,18 @@ namespace CombatWorld.Units {
 			animHelp.EndWalk();
 			FinishedAction();
 		}
+
+		public void TurnToRock() {
+			if (!rockUnit) {
+				Debug.Log("You cannot turn this unit to stone!");
+				return;
+			}
+			health += damage;
+			damage = 0;
+			moveDistance = 0;
+			moved = attacked = true;
+			turnedToStone = true;
+		}
+
 	}
 }
