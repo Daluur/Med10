@@ -13,7 +13,7 @@ public class AIUnit {
 	}
 
 	private List<AITask> possibleTasks = new List<AITask>();
-	private AITask taskToDo;
+	public AITask taskToDo;
 
 	public Pathfinding pathFinding = new Pathfinding();
 
@@ -133,6 +133,10 @@ public class AIUnit {
 
 	public void SetTaskToDo(AITask task) {
 		taskToDo = task;
+	}
+
+	public void SetTaskToDo(AICalculateScore.PossibleTasks task) {
+		taskToDo = FindTaskByName(task);
 	}
 
 }

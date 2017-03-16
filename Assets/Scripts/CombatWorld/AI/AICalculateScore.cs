@@ -43,8 +43,9 @@ public class AICalculateScore : MonoBehaviour {
 		foreach (var unit in aiUnits) {
 			unit.Value.MyTasks();
 			var task = EvaluateTasks(unit.Value);
+			unit.Value.SetTaskToDo(task);
 			//unit.Value.SetTaskToDo(task);
-			PerformTask(unit.Value, unit.Value.FindTaskByName(task));
+			PerformTask(unit.Value, unit.Value.taskToDo);
 		}
 	}
 
@@ -144,7 +145,7 @@ public class AICalculateScore : MonoBehaviour {
 	}
 
 	private IEnumerator WaitForCompletedTask(AIUnit unit) {
-		while (!unit.taskCompleted) {
+		while (!GameController.instance.WaitingForAction()) {
 			yield return new WaitForSeconds(0.1f);
 		}
 	}
