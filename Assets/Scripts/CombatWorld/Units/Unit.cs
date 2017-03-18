@@ -221,6 +221,7 @@ namespace CombatWorld.Units {
 			if (DamageConstants.ROCKUNITSGETSATTACKASHEALTH) {
 				health += damage;
 			}
+			animHelp.TurnToStone();
 			damage = 0;
 			moveDistance = 0;
 			moved = attacked = true;
