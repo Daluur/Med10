@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4397759234420280}
   - component: {fileID: 33391965885991676}
-  - component: {fileID: 135136242741144406}
   - component: {fileID: 23417974827480272}
   - component: {fileID: 95417444040014748}
   - component: {fileID: 114543633812608934}
@@ -39,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 1297313545711596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.394693, y: 0.0063074455, z: -0.9270542}
-  m_LocalScale: {x: 1, y: 0.012614891, z: 1}
+  m_LocalScale: {x: 10, y: 0.012614891, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -111,15 +110,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95417444040014748}
---- !u!135 &135136242741144406
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1297313545711596}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

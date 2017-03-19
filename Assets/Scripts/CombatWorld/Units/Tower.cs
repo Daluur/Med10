@@ -8,16 +8,21 @@ using System;
 namespace CombatWorld.Units {
 	public class Tower : MonoBehaviour, IEntity {
 
-		[SerializeField]
-		private int health;
+		private int health = 15;
 		[SerializeField]
 		private Team team;
 		[SerializeField]
 		private Node currentNode;
 
 		void Start() {
-			currentNode.SetOccupant(this);
+			if (!currentNode.HasOccupant()) {
+				currentNode.SetOccupant(this);
+			}
 			GameController.instance.AddTower(team);
+		}
+
+		public void SetCurrentNode(Node node) {
+			currentNode = node;
 		}
 
 		public void Die() {
@@ -36,6 +41,10 @@ namespace CombatWorld.Units {
 
 		public Team GetTeam() {
 			return team;
+		}
+
+		public void SetTeam(Team newTeam) {
+			team = newTeam;
 		}
 
 		public Transform GetTransform() {
