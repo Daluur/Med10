@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 4256057220241640}
   - component: {fileID: 114521997348562442}
   m_Layer: 0
-  m_Name: RockUnit
+  m_Name: normal_stone_unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1422,7 +1422,7 @@ MonoBehaviour:
   attackName: Melee Right Attack 01
   projectile: {fileID: 1063805332281906, guid: 3d16eeae53dc60c4d9e51d59da162c16, type: 2}
   shadowUnit: 0
-  rockUnit: 1
+  stoneUnit: 1
 --- !u!114 &114621656762612242
 MonoBehaviour:
   m_ObjectHideFlags: 1

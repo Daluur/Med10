@@ -44,7 +44,6 @@ namespace CombatWorld.Units {
 
 		public void TakeDamage(DamagePackage damage) {
 			health -= damage.CalculateDamageAgainst();
-			GameController.instance.UnitMadeAction();
 			if (health <= 0) {
 				Die();
 			}
