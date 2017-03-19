@@ -13,9 +13,12 @@ namespace CombatWorld.Map {
 
 		protected HighlightState state;
 
-		#region setup
+		protected Color basicColor;
+
+		#region Setup
 
 		void Awake() {
+			basicColor = GetComponentInChildren<Renderer>().material.color;
 			Setup();
 		}
 
@@ -25,7 +28,7 @@ namespace CombatWorld.Map {
 
 		#endregion
 
-		#region neighbours
+		#region Neighbours
 
 		public List<Node> GetNeighbours() {
 			return neighbours;
@@ -64,13 +67,13 @@ namespace CombatWorld.Map {
 
 		#endregion
 
-		#region states
+		#region States
 
 		public void SetState(HighlightState state) {
 			this.state = state;
 			switch (state) {
 				case HighlightState.None:
-					GetComponentInChildren<Renderer>().material.color = Color.gray;
+					GetComponentInChildren<Renderer>().material.color = basicColor;
 					break;
 				case HighlightState.Selectable:
 					GetComponentInChildren<Renderer>().material.color = Color.yellow;
@@ -88,6 +91,9 @@ namespace CombatWorld.Map {
 				case HighlightState.Attackable:
 					GetComponentInChildren<Renderer>().material.color = Color.red;
 					break;
+				case HighlightState.SelfClick:
+					GetComponentInChildren<Renderer>().material.color = Color.magenta;
+					break;
 				default:
 					break;
 			}
@@ -99,7 +105,7 @@ namespace CombatWorld.Map {
 
 		#endregion
 
-		#region input
+		#region Input
 
 		public virtual void HandleInput() {
 			switch (state) {
@@ -115,6 +121,9 @@ namespace CombatWorld.Map {
 				case HighlightState.Attackable:
 					GameController.instance.GetSelectedUnit().Attack(GetOccupant());
 					break;
+				case HighlightState.SelfClick:
+					GameController.instance.NodeGotSelfClick();
+					break;
 				default:
 					break;
 			}
@@ -123,14 +132,54 @@ namespace CombatWorld.Map {
 
 		#endregion
 
+		#region InEditorThings
+
 		void OnDrawGizmos() {
 			if (neighbours == null || neighbours.Count == 0) {
 				return;
 			}
-			foreach (var item in neighbours) {
-				Gizmos.color = Color.cyan;
-				Gizmos.DrawLine(transform.position + new Vector3(0, 0.5f, 0), item.transform.position - new Vector3(0, 0.5f, 0));
+			CleanNeighbours();
+			foreach (Node node in neighbours) {
+				if (node.neighbours.Contains(this)) {
+					//double connection
+					Gizmos.color = Color.cyan;
+					Gizmos.DrawLine(transform.position + new Vector3(0, 0.5f, 0), node.transform.position + new Vector3(0, 0.5f, 0));
+				}
+				else {
+					//single connection
+					Gizmos.color = Color.red;
+					Gizmos.DrawLine(transform.position + new Vector3(0, 0.5f, 0), node.transform.position + new Vector3(0, 0.5f, 0));
+				}
 			}
 		}
+
+		void OnDrawGizmosSelected() {
+			if (neighbours == null || neighbours.Count == 0) {
+				return;
+			}
+			CleanNeighbours();
+			foreach (Node node in neighbours) {
+				if (node.neighbours.Contains(this)) {
+					//double connection
+					Gizmos.color = Color.cyan;
+					Gizmos.DrawLine(transform.position + new Vector3(0, 0.5f, 0), node.transform.position + new Vector3(0, 0.5f, 0));
+				}
+				else {
+					//single connection
+					Gizmos.color = Color.yellow;
+					Gizmos.DrawLine(transform.position + new Vector3(0, 0.5f, 0), node.transform.position + new Vector3(0, 0.5f, 0));
+				}
+			}
+		}
+
+		void CleanNeighbours() {
+			for (int i = neighbours.Count - 1; i >= 0; i--) {
+				if (neighbours[i] == null) {
+					neighbours.RemoveAt(i);
+				}
+			}
+		}
+
+		#endregion
 	}
 }

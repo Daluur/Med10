@@ -14,13 +14,14 @@
 		NotMoveable,
 		Summon,
 		Attackable,
+		SelfClick,
 	}
 
 	public enum ElementalTypes {
 		NONE,
 		Fire,
 		Water,
-		Earth,
-		Ligthning,
+		Nature,
+		Lightning,
 	}
 }

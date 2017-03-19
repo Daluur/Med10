@@ -8,9 +8,16 @@ using CombatWorld.Utility;
 namespace CombatWorld.Units {
 	public class Unit : MonoBehaviour, IEntity {
 
-		[Tooltip("Name of the trigger. Useable: \nMelee Right Attack 01 \nMelee Right Attack 02 \nMelee Right Attack 03 \nMelee Left Attack 01 \nLeft Punch Attack \nRight Punch Attack ")]
+		[Tooltip("Name of the trigger. Useable: \nMelee Right Attack 01 \nMelee Right Attack 02 \nMelee Right Attack 03 \nMelee Left Attack 01 \nLeft Punch Attack \nRight Punch Attack \nProjectile Right Attack 01 \nCrossbow Attack \nCast Spell 01 \nCast Spell 02")]
 		public string attackName = "Melee Right Attack 01";
 		public GameObject projectile;
+
+		[SerializeField]
+		private bool shadowUnit = false;
+
+		[SerializeField]
+		private bool stoneUnit = false;
+		bool turnedToStone = false;
 
 		private int health;
 		private Team team;
@@ -25,14 +32,16 @@ namespace CombatWorld.Units {
 		private bool moved = true;
 		private bool attacked = true;
 
+		private Vector3 defaultFaceDirection;
+
 		private AnimationHandler animHelp;
 
 		void Start() {
-			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName);
+			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName, shadowUnit);
 		}
 
 		public void Move(List<Node> node) {
-			GameController.instance.WaitForAction();
+			GameController.instance.AddWaitForUnit(this);
 			currentNode.RemoveOccupant();
 			currentNode = node[0];
 			currentNode.SetOccupant(this);
@@ -52,6 +61,10 @@ namespace CombatWorld.Units {
 
 		public Team GetTeam() {
 			return team;
+		}
+
+		public ElementalTypes GetElementalType() {
+			return type;
 		}
 
 		public bool CanMove() {
@@ -74,9 +87,20 @@ namespace CombatWorld.Units {
 			return transform;
 		}
 
+		public bool IsShadowUnit() {
+			return shadowUnit;
+		}
+
+		public bool IsStoneUnit() {
+			return stoneUnit;
+		}
+
 		#endregion
 
 		public void NewTurn() {
+			if (turnedToStone) {
+				return;
+			}
 			moved = attacked = false;
 		}
 
@@ -84,6 +108,7 @@ namespace CombatWorld.Units {
 		DamagePackage damagePack;
 
 		public void Attack(IEntity target) {
+			GameController.instance.AddWaitForUnit(this);
 			this.target = target;
 			attacked = moved = true;
 			damagePack = new DamagePackage(damage, this, type);
@@ -97,13 +122,12 @@ namespace CombatWorld.Units {
 		}
 
 		void DealDamage() {
-			GameController.instance.WaitForAction();
 			transform.LookAt(target.GetTransform());
 			animHelp.Attack(SpawnProjectile);
 		}
 
 		void SpawnProjectile() {
-			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Projectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack);
+			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Projectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, FinishedAction);
 			target = null;
 			if(health <= 0) {
 				Die();
@@ -113,6 +137,7 @@ namespace CombatWorld.Units {
 		DamagePackage damageIntake = null;
 
 		public void TakeDamage(DamagePackage damage) {
+			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
 			health -= damageIntake.CalculateDamageAgainst(type);
 			animHelp.TakeDamage(TookDamage);
@@ -121,7 +146,7 @@ namespace CombatWorld.Units {
 		void TookDamage() {
 			if(health <= 0) {
 				//Die unless it can do retaliation.
-				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH) {
+				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && !turnedToStone) {
 					RetaliationAttack(damageIntake.GetSource());
 					return;
 				}
@@ -131,7 +156,7 @@ namespace CombatWorld.Units {
 				}
 			}
 			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
-			else if(!damageIntake.WasRetaliation()) {
+			else if(!damageIntake.WasRetaliation() && !turnedToStone) {
 				RetaliationAttack(damageIntake.GetSource());
 				return;
 			}
@@ -140,18 +165,23 @@ namespace CombatWorld.Units {
 		}
 
 		public void Die() {
+			GameController.instance.UnitDied(team, currentNode);
+			currentNode.RemoveOccupant();
 			animHelp.Die(Death);
 		}
 
 		void Death() {
-			GameController.instance.UnitDied(team, currentNode);
-			currentNode.RemoveOccupant();
 			FinishedAction();
 			Destroy(gameObject);
 		}
 
 		void FinishedAction() {
-			GameController.instance.UnitMadeAction();
+			GameController.instance.PerformedAction(this);
+			FaceForward();
+		}
+
+		void FaceForward() {
+			transform.LookAt(transform.position + defaultFaceDirection, Vector3.up);
 		}
 
 		public void SpawnEntity(Node node, Team team, CombatData data) {
@@ -162,6 +192,13 @@ namespace CombatWorld.Units {
 			this.team = team;
 			currentNode = node;
 			node.SetOccupant(this);
+			if(team == Team.Player) {
+				defaultFaceDirection = Vector3.right;
+			}
+			else {
+				defaultFaceDirection = Vector3.left;
+			}
+			FaceForward();
 		}
 
 		IEnumerator MoveTo(List<Node> target) {
@@ -182,6 +219,18 @@ namespace CombatWorld.Units {
 			transform.position = target[target.Count-1].transform.position;
 			animHelp.EndWalk();
 			FinishedAction();
+		}
+
+		public void TurnToStone() {
+			if (!stoneUnit) {
+				Debug.Log("You cannot turn this unit to stone!");
+				return;
+			}
+			health += damage;
+			damage = 0;
+			moveDistance = 0;
+			moved = attacked = true;
+			turnedToStone = true;
 		}
 	}
 }

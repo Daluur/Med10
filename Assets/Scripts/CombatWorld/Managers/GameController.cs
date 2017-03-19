@@ -14,6 +14,8 @@ namespace CombatWorld {
 		public Text winLoseText;
 		public Button endTurnButton;
 
+		public GameObject map;
+
 		List<Node> allNodes = new List<Node>();
 		List<SummonNode> playerSummonNodes = new List<SummonNode>();
 		List<SummonNode> AISummonNodes = new List<SummonNode>();
@@ -27,9 +29,11 @@ namespace CombatWorld {
 		int PlayerTowersRemaining = 0;
 
 		bool waitingForAction = false;
+		List<Unit> performingAction = new List<Unit>();
 
 		void Start() {
 			pathfinding = new Pathfinding();
+			Instantiate(map,new Vector3(3,-1039,0),Quaternion.identity);
 			StartGame();
 		}
 
@@ -117,10 +121,22 @@ namespace CombatWorld {
 			}
 			else {
 				if (selectedUnit.CanMove()) {
-					HighlightMoveableNodes(pathfinding.GetAllNodesWithinDistance(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
+					if (selectedUnit.IsShadowUnit()) {
+						HighlightMoveableNodes(pathfinding.GetAllReachableNodes(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
+					}
+					else {
+						HighlightMoveableNodes(pathfinding.GetAllNodesWithinDistance(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
+					}
+					if (selectedUnit.IsStoneUnit()) {
+						selectedUnit.GetNode().SetState(HighlightState.SelfClick);
+					}
 				}
+
 				if (selectedUnit.CanAttack()) {
 					HighlightAttackableNodes();
+					if (selectedUnit.IsStoneUnit()) {
+						selectedUnit.GetNode().SetState(HighlightState.SelfClick);
+					}
 				}
 			}
 		}
@@ -184,6 +200,10 @@ namespace CombatWorld {
 			selectedUnit.Move(pathfinding.GetPathTo(node));
 		}
 
+		public void NodeGotSelfClick() {
+			selectedUnit.TurnToStone();
+		}
+
 		public void GotInput() {
 			ResetAllNodes();
 			SelectTeamNodes();
@@ -194,8 +214,8 @@ namespace CombatWorld {
 			waitingForAction = false;
 			if (currentTeam == Team.Player) {
 				SelectTeamNodes();
+				endTurnButton.interactable = true;
 			}
-			endTurnButton.interactable = true;
 		}
 
 		public void SetSelectedUnit(Unit unit) {
@@ -217,12 +237,34 @@ namespace CombatWorld {
 		}
 
 		public void WaitForAction() {
+			Debug.LogError("OLD function, use AddWaitForUnit");
+			return;
 			endTurnButton.interactable = false;
 			waitingForAction = true;
 		}
 
 		public bool WaitingForAction() {
-			return waitingForAction;
+			return performingAction.Count > 0;
+		}
+
+		public void AddWaitForUnit(Unit unit) {
+			endTurnButton.interactable = false;
+			if (performingAction.Contains(unit)) {
+				Debug.LogWarning("Was already performing an action " + unit);
+			}
+			else {
+				performingAction.Add(unit);
+			}
+			waitingForAction = true;
+		}
+
+		public void PerformedAction(Unit unit) {
+			if (performingAction.Contains(unit)) {
+				performingAction.Remove(unit);
+			}
+			if(performingAction.Count == 0) {
+				UnitMadeAction();
+			}
 		}
 
 		#region SummonPoints
@@ -258,6 +300,16 @@ namespace CombatWorld {
 				}
 				AIController.instance.GiveSummonPoints(2);
 			}
+		}
+
+		public List<Node> GetTowersForTeam(Team team) {
+			List<Node> toReturn = new List<Node>();
+			foreach (Node node in allNodes) {
+				if(node.HasOccupant() && !node.HasUnit() && node.GetOccupant().GetTeam() == team) {
+					toReturn.Add(node);
+				}
+			}
+			return toReturn;
 		}
 
 		#endregion

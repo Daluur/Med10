@@ -44,6 +44,43 @@ namespace CombatWorld.Map {
 			return new List<Node>(distance.Keys);
 		}
 
+		public List<Node> GetAllNodesWithinDistanceWithhoutOccupants(Node start, int dist) {
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			distance.Add(start, 0);
+
+			Node current = start;
+			path.Add(start, null);
+			foreach (Node neighbour in current.neighbours) {
+				if (!distance.ContainsKey(neighbour) && !neighbour.HasOccupant()) {
+					q.Enqueue(neighbour);
+					distance.Add(neighbour, distance[current] + 1);
+					path.Add(neighbour, current);
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+				if (distance[current] >= dist) {
+					continue;
+				}
+				if (current.HasOccupant()) {
+					continue;
+				}
+				foreach (Node neighbour in current.neighbours) {
+					if (!distance.ContainsKey(neighbour) && !neighbour.HasOccupant()) {
+						q.Enqueue(neighbour);
+						distance.Add(neighbour, distance[current] + 1);
+						path.Add(neighbour, current);
+					}
+				}
+			}
+			distance.Remove(start);
+			return new List<Node>(distance.Keys);
+		}
+
 		public List<Node> GetPathTo(Node node) {
 			List<Node> toReturn = new List<Node>();
 			toReturn.Add(node);
@@ -59,6 +96,75 @@ namespace CombatWorld.Map {
 					prev = temp;
 				}
 			}
+		}
+
+		public List<Node> GetPathFromTo(Node start, Node end) {
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			Node current = start;
+			path.Add(start, null);
+			foreach (Node neighbour in current.neighbours) {
+				if (!path.ContainsKey(neighbour) && !neighbour.HasOccupant()) {
+					q.Enqueue(neighbour);
+					path.Add(neighbour, current);
+					if (neighbour == end) {
+						return GetPathTo(end);
+					}
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+				if (current.HasOccupant()) {
+					continue;
+				}
+				foreach (Node neighbour in current.neighbours) {
+					if (!path.ContainsKey(neighbour) && !neighbour.HasOccupant()) {
+						q.Enqueue(neighbour);
+						path.Add(neighbour, current);
+						if (neighbour == end) {
+							return GetPathTo(end);
+						}
+					}
+				}
+			}
+			throw new System.NullReferenceException("Could not reach the target node!");
+		}
+
+		public List<Node> GetAllReachableNodes(Node start, int dist) {
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			distance.Add(start, 0);
+
+			Node current = start;
+			path.Add(start, null);
+			foreach (Node neighbour in current.neighbours) {
+				if (!distance.ContainsKey(neighbour)) {
+					q.Enqueue(neighbour);
+					distance.Add(neighbour, distance[current] + 1);
+					path.Add(neighbour, current);
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+				if (distance[current] >= dist) {
+					continue;
+				}
+				foreach (Node neighbour in current.neighbours) {
+					if (!distance.ContainsKey(neighbour)) {
+						q.Enqueue(neighbour);
+						distance.Add(neighbour, distance[current] + 1);
+						path.Add(neighbour, current);
+					}
+				}
+			}
+			distance.Remove(start);
+			return new List<Node>(distance.Keys);
 		}
 	}
 }

@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour {
 	public List<GameObject> slots = new List<GameObject> ();
 
 	void Start() {
-		database = GetComponent<ItemDatabase>();
+		database = new ItemDatabase();
 
 		slotAmount = 12;
 		inventoryPanel = GameObject.Find ("Inventory Panel");
@@ -79,5 +79,15 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 		return false;
+	}
+
+	public List<Item> GetFirstXItemsFromInventory(int x) {
+		List<Item> toReturn = new List<Item>();
+		for (int i = 0; i < x; i++) {
+			if(items[i].ID != -1) {
+				toReturn.Add(items[i]);
+			}
+		}
+		return toReturn;
 	}
 }
