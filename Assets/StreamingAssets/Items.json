@@ -1,226 +1,255 @@
+
 [
-	{
-		"id": 0,
-		"title": "Fire Shaman",
-		"type": "Fire",
-		"transform": "None",
-		"stats": {
-			"attack": 2,
-			"health": 6,
-			"moves": 3,
-			"summonCost": 2
-			},
-		"goldCost": 50,
-		"description": "Fast Shaman who deals fire damage.",
-		"stackable": false,
-		"slug": "fire_shaman"
-	},
-	{
-		"id": 1,
-		"title": "Fire Barbarian",
-		"type": "Fire",
-		"transform": "None",
-		"stats": {
-			"attack": 6,
-			"health": 9,
-			"moves": 1,
-			"summonCost": 3
-			},
-		"goldCost": 50,
-		"description": "Slow Barbarian with lots of health who deals tons of fire damage.",
-		"stackable": false,
-		"slug": "fire_barb"
-	},
-		{
-		"id": 2,
-		"title": "Water Mage",
-		"type": "Water",
-		"transform": "None",
-		"stats": {
-			"attack": 3,
-			"health": 3,
-			"moves": 2,
-			"summonCost": 1
-			},
-		"goldCost": 50,
-		"description": "Average Mage who deals water damage.",
-		"stackable": false,
-		"slug": "water_mage"
-	},
-		{
-		"id": 3,
-		"title": "Water Shaman",
-		"type": "Water",
-		"transform": "None",
-		"stats": {
-			"attack": 6,
-			"health": 2,
-			"moves": 1,
-			"summonCost": 3
-			},
-		"goldCost": 50,
-		"description": "Slow Shaman who deals a lot of water damage.",
-		"stackable": false,
-		"slug": "water_shaman"
-	},
-		{
-		"id": 4,
-		"title": "Lightning Archer",
-		"type": "Lightning",
-		"transform": "None",
-		"stats": {
-			"attack": 2,
-			"health": 3,
-			"moves": 3,
-			"summonCost": 1
-			},
-		"goldCost": 50,
-		"description": "Fast weak Archer who deals lightning damage.",
-		"stackable": false,
-		"slug": "light_archer"
-	},
-		{
-		"id": 5,
-		"title": "Lightning Mage",
-		"type": "Lightning",
-		"transform": "None",
-		"stats": {
-			"attack": 7,
-			"health": 2,
-			"moves": 2,
-			"summonCost": 3
-			},
-		"goldCost": 50,
-		"description": "Powerful Mage who deals a lot of lightning damage, but has low health.",
-		"stackable": false,
-		"slug": "light_mage"
-	},
-		{
-		"id": 6,
-		"title": "Nature Warrior",
-		"type": "Nature",
-		"transform": "None",
-		"stats": {
-			"attack": 5,
-			"health": 4,
-			"moves": 2,
-			"summonCost": 2
-			},
-		"goldCost": 50,
-		"description": "Capable Warrior who deals Nature damage.",
-		"stackable": false,
-		"slug": "nature_warrior"
-	},
-		{
-		"id": 7,
-		"title": "Nature Shaman",
-		"type": "Nature",
-		"transform": "None",
-		"stats": {
-			"attack": 6,
-			"health": 6,
-			"moves": 1,
-			"summonCost": 2
-			},
-		"goldCost": 50,
-		"description": "Slow Shaman who has a good amount of health, and deals Nature damage.",
-		"stackable": false,
-		"slug": "nature_shaman"
-	},
-		{
-		"id": 8,
-		"title": "Shadow Rogue",
-		"type": "Shadow",
-		"transform": "None",
-		"stats": {
-			"attack": 2,
-			"health": 3,
-			"moves": 3,
-			"summonCost": 2
-			},
-		"goldCost": 50,
-		"description": "Fast Rogue who can use shadow power to move through other units.",
-		"stackable": false,
-		"slug": "shadow_rogue"
-	},
-		{
-		"id": 9,
-		"title": "Shadow Mage",
-		"type": "Shadow",
-		"transform": "None",
-		"stats": {
-			"attack": 4,
-			"health": 3,
-			"moves": 2,
-			"summonCost": 3
-			},
-		"goldCost": 50,
-		"description": "Capable Mage who can use shadow power to move through other units.",
-		"stackable": false,
-		"slug": "shadow_mage"
-	},
-		{
-		"id": 10,
-		"title": "Stone Warrior",
-		"type": "Normal",
-		"transform": "Stone",
-		"stats": {
-			"attack": 3,
-			"health": 3,
-			"moves": 2,
-			"summonCost": 2
-			},
-		"goldCost": 50,
-		"description": "Average Warrior who can transform into a stone blockade.",
-		"stackable": false,
-		"slug": "stone_warrior"
-	},
-		{
-		"id": 11,
-		"title": "Stone Barbarian",
-		"type": "Normal",
-		"transform": "Stone",
-		"stats": {
-			"attack": 6,
-			"health": 6,
-			"moves": 1,
-			"summonCost": 3
-			},
-		"goldCost": 50,
-		"description": "Slow Barbarian who can transform into a stone blockade.",
-		"stackable": false,
-		"slug": "stone_barb"
-	},
-		{
-		"id": 12,
-		"title": "Archer",
-		"type": "Normal",
-		"transform": "None",
-		"stats": {
-			"attack": 4,
-			"health": 2,
-			"moves": 2,
-			"summonCost": 1
-			},
-		"goldCost": 50,
-		"description": "Normal Archer with no extra abilities.",
-		"stackable": false,
-		"slug": "archer"
-	},
-		{
-		"id": 13,
-		"title": "Warrior",
-		"type": "Normal",
-		"transform": "None",
-		"stats": {
-			"attack": 3,
-			"health": 3,
-			"moves": 3,
-			"summonCost": 1
-			},
-		"goldCost": 50,
-		"description": "Normal Warrior with no extra abilities.",
-		"stackable": false,
-		"slug": "warrior"
-	}
+    {
+        "id" : 0,
+        "title" : "Fire Shaman",
+        "type"  : "Fire",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 2,
+            "health" : 6,
+            "moves"  : 3,
+            "summonCost" : 2
+        },
+        "goldCost"  : 50,
+        "description" : "Fast Shaman who deals fire damage.",
+        "stackable"   : false,
+        "slug"        : "fire_shaman"
+    },
+    {
+        "id" : 1,
+        "title" : "Fire Barbarian",
+        "type"  : "Fire",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 6,
+            "health" : 9,
+            "moves"  : 1,
+            "summonCost" : 3
+        },
+        "goldCost"  : 50,
+        "description" : "Slow Barbarian with lots of health who deals tons of fire damage.",
+        "stackable"   : false,
+        "slug"        : "fire_barb"
+    },
+    {
+        "id" : 2,
+        "title" : "Water Mage",
+        "type"  : "Water",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 3,
+            "health" : 3,
+            "moves"  : 2,
+            "summonCost" : 1
+        },
+        "goldCost"  : 50,
+        "description" : "Average Mage who deals water damage.",
+        "stackable"   : false,
+        "slug"        : "water_mage"
+    },
+    {
+        "id" : 3,
+        "title" : "Water Shaman",
+        "type"  : "Water",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 6,
+            "health" : 2,
+            "moves"  : 1,
+            "summonCost" : 3
+        },
+        "goldCost"  : 50,
+        "description" : "Slow Shaman who deals a lot of water damage.",
+        "stackable"   : false,
+        "slug"        : "water_shaman"
+    },
+    {
+        "id" : 4,
+        "title" : "Lightning Archer",
+        "type"  : "Lightning",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 2,
+            "health" : 3,
+            "moves"  : 3,
+            "summonCost" : 1
+        },
+        "goldCost"  : 50,
+        "description" : "Fast weak Archer who deals lightning damage.",
+        "stackable"   : false,
+        "slug"        : "light_archer"
+    },
+    {
+        "id" : 5,
+        "title" : "Lightning Mage",
+        "type"  : "Lightning",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 7,
+            "health" : 2,
+            "moves"  : 2,
+            "summonCost" : 3
+        },
+        "goldCost"  : 50,
+        "description" : "Powerful Mage who deals a lot of lightning damage, but has low health.",
+        "stackable"   : false,
+        "slug"        : "light_mage"
+    },
+    {
+        "id" : 6,
+        "title" : "Nature Warrior",
+        "type"  : "Nature",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 5,
+            "health" : 4,
+            "moves"  : 2,
+            "summonCost" : 2
+        },
+        "goldCost"  : 50,
+        "description" : "Capable Warrior who deals Nature damage.",
+        "stackable"   : false,
+        "slug"        : "nature_warrior"
+    },
+    {
+        "id" : 7,
+        "title" : "Nature Shaman",
+        "type"  : "Nature",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 6,
+            "health" : 6,
+            "moves"  : 1,
+            "summonCost" : 2
+        },
+        "goldCost"  : 50,
+        "description" : "Slow Shaman who has a good amount of health, and deals Nature damage.",
+        "stackable"   : false,
+        "slug"        : "nature_shaman"
+    },
+    {
+        "id" : 8,
+        "title" : "Shadow Rogue",
+        "type"  : "Shadow",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 2,
+            "health" : 3,
+            "moves"  : 3,
+            "summonCost" : 2
+        },
+        "goldCost"  : 50,
+        "description" : "Fast Rogue who can use shadow power to move through other units.",
+        "stackable"   : false,
+        "slug"        : "shadow_rogue"
+    },
+    {
+        "id" : 9,
+        "title" : "Shadow Mage",
+        "type"  : "Shadow",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 4,
+            "health" : 3,
+            "moves"  : 2,
+            "summonCost" : 3
+        },
+        "goldCost"  : 50,
+        "description" : "Capable Mage who can use shadow power to move through other units.",
+        "stackable"   : false,
+        "slug"        : "shadow_mage"
+    },
+    {
+        "id" : 10,
+        "title" : "Stone Warrior",
+        "type"  : "Normal",
+        "transform" : "Stone",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 3,
+            "health" : 3,
+            "moves"  : 2,
+            "summonCost" : 2
+        },
+        "goldCost"  : 50,
+        "description" : "Average Warrior who can transform into a stone blockade.",
+        "stackable"   : false,
+        "slug"        : "stone_warrior"
+    },
+    {
+        "id" : 11,
+        "title" : "Stone Barbarian",
+        "type"  : "Normal",
+        "transform" : "Stone",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 6,
+            "health" : 6,
+            "moves"  : 1,
+            "summonCost" : 3
+        },
+        "goldCost"  : 50,
+        "description" : "Slow Barbarian who can transform into a stone blockade.",
+        "stackable"   : false,
+        "slug"        : "stone_barb"
+    },
+    {
+        "id" : 12,
+        "title" : "Archer",
+        "type"  : "Normal",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 4,
+            "health" : 2,
+            "moves"  : 2,
+            "summonCost" : 1
+        },
+        "goldCost"  : 50,
+        "description" : "Normal Archer with no extra abilities.",
+        "stackable"   : false,
+        "slug"        : "archer"
+    },
+    {
+        "id" : 13,
+        "title" : "Warrior",
+        "type"  : "Normal",
+        "transform" : "None",
+        "shadow"    : false,
+        "stone"     : false,
+        "stats"     : {
+            "attack" : 3,
+            "health" : 3,
+            "moves"  : 3,
+            "summonCost" : 1
+        },
+        "goldCost"  : 50,
+        "description" : "Normal Warrior with no extra abilities.",
+        "stackable"   : false,
+        "slug"        : "warrior"
+    }
 ]

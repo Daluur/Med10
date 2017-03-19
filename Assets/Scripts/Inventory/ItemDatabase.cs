@@ -42,6 +42,10 @@ public class ItemDatabase {
 			itemData[i]["title"].ToString(), 
 			itemData[i]["type"].ToString(),
 			itemData[i]["transform"].ToString(),
+			false,
+			false,
+			//(bool)itemData[i]["shadow"],
+			//(bool)itemData[i]["stone"],
 			(int)itemData[i]["stats"]["attack"], 
 			(int)itemData[i]["stats"]["health"], 
 			(int)itemData[i]["stats"]["moves"],
@@ -61,6 +65,8 @@ public class Item {
 	public string Title { get; set; }
 	public string Type { get; set; }
 	public string Transform { get; set; }
+	public bool Shadow { get; set; }
+	public bool Stone { get; set; }
 	public int Attack { get; set; }
 	public int Health { get; set; }
 	public int Moves { get; set; }
@@ -73,18 +79,20 @@ public class Item {
 	public GameObject Model { get; set; }
 
 	/* -- Constructor which also loads the appropriate sprite from the Resources folder -- */
-	public Item(int id, string tit, string typ, string tra, int att, int hp, int mov, int summonCost, int goldCost, string des, bool stack, string slug) {
+	public Item(int id, string tit, string typ, string tra,bool shadow, bool stone, int att, int hp, int mov, int summonCost, int goldCost, string des, bool stack, string slug) {
 		this.ID = id;
 		this.Title = tit;
 		this.Type = typ;
 		this.Transform = tra;
+		this.Shadow = shadow;
+		this.Stone = stone;
 		this.Attack = att;
 		this.Health = hp;
 		this.Description = des;
 		this.Stackable = stack;
 		this.Moves = mov;
 		this.SummonCost = summonCost;
-		this.GoldCost = GoldCost;
+		this.GoldCost = goldCost;
 		this.Slug = slug;
 		this.Sprite = Resources.Load<Sprite> ("Art/2D/Units/" + slug);
 		this.Model = Resources.Load<GameObject>("Art/3D/Units/" + slug);
@@ -93,6 +101,25 @@ public class Item {
 	/* -- Set to -1 to have an empty item slot in the inventory -- */
 	public Item() {
 		this.ID = -1;
+	}
+
+	public Item(int id) {
+		this.ID = id;
+		this.Title = "";
+		this.Type = "Normal";
+		this.Transform = "None";
+		this.Shadow = false;
+		this.Stone = false;
+		this.Attack = 0;
+		this.Health = 0;
+		this.Description = "";
+		this.Stackable = false;
+		this.Moves = 0;
+		this.SummonCost = 0;
+		this.GoldCost = 0;
+		this.Slug = "";
+		this.Sprite = Resources.Load<Sprite>("Art/2D/Units/" + Slug);
+		this.Model = Resources.Load<GameObject>("Art/3D/Units/" + Slug);
 	}
 
 }

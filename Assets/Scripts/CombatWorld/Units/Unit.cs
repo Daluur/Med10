@@ -16,7 +16,7 @@ namespace CombatWorld.Units {
 		private bool shadowUnit = false;
 
 		[SerializeField]
-		private bool rockUnit = false;
+		private bool stoneUnit = false;
 		bool turnedToStone = false;
 
 		private int health;
@@ -92,7 +92,7 @@ namespace CombatWorld.Units {
 		}
 
 		public bool IsRockUnit() {
-			return rockUnit;
+			return stoneUnit;
 		}
 
 		#endregion
@@ -190,6 +190,8 @@ namespace CombatWorld.Units {
 			health = data.healthValue;
 			this.team = team;
 			currentNode = node;
+			stoneUnit = data.stone;
+			shadowUnit = data.shadow;
 			node.SetOccupant(this);
 		}
 
@@ -214,7 +216,7 @@ namespace CombatWorld.Units {
 		}
 
 		public void TurnToRock() {
-			if (!rockUnit) {
+			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
