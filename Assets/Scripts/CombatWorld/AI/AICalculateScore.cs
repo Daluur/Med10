@@ -613,7 +613,7 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 		foreach (var go in gos) {
 			if (go.GetComponent<Unit>().GetTeam() != aiTeam) {
 				var unit = go.GetComponent<Unit>();
-				switch (unit.GetType()) {
+				switch (unit.GetElementalType()) {
 					case ElementalTypes.NONE:
 						mostOfType[0] = ElementalTypes.NONE;
 						amountOfTypes[0]++;

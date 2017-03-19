@@ -85,7 +85,7 @@ namespace CombatWorld.Map {
 			throw new System.Exception("Could not find end node, is it hidden behind a tower?");
 		}
 
-		public List<Node> GetAllReachableNodes(Node start, int dist) {
+	/*	public List<Node> GetAllReachableNodes(Node start, int dist) {
 			q = new Queue<Node>();
 			distance = new Dictionary<Node, int>();
 			path = new Dictionary<Node, Node>();
@@ -117,7 +117,7 @@ namespace CombatWorld.Map {
 			}
 			distance.Remove(start);
 			return new List<Node>(distance.Keys);
-		}
+		}*/
 
 		public List<Node> GetAllNodesWithinDistanceWithhoutOccupants(Node start, int dist) {
 			q = new Queue<Node>();
