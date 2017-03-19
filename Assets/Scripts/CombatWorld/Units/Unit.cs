@@ -25,6 +25,8 @@ namespace CombatWorld.Units {
 		private bool moved = true;
 		private bool attacked = true;
 
+		public bool doingAction = false;
+
 		private AnimationHandler animHelp;
 
 		void Start() {
@@ -36,7 +38,16 @@ namespace CombatWorld.Units {
 			currentNode.RemoveOccupant();
 			currentNode = node[0];
 			currentNode.SetOccupant(this);
-			StartCoroutine(MoveTo(node));
+			StartCoroutine(MoveTo(node, false));
+			moved = true;
+		}
+
+		public void Move(List<Node> node, bool AIAttackAfter) {
+			GameController.instance.WaitForAction();
+			currentNode.RemoveOccupant();
+			currentNode = node[0];
+			currentNode.SetOccupant(this);
+			StartCoroutine(MoveTo(node, AIAttackAfter));
 			moved = true;
 		}
 
@@ -158,6 +169,10 @@ namespace CombatWorld.Units {
 			GameController.instance.UnitMadeAction();
 		}
 
+		void FinishedImediateAction() {
+			doingAction = false;
+		}
+
 		public void SpawnEntity(Node node, Team team, CombatData data) {
 			moveDistance = data.moveDistance;
 			damage = data.attackValue;
@@ -168,7 +183,8 @@ namespace CombatWorld.Units {
 			node.SetOccupant(this);
 		}
 
-		IEnumerator MoveTo(List<Node> target) {
+		IEnumerator MoveTo(List<Node> target, bool AIAttackAfter) {
+			doingAction = true;
 			animHelp.StartWalk();
 			target.Reverse();
 			for (int i = 0; i < target.Count; i++) {
@@ -185,6 +201,10 @@ namespace CombatWorld.Units {
 			}
 			transform.position = target[target.Count-1].transform.position;
 			animHelp.EndWalk();
+			if (AIAttackAfter) {
+				FinishedImediateAction();
+				yield break;
+			}
 			FinishedAction();
 		}
 	}

@@ -44,6 +44,81 @@ namespace CombatWorld.Map {
 			return new List<Node>(distance.Keys);
 		}
 
+		public int GetDistanceToNode(Node start, Node end) {
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			if (start == end) {
+				return 0;
+			}
+
+			distance.Add(start, 0);
+
+			Node current = start;
+			path.Add(start, null);
+			foreach (Node neighbour in current.neighbours) {
+				if (!distance.ContainsKey(neighbour) && !neighbour.HasTower() && !neighbour.HasOccupant()) {
+					q.Enqueue(neighbour);
+					distance.Add(neighbour, distance[current] + 1);
+					path.Add(neighbour, current);
+					if (neighbour == end) {
+						return distance[current] + 1;
+					}
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+				foreach (Node neighbour in current.neighbours) {
+					if (!distance.ContainsKey(neighbour) && !neighbour.HasTower() && !neighbour.HasOccupant()) {
+						q.Enqueue(neighbour);
+						distance.Add(neighbour, distance[current] + 1);
+						path.Add(neighbour, current);
+						if(neighbour == end) {
+							return distance[current] + 1;
+						}
+					}
+				}
+			}
+			return 0;
+			throw new System.Exception("Could not find end node, is it hidden behind a tower?");
+		}
+
+		public List<Node> GetAllReachableNodes(Node start, int dist) {
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			distance.Add(start, 0);
+
+			Node current = start;
+			path.Add(start, null);
+			foreach (Node neighbour in current.neighbours) {
+				if (!distance.ContainsKey(neighbour)) {
+					q.Enqueue(neighbour);
+					distance.Add(neighbour, distance[current] + 1);
+					path.Add(neighbour, current);
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+				if (distance[current] >= dist) {
+					continue;
+				}
+				foreach (Node neighbour in current.neighbours) {
+					if (!distance.ContainsKey(neighbour)) {
+						q.Enqueue(neighbour);
+						distance.Add(neighbour, distance[current] + 1);
+						path.Add(neighbour, current);
+					}
+				}
+			}
+			distance.Remove(start);
+			return new List<Node>(distance.Keys);
+		}
+
 		public List<Node> GetAllNodesWithinDistanceWithhoutOccupants(Node start, int dist) {
 			q = new Queue<Node>();
 			distance = new Dictionary<Node, int>();
@@ -130,6 +205,7 @@ namespace CombatWorld.Map {
 					}
 				}
 			}
+			return null;
 			throw new System.NullReferenceException("Could not reach the target node!");
 		}
 	}

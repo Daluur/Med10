@@ -12,7 +12,7 @@ public class AIUnit {
 		this.pathFinding = pathfinding;
 	}
 
-	private List<AITask> possibleTasks = new List<AITask>();
+	public List<AITask> possibleTasks = new List<AITask>();
 	public AITask taskToDo;
 
 	public Pathfinding pathFinding = new Pathfinding();
@@ -28,7 +28,7 @@ public class AIUnit {
 	public AICalculateScore AICalcScore;
 
 	public void MyTasks() {
-		possibleMoveTo = pathFinding.GetAllNodesWithinDistanceWithhoutOccupants(myUnit.GetNode(), myUnit.GetMoveDistance());
+		possibleMoveTo = pathFinding.GetAllNodesWithinDistance(myUnit.GetNode(), myUnit.GetMoveDistance());
 		OffensiveMove();
 		DefensiveMove();
 
@@ -36,13 +36,13 @@ public class AIUnit {
 
 	private void OffensiveMove() {
 		//foreach (var node in possibleMoveTo) {
-		Debug.Log(possibleMoveTo[0]);
+
 		if(possibleMoveTo.Count > 0)
-			possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveOffensive, possibleMoveTo[0]));
-			//if(AICalculateScore.PossibleTasks.MoveOffensive == FindTaskByName(AICalculateScore.PossibleTasks.MoveOffensive).task){
-			//	possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveOffensive, possibleMoveTo[1]));
-			//}
-		//}
+			foreach (var move in possibleMoveTo) {
+
+				possibleTasks.Add(new AITask(0,AICalculateScore.PossibleTasks.MoveOffensive, move));
+			}
+
 		if(myUnit.CanMove()&&myUnit.CanAttack()){
 			foreach (var node in possibleMoveTo) {
 				if (node.HasOccupant()) {
@@ -129,6 +129,7 @@ public class AIUnit {
 
 	public void ClearTasks() {
 		possibleTasks.Clear();
+		taskToDo = null;
 	}
 
 	public void SetTaskToDo(AITask task) {

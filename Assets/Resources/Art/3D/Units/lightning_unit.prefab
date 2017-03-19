@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 114426716426091564}
   m_Layer: 0
   m_Name: lightning_unit
-  m_TagString: Untagged
+  m_TagString: CombatUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1551,6 +1551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: Melee Right Attack 02
   projectile: {fileID: 1640924473077204, guid: 5949e6c3b12c17145a3532f8b2c7834b, type: 2}
+  doingAction: 0
 --- !u!114 &114550733303500252
 MonoBehaviour:
   m_ObjectHideFlags: 1

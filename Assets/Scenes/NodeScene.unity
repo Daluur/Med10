@@ -1361,7 +1361,7 @@ GameObject:
   - component: {fileID: 1248978506}
   - component: {fileID: 1248978508}
   - component: {fileID: 1248978509}
-  - component: {fileID: 1248978510}
+  - component: {fileID: 1248978511}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1422,7 +1422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8dfbc1097350448be76e5ebac7807e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1248978510
+--- !u!114 &1248978511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1430,18 +1430,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1248978505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01df695d0de545e449da7cc5c2328ab4, type: 3}
+  m_Script: {fileID: 11500000, guid: 39c1b2c587255b64badff20fbf1af3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitToSummon: {fileID: 1578989096024508, guid: 94bb0ce285c7ea845a43dd466544cda0,
-    type: 2}
-  data:
-    moveDistance: 3
-    attackValue: 2
-    healthValue: 5
-    cost: 0
-    model: {fileID: 0}
-    type: 1
+  unitsToSummon: 00000000010000000200000003000000
+  summonPoints: 3
+  triggerForDefensiveSpawns: 3
+  triggerForOffensiveSpawns: 2
 --- !u!1 &1268836026
 GameObject:
   m_ObjectHideFlags: 0

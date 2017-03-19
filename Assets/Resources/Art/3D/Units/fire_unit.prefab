@@ -685,7 +685,7 @@ GameObject:
   - component: {fileID: 114157725706257800}
   m_Layer: 0
   m_Name: fire_unit
-  m_TagString: Untagged
+  m_TagString: CombatUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1440,6 +1440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: Melee Right Attack 03
   projectile: {fileID: 1063805332281906, guid: 3d16eeae53dc60c4d9e51d59da162c16, type: 2}
+  doingAction: 0
 --- !u!114 &114208869118433550
 MonoBehaviour:
   m_ObjectHideFlags: 1

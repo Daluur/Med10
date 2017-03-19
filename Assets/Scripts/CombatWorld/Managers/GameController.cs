@@ -76,10 +76,12 @@ namespace CombatWorld {
 					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
-					AIController.instance.GiveSummonPoints(2);
+					//AIController.instance.GiveSummonPoints(2);
+					AICalculateScore.instance.GiveSummonPoints(2);
 					CheckWinLose();
 					StartTurn();
-					AIController.instance.MyTurn();
+					AICalculateScore.instance.DoAITurn();
+					//AIController.instance.MyTurn();
 					break;
 				case Team.AI:
 					currentTeam = Team.Player;
@@ -230,9 +232,10 @@ namespace CombatWorld {
 		public void UnitDied(Team team, Node node) {
 			if(team == Team.AI) {
 				SummonHandler.instance.GivePoints(2);
+				AICalculateScore.instance.RemoveAIUnit(node.GetUnit());
 			}
 			else {
-				AIController.instance.GiveSummonPoints(2);
+				//AIController.instance.GiveSummonPoints(2);
 			}
 			node.ResetState();
 		}
@@ -256,7 +259,7 @@ namespace CombatWorld {
 					Lost();
 					return;
 				}
-				AIController.instance.GiveSummonPoints(2);
+				//AIController.instance.GiveSummonPoints(2);
 			}
 		}
 

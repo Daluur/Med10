@@ -13,15 +13,16 @@ public class AITaskImplementations {
 
 	private static Queue<AIUnit> tasksToComplete = new Queue<AIUnit>();
 
+	private static bool performingAction = false;
+
 	private static Coroutine waiting;
 	private static bool isRunning;
 
 	public static void DoAIAction(AIUnit unit, AITask task) {
-
+		unit.SetTaskToDo(task);
 		tasksToComplete.Enqueue(unit);
 
 		if(!isRunning){
-			Debug.Log("Started");
 			waiting = unit.myUnit.StartCoroutine(WaitForAction(unit));
 		}
 	}
@@ -30,30 +31,35 @@ public class AITaskImplementations {
 	private static void DoAction(AIUnit unit) {
 		var task = unit.taskToDo;
 		switch (task.task) {
-				case AICalculateScore.PossibleTasks.Attack:
-					break;
-				case AICalculateScore.PossibleTasks.MoveAttack:
-					MoveToAndAttack(task.endNode, task.toAttack, unit.myUnit);
-					break;
-				case AICalculateScore.PossibleTasks.MoveDefensive:
-					MoveTo(task.endNode, unit.myUnit);
-					break;
-				case AICalculateScore.PossibleTasks.MoveFromSpawn:
-					break;
-				case AICalculateScore.PossibleTasks.MoveOffensive:
-					MoveTo(task.endNode, unit.myUnit);
-					break;
-				case AICalculateScore.PossibleTasks.Stay:
-					break;
-				case AICalculateScore.PossibleTasks.TurnShadow:
-					break;
-				case AICalculateScore.PossibleTasks.TurnStone:
-					break;
-				default:
-					Debug.LogError("Not implemented yet for this type of action");
-					break;
+			case AICalculateScore.PossibleTasks.Attack:
+				Attack(task.toAttack, unit.myUnit);
+				break;
+			case AICalculateScore.PossibleTasks.MoveAttack:
+				MoveToAndAttack(task.endNode, task.toAttack, unit.myUnit);
+				break;
+			case AICalculateScore.PossibleTasks.MoveAttackDefensive:
+				MoveToAndAttack(task.endNode, task.toAttack, unit.myUnit);
+				break;
+			case AICalculateScore.PossibleTasks.MoveDefensive:
+				MoveTo(task.endNode, unit.myUnit);
+				break;
+			case AICalculateScore.PossibleTasks.MoveBlock:
+				MoveTo(task.endNode, unit.myUnit);
+				break;
+			case AICalculateScore.PossibleTasks.MoveOffensive:
+				MoveTo(task.endNode, unit.myUnit);
+				break;
+			case AICalculateScore.PossibleTasks.Stay:
+				break;
+			case AICalculateScore.PossibleTasks.MoveFromSpawn:
+				MoveTo(task.endNode, unit.myUnit);
+				break;
+			default:
+				Debug.LogError("Not implemented yet for this type of action");
+				break;
 
 		}
+		unit.ClearTasks();
 
 	}
 
@@ -86,9 +92,27 @@ public class AITaskImplementations {
 	}
 
 	private static void MoveToAndAttack(Node moveTo, Node toAttack, Unit unit) {
-		unit.Move(pathFinding.GetPathFromTo(unit.GetNode(), moveTo));
-		if (toAttack.HasOccupant() && toAttack.GetOccupant().GetTeam() != Team.AI) {
-			unit.Attack(toAttack.GetOccupant());
+		performingAction = true;
+		Debug.Log("Move and attack");
+		unit.Move(pathFinding.GetPathFromTo(unit.GetNode(), moveTo), true);
+		unit.StartCoroutine(MoveAndAttackWait(unit, toAttack));
+	}
+
+	private static void Attack(Node toAttack, Unit unit) {
+		Debug.Log("Attack");
+		unit.Attack(toAttack.GetOccupant());
+	}
+
+	private static IEnumerator MoveAndAttackWait(Unit unit, Node toAttack) {
+		while (unit.doingAction) {
+			yield return new WaitForSeconds(0.1f);
 		}
+		unit.Attack(toAttack.GetOccupant());
+		performingAction = false;
+		yield return null;
+	}
+
+	public static bool GetPerformingAction() {
+		return performingAction;
 	}
 }
