@@ -37,6 +37,8 @@ namespace CombatWorld
 			for (int i = 0; i < 3; i++) {
 				toReturn.Add(database.FetchItemByID(i));
 			}
+			toReturn.Add(database.FetchItemByID(5));
+			toReturn.Add(database.FetchItemByID(4));
 			return toReturn;
 		}
 
