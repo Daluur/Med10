@@ -32,6 +32,8 @@ namespace CombatWorld.Units {
 		private bool moved = true;
 		private bool attacked = true;
 
+		private float moveSpeed = 12.5f;
+
 		private AnimationHandler animHelp;
 
 		void Start() {
@@ -136,7 +138,12 @@ namespace CombatWorld.Units {
 
 		public void TakeDamage(DamagePackage damage) {
 			damageIntake = damage;
-			health -= damageIntake.CalculateDamageAgainst(type);
+			if (turnedToStone && DamageConstants.ROCKUNITONLYTAKES1DMG) {
+				health -= 1;
+			}
+			else {
+				health -= damageIntake.CalculateDamageAgainst(type);
+			}
 			animHelp.TakeDamage(TookDamage);
 		}
 
@@ -193,8 +200,8 @@ namespace CombatWorld.Units {
 				transform.LookAt(target[i].transform);
 				bool moving = true;
 				while (moving) {
-					transform.position += (target[i].transform.position - transform.position).normalized * 5 * Time.deltaTime;
-					if ((transform.position - target[i].transform.position).magnitude < 0.1f) {
+					transform.position += (target[i].transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
+					if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
 						moving = false;
 						
 					}
@@ -211,7 +218,10 @@ namespace CombatWorld.Units {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
-			health += damage;
+			if (DamageConstants.ROCKUNITSGETSATTACKASHEALTH) {
+				health += damage;
+			}
+			animHelp.TurnToStone();
 			damage = 0;
 			moveDistance = 0;
 			moved = attacked = true;

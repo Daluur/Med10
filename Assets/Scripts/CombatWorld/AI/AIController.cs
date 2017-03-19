@@ -90,10 +90,12 @@ namespace CombatWorld.AI {
 
 		void UseSummonPoints(int amount) {
 			summonPoints -= amount;
+			SummonHandler.instance.GivePoints(0);
 		}
 
 		public void GiveSummonPoints(int amount) {
 			summonPoints += amount;
+			SummonHandler.instance.GivePoints(0);
 		}
 	}
 }
