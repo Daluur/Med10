@@ -7,7 +7,7 @@ namespace CombatWorld.Units {
 	public class Projectile : MonoBehaviour {
 
 		Transform target;
-		float speed = 10;
+		float speed = 25;
 		Action<DamagePackage> CB;
 		Vector3 dir;
 		DamagePackage damage;
