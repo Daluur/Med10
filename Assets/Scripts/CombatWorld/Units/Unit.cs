@@ -16,7 +16,7 @@ namespace CombatWorld.Units {
 		private bool shadowUnit = false;
 
 		[SerializeField]
-		private bool rockUnit = false;
+		private bool stoneUnit = false;
 		bool turnedToStone = false;
 
 		private int health;
@@ -33,6 +33,10 @@ namespace CombatWorld.Units {
 		private bool attacked = true;
 
 		public bool doingAction = false;
+		
+		private Vector3 defaultFaceDirection;
+
+		private float moveSpeed = 12.5f;
 
 		private AnimationHandler animHelp;
 
@@ -41,7 +45,7 @@ namespace CombatWorld.Units {
 		}
 
 		public void Move(List<Node> node) {
-			GameController.instance.WaitForAction();
+			GameController.instance.AddWaitForUnit(this);
 			currentNode.RemoveOccupant();
 			currentNode = node[0];
 			currentNode.SetOccupant(this);
@@ -100,8 +104,8 @@ namespace CombatWorld.Units {
 			return shadowUnit;
 		}
 
-		public bool IsRockUnit() {
-			return rockUnit;
+		public bool IsStoneUnit() {
+			return stoneUnit;
 		}
 
 		#endregion
@@ -117,6 +121,7 @@ namespace CombatWorld.Units {
 		DamagePackage damagePack;
 
 		public void Attack(IEntity target) {
+			GameController.instance.AddWaitForUnit(this);
 			this.target = target;
 			attacked = moved = true;
 			damagePack = new DamagePackage(damage, this, type);
@@ -130,13 +135,12 @@ namespace CombatWorld.Units {
 		}
 
 		void DealDamage() {
-			GameController.instance.WaitForAction();
 			transform.LookAt(target.GetTransform());
 			animHelp.Attack(SpawnProjectile);
 		}
 
 		void SpawnProjectile() {
-			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Projectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack);
+			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Projectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, FinishedAction);
 			target = null;
 			if(health <= 0) {
 				Die();
@@ -146,8 +150,14 @@ namespace CombatWorld.Units {
 		DamagePackage damageIntake = null;
 
 		public void TakeDamage(DamagePackage damage) {
+			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
-			health -= damageIntake.CalculateDamageAgainst(type);
+			if (turnedToStone && DamageConstants.ROCKUNITONLYTAKES1DMG) {
+				health -= 1;
+			}
+			else {
+				health -= damageIntake.CalculateDamageAgainst(type);
+			}
 			animHelp.TakeDamage(TookDamage);
 		}
 
@@ -173,18 +183,23 @@ namespace CombatWorld.Units {
 		}
 
 		public void Die() {
+			GameController.instance.UnitDied(team, currentNode);
+			currentNode.RemoveOccupant();
 			animHelp.Die(Death);
 		}
 
 		void Death() {
-			GameController.instance.UnitDied(team, currentNode);
-			currentNode.RemoveOccupant();
 			FinishedAction();
 			Destroy(gameObject);
 		}
 
 		void FinishedAction() {
-			GameController.instance.UnitMadeAction();
+			GameController.instance.PerformedAction(this);
+			FaceForward();
+		}
+
+		void FaceForward() {
+			transform.LookAt(transform.position + defaultFaceDirection, Vector3.up);
 		}
 
 		void FinishedImediateAction() {
@@ -199,6 +214,13 @@ namespace CombatWorld.Units {
 			this.team = team;
 			currentNode = node;
 			node.SetOccupant(this);
+			if(team == Team.Player) {
+				defaultFaceDirection = Vector3.right;
+			}
+			else {
+				defaultFaceDirection = Vector3.left;
+			}
+			FaceForward();
 		}
 
 		IEnumerator MoveTo(List<Node> target, bool AIAttackAfter) {
@@ -209,8 +231,8 @@ namespace CombatWorld.Units {
 				transform.LookAt(target[i].transform);
 				bool moving = true;
 				while (moving) {
-					transform.position += (target[i].transform.position - transform.position).normalized * 5 * Time.deltaTime;
-					if ((transform.position - target[i].transform.position).magnitude < 0.1f) {
+					transform.position += (target[i].transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
+					if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
 						moving = false;
 						
 					}
@@ -226,17 +248,19 @@ namespace CombatWorld.Units {
 			FinishedAction();
 		}
 
-		public void TurnToRock() {
-			if (!rockUnit) {
+		public void TurnToStone() {
+			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
-			health += damage;
+			if (DamageConstants.ROCKUNITSGETSATTACKASHEALTH) {
+				health += damage;
+			}
+			animHelp.TurnToStone();
 			damage = 0;
 			moveDistance = 0;
 			moved = attacked = true;
 			turnedToStone = true;
 		}
-
 	}
 }

@@ -7,18 +7,20 @@ namespace CombatWorld.Units {
 	public class Projectile : MonoBehaviour {
 
 		Transform target;
-		float speed = 10;
+		float speed = 25;
 		Action<DamagePackage> CB;
+		Action finishCB;
 		Vector3 dir;
 		DamagePackage damage;
 
-		public void Setup(Transform target, Action<DamagePackage> cb, DamagePackage damage) {
+		public void Setup(Transform target, Action<DamagePackage> cb, DamagePackage damage, Action finishCB) {
 			this.target = target;
 			this.damage = damage;
 			transform.LookAt(target);
 			dir = target.transform.position - transform.position;
 			dir.Normalize();
 			CB = cb;
+			this.finishCB = finishCB;
 			StartCoroutine(Travel());
 		}
 
@@ -32,6 +34,7 @@ namespace CombatWorld.Units {
 				yield return new WaitForEndOfFrame();
 			}
 			CB(damage);
+			finishCB();
 			Destroy(gameObject);
 		}
 	}

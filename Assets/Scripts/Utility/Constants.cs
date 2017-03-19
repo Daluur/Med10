@@ -27,6 +27,8 @@ public static class DamageConstants {
 	public const int EFFECTIVEMULTIPLIER = 2;
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
 	public const bool ALLOWRETALIATIONAFTERDEATH = true;
+	public const bool ROCKUNITSGETSATTACKASHEALTH = false;
+	public const bool ROCKUNITONLYTAKES1DMG = true;
 }
 
 public static class GameNotificationConstants {

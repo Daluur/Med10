@@ -1381,7 +1381,7 @@ Transform:
   m_GameObject: {fileID: 1597974298994722}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4991091951354424}
   - {fileID: 224170436746875626}
@@ -1409,7 +1409,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1333709728076760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4323547889418392}
@@ -1711,6 +1711,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: Melee Right Attack 01
   projectile: {fileID: 1640924473077204, guid: 5949e6c3b12c17145a3532f8b2c7834b, type: 2}
+  shadowUnit: 0
+  rockUnit: 0
 --- !u!114 &114561645371224050
 MonoBehaviour:
   m_ObjectHideFlags: 1

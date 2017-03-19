@@ -29,6 +29,7 @@ namespace CombatWorld {
 		int PlayerTowersRemaining = 0;
 
 		bool waitingForAction = false;
+		List<Unit> performingAction = new List<Unit>();
 
 		void Start() {
 			pathfinding = new Pathfinding();
@@ -123,19 +124,20 @@ namespace CombatWorld {
 			else {
 				if (selectedUnit.CanMove()) {
 					if (selectedUnit.IsShadowUnit()) {
+						Debug.Log("is shadow");
 						HighlightMoveableNodes(pathfinding.GetAllReachableNodes(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
 					}
 					else {
 						HighlightMoveableNodes(pathfinding.GetAllNodesWithinDistance(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
 					}
-					if (selectedUnit.IsRockUnit()) {
+					if (selectedUnit.IsStoneUnit()) {
 						selectedUnit.GetNode().SetState(HighlightState.SelfClick);
 					}
 				}
 
 				if (selectedUnit.CanAttack()) {
 					HighlightAttackableNodes();
-					if (selectedUnit.IsRockUnit()) {
+					if (selectedUnit.IsStoneUnit()) {
 						selectedUnit.GetNode().SetState(HighlightState.SelfClick);
 					}
 				}
@@ -202,7 +204,7 @@ namespace CombatWorld {
 		}
 
 		public void NodeGotSelfClick() {
-			selectedUnit.TurnToRock();
+			selectedUnit.TurnToStone();
 		}
 
 		public void GotInput() {
@@ -215,8 +217,8 @@ namespace CombatWorld {
 			waitingForAction = false;
 			if (currentTeam == Team.Player) {
 				SelectTeamNodes();
+				endTurnButton.interactable = true;
 			}
-			endTurnButton.interactable = true;
 		}
 
 		public void SetSelectedUnit(Unit unit) {
@@ -238,12 +240,34 @@ namespace CombatWorld {
 		}
 
 		public void WaitForAction() {
+			Debug.LogError("OLD function, use AddWaitForUnit");
+			return;
 			endTurnButton.interactable = false;
 			waitingForAction = true;
 		}
 
 		public bool WaitingForAction() {
-			return waitingForAction;
+			return performingAction.Count > 0;
+		}
+
+		public void AddWaitForUnit(Unit unit) {
+			endTurnButton.interactable = false;
+			if (performingAction.Contains(unit)) {
+				Debug.LogWarning("Was already performing an action " + unit);
+			}
+			else {
+				performingAction.Add(unit);
+			}
+			waitingForAction = true;
+		}
+
+		public void PerformedAction(Unit unit) {
+			if (performingAction.Contains(unit)) {
+				performingAction.Remove(unit);
+			}
+			if(performingAction.Count == 0) {
+				UnitMadeAction();
+			}
 		}
 
 		#region SummonPoints
