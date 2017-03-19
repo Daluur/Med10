@@ -32,6 +32,8 @@ namespace CombatWorld.Units {
 		private bool moved = true;
 		private bool attacked = true;
 
+		private Vector3 defaultFaceDirection;
+
 		private AnimationHandler animHelp;
 
 		void Start() {
@@ -174,6 +176,11 @@ namespace CombatWorld.Units {
 
 		void FinishedAction() {
 			GameController.instance.UnitMadeAction();
+			FaceForward();
+		}
+
+		void FaceForward() {
+			transform.LookAt(transform.position + defaultFaceDirection, Vector3.up);
 		}
 
 		public void SpawnEntity(Node node, Team team, CombatData data) {
@@ -184,6 +191,13 @@ namespace CombatWorld.Units {
 			this.team = team;
 			currentNode = node;
 			node.SetOccupant(this);
+			if(team == Team.Player) {
+				defaultFaceDirection = Vector3.right;
+			}
+			else {
+				defaultFaceDirection = Vector3.left;
+			}
+			FaceForward();
 		}
 
 		IEnumerator MoveTo(List<Node> target) {
