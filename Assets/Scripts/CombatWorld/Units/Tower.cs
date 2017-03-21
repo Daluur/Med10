@@ -8,7 +8,7 @@ using System;
 namespace CombatWorld.Units {
 	public class Tower : MonoBehaviour, IEntity {
 
-		private int health = 15;
+		private int health = DamageConstants.TOWERHP;
 		[SerializeField]
 		private Team team;
 		[SerializeField]

@@ -80,14 +80,14 @@ namespace CombatWorld {
 					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
-					AIController.instance.GiveSummonPoints(2);
+					AIController.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
 					StartTurn();
 					AIController.instance.MyTurn();
 					break;
 				case Team.AI:
 					currentTeam = Team.Player;
-					SummonHandler.instance.GivePoints(2);
+					SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
 					StartTurn();
 					SelectTeamNodes();
@@ -271,10 +271,10 @@ namespace CombatWorld {
 
 		public void UnitDied(Team team, Node node) {
 			if(team == Team.AI) {
-				SummonHandler.instance.GivePoints(2);
+				SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERKILL);
 			}
 			else {
-				AIController.instance.GiveSummonPoints(2);
+				AIController.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERKILL);
 			}
 			node.ResetState();
 		}
@@ -290,7 +290,7 @@ namespace CombatWorld {
 					Won();
 					return;
 				}
-				SummonHandler.instance.GivePoints(2);
+				SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERTOWERKILL);
 			}
 			else {
 				PlayerTowersRemaining--;
@@ -298,7 +298,7 @@ namespace CombatWorld {
 					Lost();
 					return;
 				}
-				AIController.instance.GiveSummonPoints(2);
+				AIController.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERTOWERKILL);
 			}
 		}
 
