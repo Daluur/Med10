@@ -19,6 +19,7 @@ namespace Overworld {
 				following = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
 			}
 			camPos = cam.gameObject.transform.position;
+			camPos = new Vector3(camPos.x, camPos.y + following.transform.position.y, camPos.z);
 		}
 
 		void Update () {
