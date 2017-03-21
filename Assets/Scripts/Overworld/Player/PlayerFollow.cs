@@ -8,6 +8,7 @@ namespace Overworld {
 
 		public GameObject following;
 		public float offSet = 12f;
+		public float yOffset = 20f;
 		private Vector3 camPos;
 		private Camera cam;
 		public float maxZoom = 25.5f, minZoom = 5.5f;
@@ -19,24 +20,28 @@ namespace Overworld {
 				following = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
 			}
 			camPos = cam.gameObject.transform.position;
-			camPos = new Vector3(camPos.x, camPos.y + following.transform.position.y, camPos.z);
+			camPos = new Vector3(camPos.x, yOffset + following.transform.position.y, camPos.z);
 		}
 
 		void Update () {
-			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x,camPos.y,following.transform.position.z - offSet);
+			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x,yOffset + following.transform.position.y,following.transform.position.z - offSet);
 			CameraZoom();
 		}
 
 		void CameraZoom() {
+			var maxZoomOut = camPos.y + maxZoom;
+			var minZoomIn = camPos.y - minZoom;
 			var displacment = Input.mouseScrollDelta.y;
 			if (displacment < 0f) {
-				if(camPos.y + 1f  <= maxZoom){
+				if(camPos.y + 1f  <= maxZoomOut){
+					yOffset += 1f;
 					offSet += 1f;
 					camPos += new Vector3(0f, 1f, offSet);
 				}
 			}
 			if (displacment > 0f) {
-				if(( camPos.y - 1 ) > minZoom){
+				if(( camPos.y - 1 ) > minZoomIn) {
+					yOffset -= 1f;
 					offSet -= 1f;
 					camPos -= new Vector3(0f, 1f, offSet);
 				}
