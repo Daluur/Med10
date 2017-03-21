@@ -7,9 +7,6 @@ public class QuestGiver : MonoBehaviour {
 
 	private bool inTrigger = false;
 
-	public List<int> availableQuestIDs = new List<int>();
-	public List<int> receivableQuestIDs = new List<int>();
-
 	public GameObject questMarker;
 	public Image markerImage;
 
@@ -23,28 +20,6 @@ public class QuestGiver : MonoBehaviour {
 
 	void SetQuestMarker() {
 
-		if (QuestManager.questManager.CheckCompletedQuests(this)) {
-
-			questMarker.SetActive (true);
-			markerImage.sprite = questReceivable;
-			markerImage.color = Color.yellow;
-		}
-		else if (QuestManager.questManager.CheckAvailableQuests(this)) {
-
-			questMarker.SetActive (true);
-			markerImage.sprite = questAvailable;
-			markerImage.color = Color.red;
-		}
-		else if (QuestManager.questManager.CheckAcceptedQuests(this)) {
-
-			questMarker.SetActive (true);
-			markerImage.sprite = questReceivable;
-			markerImage.color = Color.gray;
-		} 
-		else {
-
-			questMarker.SetActive (false);
-		}
 	}
 
 	void Update() {
@@ -52,7 +27,7 @@ public class QuestGiver : MonoBehaviour {
 		if (inTrigger && Input.GetKeyDown(KeyCode.Space)) {
 
 			//quest UI manager
-			QuestManager.questManager.QuestRequest (this);
+			//QuestManager.questManager.QuestRequest (this);
 		}
 	}
 
