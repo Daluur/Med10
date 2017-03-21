@@ -18,7 +18,7 @@ namespace CombatWorld
 		CombatData currentlySelectedData;
 		ItemDatabase database;
 
-		int summonPoints = 3;
+		int summonPoints = 2;
 
 		private void Start() {
 			database = new ItemDatabase();
@@ -51,6 +51,7 @@ namespace CombatWorld
 			SpendPoints(currentlySelectedData.cost);
 			GameObject unit = Instantiate(currentlySelectedData.model, node.transform.position, Quaternion.identity) as GameObject;
 			unit.GetComponent<Unit>().SpawnEntity(node, Team.Player, currentlySelectedData);
+			unit.transform.parent = transform;
 		}
 
 		public void SummonButtonPressed(CombatData CD) {
@@ -89,6 +90,7 @@ namespace CombatWorld
 			CombatData data = new CombatData(item);
 			GameObject unit = Instantiate(data.model, node.transform.position, Quaternion.identity) as GameObject;
 			unit.GetComponent<Unit>().SpawnEntity(node, Team.AI, data);
+			unit.transform.parent = transform;
 			return unit.GetComponent<Unit>();
 		}
 	}

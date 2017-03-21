@@ -29,6 +29,10 @@ public static class DamageConstants {
 	public const bool ALLOWRETALIATIONAFTERDEATH = true;
 	public const bool ROCKUNITSGETSATTACKASHEALTH = false;
 	public const bool ROCKUNITONLYTAKES1DMG = true;
+	public const int TOWERHP = 100;
+	public const int SUMMONPOINTSPERTURN = 1;
+	public const int SUMMONPOINTSPERKILL = 1;
+	public const int SUMMONPOINTSPERTOWERKILL = 3;
 }
 
 public static class GameNotificationConstants {
