@@ -71,7 +71,7 @@ public class UnitMaker : EditorWindow {
 
 			filterFor_type = EditorGUILayout.Toggle("Filter for type", filterFor_type);
 			if (filterFor_type) {
-				filter_type = (ElementalTypes)EditorGUILayout.EnumPopup("Special: ", filter_type);
+				filter_type = (ElementalTypes)EditorGUILayout.EnumPopup("Type: ", filter_type);
 			}
 
 			filter_slug = EditorGUILayout.TextField("slug", filter_slug);
@@ -171,14 +171,14 @@ public class UnitMaker : EditorWindow {
 				}
 			}
 		}
-		
-		if (GUILayout.Button("NEW!",GUILayout.Height(95))) {
+		EditorGUILayout.EndScrollView();
+
+		if (GUILayout.Button("NEW!", GUILayout.Height(40))) {
+			scrollPos.y = float.MaxValue;
 			NewUnit();
 		}
 
-		EditorGUILayout.EndScrollView();
-
-		if (GUILayout.Button("Save and close!", GUILayout.Height(95))) {
+		if (GUILayout.Button("Save and close!", GUILayout.Height(55))) {
 			Save();
 			window.Close();
 		}
