@@ -267,6 +267,26 @@ namespace CombatWorld {
 			}
 		}
 
+		public List<Unit> GetAllUnits() {
+			List<Unit> units = new List<Unit>();
+			foreach (Node node in allNodes) {
+				if (node.HasUnit()) {
+					units.Add(node.GetUnit());
+				}
+			}
+			return units;
+		}
+
+		public List<Unit> GettAllUnitsOfTeam(Team team) {
+			List<Unit> units = new List<Unit>();
+			foreach (Node node in allNodes) {
+				if(node.HasUnit() && node.GetUnit().GetTeam() == team) {
+					units.Add(node.GetUnit());
+				}
+			}
+			return units;
+		}
+
 		#region SummonPoints
 
 		public void UnitDied(Team team, Node node) {
