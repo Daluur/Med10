@@ -678,8 +678,8 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 				calculatedSummonPoints -= units[ind].cost;
 				Debug.Log("Wanting to summon: " + units[ind].model.name + " for: " + units[ind].cost + " " + calculatedSummonPoints);
 				index.Add(ind);
-				iterator++;
 			}
+			iterator++;
 		}
 		return index;
 	}
