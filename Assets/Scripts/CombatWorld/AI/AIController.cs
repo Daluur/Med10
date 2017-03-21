@@ -18,7 +18,7 @@ namespace CombatWorld.AI {
 
 		Pathfinding pathfinding = new Pathfinding();
 
-		int summonPoints = 3;
+		int summonPoints = 2;
 
 		public void MyTurn() {
 			CheckForDeadUnits();
@@ -88,14 +88,8 @@ namespace CombatWorld.AI {
 			}
 		}
 
-		void UseSummonPoints(int amount) {
-			summonPoints -= amount;
-			SummonHandler.instance.GivePoints(0);
-		}
-
 		public void GiveSummonPoints(int amount) {
 			summonPoints += amount;
-			SummonHandler.instance.GivePoints(0);
 		}
 	}
 }

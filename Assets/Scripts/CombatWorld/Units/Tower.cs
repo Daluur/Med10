@@ -8,7 +8,7 @@ using System;
 namespace CombatWorld.Units {
 	public class Tower : MonoBehaviour, IEntity {
 
-		private int health = 15;
+		private int health = DamageConstants.TOWERHP;
 		[SerializeField]
 		private Team team;
 		[SerializeField]
@@ -27,6 +27,10 @@ namespace CombatWorld.Units {
 
 		public void Die() {
 			GameController.instance.DestroyTower(team);
+			foreach (Node node in currentNode.GetNeighbours()) {
+				node.neighbours.Remove(currentNode);
+			}
+			currentNode.neighbours.Clear();
 			currentNode.RemoveOccupant();
 			Destroy(gameObject);
 		}
