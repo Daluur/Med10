@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Overworld;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Overworld {
 	public class ContextInteraction : InputSubscriber {
@@ -34,8 +35,10 @@ namespace Overworld {
 		}
 
 		private bool DistanceBetweenObjAndPlayer() {
-			if (Vector3.Distance(playerOW.transform.position, gameObject.transform.position) < distanceToOpen)
+			if (Vector3.Distance(playerOW.transform.position, gameObject.transform.position) < distanceToOpen){
+				playerOW.GetComponent<PlayerMovementOW>().DoAction();
 				return true;
+			}
 			return false;
 		}
 
