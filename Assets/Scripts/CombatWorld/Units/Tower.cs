@@ -27,6 +27,10 @@ namespace CombatWorld.Units {
 
 		public void Die() {
 			GameController.instance.DestroyTower(team);
+			foreach (Node node in currentNode.GetNeighbours()) {
+				node.neighbours.Remove(currentNode);
+			}
+			currentNode.neighbours.Clear();
 			currentNode.RemoveOccupant();
 			Destroy(gameObject);
 		}

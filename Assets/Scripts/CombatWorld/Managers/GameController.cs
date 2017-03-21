@@ -122,7 +122,6 @@ namespace CombatWorld {
 			else {
 				if (selectedUnit.CanMove()) {
 					if (selectedUnit.IsShadowUnit()) {
-						Debug.Log("is shadow");
 						HighlightMoveableNodes(pathfinding.GetAllReachableNodes(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
 					}
 					else {
