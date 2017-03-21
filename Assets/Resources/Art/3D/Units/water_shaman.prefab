@@ -35,6 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4249684233955664}
   - component: {fileID: 114416172349608022}
+  - component: {fileID: 135783573459428840}
   m_Layer: 0
   m_Name: water_shaman
   m_TagString: Untagged
@@ -1717,6 +1718,16 @@ MonoBehaviour:
   attackName: Melee Right Attack 01
   projectile: {fileID: 1640924473077204, guid: 5949e6c3b12c17145a3532f8b2c7834b, type: 2}
   lightSource: {fileID: 108655116706157312}
+  data:
+    name: 
+    moveDistance: 0
+    attackValue: 0
+    healthValue: 0
+    cost: 0
+    shadow: 0
+    stone: 0
+    model: {fileID: 0}
+    type: 0
 --- !u!114 &114978034858311346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1750,6 +1761,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1
+--- !u!135 &135783573459428840
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1049695476210686}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137915113083803744
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CombatWorld.Map;
 using CombatWorld.Utility;
+using UnityEngine.EventSystems;
 
 namespace CombatWorld.Units {
 	public class Unit : MonoBehaviour, IEntity {
@@ -32,6 +33,8 @@ namespace CombatWorld.Units {
 		private bool attacked = true;
 
 		private Vector3 defaultFaceDirection;
+
+		public CombatData data;
 
 		private float moveSpeed = 12.5f;
 
@@ -200,6 +203,7 @@ namespace CombatWorld.Units {
 			stoneUnit = data.stone;
 			shadowUnit = data.shadow;
 			node.SetOccupant(this);
+			this.data = data;
 			lightSource.color = GetColorFromType();
 			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
@@ -260,6 +264,14 @@ namespace CombatWorld.Units {
 			moveDistance = 0;
 			moved = attacked = true;
 			turnedToStone = true;
+		}
+
+		void OnMouseEnter() {
+			TooltipHandler.instance.CreateTooltip(transform.position, this);
+		}
+
+		void OnMouseExit() {
+			TooltipHandler.instance.CloseTooltip();
 		}
 	}
 }

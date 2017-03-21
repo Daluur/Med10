@@ -437,6 +437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4566954938146264}
   - component: {fileID: 114505287192355542}
+  - component: {fileID: 135990547161102492}
   m_Layer: 0
   m_Name: nature_warrior
   m_TagString: Untagged
@@ -1697,6 +1698,16 @@ MonoBehaviour:
   attackName: Melee Right Attack 01
   projectile: {fileID: 1640924473077204, guid: 5949e6c3b12c17145a3532f8b2c7834b, type: 2}
   lightSource: {fileID: 108669755154901918}
+  data:
+    name: 
+    moveDistance: 0
+    attackValue: 0
+    healthValue: 0
+    cost: 0
+    shadow: 0
+    stone: 0
+    model: {fileID: 0}
+    type: 0
 --- !u!114 &114542899193957154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1781,6 +1792,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba13f54de909ab4483a016f024fb9ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &135990547161102492
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1622895357466536}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137251946793409812
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

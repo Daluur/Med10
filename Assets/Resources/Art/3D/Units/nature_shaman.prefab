@@ -426,6 +426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4974738890226740}
   - component: {fileID: 114236744570078950}
+  - component: {fileID: 135496906962480150}
   m_Layer: 0
   m_Name: nature_shaman
   m_TagString: Untagged
@@ -1776,6 +1777,16 @@ MonoBehaviour:
   attackName: Melee Right Attack 01
   projectile: {fileID: 1640924473077204, guid: 5949e6c3b12c17145a3532f8b2c7834b, type: 2}
   lightSource: {fileID: 108263842416772772}
+  data:
+    name: 
+    moveDistance: 0
+    attackValue: 0
+    healthValue: 0
+    cost: 0
+    shadow: 0
+    stone: 0
+    model: {fileID: 0}
+    type: 0
 --- !u!114 &114561645371224050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1868,6 +1879,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1
+--- !u!135 &135496906962480150
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1597974298994722}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137074828825338454
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

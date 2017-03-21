@@ -411,6 +411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4225081323239258}
   - component: {fileID: 114621530550703620}
+  - component: {fileID: 135229722317059086}
   m_Layer: 0
   m_Name: light_archer
   m_TagString: Untagged
@@ -1693,6 +1694,16 @@ MonoBehaviour:
   attackName: Melee Right Attack 01
   projectile: {fileID: 1640924473077204, guid: 5949e6c3b12c17145a3532f8b2c7834b, type: 2}
   lightSource: {fileID: 108540038039371876}
+  data:
+    name: 
+    moveDistance: 0
+    attackValue: 0
+    healthValue: 0
+    cost: 0
+    shadow: 0
+    stone: 0
+    model: {fileID: 0}
+    type: 0
 --- !u!114 &114633100188203822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1750,6 +1761,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba13f54de909ab4483a016f024fb9ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &135229722317059086
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1467680697508270}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137513996164177554
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

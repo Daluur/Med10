@@ -357,6 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4953509744677038}
   - component: {fileID: 114034107034654398}
+  - component: {fileID: 135622527418759116}
   m_Layer: 0
   m_Name: Warrior02
   m_TagString: Untagged
@@ -1576,6 +1577,16 @@ MonoBehaviour:
   attackName: Right Punch Attack
   projectile: {fileID: 1063805332281906, guid: 3d16eeae53dc60c4d9e51d59da162c16, type: 2}
   lightSource: {fileID: 108802949050401606}
+  data:
+    name: 
+    moveDistance: 0
+    attackValue: 0
+    healthValue: 0
+    cost: 0
+    shadow: 0
+    stone: 0
+    model: {fileID: 0}
+    type: 0
 --- !u!114 &114329161387726114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1681,6 +1692,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 100
+--- !u!135 &135622527418759116
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1578989096024508}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137890085240306438
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
