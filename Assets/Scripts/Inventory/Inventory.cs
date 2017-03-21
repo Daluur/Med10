@@ -23,9 +23,9 @@ public class Inventory : MonoBehaviour {
 		slotPanel = inventoryPanel.transform.FindChild ("Slot Panel").gameObject;
 		for (int i = 0; i < slotAmount; i++) {
 			items.Add (new Item());
-			slots.Add (Instantiate (inventorySlot));
+			slots.Add (Instantiate (inventorySlot,slotPanel.transform));
 			slots [i].GetComponent<Slot> ().id = i;
-			slots [i].transform.SetParent (slotPanel.transform);
+			//slots [i].transform.SetParent (slotPanel.transform);
 		}
 
 		AddItem (0);
