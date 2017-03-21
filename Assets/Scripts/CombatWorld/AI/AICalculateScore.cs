@@ -199,7 +199,7 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 				case PossibleTasks.Stay:
 					if (unit.GetNode())
 						if (AmIBlockingTowerHits(unit)) {
-							task.score = 7;
+							task.score = 7 - offensiveFactor*2;
 						}
 						else {
 							task.score = -3;
@@ -259,8 +259,10 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 			}
 		}
 		if (atkNextToTowers != 0) {
+			Debug.Log(atkNextToTowers + " attackvalue next to towers");
 			turnsToKillTowers = hpOfTowers / atkNextToTowers;
 		}
+		Debug.Log("turns to kill towers" + turnsToKillTowers);
 		toReturn = turnsToKillTowers;
 		return toReturn;
 	}

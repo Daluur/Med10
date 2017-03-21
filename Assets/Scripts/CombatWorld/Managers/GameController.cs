@@ -278,6 +278,7 @@ namespace CombatWorld {
 				AICalculateScore.instance.RemoveAIUnit(node.GetUnit());
 			}
 			else {
+				AICalculateScore.instance.GiveSummonPoints(2);
 				//AIController.instance.GiveSummonPoints(2);
 			}
 			node.ResetState();
@@ -302,6 +303,7 @@ namespace CombatWorld {
 					Lost();
 					return;
 				}
+				AICalculateScore.instance.GiveSummonPoints(2);
 				//AIController.instance.GiveSummonPoints(2);
 			}
 		}

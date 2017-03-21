@@ -33,7 +33,7 @@ namespace CombatWorld.Units {
 		private bool attacked = true;
 
 		public bool doingAction = false;
-		
+
 		private Vector3 defaultFaceDirection;
 
 		private float moveSpeed = 12.5f;
@@ -54,7 +54,7 @@ namespace CombatWorld.Units {
 		}
 
 		public void Move(List<Node> node, bool AIAttackAfter) {
-			GameController.instance.WaitForAction();
+			GameController.instance.AddWaitForUnit(this);
 			currentNode.RemoveOccupant();
 			currentNode = node[0];
 			currentNode.SetOccupant(this);
