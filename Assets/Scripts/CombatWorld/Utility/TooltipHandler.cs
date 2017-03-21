@@ -13,6 +13,10 @@ namespace CombatWorld.Utility {
 			tooltip.SetData(Camera.main.WorldToScreenPoint(pos), unit);
 		}
 
+		public void CreateTooltip(Vector3 pos, CombatData data) {
+			tooltip.SetData(pos, data);
+		}
+
 		public void CloseTooltip() {
 			tooltip.Hide();
 		}

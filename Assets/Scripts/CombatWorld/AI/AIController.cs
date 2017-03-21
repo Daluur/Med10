@@ -18,7 +18,7 @@ namespace CombatWorld.AI {
 
 		Pathfinding pathfinding = new Pathfinding();
 
-		public int summonPoints = 3;
+		public int summonPoints = 2;
 
 		public void MyTurn() {
 			if (GameController.playerVSPlayer) {

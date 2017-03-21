@@ -149,7 +149,12 @@ namespace CombatWorld.Units {
 			else {
 				health -= damageIntake.CalculateDamageAgainst(type);
 			}
-			animHelp.TakeDamage(TookDamage);
+			if (turnedToStone) {
+				TookDamage();
+			}
+			else {
+				animHelp.TakeDamage(TookDamage);
+			}
 		}
 
 		void TookDamage() {
@@ -176,7 +181,12 @@ namespace CombatWorld.Units {
 		public void Die() {
 			GameController.instance.UnitDied(team, currentNode);
 			currentNode.RemoveOccupant();
-			animHelp.Die(Death);
+			if (turnedToStone) {
+				Death();
+			}
+			else {
+				animHelp.Die(Death);
+			}
 		}
 
 		void Death() {

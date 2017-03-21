@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CombatWorld.Utility;
+using UnityEngine.EventSystems;
 
 namespace CombatWorld.Units {
-	public class UnitButton : MonoBehaviour {
+	public class UnitButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
 		public Button button;
 		public Text unitName;
@@ -41,6 +42,14 @@ namespace CombatWorld.Units {
 
 		public bool CanAfford(int summonPoints) {
 			return summonPoints >= data.cost;
+		}
+
+		public void OnPointerEnter(PointerEventData eventData) {
+			TooltipHandler.instance.CreateTooltip(eventData.position, data);
+		}
+
+		public void OnPointerExit(PointerEventData eventData) {
+			TooltipHandler.instance.CloseTooltip();
 		}
 	}
 }

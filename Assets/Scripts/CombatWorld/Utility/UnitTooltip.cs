@@ -21,6 +21,15 @@ namespace CombatWorld.Utility {
 			gameObject.SetActive(true);
 		}
 
+		public void SetData(Vector3 pos, CombatData data) {
+			transform.position = pos;
+			unitName.text = data.name;
+			unitType.text = "ATT: " + data.attackValue;
+			unitSpecial.text = "HP: " + data.healthValue;
+			unitMoves.text = "Moves: " + data.moveDistance;
+			gameObject.SetActive(true);
+		}
+
 		public void Hide() {
 			gameObject.SetActive(false);
 		}

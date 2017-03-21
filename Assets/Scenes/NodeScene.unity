@@ -225,7 +225,21 @@ Prefab:
     - target: {fileID: 224653798112857942, guid: dde5fab992ca27f4c831f4ba883853a9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -52
+      value: 33.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125053223914312, guid: dde5fab992ca27f4c831f4ba883853a9, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224653798112857942, guid: dde5fab992ca27f4c831f4ba883853a9,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224653798112857942, guid: dde5fab992ca27f4c831f4ba883853a9,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dde5fab992ca27f4c831f4ba883853a9, type: 2}
@@ -398,7 +412,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
@@ -544,11 +558,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec1db36e00b6e934183f6c66f668954c, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &855731870 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1963595508603570, guid: ec1db36e00b6e934183f6c66f668954c,
-    type: 2}
-  m_PrefabInternal: {fileID: 855731869}
 --- !u!114 &855731871 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114691811828080564, guid: ec1db36e00b6e934183f6c66f668954c,
@@ -719,10 +728,10 @@ MonoBehaviour:
   summonPointP2Text: {fileID: 855731871}
   ButtonTemplate: {fileID: 1161403688557652, guid: 75b8f47372654dc4aa03ad04b979d252,
     type: 2}
-  buttonPanel: {fileID: 1374182882}
-  buttonPanelP2: {fileID: 855731870}
-  idsP1: 0000000001000000020000000300000004000000
-  idsP2: 0500000006000000070000000800000009000000
+  buttonPanel: {fileID: 2112114883}
+  buttonPanelP2: {fileID: 1736124648}
+  idsP1: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000
+  idsP2: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000
 --- !u!114 &1248978509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,7 +766,7 @@ MonoBehaviour:
     stone: 0
     model: {fileID: 0}
     type: 1
-  summonPoints: 3
+  summonPoints: 2
 --- !u!114 &1248978511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,11 +885,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec1db36e00b6e934183f6c66f668954c, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1374182882 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1963595508603570, guid: ec1db36e00b6e934183f6c66f668954c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1374182881}
 --- !u!114 &1374182883 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114691811828080564, guid: ec1db36e00b6e934183f6c66f668954c,
@@ -956,6 +960,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1736124648 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1823248914295542, guid: ec1db36e00b6e934183f6c66f668954c,
+    type: 2}
+  m_PrefabInternal: {fileID: 855731869}
 --- !u!1 &2014736635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,3 +1027,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2112114883 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1823248914295542, guid: ec1db36e00b6e934183f6c66f668954c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1374182881}
