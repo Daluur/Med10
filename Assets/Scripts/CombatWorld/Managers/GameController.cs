@@ -19,7 +19,7 @@ namespace CombatWorld {
 		List<Node> allNodes = new List<Node>();
 		List<SummonNode> playerSummonNodes = new List<SummonNode>();
 		List<SummonNode> AISummonNodes = new List<SummonNode>();
-		Team currentTeam;
+		public Team currentTeam;
 
 		Pathfinding pathfinding;
 
@@ -30,6 +30,9 @@ namespace CombatWorld {
 
 		bool waitingForAction = false;
 		List<Unit> performingAction = new List<Unit>();
+
+		public static bool playerVSPlayer = true;
+		public Text PVP;
 
 		void Start() {
 			pathfinding = new Pathfinding();
@@ -84,17 +87,31 @@ namespace CombatWorld {
 					CheckWinLose();
 					StartTurn();
 					AIController.instance.MyTurn();
+					if (playerVSPlayer) {
+						SummonHandler.instance.SetPlayerTurn(Team.AI);
+						SummonHandler.instance.GivePoints(0);
+						endTurnButton.interactable = true;
+						ResetAllNodes();
+						SelectTeamNodes();
+					}
 					break;
 				case Team.AI:
 					currentTeam = Team.Player;
+					if (playerVSPlayer) {
+						SummonHandler.instance.SetPlayerTurn(Team.Player);
+					}
 					SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
 					StartTurn();
+					ResetAllNodes();
 					SelectTeamNodes();
 					endTurnButton.interactable = true;
 					break;
 				default:
 					break;
+			}
+			if (playerVSPlayer) {
+				PVP.text = currentTeam == Team.Player ? "Player 1" : "Player 2";
 			}
 		}
 
@@ -143,11 +160,22 @@ namespace CombatWorld {
 
 		void HighlightSelectableUnits() {
 			foreach (Node node in allNodes) {
-				if (node.HasUnit() && node.GetOccupant().GetTeam() == Team.Player) {
+				if (node.HasUnit() && node.GetOccupant().GetTeam() == Team.Player && currentTeam == Team.Player) {
 					if (node.GetUnit().CanMove()) {
 						node.SetState(HighlightState.Selectable);
 					}
 					else if(node.GetUnit().CanAttack()) {
+						node.SetState(HighlightState.NoMoreMoves);
+					}
+					else {
+						node.SetState(HighlightState.NotMoveable);
+					}
+				}
+				else if(playerVSPlayer && currentTeam == Team.AI && node.HasUnit() && node.GetOccupant().GetTeam() == Team.AI) {
+					if (node.GetUnit().CanMove()) {
+						node.SetState(HighlightState.Selectable);
+					}
+					else if (node.GetUnit().CanAttack()) {
 						node.SetState(HighlightState.NoMoreMoves);
 					}
 					else {
@@ -190,6 +218,16 @@ namespace CombatWorld {
 					}
 				}
 			}
+			else if(playerVSPlayer) {
+				foreach (SummonNode node in AISummonNodes) {
+					if (!node.HasOccupant()) {
+						node.SetState(HighlightState.Summon);
+					}
+					else {
+						node.SetState(HighlightState.NotMoveable);
+					}
+				}
+			}
 		}
 
 		public void SummonNodeClickHandler(SummonNode node) {
@@ -212,7 +250,7 @@ namespace CombatWorld {
 		public void UnitMadeAction() {
 			selectedUnit = null;
 			waitingForAction = false;
-			if (currentTeam == Team.Player) {
+			if (currentTeam == Team.Player || playerVSPlayer) {
 				SelectTeamNodes();
 				endTurnButton.interactable = true;
 			}
@@ -344,7 +382,9 @@ namespace CombatWorld {
 				if (!AllSummonNodesOccupied()) {
 					return;
 				}
-				//TODO check for AI summonpoints.
+				if (!AllSummonNodesOccupied() && SummonHandler.instance.HasPointsToSummon(AIController.instance.summonPoints)) {
+					return;
+				}
 				Won();
 			}
 			else {

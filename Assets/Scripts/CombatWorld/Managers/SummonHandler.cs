@@ -5,14 +5,19 @@ using UnityEngine.UI;
 using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
+using CombatWorld.AI;
 
 namespace CombatWorld
 {
 	public class SummonHandler : Singleton<SummonHandler>
 	{
 		public Text summonPointText;
+		public Text summonPointP2Text;
 		public GameObject ButtonTemplate;
 		public GameObject buttonPanel;
+		public GameObject buttonPanelP2;
+		public int[] idsP1;
+		public int[] idsP2;
 
 		List<UnitButton> buttons = new List<UnitButton>();
 		CombatData currentlySelectedData;
@@ -27,9 +32,22 @@ namespace CombatWorld
 				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(4));
 			}
 			else {
-				SetupButtonsAndData(CombatNotStartedFromOverWorld());
+				SetupButtonsAndData(PVPdifferentUnits(idsP1), Team.Player);
+				SetupButtonsAndData(PVPdifferentUnits(idsP2), Team.AI);
 			}
 			UpdateButtonsAndText();
+			SetPlayerTurn(Team.Player);
+		}
+
+		public void SetPlayerTurn(Team team) {
+			if(team == Team.Player) {
+				buttonPanel.SetActive(true);
+				buttonPanelP2.SetActive(false);
+			}
+			else {
+				buttonPanelP2.SetActive(true);
+				buttonPanel.SetActive(false);
+			}
 		}
 
 		List<Item> CombatNotStartedFromOverWorld() {
@@ -40,9 +58,24 @@ namespace CombatWorld
 			return toReturn;
 		}
 
-		void SetupButtonsAndData(List<Item> units) {
-			foreach (Item item in units) {
-				buttons.Add(Instantiate(ButtonTemplate, buttonPanel.transform).GetComponent<UnitButton>().Setup(item, SummonButtonPressed));
+		List<Item> PVPdifferentUnits(int[] arr) {
+			List<Item> toReturn = new List<Item>();
+			foreach (int item in arr) {
+				toReturn.Add((database.FetchItemByID(item)));
+			}
+			return toReturn;
+		}
+
+		void SetupButtonsAndData(List<Item> units, Team team = Team.Player) {
+			if(team == Team.Player){
+				foreach (Item item in units) {
+					buttons.Add(Instantiate(ButtonTemplate, buttonPanel.transform).GetComponent<UnitButton>().Setup(item, SummonButtonPressed));
+				}
+			}
+			else{
+				foreach (Item item in units) {
+					buttons.Add(Instantiate(ButtonTemplate, buttonPanelP2.transform).GetComponent<UnitButton>().Setup(item, SummonButtonPressed));
+				}
 			}
 		}
 
@@ -50,8 +83,12 @@ namespace CombatWorld
 		{
 			SpendPoints(currentlySelectedData.cost);
 			GameObject unit = Instantiate(currentlySelectedData.model, node.transform.position, Quaternion.identity) as GameObject;
-			unit.GetComponent<Unit>().SpawnEntity(node, Team.Player, currentlySelectedData);
-			unit.transform.parent = transform;
+			if (GameController.playerVSPlayer && GameController.instance.currentTeam == Team.AI) {
+				unit.GetComponent<Unit>().SpawnEntity(node, Team.AI, currentlySelectedData);
+			}
+			else {
+				unit.GetComponent<Unit>().SpawnEntity(node, Team.Player, currentlySelectedData);
+			}
 		}
 
 		public void SummonButtonPressed(CombatData CD) {
@@ -60,8 +97,14 @@ namespace CombatWorld
 		}
 
 		void SpendPoints(int amount) {
-			summonPoints -= amount;
-			UpdateButtonsAndText();
+			if (GameController.playerVSPlayer && GameController.instance.currentTeam == Team.AI) {
+				AIController.instance.summonPoints -= amount;
+				UpdateButtonsAndText();
+			}
+			else {
+				summonPoints -= amount;
+				UpdateButtonsAndText();
+			}
 		}
 
 		public void GivePoints(int amount) {
@@ -70,15 +113,35 @@ namespace CombatWorld
 		}
 
 		void UpdateButtonsAndText() {
-			foreach (UnitButton item in buttons) {
-				item.CheckCost(summonPoints);
+			if (GameController.playerVSPlayer && GameController.instance.currentTeam == Team.AI) {
+				foreach (UnitButton item in buttons) {
+					item.CheckCost(AIController.instance.summonPoints);
+				}
+				summonPointP2Text.text = "Summon points: " + AIController.instance.summonPoints;
 			}
-			summonPointText.text = "Summon points: " + summonPoints;
+			else {
+				foreach (UnitButton item in buttons) {
+					item.CheckCost(summonPoints);
+				}
+				summonPointText.text = "Summon points: " + summonPoints;
+			}
 		}
 
 		public bool HasPointsToSummon() {
 			foreach (UnitButton item in buttons) {
 				if (!item.CanAfford(summonPoints)) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		public bool HasPointsToSummon(int points) {
+			if (!GameController.playerVSPlayer) {
+				Debug.Log("SHOULD ONLY bE USED IN PVP MODE!");
+			}
+			foreach (UnitButton item in buttons) {
+				if (!item.CanAfford(points)) {
 					return false;
 				}
 			}
