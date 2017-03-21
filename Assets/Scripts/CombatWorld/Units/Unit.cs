@@ -143,7 +143,7 @@ namespace CombatWorld.Units {
 		public void TakeDamage(DamagePackage damage) {
 			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
-			if (turnedToStone && DamageConstants.ROCKUNITONLYTAKES1DMG) {
+			if (turnedToStone && DamageConstants.STONEUNITONLYTAKES1DMG) {
 				health -= 1;
 			}
 			else {
@@ -266,8 +266,11 @@ namespace CombatWorld.Units {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
-			if (DamageConstants.ROCKUNITSGETSATTACKASHEALTH) {
+			if (DamageConstants.STONEUNITSGETSATTACKASHEALTH) {
 				health += damage;
+			}
+			if (DamageConstants.STONEUNITSGETDOUBLEHEALTH) {
+				health *= 2;
 			}
 			animHelp.TurnToStone();
 			damage = 0;
