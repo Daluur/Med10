@@ -33,7 +33,7 @@ namespace CombatWorld {
 
 		void Start() {
 			pathfinding = new Pathfinding();
-			Instantiate(map,new Vector3(3,-1039,0),Quaternion.identity);
+			Instantiate(map,new Vector3(3,-1039,0),Quaternion.identity,transform);
 			StartGame();
 		}
 
