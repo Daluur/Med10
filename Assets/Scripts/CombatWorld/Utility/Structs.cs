@@ -8,18 +8,20 @@ namespace CombatWorld.Utility {
 		public int attackValue;
 		public int healthValue;
 		public int cost;
+		public bool shadow;
+		public bool stone;
 		public GameObject model;
 		public ElementalTypes type;
 
 		public ElementalTypes GetTypeFromString(string type) {
 			switch (type) {
-				case "fire_unit":
+				case "Fire":
 					return ElementalTypes.Fire;
-				case "water_unit":
+				case "Water":
 					return ElementalTypes.Water;
-				case "lightning_unit":
+				case "Lightning":
 					return ElementalTypes.Lightning;
-				case "nature_unit":
+				case "Nature":
 					return ElementalTypes.Nature;
 				default:
 					return ElementalTypes.NONE;
@@ -32,6 +34,8 @@ namespace CombatWorld.Utility {
 			moveDistance = item.Moves;
 			type = ElementalTypes.NONE;
 			cost = item.SummonCost;
+			shadow = item.Shadow;
+			stone = item.Stone;
 			model = item.Model;
 			type = GetTypeFromString(item.Type);
 		}

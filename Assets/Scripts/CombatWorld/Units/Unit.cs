@@ -213,6 +213,8 @@ namespace CombatWorld.Units {
 			health = data.healthValue;
 			this.team = team;
 			currentNode = node;
+			stoneUnit = data.stone;
+			shadowUnit = data.shadow;
 			node.SetOccupant(this);
 			if(team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
@@ -249,6 +251,7 @@ namespace CombatWorld.Units {
 		}
 
 		public void TurnToStone() {
+
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
