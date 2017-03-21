@@ -143,13 +143,18 @@ namespace CombatWorld.Units {
 		public void TakeDamage(DamagePackage damage) {
 			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
-			if (turnedToStone && DamageConstants.ROCKUNITONLYTAKES1DMG) {
+			if (turnedToStone && DamageConstants.STONEUNITONLYTAKES1DMG) {
 				health -= 1;
 			}
 			else {
 				health -= damageIntake.CalculateDamageAgainst(type);
 			}
-			animHelp.TakeDamage(TookDamage);
+			if (turnedToStone) {
+				TookDamage();
+			}
+			else {
+				animHelp.TakeDamage(TookDamage);
+			}
 		}
 
 		void TookDamage() {
@@ -176,7 +181,12 @@ namespace CombatWorld.Units {
 		public void Die() {
 			GameController.instance.UnitDied(team, currentNode);
 			currentNode.RemoveOccupant();
-			animHelp.Die(Death);
+			if (turnedToStone) {
+				Death();
+			}
+			else {
+				animHelp.Die(Death);
+			}
 		}
 
 		void Death() {
@@ -256,8 +266,11 @@ namespace CombatWorld.Units {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
-			if (DamageConstants.ROCKUNITSGETSATTACKASHEALTH) {
+			if (DamageConstants.STONEUNITSGETSATTACKASHEALTH) {
 				health += damage;
+			}
+			if (DamageConstants.STONEUNITSGETDOUBLEHEALTH) {
+				health *= 2;
 			}
 			animHelp.TurnToStone();
 			damage = 0;
