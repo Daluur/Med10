@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class AudioHandler : Singleton<AudioHandler> {
 
-	public AudioClip attack;
-	public AudioClip takeDamage;
+	public AudioClip[] attack;
+	public AudioClip[] takeDamage;
 	public AudioClip die;
-	public AudioClip move;
-	public AudioClip click;
+	public AudioClip[] move;
+	public AudioClip[] click;
 
 	public AudioSource source;
 
 	public void PlayAttack() {
-		source.clip = attack;
+		source.clip = attack[Random.Range(0, attack.Length)];
+		source.Play();
+	}
+
+	public void PlayAttack(int i) {
+		source.clip = attack[i];
 		source.Play();
 	}
 
 	public void PlayTakeDamage() {
-		source.clip = takeDamage;
+		source.clip = takeDamage[Random.Range(0, takeDamage.Length)];
+		source.Play();
+	}
+
+	public void PlayTakeDamage(int i) {
+		source.clip = takeDamage[i];
 		source.Play();
 	}
 
@@ -28,12 +38,26 @@ public class AudioHandler : Singleton<AudioHandler> {
 	}
 
 	public void PlayMove() {
-		source.clip = move;
+		source.clip = move[Random.Range(0, move.Length)];
 		source.Play();
 	}
 
 	public void PlayClick() {
-		source.clip = click;
+		source.clip = click[Random.Range(0, click.Length)];
 		source.Play();
 	}
+
+	public void PlayClick(int i) {
+		source.clip = click[i];
+		source.Play();
+	}
+
+	public void PlayInteraction() {
+		Debug.Log("Interaction needs a sound");
+	}
+
+	public void PlayEnterCombat() {
+		Debug.Log("Enter combat needs a sound");
+	}
+
 }
