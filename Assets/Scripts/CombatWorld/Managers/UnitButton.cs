@@ -29,7 +29,6 @@ namespace CombatWorld.Units {
 		}
 
 		void Clicked() {
-			AudioHandler.instance.PlayClick();
 			callback(data);
 		}
 
