@@ -15,9 +15,11 @@ public class Inventory : MonoBehaviour {
 	public List<Item> items = new List<Item> ();
 	public List<GameObject> slots = new List<GameObject> ();
 
-	void Start() {
+	void Awake() {
 		database = new ItemDatabase();
+	}
 
+	void Start() {
 		slotAmount = 12;
 		inventoryPanel = GameObject.Find ("Inventory Panel");
 		slotPanel = inventoryPanel.transform.FindChild ("Slot Panel").gameObject;
@@ -89,5 +91,9 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 		return toReturn;
+	}
+
+	public ItemDatabase GetDatabase() {
+		return database;
 	}
 }
