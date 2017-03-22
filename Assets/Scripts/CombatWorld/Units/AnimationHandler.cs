@@ -25,6 +25,10 @@ namespace CombatWorld.Units {
 
 		public AnimationHandler Setup(string attackName, bool shadowUnit) {
 			if (shadowUnit) {
+				if(attackName == "Left Punch Attack" || attackName == "Right Punch Attack") {
+					attackName = "Melee Right Attack 01";
+				}
+				attackName = "Fly " + attackName;
 				anim.SetBool("Fly Idle", true);
 				walkTrigger = "Fly Forward";
 				takeDamageTrigger = "Fly Take Damage";
