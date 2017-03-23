@@ -32,8 +32,13 @@ namespace CombatWorld
 				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(4));
 			}
 			else {
-				SetupButtonsAndData(GetRandomUnits(6), Team.Player);
-				SetupButtonsAndData(GetRandomUnits(6), Team.AI);
+				List<Item> p1Units = PVPdifferentUnits(idsP1);
+				List<Item> p2Units = PVPdifferentUnits(idsP2);
+				p1Units = GetRandomUnits(6 - p1Units.Count, p1Units);
+				p2Units = GetRandomUnits(6 - p2Units.Count, p2Units);
+
+				SetupButtonsAndData(p1Units, Team.Player);
+				SetupButtonsAndData(p2Units, Team.AI);
 				//SetupButtonsAndData(PVPdifferentUnits(idsP1), Team.Player);
 				//SetupButtonsAndData(PVPdifferentUnits(idsP2), Team.AI);
 			}
@@ -41,23 +46,29 @@ namespace CombatWorld
 			SetPlayerTurn(Team.Player);
 		}
 
-		List<Item> GetRandomUnits(int amount) {
+		List<Item> GetRandomUnits(int amount, List<Item> alreadyAdded) {
+			if (amount == 0) {
+				return alreadyAdded;
+			}
 			int a = database.GetAllItems().Count;
-			List<int> temp = new List<int>();
+			List<int> existing = new List<int>();
+
+			foreach (Item item in alreadyAdded) {
+				existing.Add(item.ID);
+			}
+
 			for (int i = 0; i < amount; i++) {
-				int j = Random.Range(0, a);
-				if (temp.Contains(j)) {
+				int x = Random.Range(0, a);
+				if (existing.Contains(x)) {
 					i--;
 				}
 				else {
-					temp.Add(j);
+					alreadyAdded.Add(database.FetchItemByID(x));
+					existing.Add(x);
 				}
 			}
-			List<Item> toReturn = new List<Item>();
-			foreach (int i in temp) {
-				toReturn.Add(database.FetchItemByID(i));
-			}
-			return toReturn;
+			alreadyAdded.Sort((x, y) => x.ID.CompareTo(y.ID));
+			return alreadyAdded;
 		}
 
 		public void SetPlayerTurn(Team team) {
@@ -150,11 +161,11 @@ namespace CombatWorld
 
 		public bool HasPointsToSummon() {
 			foreach (UnitButton item in buttons) {
-				if (!item.CanAfford(summonPoints)) {
-					return false;
+				if (item.CanAfford(summonPoints)) {
+					return true;
 				}
 			}
-			return true;
+			return false;
 		}
 
 		public bool HasPointsToSummon(int points) {

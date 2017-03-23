@@ -27,10 +27,12 @@ public static class DamageConstants {
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
 	public const bool ALLOWRETALIATIONAFTERDEATH = true;
 	public const bool STONEUNITSGETSATTACKASHEALTH = false;
-	public const bool STONEUNITONLYTAKES1DMG = false;
-	public const bool STONEUNITSGETDOUBLEHEALTH = true;
+	public const bool STONEUNITONLYTAKES1DMG = true;
+	public const bool STONEUNITSGETDOUBLEHEALTH = false;
+	public const int STONEUNITATTACKAFTERTURN = 5;
+	public const int STONEUNITTAKEDMGAFTERTURN = 5;
 	public const int TOWERHP = 100;
-	public const int SUMMONPOINTSPERTURN = 1;
+	public const int SUMMONPOINTSPERTURN = 2;
 	public const int SUMMONPOINTSPERKILL = 1;
 	public const int SUMMONPOINTSPERTOWERKILL = 3;
 }

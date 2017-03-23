@@ -18,6 +18,7 @@ namespace CombatWorld.Units {
 		private bool shadowUnit = false;
 		private bool stoneUnit = false;
 		bool turnedToStone = false;
+		bool stone = false;
 
 		private int health;
 		private Team team;
@@ -105,6 +106,10 @@ namespace CombatWorld.Units {
 			if (turnedToStone) {
 				return;
 			}
+			if (stone) {
+				moved = attacked = true;
+				return;
+			}
 			moved = attacked = false;
 		}
 
@@ -143,8 +148,8 @@ namespace CombatWorld.Units {
 		public void TakeDamage(DamagePackage damage) {
 			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
-			if (turnedToStone && DamageConstants.STONEUNITONLYTAKES1DMG) {
-				health -= 1;
+			if (stone && DamageConstants.STONEUNITONLYTAKES1DMG) {
+				health -= DamageConstants.STONEUNITTAKEDMGAFTERTURN;
 			}
 			else {
 				health -= damageIntake.CalculateDamageAgainst(type);
@@ -272,11 +277,15 @@ namespace CombatWorld.Units {
 			if (DamageConstants.STONEUNITSGETDOUBLEHEALTH) {
 				health *= 2;
 			}
-			animHelp.TurnToStone();
-			damage = 0;
+			GameController.instance.AddWaitForUnit(this);
+			//animHelp.TurnToStone();
+
+			damage = DamageConstants.STONEUNITATTACKAFTERTURN;
 			moveDistance = 0;
 			moved = attacked = true;
-			turnedToStone = true;
+			stone = true;
+			FinishedAction();
+			//turnedToStone = true;
 		}
 
 		void OnMouseEnter() {
