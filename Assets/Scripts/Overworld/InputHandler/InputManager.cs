@@ -54,6 +54,10 @@ namespace Overworld {
 					FillDistributer(keyCode);
 					DistributeAction();
 					break;
+				case KeyCode.Q:
+					FillDistributer(keyCode);
+					DistributeAction();
+					break;
 				default:
 					Debug.Log("No implementation for this key exists");
 					break;

@@ -7,11 +7,12 @@ namespace Overworld {
 	public class CurrencyHandler : MonoBehaviour {
 
 		private static Text amountOfCurrencyUI;
-		private static int amountOfCurrency;
+		private static int amountOfCurrency = 500;
 
 		private void Start() {
 			//TODO: Find how much currency I have, from save game
 			amountOfCurrencyUI = GetComponent<Text>();
+			UpdateCurrencyUI();
 		}
 
 		public static void AddCurrency(int amountToAdd) {
