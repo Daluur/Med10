@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222272981659630114}
   - component: {fileID: 114485040240757762}
   - component: {fileID: 114201138258457368}
+  - component: {fileID: 114909246207671826}
   m_Layer: 5
   m_Name: Concede
   m_TagString: Untagged
@@ -57,6 +58,7 @@ GameObject:
   - component: {fileID: 222113052409242322}
   - component: {fileID: 114824280831033130}
   - component: {fileID: 114486575243508106}
+  - component: {fileID: 114976857393422516}
   m_Layer: 5
   m_Name: End turn
   m_TagString: Untagged
@@ -75,6 +77,7 @@ GameObject:
   - component: {fileID: 222317084365281702}
   - component: {fileID: 114589422316174766}
   - component: {fileID: 114151352747938692}
+  - component: {fileID: 114312884248832390}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -272,6 +275,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114312884248832390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1505710554564294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b918830a4779a43947eef6ace615da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114485040240757762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -568,6 +582,17 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114909246207671826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125053223914312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b918830a4779a43947eef6ace615da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114968540279885844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -601,6 +626,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: End turn
+--- !u!114 &114976857393422516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162133679897378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b918830a4779a43947eef6ace615da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222113052409242322
 CanvasRenderer:
   m_ObjectHideFlags: 1
