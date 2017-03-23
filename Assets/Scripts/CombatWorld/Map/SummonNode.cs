@@ -35,6 +35,7 @@ namespace CombatWorld.Map {
 					base.HandleInput();
 					return;
 			}
+			AudioHandler.instance.PlayClick();
 			GameController.instance.GotInput();
 		}
 

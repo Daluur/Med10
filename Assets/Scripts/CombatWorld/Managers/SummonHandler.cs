@@ -32,11 +32,32 @@ namespace CombatWorld
 				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(4));
 			}
 			else {
-				SetupButtonsAndData(PVPdifferentUnits(idsP1), Team.Player);
-				SetupButtonsAndData(PVPdifferentUnits(idsP2), Team.AI);
+				SetupButtonsAndData(GetRandomUnits(6), Team.Player);
+				SetupButtonsAndData(GetRandomUnits(6), Team.AI);
+				//SetupButtonsAndData(PVPdifferentUnits(idsP1), Team.Player);
+				//SetupButtonsAndData(PVPdifferentUnits(idsP2), Team.AI);
 			}
 			UpdateButtonsAndText();
 			SetPlayerTurn(Team.Player);
+		}
+
+		List<Item> GetRandomUnits(int amount) {
+			int a = database.GetAllItems().Count;
+			List<int> temp = new List<int>();
+			for (int i = 0; i < amount; i++) {
+				int j = Random.Range(0, a);
+				if (temp.Contains(j)) {
+					i--;
+				}
+				else {
+					temp.Add(j);
+				}
+			}
+			List<Item> toReturn = new List<Item>();
+			foreach (int i in temp) {
+				toReturn.Add(database.FetchItemByID(i));
+			}
+			return toReturn;
 		}
 
 		public void SetPlayerTurn(Team team) {

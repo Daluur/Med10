@@ -127,6 +127,7 @@ namespace CombatWorld.Map {
 				default:
 					break;
 			}
+			AudioHandler.instance.PlayClick();
 			GameController.instance.GotInput();
 		}
 

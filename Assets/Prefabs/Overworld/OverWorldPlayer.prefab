@@ -656,6 +656,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4362561693019606}
   - component: {fileID: 95801497779007992}
+  - component: {fileID: 114214901554489012}
   m_Layer: 0
   m_Name: Toon Death Knight-Blue
   m_TagString: Untagged
@@ -812,8 +813,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710159462820168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.4526596, y: 1.59, z: 2.3262134}
-  m_LocalScale: {x: 1.4621394, y: 1.4621392, z: 1.4621392}
+  m_LocalPosition: {x: 190.8, y: 93.7, z: 928.5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 4362561693019606}
   - {fileID: 4498231462230546}
@@ -1100,7 +1101,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1906465921750668}
-  m_LocalRotation: {x: 0.71122646, y: 0.7028482, z: -0.0074100583, w: 0.010324803}
+  m_LocalRotation: {x: 0.71122646, y: 0.7028482, z: -0.00741006, w: 0.010324803}
   m_LocalPosition: {x: -0.068068825, y: -0.086726665, z: -0.0070245373}
   m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1.0000004}
   m_Children: []
@@ -1434,6 +1435,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114214901554489012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1953481100716496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3a8155efd94d45a21c142fc252fbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114577629066926778
 MonoBehaviour:
   m_ObjectHideFlags: 1

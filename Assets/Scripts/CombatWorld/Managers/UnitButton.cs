@@ -47,7 +47,6 @@ namespace CombatWorld.Units {
 		public void OnPointerEnter(PointerEventData eventData) {
 			TooltipHandler.instance.CreateTooltip(eventData.position, data);
 		}
-
 		public void OnPointerExit(PointerEventData eventData) {
 			TooltipHandler.instance.CloseTooltip();
 		}

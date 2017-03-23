@@ -76,6 +76,13 @@ namespace CombatWorld {
 			StartCoroutine(prepEndTurn());
 		}
 
+		public void TryEndTurn() {
+			if (waitingForAction) {
+				return;
+			}
+			EndTurn();
+		}
+
 		IEnumerator prepEndTurn() {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
