@@ -48,6 +48,7 @@ namespace Overworld {
 			if (currentChance >= randGenerator) {
 				currentChance = startChance;
 				sceneHandler.LoadScene(type);
+				player.GetComponent<PlayerMovementOW>().DoAction();
 				return true;
 			}
 			else {

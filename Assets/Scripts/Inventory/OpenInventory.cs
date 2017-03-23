@@ -9,7 +9,6 @@ namespace Overworld {
 
 		void Start () {
 			Register(this,KeyCode.B);
-			CloseInventory();
 		}
 
 		public void DoAction() {

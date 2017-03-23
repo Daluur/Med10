@@ -25,7 +25,6 @@ namespace Overworld {
 			InitRecruitButtons();
 			myButtons = GetComponentsInChildren<Button>();
 			InitUnitIconImages(GameObject.FindGameObjectsWithTag(TagConstants.ICONIMAGE));
-			CloseElement(gameObject);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 		}
 
@@ -89,6 +88,9 @@ namespace Overworld {
 				myUnitTexts[i].text = "Empty";
 				myIconImages[i].sprite = defaultEmptyIcon;
 				units.Clear();
+			}
+			foreach (var buttons in myButtons) {
+				buttons.onClick.RemoveAllListeners();
 			}
 		}
 

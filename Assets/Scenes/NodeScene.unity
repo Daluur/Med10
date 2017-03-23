@@ -188,12 +188,12 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114201138258457368, guid: dde5fab992ca27f4c831f4ba883853a9,
+    - target: {fileID: 114151352747938692, guid: dde5fab992ca27f4c831f4ba883853a9,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1248978506}
-    - target: {fileID: 114486575243508106, guid: dde5fab992ca27f4c831f4ba883853a9,
+    - target: {fileID: 114201138258457368, guid: dde5fab992ca27f4c831f4ba883853a9,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -202,7 +202,7 @@ Prefab:
       propertyPath: m_Name
       value: EndTurn/Conced canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 114151352747938692, guid: dde5fab992ca27f4c831f4ba883853a9,
+    - target: {fileID: 114486575243508106, guid: dde5fab992ca27f4c831f4ba883853a9,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -326,6 +326,52 @@ GameObject:
   m_PrefabParentObject: {fileID: 1844370599984300, guid: dde5fab992ca27f4c831f4ba883853a9,
     type: 2}
   m_PrefabInternal: {fileID: 171453778}
+--- !u!1001 &410207991
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4567465935269166, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567465935269166, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567465935269166, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567465935269166, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567465935269166, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567465935269166, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567465935269166, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567465935269166, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968044058289142, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+      propertyPath: m_Name
+      value: Audio
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &571487585
 Prefab:
   m_ObjectHideFlags: 0
@@ -442,7 +488,6 @@ GameObject:
   - component: {fileID: 1024775184}
   - component: {fileID: 1024775183}
   - component: {fileID: 1024775182}
-  - component: {fileID: 1024775181}
   - component: {fileID: 1024775186}
   m_Layer: 0
   m_Name: Main Camera
@@ -451,13 +496,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1024775181
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1024775180}
-  m_Enabled: 1
 --- !u!124 &1024775182
 Behaviour:
   m_ObjectHideFlags: 0

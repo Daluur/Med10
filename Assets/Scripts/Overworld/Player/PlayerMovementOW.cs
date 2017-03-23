@@ -52,9 +52,12 @@ namespace Overworld {
 		}
 
 		public void DoAction() {
+			agent.Stop();
+			agent.ResetPath();
 		}
 
 		public void DoAction<T>(T param) {
+			agent.Resume();
 			if (param.GetType() != typeof(Vector3)) {
 				Debug.LogError("To move the character give it a Vector3 to move to");
 				return;
