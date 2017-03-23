@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LitJson;
+using System.IO;
+using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour {
 
 	public static QuestManager questManager;
 
-	public List<Quest> questList = new List<Quest>();		//master quest list
+	private JsonData questData;
+
+	public List<Quest> questList = new List<Quest>();
 	private int currentQuest = 0;
 
-	//private vars for questobject
+	public GameObject questTitle;
+	public GameObject questDescription;
 
 	void Awake () {
 		if (questManager == null) {
@@ -20,6 +26,14 @@ public class QuestManager : MonoBehaviour {
 		}
 
 		DontDestroyOnLoad (gameObject);
+		questData = JsonMapper.ToObject (File.ReadAllText(Application.dataPath + "/StreamingAssets/Quests.json"));
+		ConstructQuestDatabase ();
+	}
+
+	void Start () {
+
+		questList [0].Progress = Quest.QuestProgress.AVAILABLE;
+		AcceptQuest (0);
 	}
 		
 
@@ -30,6 +44,8 @@ public class QuestManager : MonoBehaviour {
 
 			if (questList[i].ID == id && questList[i].Progress == Quest.QuestProgress.AVAILABLE) {
 				questList [i].Progress = Quest.QuestProgress.ACCEPTED;
+				questTitle.GetComponent<Text> ().text = questList [i].Title;
+				questDescription.GetComponent<Text> ().text = questList [i].Description;
 			}
 		}
 	}
@@ -66,5 +82,23 @@ public class QuestManager : MonoBehaviour {
 		}
 	}
 
-	//REMOVE items
+	void ConstructQuestDatabase() {
+		for (int i = 0; i < questData.Count; i++) {
+			questList.Add(new Quest(
+				(int)questData[i]["id"], 
+				questData[i]["title"].ToString(), 
+				(int)questData[i]["progress"],
+				questData[i]["description"].ToString(),
+				questData[i]["hint"].ToString(),
+				questData[i]["completion"].ToString(),
+				questData[i]["summary"].ToString(),
+				(int)questData[i]["next"],
+				questData[i]["to collect"].ToString(),
+				(int)questData[i]["collect amount"], 
+				(int)questData[i]["current amount"],
+				(int)questData[i]["gold reward"],
+				(int)questData[i]["item reward"]
+			));
+		}
+	}
 }

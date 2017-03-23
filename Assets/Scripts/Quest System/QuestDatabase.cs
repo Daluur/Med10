@@ -7,29 +7,29 @@ using System.IO;
 public class QuestDatabase {
 
 	private List<Quest> database = new List<Quest>();
-	private JsonData itemData;
+	private JsonData questData;
 
 	public QuestDatabase() {
-		itemData = JsonMapper.ToObject (File.ReadAllText(Application.dataPath + "/StreamingAssets/Quests.json"));
+		questData = JsonMapper.ToObject (File.ReadAllText(Application.dataPath + "/StreamingAssets/Quests.json"));
 		ConstructItemDtabase ();
 	}
 
 	void ConstructItemDtabase() {
-		for (int i = 0; i < itemData.Count; i++) {
+		for (int i = 0; i < questData.Count; i++) {
 			database.Add(new Quest(
-				(int)itemData[i]["id"], 
-				itemData[i]["title"].ToString(), 
-				(int)itemData[i]["progress"],
-				itemData[i]["description"].ToString(),
-				itemData[i]["hint"].ToString(),
-				itemData[i]["completion"].ToString(),
-				itemData[i]["summary"].ToString(),
-				(int)itemData[i]["next"],
-				itemData[i]["to collect"].ToString(),
-				(int)itemData[i]["collect amount"], 
-				(int)itemData[i]["current amount"],
-				(int)itemData[i]["gold reward"],
-				(int)itemData[i]["item reward"]
+				(int)questData[i]["id"], 
+				questData[i]["title"].ToString(), 
+				(int)questData[i]["progress"],
+				questData[i]["description"].ToString(),
+				questData[i]["hint"].ToString(),
+				questData[i]["completion"].ToString(),
+				questData[i]["summary"].ToString(),
+				(int)questData[i]["next"],
+				questData[i]["to collect"].ToString(),
+				(int)questData[i]["collect amount"], 
+				(int)questData[i]["current amount"],
+				(int)questData[i]["gold reward"],
+				(int)questData[i]["item reward"]
 			));
 		}
 	}

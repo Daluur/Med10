@@ -26,8 +26,6 @@ public class QuestGiver : MonoBehaviour {
 
 		if (inTrigger && Input.GetKeyDown(KeyCode.Space)) {
 
-			//quest UI manager
-			//QuestManager.questManager.QuestRequest (this);
 		}
 	}
 
