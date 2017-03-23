@@ -21,6 +21,7 @@ namespace Overworld.Shops {
 		#endregion
 
 		List<int> UnlockedUnits = new List<int>();
+		bool newUnlock = true;
 
 		private UnlockHandler() {
 			UnlockedUnits.Add(0);
@@ -38,6 +39,7 @@ namespace Overworld.Shops {
 			}
 			else {
 				UnlockedUnits.Add(id);
+				newUnlock = true;
 			}
 		}
 
@@ -47,6 +49,14 @@ namespace Overworld.Shops {
 
 		public int UnlockedCount() {
 			return UnlockedUnits.Count;
+		}
+
+		public bool UnlockedNewUnitSinceLast() {
+			if (newUnlock) {
+				newUnlock = false;
+				return true;
+			}
+			return false;
 		}
 	}
 }

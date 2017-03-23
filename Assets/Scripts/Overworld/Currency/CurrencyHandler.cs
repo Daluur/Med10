@@ -34,5 +34,9 @@ namespace Overworld {
 			amountOfCurrencyUI.text = amountOfCurrency.ToString();
 		}
 
+		public static int GetCurrentGold() {
+			return amountOfCurrency;
+		}
+
 	}
 }
