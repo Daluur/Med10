@@ -42,7 +42,12 @@ namespace CombatWorld.Units {
 			anim.SetBool(walkTrigger, false);
 		}
 
+		public void Step() {
+			AudioHandler.instance.PlayMove();
+		}
+
 		public void Attack(Action cb) {
+			AudioHandler.instance.PlayAttack();
 			nextCB.Enqueue(cb);
 			QueueAnim(attackName);
 		}
@@ -60,6 +65,10 @@ namespace CombatWorld.Units {
 			FinishedAnim();
 		}
 
+		public void TakeDamageSound() {
+			AudioHandler.instance.PlayTakeDamage();
+		}
+
 		public void Die(Action cb) {
 			nextCB.Enqueue(cb);
 			QueueAnim(dieTrigger);
@@ -67,6 +76,10 @@ namespace CombatWorld.Units {
 
 		public void FinishedDie() {
 			FinishedAnim();
+		}
+
+		public void DieSound() {
+			AudioHandler.instance.PlayDie();
 		}
 
 		public void TurnToStone() {
