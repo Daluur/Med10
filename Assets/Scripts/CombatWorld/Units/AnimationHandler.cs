@@ -69,13 +69,14 @@ namespace CombatWorld.Units {
 			FinishedAnim();
 		}
 
-		public void TurnToStone() {
-			StartCoroutine(TurnToStoneColor());
+		public void TurnToStone(Action cb) {
+			StartCoroutine(TurnToStoneColor(cb));
 			anim.SetBool("Defend", true);
 		}
 
-		public void FinishedDefend() {
+		public void FinishedDefend(Action cb) {
 			anim.Stop();
+			cb();
 		}
 
 		void QueueAnim(String name) {
@@ -98,7 +99,7 @@ namespace CombatWorld.Units {
 			nextCB.Dequeue()();
 		}
 
-		IEnumerator TurnToStoneColor() {
+		IEnumerator TurnToStoneColor(Action cb) {
 			var renderers = GetComponentsInChildren<Renderer>();
 			Material[] materials = new Material[renderers.Length];
 			for (int i = 0; i < renderers.Length; i++) {
@@ -116,7 +117,7 @@ namespace CombatWorld.Units {
 				t += Time.deltaTime;
 				yield return new WaitForEndOfFrame();
 			}
-			FinishedDefend();
+			FinishedDefend(cb);
 		}
 	}
 }

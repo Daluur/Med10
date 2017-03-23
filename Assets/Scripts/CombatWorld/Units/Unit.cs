@@ -261,7 +261,6 @@ namespace CombatWorld.Units {
 		}
 
 		public void TurnToStone() {
-
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
@@ -272,11 +271,16 @@ namespace CombatWorld.Units {
 			if (DamageConstants.STONEUNITSGETDOUBLEHEALTH) {
 				health *= 2;
 			}
-			animHelp.TurnToStone();
+			GameController.instance.AddWaitForUnit(this);
+			animHelp.TurnToStone(TurnedToStone);
 			damage = 0;
 			moveDistance = 0;
 			moved = attacked = true;
 			turnedToStone = true;
+		}
+
+		void TurnedToStone() {
+			FinishedAction();
 		}
 
 		void OnMouseEnter() {
