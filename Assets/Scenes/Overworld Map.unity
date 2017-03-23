@@ -1170,7 +1170,7 @@ Prefab:
     - target: {fileID: 224802859311229482, guid: 79489d05c4ffe2a44a3ba042ef1e4586,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -14.7235775
       objectReference: {fileID: 0}
     - target: {fileID: 224802859311229482, guid: 79489d05c4ffe2a44a3ba042ef1e4586,
         type: 2}
@@ -1180,12 +1180,12 @@ Prefab:
     - target: {fileID: 224802859311229482, guid: 79489d05c4ffe2a44a3ba042ef1e4586,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 15.447155
       objectReference: {fileID: 0}
     - target: {fileID: 224269125000039380, guid: 79489d05c4ffe2a44a3ba042ef1e4586,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 29.447155
       objectReference: {fileID: 0}
     - target: {fileID: 224493394125234722, guid: 79489d05c4ffe2a44a3ba042ef1e4586,
         type: 2}
@@ -1658,7 +1658,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4079644097719058, guid: aba21f05b666bde488d0d6e59e6cd236, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 94.4
+      value: 93.7
       objectReference: {fileID: 0}
     - target: {fileID: 4079644097719058, guid: aba21f05b666bde488d0d6e59e6cd236, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1694,7 +1694,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4449604915135800, guid: aba21f05b666bde488d0d6e59e6cd236, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0.007410061
+      value: -0.00741006
       objectReference: {fileID: 0}
     - target: {fileID: 4449604915135800, guid: aba21f05b666bde488d0d6e59e6cd236, type: 2}
       propertyPath: m_LocalRotation.w
@@ -2000,6 +2000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   following: {fileID: 664362666}
   offSet: 50
+  yOffset: 20
   maxZoom: 25.5
   minZoom: 5.5
 --- !u!1001 &1917937404
