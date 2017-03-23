@@ -20,7 +20,7 @@ namespace Overworld.Shops {
 			Register(this, KeyCode.Escape);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 			database = inventory.GetDatabase();
-			float num = (database.GetAllItems().Count * 50 + 40);
+			float num = (database.GetAllItems().Count * 50);
 			parent.sizeDelta = new Vector2(parent.sizeDelta.x, num);
 			parent.anchoredPosition = new Vector2(parent.anchoredPosition.x, -(num / 2));
 			CreateButtons();
