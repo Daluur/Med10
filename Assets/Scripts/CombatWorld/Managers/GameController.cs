@@ -409,10 +409,6 @@ namespace CombatWorld {
 			return AISummonNodes;
 		}
 
-		public GameObject[] GetAllUnits() {
-			return GameObject.FindGameObjectsWithTag(TagConstants.COMBATWORLDUNIT);
-		}
-
 		#endregion
 	}
 }

@@ -209,6 +209,40 @@ namespace CombatWorld.Map {
 			throw new System.NullReferenceException("Could not reach the target node!");
 		}
 
+		public List<Node> GetPathFromToWithoutOccupants(Node start, Node end) {
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			Node current = start;
+			path.Add(start, null);
+			foreach (Node neighbour in current.neighbours) {
+				if (!path.ContainsKey(neighbour) && !neighbour.HasTower()) {
+					q.Enqueue(neighbour);
+					path.Add(neighbour, current);
+					if (neighbour == end) {
+						return GetPathTo(end);
+					}
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+
+				foreach (Node neighbour in current.neighbours) {
+					if (!path.ContainsKey(neighbour) && !neighbour.HasTower()) {
+						q.Enqueue(neighbour);
+						path.Add(neighbour, current);
+						if (neighbour == end) {
+							return GetPathTo(end);
+						}
+					}
+				}
+			}
+			return null;
+			throw new System.NullReferenceException("Could not reach the target node!");
+		}
+
 		public List<Node> GetAllReachableNodes(Node start, int dist) {
 			q = new Queue<Node>();
 			distance = new Dictionary<Node, int>();

@@ -6,6 +6,7 @@ using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.GameCenter;
 
 public class AITaskImplementations {
 
@@ -94,7 +95,7 @@ public class AITaskImplementations {
 	private static void MoveToAndAttack(Node moveTo, Node toAttack, Unit unit) {
 		performingAction = true;
 		Debug.Log("Move and attack");
-		unit.Move(pathFinding.GetPathFromTo(unit.GetNode(), moveTo), true);
+		unit.Move(pathFinding.GetPathFromTo(unit.GetNode(), moveTo), false);
 		unit.StartCoroutine(MoveAndAttackWait(unit, toAttack));
 	}
 
@@ -104,7 +105,7 @@ public class AITaskImplementations {
 	}
 
 	private static IEnumerator MoveAndAttackWait(Unit unit, Node toAttack) {
-		while (unit.doingAction) {
+		while (GameController.instance.WaitingForAction()) {
 			yield return new WaitForSeconds(0.1f);
 		}
 		unit.Attack(toAttack.GetOccupant());

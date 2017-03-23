@@ -24,6 +24,14 @@ public class AITask {
 		this.toAttack = toAttack;
 	}
 
+	public AITask(float score, AICalculateScore.PossibleTasks task, Node endNode, Node toAttack, Node towerToMoveTo) {
+		this.score = score;
+		this.task = task;
+		this.endNode = endNode;
+		this.toAttack = toAttack;
+		this.towerToMoveTo = towerToMoveTo;
+	}
+
 
 
 	public float score;
@@ -31,4 +39,5 @@ public class AITask {
 	public Node endNode;
 	public Node toAttack;
 	public int blockedTowerNodes = 0;
+	public Node towerToMoveTo;
 }
