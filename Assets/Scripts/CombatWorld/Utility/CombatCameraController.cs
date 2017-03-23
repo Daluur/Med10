@@ -6,7 +6,7 @@ namespace CombatWorld {
 		float speed = 60.0f;
 
 		void LateUpdate() {
-			if (Input.GetMouseButton(1)) {
+			if (Input.GetMouseButton(0)) {
 				if (Input.GetAxis("Mouse X") != 0) {
 					transform.position -= new Vector3(Input.GetAxisRaw("Mouse X") * Time.deltaTime * speed, 0, 0);
 				}

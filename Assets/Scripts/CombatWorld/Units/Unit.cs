@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CombatWorld.Map;
 using CombatWorld.Utility;
+using UnityEngine.EventSystems;
 
 namespace CombatWorld.Units {
 	public class Unit : MonoBehaviour, IEntity {
@@ -12,10 +13,9 @@ namespace CombatWorld.Units {
 		public string attackName = "Melee Right Attack 01";
 		public GameObject projectile;
 
-		[SerializeField]
-		private bool shadowUnit = false;
+		public Light lightSource;
 
-		[SerializeField]
+		private bool shadowUnit = false;
 		private bool stoneUnit = false;
 		bool turnedToStone = false;
 
@@ -34,8 +34,9 @@ namespace CombatWorld.Units {
 
 		private Vector3 defaultFaceDirection;
 
-		private float moveSpeed = 12.5f;
+		public CombatData data;
 
+		private float moveSpeed = 12.5f;
 
 		private AnimationHandler animHelp;
 
@@ -142,13 +143,18 @@ namespace CombatWorld.Units {
 		public void TakeDamage(DamagePackage damage) {
 			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
-			if (turnedToStone && DamageConstants.ROCKUNITONLYTAKES1DMG) {
+			if (turnedToStone && DamageConstants.STONEUNITONLYTAKES1DMG) {
 				health -= 1;
 			}
 			else {
 				health -= damageIntake.CalculateDamageAgainst(type);
 			}
-			animHelp.TakeDamage(TookDamage);
+			if (turnedToStone) {
+				TookDamage();
+			}
+			else {
+				animHelp.TakeDamage(TookDamage);
+			}
 		}
 
 		void TookDamage() {
@@ -175,7 +181,12 @@ namespace CombatWorld.Units {
 		public void Die() {
 			GameController.instance.UnitDied(team, currentNode);
 			currentNode.RemoveOccupant();
-			animHelp.Die(Death);
+			if (turnedToStone) {
+				Death();
+			}
+			else {
+				animHelp.Die(Death);
+			}
 		}
 
 		void Death() {
@@ -202,13 +213,31 @@ namespace CombatWorld.Units {
 			stoneUnit = data.stone;
 			shadowUnit = data.shadow;
 			node.SetOccupant(this);
-			if(team == Team.Player) {
+			this.data = data;
+			lightSource.color = GetColorFromType();
+			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
 			}
 			else {
 				defaultFaceDirection = Vector3.left;
 			}
 			FaceForward();
+		}
+
+		Color GetColorFromType() {
+			switch (type) {
+				case ElementalTypes.Fire:
+					return Color.red;
+				case ElementalTypes.Water:
+					return Color.blue;
+				case ElementalTypes.Nature:
+					return Color.green;
+				case ElementalTypes.Lightning:
+					return Color.yellow;
+				case ElementalTypes.NONE:
+				default:
+					return Color.white;
+			}
 		}
 
 		IEnumerator MoveTo(List<Node> target) {
@@ -237,14 +266,25 @@ namespace CombatWorld.Units {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
-			if (DamageConstants.ROCKUNITSGETSATTACKASHEALTH) {
+			if (DamageConstants.STONEUNITSGETSATTACKASHEALTH) {
 				health += damage;
+			}
+			if (DamageConstants.STONEUNITSGETDOUBLEHEALTH) {
+				health *= 2;
 			}
 			animHelp.TurnToStone();
 			damage = 0;
 			moveDistance = 0;
 			moved = attacked = true;
 			turnedToStone = true;
+		}
+
+		void OnMouseEnter() {
+			TooltipHandler.instance.CreateTooltip(transform.position, this);
+		}
+
+		void OnMouseExit() {
+			TooltipHandler.instance.CloseTooltip();
 		}
 	}
 }
