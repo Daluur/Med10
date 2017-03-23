@@ -12,6 +12,9 @@ public class TrashItem : MonoBehaviour, IDropHandler  {
 
 	public void OnDrop(PointerEventData eventData) {
 		ItemData droppedItem = eventData.pointerDrag.GetComponent<ItemData> ();
+		if(droppedItem == null) {
+			return;
+		}
 		inv.items [droppedItem.slot] = new Item ();
 		Destroy (droppedItem.gameObject);
 	}

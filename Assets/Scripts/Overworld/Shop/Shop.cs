@@ -8,6 +8,7 @@ namespace Overworld.Shops {
 
 		public GameObject buttonObj;
 		public OpenInventory inventoryPanel;
+		public RectTransform parent;
 
 		private List<ShopButton> createdButtons = new List<ShopButton>();
 
@@ -19,6 +20,9 @@ namespace Overworld.Shops {
 			Register(this, KeyCode.Escape);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 			database = inventory.GetDatabase();
+			float num = (database.GetAllItems().Count * 50 + 40);
+			parent.sizeDelta = new Vector2(parent.sizeDelta.x, num);
+			parent.anchoredPosition = new Vector2(parent.anchoredPosition.x, -(num / 2));
 			CreateButtons();
 		}
 
@@ -58,7 +62,7 @@ namespace Overworld.Shops {
 
 		void CreateButtons() {
 			foreach (Item item in database.GetAllItems()) {
-				GameObject go = Instantiate(buttonObj, transform) as GameObject;
+				GameObject go = Instantiate(buttonObj, parent) as GameObject;
 				createdButtons.Add(go.GetComponent<ShopButton>().Setup(AddItem, item));
 			}
 		}
