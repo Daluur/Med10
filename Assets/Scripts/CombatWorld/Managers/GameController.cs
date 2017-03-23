@@ -69,6 +69,16 @@ namespace CombatWorld {
 
 		#endregion
 
+		public void TryEndTurn() {
+			if (waitingForAction) {
+				return;
+			}
+			if(currentTeam != Team.Player) {
+				return;
+			}
+			EndTurn();
+		}
+
 		public void EndTurn() {
 			StartCoroutine(prepEndTurn());
 		}
