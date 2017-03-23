@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Overworld.Shop {
+namespace Overworld.Shops {
 	public class UnlockHandler {
 
 		#region Singleton Things

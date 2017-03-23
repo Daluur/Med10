@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Overworld.Shop {
+namespace Overworld.Shops {
 	public class Shop : ControlUIElement, IInteractable {
 
 		public GameObject buttonObj;
+		public OpenInventory inventoryPanel;
 
 		private List<GameObject> createdButtons = new List<GameObject>();
 
@@ -15,6 +16,7 @@ namespace Overworld.Shop {
 		private ItemDatabase database;
 
 		void Start() {
+			Register(this, KeyCode.Escape);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 			database = inventory.GetDatabase();
 		}
@@ -34,7 +36,7 @@ namespace Overworld.Shop {
 		void CreateNewButtons() {
 			foreach (int i in unitsToShow) {
 				GameObject go = Instantiate(buttonObj, transform) as GameObject;
-
+				go.GetComponent<ShopButton>().Setup(AddItem, database.FetchItemByID(i));
 			}
 		}
 
@@ -58,12 +60,16 @@ namespace Overworld.Shop {
 				CreateShop();
 			}
 			OpenElement(gameObject, size, true);
+			inventoryPanel.OpenTheInventory();
 		}
 
 		public void CloseMenu() {
 			if (isRunning || !isShowing)
 				return;
 			CloseElement(gameObject);
+			if (inventoryPanel.isShowing) {
+				inventoryPanel.CloseInventory();
+			}
 		}
 
 		public void DoAction() {
