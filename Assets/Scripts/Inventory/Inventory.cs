@@ -66,12 +66,16 @@ public class Inventory : MonoBehaviour {
 					break;
 				} 
 			}
-
-			if (!items.Exists(x => x.ID == -1)) {
-				GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.NOTENOUGHINVENTORYSPACE);
-				//Debug.Log ("No more room in inventory - create popup message here");
-			} 
 		}
+	}
+
+	public bool HasInventorySpace() {
+		foreach (Item item in items) {
+			if(item.ID == -1) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	bool CheckItemInInventory(Item item) {
