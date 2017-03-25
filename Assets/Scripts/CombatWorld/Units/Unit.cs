@@ -37,8 +37,11 @@ namespace CombatWorld.Units {
 		private float moveSpeed = 12.5f;
 
 		private AnimationHandler animHelp;
+
 		[HideInInspector]
 		public ParticleSystem particles;
+
+		public HealthAttackVisualController healthIndicator;
 
 		void Start() {
 			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName, shadowUnit);
@@ -155,6 +158,7 @@ namespace CombatWorld.Units {
 			else {
 				animHelp.TakeDamage(TookDamage);
 			}
+			healthIndicator.TookDamage(damageIntake, health);
 		}
 
 		void TookDamage() {
@@ -214,6 +218,7 @@ namespace CombatWorld.Units {
 			shadowUnit = data.shadow;
 			node.SetOccupant(this);
 			this.data = data;
+			healthIndicator.Setup(health, damage);
 			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
 				var ma = particles.main;
@@ -248,20 +253,24 @@ namespace CombatWorld.Units {
 		}
 
 		public void TurnToStone() {
-
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
+			int healthBonus = 0;
 			if (DamageConstants.STONEUNITSGETSATTACKASHEALTH) {
+				healthBonus = damage;
 				health += damage;
 			}
 			if (DamageConstants.STONEUNITSGETDOUBLEHEALTH) {
+				healthBonus = health;
 				health *= 2;
 			}
 			animHelp.TurnToStone();
 			damage = 0;
 			moveDistance = 0;
+			healthIndicator.ChangedAttackValue(damage);
+			healthIndicator.GotMoreHealth(health, healthBonus);
 			moved = attacked = true;
 			turnedToStone = true;
 		}

@@ -15,6 +15,7 @@ public class UnitModelFixer : EditorWindow {
 	static float startTime;
 
 	static GameObject particleEffect;
+	static GameObject canvas;
 
 	[MenuItem("Unit editor/Fixer")]
 	public static void Init() {
@@ -32,6 +33,9 @@ public class UnitModelFixer : EditorWindow {
 		}
 		if(particleEffect == null) {
 			particleEffect = Resources.Load<GameObject>("EditorObjects/Models/ParticleTest");
+		}
+		if(canvas == null) {
+			canvas = Resources.Load<GameObject>("EditorObjects/Models/Unit canvas");
 		}
 
 		allModels = Resources.LoadAll<GameObject>("Art/3D/Units/");
@@ -56,8 +60,9 @@ public class UnitModelFixer : EditorWindow {
 
 	public static void FixModel(GameObject model) {
 		if (model.GetComponent<Unit>() != null) {
-			AddParticleSystem(model);
-			
+			//AddParticleSystem(model);
+			//FixSize(model);
+			UpdateCanvas(model);
 			//Add stuff here, if units needs batch change.
 			return;
 		}
@@ -93,6 +98,8 @@ public class UnitModelFixer : EditorWindow {
 	}
 
 	public static void AddParticleSystem(GameObject model) {
+		//make sure you find a way to destroy the old PS but not destroy the PS of the shadow units.
+		return;
 
 		while(model.transform.childCount > 2) {
 			DestroyImmediate(model.transform.GetChild(2).gameObject, true);
@@ -106,5 +113,22 @@ public class UnitModelFixer : EditorWindow {
 		PrefabUtility.ReplacePrefab(modelTemp, model);
 
 		DestroyImmediate(modelTemp);
+	}
+
+	public static void UpdateCanvas(GameObject model) {
+		DestroyImmediate(model.GetComponentInChildren<Canvas>().gameObject, true);
+		
+		GameObject temp = Instantiate(canvas) as GameObject;
+		temp.name = "UnitCanvas";
+		GameObject modelTemp = Instantiate(model) as GameObject;
+		temp.transform.SetParent(modelTemp.transform);
+		modelTemp.GetComponent<Unit>().healthIndicator = temp.GetComponent<HealthAttackVisualController>();
+		PrefabUtility.ReplacePrefab(modelTemp, model);
+		DestroyImmediate(modelTemp);
+	}
+
+	public static void FixSize(GameObject model) {
+		model.transform.localScale = Vector3.one;
+		model.transform.GetChild(0).localScale = (Vector3.one*2);
 	}
 }

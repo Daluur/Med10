@@ -27,7 +27,6 @@ namespace CombatWorld.AI {
 		public void MyTurn() {
 			CheckForDeadUnits();
 			StartCoroutine(SummonUnit());
-			
 		}
 
 		IEnumerator SummonUnit() {

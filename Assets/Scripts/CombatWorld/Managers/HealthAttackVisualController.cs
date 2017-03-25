@@ -4,27 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using CombatWorld.Units;
 
-namespace CombatWorld {
+namespace CombatWorld.Units {
 	public class HealthAttackVisualController : MonoBehaviour {
 
 		public Text health;
 		public Text attack;
-		public IEntity source;
+		public Text CombatText;
+		public Animator anim;
 
-		void Start() {
-			source = GetComponentInParent<IEntity>();
+		public void Setup(int hp, int attackval) {
+			health.text = hp.ToString();
+			attack.text = attackval.ToString();
 		}
 
-		// Update is called once per frame
-		void Update() {
-			health.text = source.GetHealth().ToString();
-			if (source.GetType() == typeof(Unit)) {
-				var temp = (Unit)source;
-				attack.text = temp.GetAttackValue().ToString();
-			}
-			else {
-				attack.text = "0";
-			}
+		public void TookDamage(DamagePackage dmg, int newHealth) {
+			health.text = newHealth.ToString();
+			CombatText.text = "-"+dmg.GetCalculatedDMG();
+			anim.SetTrigger("TakeDMG");
+		}
+
+		public void GotMoreHealth(int newHealth, int bonus) {
+			health.text = newHealth.ToString();
+		}
+
+		public void ChangedAttackValue(int newVal) {
+			attack.text = newVal.ToString();
 		}
 	}
 }
