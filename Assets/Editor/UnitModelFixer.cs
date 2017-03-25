@@ -14,6 +14,8 @@ public class UnitModelFixer : EditorWindow {
 	static int length = 100;
 	static float startTime;
 
+	static GameObject particleEffect;
+
 	[MenuItem("Unit editor/Fixer")]
 	public static void Init() {
 		if (running) {
@@ -28,12 +30,23 @@ public class UnitModelFixer : EditorWindow {
 		if(baseObject == null) {
 			baseObject = Resources.Load<GameObject>("EditorObjects/Models/EmptyUnit");
 		}
+		if(particleEffect == null) {
+			particleEffect = Resources.Load<GameObject>("EditorObjects/Models/ParticleTest");
+		}
+
 		allModels = Resources.LoadAll<GameObject>("Art/3D/Units/");
 		length = allModels.Length;
 
 		foreach (GameObject model in allModels) {
-			EditorUtility.DisplayProgressBar("Progress", "Doing: " + number + " of " + length, (float)number / length);
+			EditorUtility.DisplayProgressBar("Progress", "Doing: " + number + " of " + length, (float)number++ / length);
 			FixModel(model);
+		}
+		allModels = Resources.LoadAll<GameObject>("Art/3D/Units/");
+		number = 0;
+		foreach (GameObject model in allModels) {
+			EditorUtility.DisplayProgressBar("Progress", "Updating: " + number + " of " + length, (float)number++ / length);
+			AssetDatabase.ImportAsset("Assets/Resources/Art/3D/Units/" + model.name + ".prefab");
+			AssetDatabase.Refresh();
 		}
 
 		EditorUtility.ClearProgressBar();
@@ -43,8 +56,8 @@ public class UnitModelFixer : EditorWindow {
 
 	public static void FixModel(GameObject model) {
 		if (model.GetComponent<Unit>() != null) {
-			ChangeLightRange(model);
-			ChangeCanvasWidth(model);
+			AddParticleSystem(model);
+			
 			//Add stuff here, if units needs batch change.
 			return;
 		}
@@ -71,11 +84,27 @@ public class UnitModelFixer : EditorWindow {
 		FixModel(final);
 	}
 
-	public static void ChangeLightRange(GameObject model) {
-		model.GetComponentInChildren<Light>().range = 10;
-	}
+	/*public static void DeleteLight(GameObject model) {
+		DestroyImmediate(model.GetComponentInChildren<Light>().gameObject, true);
+	}*/
 
 	public static void ChangeCanvasWidth(GameObject model) {
 		model.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta = new Vector2(model.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.y, model.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.y);
+	}
+
+	public static void AddParticleSystem(GameObject model) {
+
+		while(model.transform.childCount > 2) {
+			DestroyImmediate(model.transform.GetChild(2).gameObject, true);
+		}
+
+		GameObject temp = Instantiate(particleEffect) as GameObject;
+		temp.name = "ParticleEffect";
+		GameObject modelTemp = Instantiate(model) as GameObject;
+		temp.transform.parent = modelTemp.transform;
+		modelTemp.GetComponent<Unit>().particles = temp.GetComponent<ParticleSystem>();
+		PrefabUtility.ReplacePrefab(modelTemp, model);
+
+		DestroyImmediate(modelTemp);
 	}
 }

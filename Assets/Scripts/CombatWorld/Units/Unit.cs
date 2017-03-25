@@ -13,8 +13,6 @@ namespace CombatWorld.Units {
 		public string attackName = "Melee Right Attack 01";
 		public GameObject projectile;
 
-		public Light lightSource;
-
 		private bool shadowUnit = false;
 		private bool stoneUnit = false;
 		bool turnedToStone = false;
@@ -39,6 +37,8 @@ namespace CombatWorld.Units {
 		private float moveSpeed = 12.5f;
 
 		private AnimationHandler animHelp;
+		[HideInInspector]
+		public ParticleSystem particles;
 
 		void Start() {
 			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName, shadowUnit);
@@ -214,30 +214,17 @@ namespace CombatWorld.Units {
 			shadowUnit = data.shadow;
 			node.SetOccupant(this);
 			this.data = data;
-			lightSource.color = GetColorFromType();
 			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
+				var ma = particles.main;
+				ma.startColor = new Color(1, 1, 1, 0.3f);
 			}
 			else {
 				defaultFaceDirection = Vector3.left;
+				var ma = particles.main;
+				ma.startColor = Color.black;
 			}
 			FaceForward();
-		}
-
-		Color GetColorFromType() {
-			switch (type) {
-				case ElementalTypes.Fire:
-					return Color.red;
-				case ElementalTypes.Water:
-					return Color.blue;
-				case ElementalTypes.Nature:
-					return Color.green;
-				case ElementalTypes.Lightning:
-					return Color.yellow;
-				case ElementalTypes.NONE:
-				default:
-					return Color.white;
-			}
 		}
 
 		IEnumerator MoveTo(List<Node> target) {
