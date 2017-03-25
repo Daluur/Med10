@@ -409,6 +409,10 @@ namespace CombatWorld {
 			return AISummonNodes;
 		}
 
+		public List<SummonNode> GetPlayerSummonNodes() {
+			return playerSummonNodes;
+		}
+
 		#endregion
 	}
 }

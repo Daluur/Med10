@@ -36,8 +36,11 @@ class TowerTask {
 		toMoveTo = nodes;
 	}
 
+
+
 	public Node towerNode;
 	public List<Node> toMoveTo;
+	public int turnsToTower = 10;
 }
 
 public class AICalculateScore : Singleton<AICalculateScore> {
@@ -90,22 +93,6 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 		if (Input.GetKeyDown(KeyCode.U)) {
 			SpawnUnits();
 		}
-
-		//if (Input.GetKeyDown(KeyCode.W)) {
-		//	StartCoroutine(WaitForActions());
-/*foreach (var unit in aiUnits) {
-				unit.Value.possibleTasks.AddRange(MoveToEnemyTower(unit.Key));
-				CalculateScore(unit.Key, unit.Value.possibleTasks);
-				unit.Value.PerformTask(PickHighestScore(unit.Value.possibleTasks));
-
-//foreach (var task in unit.Value.possibleTasks) {
-
-					//if(task!=null)
-						//Debug.Log(task.endNode);
-				//}
-
-			}*/
-	//	}
 	}
 
 	public void DoAITurn() {
@@ -212,20 +199,21 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 				case PossibleTasks.MoveOffensive:
 					distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
 					var subscribedTower = FindSubscribedTower(task.towerToMoveTo);
-					task.score = distance + ( offensiveFactor * 2 - defensiveFactor ) -
-								 ( ( subscribedTower != null ) ? subscribedTower.amountFocusingThisTower: 0)*3;
-					Debug.Log( ( ( subscribedTower != null ) ? subscribedTower.amountFocusingThisTower: 0));
+					task.score = (distance + ( offensiveFactor * 2 - defensiveFactor ) -
+								 ( ( subscribedTower != null ) ? subscribedTower.amountFocusingThisTower: 0)*3)*(4/task.turnsToTower);
 					break;
 				case PossibleTasks.Attack:
 					Debug.Log(unit.name +" can attack");
 					if (task.toAttack.HasTower())
-						task.score = 10;
+						task.score = 10 * 100;
 					else if (task.toAttack.HasUnit()) {
 						var enemyUnit = task.toAttack.GetUnit();
-						if (unit.GetAttackValue() >= enemyUnit.GetHealth()) {
+						var unitATKEnemyTypeModifier = TypeModifier(unit.GetElementalType(), enemyUnit.GetElementalType());
+						var enemyUnitATKunitTypeModifier = TypeModifier(enemyUnit.GetElementalType(), unit.GetElementalType());
+						if (unit.GetAttackValue()*unitATKEnemyTypeModifier >= enemyUnit.GetHealth()) {
 							task.score = 10;
 						}
-						else if (enemyUnit.GetAttackValue() >= unit.GetHealth()) {
+						else if (enemyUnit.GetAttackValue()*enemyUnitATKunitTypeModifier >= unit.GetHealth()) {
 							task.score = 1;
 						}
 						if (IsUnitNextToAITower(unit)) {
@@ -235,29 +223,34 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 							Debug.Log("enemy unit next to tower");
 							task.score += 20;
 						}
+						task.score *= unitATKEnemyTypeModifier;
 					}
 					break;
 				case PossibleTasks.MoveAttack:
 					if (task.toAttack.HasTower())
-						task.score = 11 + (offensiveFactor*2 - defensiveFactor);
+						task.score = 11 + (offensiveFactor*2 - defensiveFactor) * 100;
 					else if (task.toAttack.HasUnit()) {
 						var enemyUnit = task.toAttack.GetUnit();
-						if (enemyUnit.GetAttackValue() > 3) {
-							task.score = 1;
-						}
-						else if (enemyUnit.GetAttackValue() > unit.GetHealth()) {
+						var unitATKEnemyTypeModifier = TypeModifier(unit.GetElementalType(), enemyUnit.GetElementalType());
+						var enemyUnitATKunitTypeModifier = TypeModifier(enemyUnit.GetElementalType(), unit.GetElementalType());
+						if (enemyUnit.GetAttackValue()*enemyUnitATKunitTypeModifier >= unit.GetHealth()) {
 							task.score = 4;
+							Debug.Log("her");
 						}
-						else if (enemyUnit.GetAttackValue() < unit.GetHealth()) {
-							task.score = 3;
+						else if (enemyUnit.GetHealth() <= unit.GetAttackValue()*unitATKEnemyTypeModifier) {
+							task.score = 12;
+							Debug.Log("her2");
 						}
-						else if (enemyUnit.GetHealth() < unit.GetAttackValue()) {
-							task.score = 8;
+						else if (enemyUnit.GetAttackValue()*enemyUnitATKunitTypeModifier < unit.GetHealth()) {
+							task.score = 6;
+							Debug.Log("her1");
 						}
+						task.score *= unitATKEnemyTypeModifier;
+						task.score *= IsAttackeeCloseToTower(unit, task.toAttack);
 					}
 					break;
 				case PossibleTasks.MoveAttackDefensive:
-					task.score = 25 + (defensiveFactor*2 - offensiveFactor);
+					task.score = 25 + (defensiveFactor*2 - offensiveFactor) * FindSubscribedTower(task.towerToMoveTo).amountFocusingThisTower*4;
 					break;
 				case PossibleTasks.MoveDefensive:
 					var myTowers = GameController.instance.GetTowersForTeam(Team.AI);
@@ -273,7 +266,7 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 					}
 					break;
 				case PossibleTasks.MoveBlock:
-					task.score = 5 + pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode) + (defensiveFactor*2 - offensiveFactor);;
+					task.score = 5 + pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode) + (defensiveFactor*2 - offensiveFactor) * (4/(task.turnsToTower > 0 ? task.turnsToTower : 4)) * FindSubscribedTower(task.towerToMoveTo).amountFocusingThisTower;
 					break;
 				case PossibleTasks.Stay:
 					if (unit.GetNode())
@@ -281,7 +274,7 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 							task.score = 7 - offensiveFactor*2;
 						}
 						else {
-							task.score = -3;
+							task.score = 1*StandingOnSpawn(unit);
 						}
 					foreach (var node in GameController.instance.GetAISummonNodes()) {
 						if ((Node) node == unit.GetNode()) {
@@ -328,7 +321,9 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 		var enemiesNextToTowers = 0;
 		var atkNextToTowers = 0;
 		var turnsToKillTowers = 0;
+		var focusingTower = 0;
 		foreach (var tower in towers) {
+			focusingTower += FindSubscribedTower(tower).amountFocusingThisTower;
 			hpOfTowers += tower.GetOccupant().GetHealth();
 			foreach (var neighbor in tower.neighbours) {
 				if (neighbor.HasUnit() && neighbor.GetUnit().GetTeam() != Team.AI) {
@@ -343,6 +338,7 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 		}
 		//Debug.Log("turns to kill towers" + turnsToKillTowers);
 		toReturn = turnsToKillTowers;
+		toReturn += focusingTower*5;
 		return toReturn;
 	}
 
@@ -369,8 +365,8 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 
 	private List<AITask> MoveAndAttack(Unit unit) {
 		List<AITask> moveAndAttack = new List<AITask>();
-		var nodesToAttackWithinReach = pathfinding.GetAllNodesWithinDistance(unit.GetNode(), unit.GetMoveDistance()+1);
-		var nodesWithinReach = pathfinding.GetAllNodesWithinDistance(unit.GetNode(), unit.GetMoveDistance());
+		var nodesToAttackWithinReach = unit.GetShadow() ? pathfinding.GetAllReachableNodes(unit.GetNode(), unit.GetMoveDistance()+1) : pathfinding.GetAllNodesWithinDistance(unit.GetNode(), unit.GetMoveDistance()+1);
+		var nodesWithinReach = unit.GetShadow() ? pathfinding.GetAllReachableNodes(unit.GetNode(), unit.GetMoveDistance()) : pathfinding.GetAllNodesWithinDistance(unit.GetNode(), unit.GetMoveDistance());
 		foreach (var node in nodesToAttackWithinReach) {
 			if (node.HasOccupant() && node.GetOccupant().GetTeam() != Team.AI && node.GetOccupant().GetHealth() > 0) {
 				foreach (var neighbour in node.neighbours) {
@@ -384,20 +380,6 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 		return moveAndAttack;
 	}
 
-	/*private List<AITask> MoveToFriendlyTower(Unit unit) {
-		List<AITask> tasks = new List<AITask>();
-		var nodesToMoveTo = MoveTowardTower(unit, Team.AI);
-		foreach (var node in nodesToMoveTo) {
-			if (unit.GetNode() == node) {
-				tasks.Add(new AITask(0, PossibleTasks.Stay, node));
-			}
-			else {
-				tasks.Add(new AITask(0, PossibleTasks.MoveDefensive, node));
-			}
-		}
-		return tasks;
-	}*/
-
 	private List<AITask> CanBlockPathToOwnTower(Unit unit) {
 		List<AITask> tasks = new List<AITask>();
 		List<Node> enemyReachableNodes = new List<Node>();
@@ -406,23 +388,66 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 			foreach (var neighbor in tower.neighbours) {
 				foreach (var neighborsNeighbor in neighbor.neighbours) {
 					if (neighborsNeighbor.HasOccupant() && neighborsNeighbor.GetOccupant().GetTeam() != Team.AI) {
-						enemyReachableNodes = pathfinding.GetAllNodesWithinDistanceWithhoutOccupants(neighborsNeighbor.GetUnit().GetNode(), neighborsNeighbor.GetUnit().GetMoveDistance());
-					}
-				}
-			}
-		}
-		List<Node> unitReachableNodes = new List<Node>();
-		unitReachableNodes = pathfinding.GetAllNodesWithinDistanceWithhoutOccupants(unit.GetNode(), unit.GetMoveDistance());
-		foreach (var node in unitReachableNodes) {
-			if (enemyReachableNodes.Contains(node)) {
-				foreach (var neighbor in node.neighbours) {
-					if (neighbor.HasTower()) {
-						tasks.Add(new AITask(0, PossibleTasks.MoveBlock, node));
+						var enemyUnit = neighborsNeighbor.GetUnit();
+						enemyReachableNodes = pathfinding.GetAllNodesWithinDistanceWithhoutOccupants(enemyUnit.GetNode(), enemyUnit.GetMoveDistance());
+						var task = PathBlocking(unit, enemyUnit, enemyReachableNodes, tower);
+						if (task != null) {
+							tasks.Add(task);
+							FindSubscribedTower(tower).AddFocus();
+						}
 					}
 				}
 			}
 		}
 		return tasks;
+	}
+
+	private AITask PathBlocking(Unit unit, Unit enemyUnit, List<Node> reachableNodes, Node tower) {
+		if (enemyUnit.GetShadow())
+			return null;
+		List<Node> unitReachableNodes = new List<Node>();
+		unitReachableNodes = pathfinding.GetAllNodesWithinDistanceWithhoutOccupants(unit.GetNode(), unit.GetMoveDistance());
+		var amountTowerNeighborsEnemyCanReach = tower.GetNeighbours().Count;
+		var prevAmountTowerNeighborsEnemyCanReach = amountTowerNeighborsEnemyCanReach;
+		Node bestNode = null;
+		foreach (var node in unitReachableNodes) {
+			if (reachableNodes.Contains(node)) {
+				amountTowerNeighborsEnemyCanReach = tower.GetNeighbours().Count;
+				var enemyUnitPath = pathfinding.GetReachableNodesForUnitAfterAMove(enemyUnit, node, unit.GetNode());
+				foreach (var enemyNode in enemyUnitPath) {
+					foreach (var enemyNeighbor in enemyNode.neighbours) {
+						if (enemyNeighbor.HasTower()) {
+							amountTowerNeighborsEnemyCanReach--;
+						}
+					}
+				}
+				if (amountTowerNeighborsEnemyCanReach < prevAmountTowerNeighborsEnemyCanReach) {
+					prevAmountTowerNeighborsEnemyCanReach = amountTowerNeighborsEnemyCanReach;
+					bestNode = node;
+				}
+			}
+		}
+		AITask task = null;
+		if (amountTowerNeighborsEnemyCanReach < tower.GetNeighbours().Count && bestNode != null) {
+			task = new AITask(0, PossibleTasks.MoveBlock, tower.GetNeighbours().Count - amountTowerNeighborsEnemyCanReach, bestNode, tower);
+		}
+		return task;
+	}
+
+
+	private float StandingOnSpawn(Unit unit) {
+		var enemySpawn = GameController.instance.GetPlayerSummonNodes();
+		var factor = 1f;
+		var canStay = false;
+		foreach (var node in enemySpawn) {
+			if (node.HasUnit()) {
+				factor += 3f;
+			}
+			if (node.HasUnit() && node.GetUnit() == unit) {
+				canStay = true;
+			}
+		}
+		return canStay ? factor : 1f;
 	}
 
 	private List<AITask> MoveFromSpawn(Unit unit) {
@@ -448,20 +473,33 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 				continue;
 			}
 			var unitComp = units.GetComponent<Unit>();
-			var node = EnemyShortestPathToTower(unitComp);
-			if (TurnsToReachNode(unitComp, node) <= 1 ) {
+			Node tower = null;
+			var node = EnemyShortestPathToTower(unitComp, out tower);
+			var turnsToTower = TurnsToReachNode(unitComp, node);
+			if (turnsToTower <= 3 ) {
 				if(pathfinding.GetAllNodesWithinDistance(unit.GetNode(), unit.GetMoveDistance()).Contains(node))
-				tasks.Add(new AITask(0, PossibleTasks.MoveBlock, node));
+				tasks.Add(new AITask(0, PossibleTasks.MoveBlock, node, turnsToTower, tower));
 			}
 		}
 		return tasks;
 	}
 
-	private bool AmIBlockingTowerHits(Unit unit) {
-		//if (!IsUnitNextToOwnTower(unit)) {
-		//	return false;
-		//}
+	private int IsAttackeeCloseToTower(Unit unit, Node enemyUnit) {
+		var towers = GameController.instance.GetTowersForTeam(Team.Player);
+		foreach (var tower in towers) {
+			if (tower.neighbours.Contains(enemyUnit)) {
+				return 4;
+			}
+			foreach (var neighbor in tower.neighbours) {
+				if (neighbor.neighbours.Contains(enemyUnit)) {
+					return 4;
+				}
+			}
+		}
+		return 1;
+	}
 
+	private bool AmIBlockingTowerHits(Unit unit) {
 		var allUnits = GameController.instance.GettAllUnitsOfTeam(Team.Player);
 		var towers = GameController.instance.GetTowersForTeam(Team.AI);
 		foreach (var enemyUnit in allUnits) {
@@ -488,19 +526,26 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 		return true;
 	}
 
-	private Node EnemyShortestPathToTower(Unit unit) {
+	private Node EnemyShortestPathToTower(Unit unit, out Node towerToReturn) {
 		var towers = GameController.instance.GetTowersForTeam(Team.AI);
 		Node shortestPath = null;
 		List<Node> towerNeighbors = new List<Node>();
+		towerToReturn = null;
  		foreach (var tower in towers) {
 			towerNeighbors.AddRange(tower.neighbours);
 		}
-		return ShortestPath(unit, towerNeighbors);
+		var toReturn = ShortestPath(unit, towerNeighbors);
+		foreach (var tower in towers) {
+			if (tower.neighbours.Contains(toReturn)) {
+				towerToReturn = tower;
+			}
+		}
+		return toReturn;
 	}
 
 	private int TurnsToReachNode(Unit unit, Node node) {
-		var path = pathfinding.GetPathFromTo(unit.GetNode(), node);
-		if(path!=null)
+		var path = unit.GetShadow() ? pathfinding.GetPathFromToWithoutOccupants(unit.GetNode(), node) : pathfinding.GetPathFromTo(unit.GetNode(), node);
+		if(path!=null && unit.GetMoveDistance()!=0)
 			return Mathf.CeilToInt(path.Count / unit.GetMoveDistance());
 		return 20;
 	}
@@ -519,17 +564,30 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 		return toReturn;
 	}
 
-
 	private List<AITask> DefendOwnTower(Unit unit) {
 		List<AITask> tasks = new List<AITask>();
 		var towers = GameController.instance.GetTowersForTeam(Team.AI);
 		foreach (var tower in towers) {
-			foreach (var neighbor in tower.neighbours) {
-				if (neighbor.HasOccupant() && neighbor.GetOccupant().GetTeam() != Team.AI && neighbor.GetOccupant().GetHealth() > 0) {
-					foreach (var neighborsNeighbor in neighbor.neighbours) {
-						var path = pathfinding.GetPathFromTo(unit.GetNode(), neighborsNeighbor);
-						if (path != null && path.Count <= unit.GetMoveDistance()) {
-							tasks.Add(new AITask(0, PossibleTasks.MoveAttackDefensive, neighborsNeighbor, neighbor));
+			if (FindSubscribedTower(tower).amountFocusingThisTower > 0) {
+				foreach (var neighbor in tower.neighbours) {
+					if (neighbor.HasOccupant() && neighbor.GetOccupant().GetTeam() != Team.AI &&
+					    neighbor.GetOccupant().GetHealth() > 0) {
+						foreach (var neighborsNeighbor in neighbor.neighbours) {
+							var path = unit.GetShadow() ? pathfinding.GetPathFromToWithoutOccupants(unit.GetNode(), neighborsNeighbor) : pathfinding.GetPathFromTo(unit.GetNode(), neighborsNeighbor);
+							if (path != null && path.Count <= unit.GetMoveDistance()) {
+								tasks.Add(new AITask(0, PossibleTasks.MoveAttackDefensive, neighborsNeighbor, neighbor, tower, 1));
+							}
+						}
+					}
+					foreach (var neighborNeighbor in neighbor.neighbours) {
+						if (neighbor.HasOccupant() && neighbor.GetOccupant().GetTeam() != Team.AI &&
+						    neighbor.GetOccupant().GetHealth() > 0) {
+							foreach (var nnn in neighborNeighbor.neighbours) {
+								var path = unit.GetShadow() ? pathfinding.GetPathFromToWithoutOccupants(unit.GetNode(), nnn) : pathfinding.GetPathFromTo(unit.GetNode(), nnn);
+								if (path != null && path.Count <= unit.GetMoveDistance()) {
+									tasks.Add(new AITask(0, PossibleTasks.MoveAttackDefensive, nnn, neighborNeighbor, tower, 1));
+								}
+							}
 						}
 					}
 				}
@@ -539,8 +597,6 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 	}
 
 	private Node MoveAndAttackNode(Unit unit) {
-
-
 	List<AITask> moveAndAttack = new List<AITask>();
 	var nodesToAttackWithinReach = pathfinding.GetAllNodesWithinDistance(unit.GetNode(), unit.GetMoveDistance()+1);
 	var nodesWithinReach = pathfinding.GetAllNodesWithinDistance(unit.GetNode(), unit.GetMoveDistance());
@@ -559,16 +615,14 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 	private List<AITask> MoveToEnemyTower(Unit unit) {
 		List<AITask> tasks = new List<AITask>();
 		var nodesToMoveTo = MoveTowardTower(unit, Team.Player);
-		var tmp = 0;
 		foreach (var tower in nodesToMoveTo) {
 			foreach (var node in tower.toMoveTo) {
 				if (unit.GetNode() == node) {
 				}
 				else {
-					tasks.Add(new AITask(0, PossibleTasks.MoveOffensive, node, null, tower.towerNode));
+					tasks.Add(new AITask(0, PossibleTasks.MoveOffensive, node, null, tower.towerNode, tower.turnsToTower));
 				}
 			}
-			tmp++;
 		}
 		return tasks;
 	}
@@ -576,34 +630,37 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 
 	private List<TowerTask> MoveTowardTower(Unit unit, Team team) {
 		Node towerToMoveTo;
-		var towers = GameController.instance.GetTowersForTeam(team);
-		List<TowerTask> nodeToBeMovedTo = new List<TowerTask>();
-		TowerTask tmp;
-		foreach (var tower in towers) {
-			tmp = new TowerTask(tower, new List<Node>());
-			foreach (var neighbour in tower.neighbours) {
-				if(!neighbour.HasOccupant()) {
-					var node = PathTowardTowerNode(unit, neighbour);
-					if(node != null)
-						tmp.toMoveTo.AddRange(node);
-				}
-			}
-			nodeToBeMovedTo.Add(tmp);
-		}
-		return nodeToBeMovedTo;
-	}
+         		var towers = GameController.instance.GetTowersForTeam(team);
+         		List<TowerTask> nodeToBeMovedTo = new List<TowerTask>();
+         		TowerTask tmp;
+         		foreach (var tower in towers) {
+         			tmp = new TowerTask(tower, new List<Node>());
+         			foreach (var neighbour in tower.neighbours) {
+         				if(!neighbour.HasOccupant()) {
+         					var node = PathTowardTowerNode(unit, neighbour, out tmp.turnsToTower);
+         					if(node != null)
+         						tmp.toMoveTo.AddRange(node);
+         				}
+         			}
+         			nodeToBeMovedTo.Add(tmp);
+         		}
+         		return nodeToBeMovedTo;
+         	}
 
-	private List<Node> PathTowardTowerNode(Unit unit, Node neighbor) {
-		List<Node> endNode = new List<Node>();
-		var path = pathfinding.GetPathFromToWithoutOccupants(unit.GetNode(), neighbor);
-		if (path == null)
-			return null;
-		if (path.Count > unit.GetMoveDistance()) {
-			endNode = GetPathThisTurn(path, unit.GetMoveDistance(), unit);
-		}
-		else {
-			endNode.Add(neighbor);
-		}
+         	private List<Node> PathTowardTowerNode(Unit unit, Node neighbor, out int turnsToTower) {
+         		List<Node> endNode = new List<Node>();
+         		var path = pathfinding.GetPathFromToWithoutOccupants(unit.GetNode(), neighbor);
+         		turnsToTower = 10;
+         		if (path == null)
+         			return null;
+         		if (path.Count > unit.GetMoveDistance()) {
+         			endNode = GetPathThisTurn(path, unit.GetMoveDistance(), unit);
+         			turnsToTower = Mathf.RoundToInt(path.Count / unit.GetMoveDistance());
+         		}
+         		else {
+         			endNode.Add(neighbor);
+         			turnsToTower = 1;
+         		}
 		return endNode;
 	}
 
@@ -753,8 +810,8 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 			}
 			for(int i=0; i<units.Count;i++) {
 				if (units[i].cost <= calculatedSummonPoints && calculatedSummonPoints - units[i].cost >= 0) {
-					score = Mathf.RoundToInt((highHPFactor * units[i].healthValue + highMoveFactor * units[i].moveDistance + highDMGFactor * units[i].attackValue)*typeModifier(units[i].type,mostOfType));
-					if (score > bestScore) {
+					score = Mathf.RoundToInt((highHPFactor * units[i].healthValue + highMoveFactor * units[i].moveDistance + highDMGFactor * units[i].attackValue)*TypeModifier(units[i].type,mostOfType));
+					if (score > bestScore && score > 50) {
 						bestScore = score;
 						ind = i;
 					}
@@ -771,7 +828,7 @@ public class AICalculateScore : Singleton<AICalculateScore> {
 	}
 
 
-	private float typeModifier(ElementalTypes attacker, ElementalTypes defender) {
+	private float TypeModifier(ElementalTypes attacker, ElementalTypes defender) {
 		if (attacker == ElementalTypes.Fire && defender == ElementalTypes.Water) {
 			return 0.5f;
 		}

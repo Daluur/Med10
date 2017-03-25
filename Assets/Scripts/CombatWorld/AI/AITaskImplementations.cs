@@ -46,6 +46,8 @@ public class AITaskImplementations {
 				break;
 			case AICalculateScore.PossibleTasks.MoveBlock:
 				MoveTo(task.endNode, unit.myUnit);
+				if (unit.myUnit.IsStoneUnit())
+					unit.myUnit.StartCoroutine(TurnToStone(unit.myUnit));
 				break;
 			case AICalculateScore.PossibleTasks.MoveOffensive:
 				MoveTo(task.endNode, unit.myUnit);
@@ -89,7 +91,11 @@ public class AITaskImplementations {
 
 	private static void MoveTo(Node moveTo, Unit unit) {
 		Debug.Log("moving to: " + moveTo);
-		unit.Move(pathFinding.GetPathFromTo(unit.GetNode(), moveTo));
+		var path = pathFinding.GetPathFromTo(unit.GetNode(), moveTo);
+		if (path!=null) {
+			unit.Move(path);
+		}
+		Debug.Log("Tried to move to itself, should not do this!!!!!!");
 	}
 
 	private static void MoveToAndAttack(Node moveTo, Node toAttack, Unit unit) {
@@ -110,6 +116,14 @@ public class AITaskImplementations {
 		}
 		unit.Attack(toAttack.GetOccupant());
 		performingAction = false;
+		yield return null;
+	}
+
+	private static IEnumerator TurnToStone(Unit unit) {
+		while (GameController.instance.WaitingForAction()) {
+			yield return new WaitForSeconds(0.1f);
+		}
+		unit.TurnToStone();
 		yield return null;
 	}
 

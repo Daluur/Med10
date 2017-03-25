@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CombatWorld.Units;
 
 namespace CombatWorld.Map {
 	public class Pathfinding {
@@ -274,6 +275,51 @@ namespace CombatWorld.Map {
 				}
 			}
 			distance.Remove(start);
+			return new List<Node>(distance.Keys);
+		}
+
+		public List<Node> GetReachableNodesForUnitAfterAMove(Unit unit, Node newBlock, Node oldNode) {
+			Node start = unit.GetNode();
+			int dist = unit.GetMoveDistance();
+
+			q = new Queue<Node>();
+			distance = new Dictionary<Node, int>();
+			path = new Dictionary<Node, Node>();
+
+			distance.Add(start, 0);
+
+			Node current = start;
+			foreach (Node neighbour in current.neighbours) {
+				if(current.HasOccupant() && current != oldNode && current.GetOccupant().GetTeam() != unit.GetTeam()) {
+					continue;
+				}
+				if(current == newBlock) {
+					continue;
+				}
+				if (!distance.ContainsKey(neighbour)) {
+					q.Enqueue(neighbour);
+					distance.Add(neighbour, distance[current] + 1);
+				}
+			}
+
+			while (q.Count > 0) {
+				current = q.Dequeue();
+				if (distance[current] >= dist) {
+					continue;
+				}
+				if (current.HasOccupant() && current != oldNode && current.GetOccupant().GetTeam() != unit.GetTeam()) {
+					continue;
+				}
+				if (current == newBlock) {
+					continue;
+				}
+				foreach (Node neighbour in current.neighbours) {
+					if (!distance.ContainsKey(neighbour)) {
+						q.Enqueue(neighbour);
+						distance.Add(neighbour, distance[current] + 1);
+					}
+				}
+			}
 			return new List<Node>(distance.Keys);
 		}
 	}

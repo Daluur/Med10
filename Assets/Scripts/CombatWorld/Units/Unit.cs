@@ -298,6 +298,10 @@ namespace CombatWorld.Units {
 			turnedToStone = true;
 		}
 
+		public bool GetShadow() {
+			return shadowUnit;
+		}
+
 		void OnMouseEnter() {
 			TooltipHandler.instance.CreateTooltip(transform.position, this);
 		}
