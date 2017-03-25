@@ -143,8 +143,8 @@ namespace CombatWorld.Units {
 		public void TakeDamage(DamagePackage damage) {
 			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
-			if (turnedToStone && DamageConstants.STONEUNITONLYTAKES1DMG) {
-				health -= 1;
+			if (turnedToStone && StoneUnitOptions.STONEUNITTAKESSTATICDMG) {
+				health -= StoneUnitOptions.STONEUNITDMGTAKEN;
 			}
 			else {
 				health -= damageIntake.CalculateDamageAgainst(type);
@@ -160,7 +160,7 @@ namespace CombatWorld.Units {
 		void TookDamage() {
 			if(health <= 0) {
 				//Die unless it can do retaliation.
-				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && !turnedToStone) {
+				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
 					RetaliationAttack(damageIntake.GetSource());
 					return;
 				}
@@ -170,7 +170,7 @@ namespace CombatWorld.Units {
 				}
 			}
 			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
-			else if(!damageIntake.WasRetaliation() && !turnedToStone) {
+			else if(!damageIntake.WasRetaliation() && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
 				RetaliationAttack(damageIntake.GetSource());
 				return;
 			}
@@ -261,22 +261,34 @@ namespace CombatWorld.Units {
 		}
 
 		public void TurnToStone() {
-
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
 			}
-			if (DamageConstants.STONEUNITSGETSATTACKASHEALTH) {
+			if (StoneUnitOptions.STONEUNITSGETSATTACKASHEALTH) {
 				health += damage;
 			}
-			if (DamageConstants.STONEUNITSGETDOUBLEHEALTH) {
+			if (StoneUnitOptions.STONEUNITSGETDOUBLEHEALTH) {
 				health *= 2;
 			}
-			animHelp.TurnToStone();
-			damage = 0;
+			GameController.instance.AddWaitForUnit(this);
+			
+			if (!StoneUnitOptions.STONEUNITCANRETALIATE) {
+				animHelp.TurnToStone(TurnedToStone);
+				damage = 0;
+			}
+			else {
+				FinishedAction();
+				damage = StoneUnitOptions.STONEUNITRETALIATEDMG;
+			}
+			
 			moveDistance = 0;
 			moved = attacked = true;
 			turnedToStone = true;
+		}
+
+		void TurnedToStone() {
+			FinishedAction();
 		}
 
 		void OnMouseEnter() {

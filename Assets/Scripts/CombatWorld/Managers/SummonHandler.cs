@@ -78,11 +78,11 @@ namespace CombatWorld
 
 		public bool HasPointsToSummon() {
 			foreach (UnitButton item in buttons) {
-				if (!item.CanAfford(summonPoints)) {
-					return false;
+				if (item.CanAfford(summonPoints)) {
+					return true;
 				}
 			}
-			return true;
+			return false;
 		}
 
 		public Unit SummonAIUnitByID(SummonNode node, int id) {

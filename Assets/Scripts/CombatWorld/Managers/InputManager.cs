@@ -29,6 +29,10 @@ namespace CombatWorld {
 			if (Input.GetMouseButtonDown(1)) {
 				GameController.instance.ClickedNothing();
 			}
+
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				GameController.instance.TryEndTurn();
+			}
 		}
 	}
 }

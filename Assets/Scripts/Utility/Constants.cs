@@ -26,13 +26,19 @@ public static class DamageConstants {
 	public const int EFFECTIVEMULTIPLIER = 2;
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
 	public const bool ALLOWRETALIATIONAFTERDEATH = true;
-	public const bool STONEUNITSGETSATTACKASHEALTH = false;
-	public const bool STONEUNITONLYTAKES1DMG = false;
-	public const bool STONEUNITSGETDOUBLEHEALTH = true;
 	public const int TOWERHP = 100;
-	public const int SUMMONPOINTSPERTURN = 1;
+	public const int SUMMONPOINTSPERTURN = 2;
 	public const int SUMMONPOINTSPERKILL = 1;
 	public const int SUMMONPOINTSPERTOWERKILL = 3;
+}
+
+public static class StoneUnitOptions {
+	public const bool STONEUNITSGETSATTACKASHEALTH = false;
+	public const bool STONEUNITTAKESSTATICDMG = true;
+	public const bool STONEUNITSGETDOUBLEHEALTH = false;
+	public const bool STONEUNITCANRETALIATE = true;
+	public const int STONEUNITRETALIATEDMG = 5;
+	public const int STONEUNITDMGTAKEN = 5;
 }
 
 public static class GameNotificationConstants {
