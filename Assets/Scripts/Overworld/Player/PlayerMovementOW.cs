@@ -9,9 +9,7 @@ namespace Overworld {
 
 		private NavMeshAgent agent;
 		private Animator animator;
-		private bool isRunning = false;
 		public GameObject clickMoveToObject;
-		public float distanceToStopRunAnimation = 1f;
 
 		void Start() {
 			Register(this, KeyCode.Mouse0);
@@ -32,21 +30,22 @@ namespace Overworld {
 		void PlayerMoveToMouseInput(Vector3 hitPoint) {
 			if (agent.SetDestination(hitPoint)) {
 				Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
-				if (!isRunning) {
-					StartCoroutine(MovementAnimation());
-				}
 			}
 		}
 
-		private IEnumerator MovementAnimation() {
+		private void Update() {
+			animator.SetFloat("Speed", agent.velocity.magnitude);
+		}
+
+		/*private IEnumerator MovementAnimation() {
 			isRunning = true;
 			animator.SetTrigger("Run");
-			while (Vector3.Distance(gameObject.transform.position,agent.destination)>distanceToStopRunAnimation) {
+			while (agent.hasPath || agent.pathPending) {
 				yield return new WaitForEndOfFrame();
 			}
 			animator.SetTrigger("Run");
 			isRunning = false;
-		}
+		}*/
 
 		public void DoAction() {
 			agent.Stop();
