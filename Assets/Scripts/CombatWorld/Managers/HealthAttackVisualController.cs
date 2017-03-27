@@ -2,29 +2,74 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using CombatWorld.Units;
+using CombatWorld.Utility;
 
-namespace CombatWorld {
+namespace CombatWorld.Units {
 	public class HealthAttackVisualController : MonoBehaviour {
 
 		public Text health;
 		public Text attack;
-		public IEntity source;
+		public Text CombatText;
+		public Image icon;
+		public Animator anim;
 
-		void Start() {
-			source = GetComponentInParent<IEntity>();
-		}
-
-		// Update is called once per frame
-		void Update() {
-			health.text = source.GetHealth().ToString();
-			if (source.GetType() == typeof(Unit)) {
-				var temp = (Unit)source;
-				attack.text = temp.GetAttackValue().ToString();
+		public void Setup(int hp, int attackval, ElementalTypes type = ElementalTypes.NONE, bool shadow = false, bool stone = false) {
+			health.text = hp.ToString();
+			attack.text = attackval.ToString();
+			if(shadow) {
+				ApplyShadowIcon();
+			}
+			else if (stone) {
+				ApplyStoneIcon();
 			}
 			else {
-				attack.text = "0";
+				ApplyIconByType(type);
 			}
+		}
+
+		int newHealth;
+
+		public void TookDamage(DamagePackage dmg, int newHealth) {
+			health.text = newHealth.ToString();
+			CombatText.text = "-"+dmg.GetCalculatedDMG();
+			anim.SetTrigger("TakeDMG");
+		}
+
+		public void GotMoreHealth(int newHealth, int bonus) {
+			health.text = newHealth.ToString();
+		}
+
+		public void ChangedAttackValue(int newVal) {
+			attack.text = newVal.ToString();
+		}
+
+		void ApplyIconByType(ElementalTypes type) {
+			switch (type) {
+				case ElementalTypes.Fire:
+					icon.sprite = Resources.Load<Sprite>("Art/2D/Icons/Fire");
+					break;
+				case ElementalTypes.Water:
+					icon.sprite = Resources.Load<Sprite>("Art/2D/Icons/Water");
+					break;
+				case ElementalTypes.Nature:
+					icon.sprite = Resources.Load<Sprite>("Art/2D/Icons/Nature");
+					break;
+				case ElementalTypes.Lightning:
+					icon.sprite = Resources.Load<Sprite>("Art/2D/Icons/Lightning");
+					break;
+				case ElementalTypes.NONE:
+				default:
+					icon.enabled = false;
+					break;
+			}
+		}
+
+		void ApplyShadowIcon() {
+			icon.sprite = Resources.Load<Sprite>("Art/2D/Icons/Shadow");
+		}
+
+		void ApplyStoneIcon() {
+			icon.sprite = Resources.Load<Sprite>("Art/2D/Icons/Stone");
 		}
 	}
 }
