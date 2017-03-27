@@ -218,7 +218,7 @@ namespace CombatWorld.Units {
 			shadowUnit = data.shadow;
 			node.SetOccupant(this);
 			this.data = data;
-			healthIndicator.Setup(health, damage);
+			healthIndicator.Setup(health, damage, type, shadowUnit, stoneUnit);
 			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
 				var ma = particles.main;

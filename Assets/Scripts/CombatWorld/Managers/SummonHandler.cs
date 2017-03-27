@@ -18,7 +18,7 @@ namespace CombatWorld
 		CombatData currentlySelectedData;
 		ItemDatabase database;
 
-		int summonPoints = 2;
+		int summonPoints = 200;
 
 		private void Start() {
 			database = new ItemDatabase();
