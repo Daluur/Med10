@@ -17,5 +17,12 @@ namespace Overworld {
 			randomEncounter.RandomEncounterOn(type);
 			Debug.Log("Rand encounter on with type: " + type);
 		}
+
+		private void OnTriggerExit(Collider other) {
+			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER) {
+				return;
+			}
+			randomEncounter.RandomEncounterOff();
+		}
 	}
 }

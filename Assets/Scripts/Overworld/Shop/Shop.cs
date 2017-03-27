@@ -94,7 +94,7 @@ namespace Overworld.Shops {
 				return;
 			CloseElement(gameObject);
 			if (inventoryPanel.isShowing) {
-				inventoryPanel.CloseInventory();
+				//inventoryPanel.CloseInventory();
 			}
 		}
 
