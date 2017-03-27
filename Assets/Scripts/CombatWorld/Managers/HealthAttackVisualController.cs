@@ -27,6 +27,8 @@ namespace CombatWorld.Units {
 			}
 		}
 
+		int newHealth;
+
 		public void TookDamage(DamagePackage dmg, int newHealth) {
 			health.text = newHealth.ToString();
 			CombatText.text = "-"+dmg.GetCalculatedDMG();
