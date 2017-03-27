@@ -27,7 +27,7 @@ namespace Overworld {
 		}
 
 		void Update () {
-			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x,yOffset + following.transform.position.y,following.transform.position.z - offSet);
+			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x + 12,yOffset + following.transform.position.y,following.transform.position.z - offSet);
 			CameraZoom();
 		}
 
