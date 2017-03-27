@@ -38,13 +38,11 @@ namespace Overworld {
 		private void HandleSpecificKeys(KeyCode keyCode) {
 			switch (keyCode) {
 				case KeyCode.Mouse0:
-					if (!isMouseBlocked) {
-						var mousePos = Input.mousePosition;
-						FillDistributer(keyCode);
-						DistributeAction();
-						WhatIsHit(mousePos);
-						DistributeAction(playerMoveTo);
-					}
+					var mousePos = Input.mousePosition;
+					FillDistributer(keyCode);
+					DistributeAction();
+					WhatIsHit(mousePos);
+					DistributeAction(playerMoveTo);
 					break;
 				case KeyCode.Escape:
 					FillDistributer(keyCode);
@@ -68,9 +66,11 @@ namespace Overworld {
 		private void WhatIsHit(Vector3 mousePos) {
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
 			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit, 500f, layerMaskPlayer)) {
-				playerMoveTo = hit.point;
-				distributeTo.Add(GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<IInteractable>());
+			if (!isMouseBlocked) {
+				if (Physics.Raycast(ray, out hit, 500f, layerMaskPlayer)) {
+					playerMoveTo = hit.point;
+					distributeTo.Add(GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<IInteractable>());
+				}
 			}
 			if (Physics.Raycast(ray, out hit, 500f, layerMaskInteractable)) {
 				distributeTo.Add(hit.collider.gameObject.GetComponent<IInteractable>());
@@ -108,6 +108,20 @@ namespace Overworld {
 				var tmp = new List<IInteractable>();
 				tmp.Add(interactable);
 				registerTo.Add(keyCode, tmp);
+			}
+		}
+
+		public void UnRegister(IInteractable interactable, KeyCode keyCode) {
+			if (registerTo.ContainsKey(keyCode)) {
+				if (registerTo[keyCode].Contains(interactable)) {
+					registerTo[keyCode].Remove(interactable);
+				}
+				else {
+					Debug.LogWarning("You are trying to unregister an interacteble that was not registered!" + interactable.GetType() + " key: " + keyCode);
+				}
+			}
+			else {
+				Debug.LogWarning("you are trying to unregister from a keycode that has not been registered.");
 			}
 		}
 

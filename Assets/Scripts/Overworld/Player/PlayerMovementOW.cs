@@ -13,10 +13,7 @@ namespace Overworld {
 		public GameObject clickMoveToObject;
 		public float distanceToStopRunAnimation = 1f;
 
-
-
 		void Start() {
-
 			Register(this, KeyCode.Mouse0);
 
 			agent = GetComponent<NavMeshAgent>();

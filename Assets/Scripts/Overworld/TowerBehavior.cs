@@ -8,30 +8,18 @@ namespace Overworld {
 
 	public class TowerBehavior : ContextInteraction, IInteractable {
 
-		public GameObject contextMenu;
-		public GameObject shop;
-
-		public GameObject[] units;
-		public int[] amountOfUnits;
-
-
-		//public Unit[] containingUnits;
-
-		//TODO: Add custom editor to the tower behaviour so that it is possible to write in editor how many units of each the tower should have
-		public Dictionary<GameObject, int>[] containing;
+		Shop shop;
 
 		void Start () {
-
-			Register(this, KeyCode.Mouse0);
-
-			if (contextMenu == null) {
-				contextMenu = GameObject.FindGameObjectWithTag(TagConstants.CONTEXTUNITMENU);
+			if (playerOW == null) {
+				playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
 			}
+			shop = GameObject.FindGameObjectWithTag("OWShop").GetComponent<Shop>();
+			Register(this, KeyCode.Mouse0);
 		}
 
 		private void OpenMenu() {
-			//contextMenu.GetComponent<ContextPopUp>().DisplayMenu(units);
-			shop.GetComponent<Shop>().OpenMenu();
+			shop.OpenMenu();
 		}
 
 		public override void PerformClosenessAction() {

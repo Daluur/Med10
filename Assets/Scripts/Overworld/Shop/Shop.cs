@@ -18,9 +18,10 @@ namespace Overworld.Shops {
 
 		void Start() {
 			Register(this, KeyCode.Escape);
+			Register(this, KeyCode.Q);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 			database = inventory.GetDatabase();
-			float num = (database.GetAllItems().Count * 50);
+			float num = (database.GetAllItems().Count * 50); // 50 is the height of the buttons. Is hardcoded for now.
 			parent.sizeDelta = new Vector2(parent.sizeDelta.x, num);
 			parent.anchoredPosition = new Vector2(parent.anchoredPosition.x, -(num / 2));
 			CreateButtons();
@@ -84,6 +85,8 @@ namespace Overworld.Shops {
 		}
 
 		public void OpenMenu() {
+			if (isRunning || isShowing)
+				return;
 			CreateShop();
 			OpenElement(gameObject, size, true);
 			inventoryPanel.OpenTheInventory();
@@ -93,9 +96,6 @@ namespace Overworld.Shops {
 			if (isRunning || !isShowing)
 				return;
 			CloseElement(gameObject);
-			if (inventoryPanel.isShowing) {
-				//inventoryPanel.CloseInventory();
-			}
 		}
 
 		public void DoAction() {

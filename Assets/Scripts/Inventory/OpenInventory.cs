@@ -21,9 +21,13 @@ namespace Overworld {
 		}
 
 		public void OpenTheInventory() {
+			if (isRunning || isShowing)
+				return;
 			OpenElement(gameObject, size, true);
+			Register(this, KeyCode.Escape);
 		}
 		public void CloseInventory() {
+			UnRegister(this, KeyCode.Escape);
 			CloseElement(gameObject);
 		}
 
