@@ -62,7 +62,7 @@ public class UnitModelFixer : EditorWindow {
 		if (model.GetComponent<Unit>() != null) {
 			//AddParticleSystem(model);
 			//FixSize(model);
-			UpdateCanvas(model);
+			//UpdateCanvas(model);
 			//Add stuff here, if units needs batch change.
 			return;
 		}
@@ -99,11 +99,8 @@ public class UnitModelFixer : EditorWindow {
 
 	public static void AddParticleSystem(GameObject model) {
 		//make sure you find a way to destroy the old PS but not destroy the PS of the shadow units.
-		return;
-
-		while(model.transform.childCount > 2) {
-			DestroyImmediate(model.transform.GetChild(2).gameObject, true);
-		}
+		//return;
+		DestroyImmediate(model.transform.GetChild(2).gameObject, true);
 
 		GameObject temp = Instantiate(particleEffect) as GameObject;
 		temp.name = "ParticleEffect";
@@ -116,7 +113,9 @@ public class UnitModelFixer : EditorWindow {
 	}
 
 	public static void UpdateCanvas(GameObject model) {
-		DestroyImmediate(model.GetComponentInChildren<Canvas>().gameObject, true);
+		if (model.GetComponentInChildren<Canvas>() != null) {
+			DestroyImmediate(model.GetComponentInChildren<Canvas>().gameObject, true);
+		}
 		
 		GameObject temp = Instantiate(canvas) as GameObject;
 		temp.name = "UnitCanvas";
