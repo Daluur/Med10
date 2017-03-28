@@ -60,5 +60,9 @@ namespace Overworld {
 			}
 			PlayerMoveToMouseInput((Vector3)(param as Vector3?));
 		}
+
+		public ControlUIElement GetControlElement() {
+			return null;
+		}
 	}
 }
