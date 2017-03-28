@@ -13,5 +13,9 @@ namespace Overworld {
 		public void Register(IInteractable interactable, KeyCode keyCode) {
 			inputManager.Register(interactable, keyCode);
 		}
+
+		public void UnRegister(IInteractable interactable, KeyCode keyCode) {
+			inputManager.UnRegister(interactable, keyCode);
+		}
 	}
 }

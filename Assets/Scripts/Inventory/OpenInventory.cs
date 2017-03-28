@@ -8,7 +8,7 @@ namespace Overworld {
 	public class OpenInventory : ControlUIElement, IInteractable {
 
 		void Start () {
-			Register(this,KeyCode.B);
+			Register(this, KeyCode.B);
 		}
 
 		public void DoAction() {
@@ -20,10 +20,14 @@ namespace Overworld {
 			}
 		}
 
-		private void OpenTheInventory() {
+		public void OpenTheInventory() {
+			if (isRunning || isShowing)
+				return;
 			OpenElement(gameObject, size, true);
+			Register(this, KeyCode.Escape);
 		}
-		private void CloseInventory() {
+		public void CloseInventory() {
+			UnRegister(this, KeyCode.Escape);
 			CloseElement(gameObject);
 		}
 

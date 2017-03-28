@@ -12,7 +12,7 @@ namespace Overworld {
 		public bool isRunning = false;
 		[HideInInspector]
 		public bool meClicked = false;
-		public float distanceToOpen = 5f;
+		float distanceToOpen = Values.InteractDistance;
 
 
 		public void CheckDistance() {
