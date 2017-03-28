@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CombatWorld.Map;
-using CombatWorld.Units;
 using CombatWorld.Utility;
 using CombatWorld.AI;
+using Overworld;
 using UnityEngine.SceneManagement;
+using Unit = CombatWorld.Units.Unit;
 
 namespace CombatWorld {
 	public class GameController : Singleton<GameController> {
@@ -401,6 +402,7 @@ namespace CombatWorld {
 		void Won() {
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
+			SceneHandler.instance.Won();
 		}
 
 		void Lost() {
