@@ -5,6 +5,8 @@ using UnityEngine;
 namespace Overworld {
 	public class InputSubscriber : MonoBehaviour {
 		public InputManager inputManager;
+		[HideInInspector]
+		public bool open;
 
 		private void Awake() {
 			inputManager = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<InputManager>();

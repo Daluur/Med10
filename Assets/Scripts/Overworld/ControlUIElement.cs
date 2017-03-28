@@ -6,24 +6,24 @@ using UnityEngine;
 namespace Overworld {
 	public class ControlUIElement : InputSubscriber {
 
-		public float speed;
+		public float speed = 7;
 		public Vector2 size = new Vector2(1,1);
 		[HideInInspector]
 		public bool isRunning;
 		[HideInInspector]
 		public bool isShowing;
 
-		public void OpenElement(GameObject go, Vector2 endScale, bool blockMouseUI) {
+		public void OpenElement() {
 			if(isRunning)
 				return;
-			go.SetActive(true);
-			StartCoroutine(OpenAUIElement(go, endScale, blockMouseUI));
+			gameObject.SetActive(true);
+			StartCoroutine(OpenAUIElement(gameObject, size, true));
 		}
 
-		public void CloseElement(GameObject go) {
+		public void CloseElement() {
 			if(isRunning)
 				return;
-			StartCoroutine(OpenAUIElement(go, Vector2.zero, false));
+			StartCoroutine(OpenAUIElement(gameObject, Vector2.zero, false));
 		}
 
 		private IEnumerator OpenAUIElement(GameObject go, Vector2 endScale, bool blockMouseUI) {
@@ -32,6 +32,7 @@ namespace Overworld {
 			if (blockMouseUI && endScale != Vector2.zero) {
 				inputManager.BlockMouseUI();
 				isShowing = true;
+				open = true;
 			}
 			var startTime = Time.time;
 			var initScale = new Vector2(go.transform.localScale.x, go.transform.localScale.y);
@@ -48,6 +49,7 @@ namespace Overworld {
 				inputManager.UnblockMouseUI();
 				isShowing = false;
 				go.SetActive(false);
+				open = false;
 			}
 			yield return null;
 

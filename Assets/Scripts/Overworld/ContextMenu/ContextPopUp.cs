@@ -20,7 +20,7 @@ namespace Overworld {
 		public string buttonText = "Recruit for: ";
 
 		void Start() {
-			Register(this, KeyCode.Escape);
+			//Register(this, KeyCode.Escape);
 			InitUnitTexts(GetComponentsInChildren<Text>());
 			InitRecruitButtons();
 			myButtons = GetComponentsInChildren<Button>();
@@ -59,14 +59,14 @@ namespace Overworld {
 				return;
 			}
 			UnpopulateUnitSlots();
-			OpenElement(gameObject, size, true);
+			OpenElement();
 			PopulateUnitSlots(units);
 		}
 
 		public void CloseMenu() {
 			if(isRunning || !isShowing)
 				return;
-			CloseElement(gameObject);
+			CloseElement();
 		}
 
 		private void PopulateUnitSlots(GameObject[] units) {
@@ -111,6 +111,10 @@ namespace Overworld {
 		}
 
 		public void DoAction<T>(T param) {
+		}
+
+		public ControlUIElement GetControlElement() {
+			return this;
 		}
 
 		//Refactored, not using anymore, keeping just in case

@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using UnityEngine;
 
 namespace Overworld {
@@ -13,13 +15,12 @@ namespace Overworld {
 		private List<IInteractable> distributeTo = new List<IInteractable>();
 		private Dictionary<KeyCode, List<IInteractable>> registerTo = new Dictionary<KeyCode, List<IInteractable>>();
 		private Vector3 playerMoveTo;
-		private GameObject evtSystem;
+		private bool inGameMenuOpen = false;
 
 		// Use this for initialization
 		void Start () {
 			layerMaskPlayer = (1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER));
 			layerMaskInteractable = ( 1 << LayerMask.NameToLayer(LayerConstants.INTERACTABLELAYER) );
-			evtSystem = GameObject.FindGameObjectWithTag(TagConstants.OWEVENTSYSTEM);
 		}
 
 		// Update is called once per frame
@@ -36,6 +37,9 @@ namespace Overworld {
 		}
 
 		private void HandleSpecificKeys(KeyCode keyCode) {
+			if(inGameMenuOpen && !keyCode.Equals(KeyCode.Escape)){
+				return;
+			}
 			switch (keyCode) {
 				case KeyCode.Mouse0:
 					var mousePos = Input.mousePosition;
@@ -45,8 +49,7 @@ namespace Overworld {
 					DistributeAction(playerMoveTo);
 					break;
 				case KeyCode.Escape:
-					FillDistributer(keyCode);
-					DistributeAction();
+					EscapeBehaviour();
 					break;
 				case KeyCode.B:
 					FillDistributer(keyCode);
@@ -82,6 +85,26 @@ namespace Overworld {
 				distributeTo.Add(interactable);
 			}
 		}
+
+		private void EscapeBehaviour() {
+			var closedSomething = false;
+			foreach (var listIInteractable in registerTo.Values) {
+				foreach (var iinteractable in listIInteractable) {
+					if (iinteractable.GetControlElement() != null && iinteractable.GetControlElement().open) {
+						iinteractable.GetControlElement().CloseElement();
+						closedSomething = true;
+					}
+				}
+			}
+			if(closedSomething) {
+				inGameMenuOpen = false;
+				return;
+			}
+			inGameMenuOpen = true;
+			FillDistributer(KeyCode.Escape);
+			DistributeAction();
+		}
+
 
 		private void DistributeAction(Vector3 playerMoveTo) {
 			foreach (var interactable in distributeTo) {
