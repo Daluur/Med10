@@ -9,6 +9,8 @@ namespace Overworld {
 	public class StaticEncounter : ContextInteraction, IInteractable {
 
 
+		public int currencyForWinning = 25;
+
 		private SceneHandler sceneHandler;
 
 		// Use this for initialization
@@ -25,7 +27,7 @@ namespace Overworld {
 
 
 		public override void PerformClosenessAction() {
-			sceneHandler.LoadScene(0);
+			sceneHandler.LoadScene(0, currencyForWinning, gameObject);
 
 		}
 
