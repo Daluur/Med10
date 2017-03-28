@@ -30,6 +30,8 @@ namespace CombatWorld.Units {
 		private bool moved = true;
 		private bool attacked = true;
 
+		public bool doingAction = false;
+
 		private Vector3 defaultFaceDirection;
 
 		public CombatData data;
@@ -48,6 +50,15 @@ namespace CombatWorld.Units {
 		}
 
 		public void Move(List<Node> node) {
+			GameController.instance.AddWaitForUnit(this);
+			currentNode.RemoveOccupant();
+			currentNode = node[0];
+			currentNode.SetOccupant(this);
+			StartCoroutine(MoveTo(node));
+			moved = true;
+		}
+
+		public void Move(List<Node> node, bool AIAttackAfter) {
 			GameController.instance.AddWaitForUnit(this);
 			currentNode.RemoveOccupant();
 			currentNode = node[0];
@@ -207,6 +218,10 @@ namespace CombatWorld.Units {
 			transform.LookAt(transform.position + defaultFaceDirection, Vector3.up);
 		}
 
+		void FinishedImediateAction() {
+			doingAction = false;
+		}
+
 		public void SpawnEntity(Node node, Team team, CombatData data) {
 			moveDistance = data.moveDistance;
 			damage = data.attackValue;
@@ -249,6 +264,10 @@ namespace CombatWorld.Units {
 			}
 			transform.position = target[target.Count-1].transform.position;
 			animHelp.EndWalk();
+			/*if (AIAttackAfter) {
+				FinishedImediateAction();
+				yield break;
+			}*/
 			FinishedAction();
 		}
 
@@ -282,6 +301,10 @@ namespace CombatWorld.Units {
 			healthIndicator.GotMoreHealth(health, healthBonus);
 			moved = attacked = true;
 			turnedToStone = true;
+		}
+
+		public bool GetShadow() {
+			return shadowUnit;
 		}
 
 		void TurnedToStone() {

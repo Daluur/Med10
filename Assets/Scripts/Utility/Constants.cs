@@ -20,6 +20,7 @@ public static class TagConstants {
 	public const string CURRENCYPICKUP = "CurrencyPickup";
 	public const string BUTTONIMAGE = "ButtonImage";
 	public const string ICONIMAGE = "IconImage";
+	public const string COMBATWORLDUNIT = "CombatUnit";
 }
 
 public static class Values {
