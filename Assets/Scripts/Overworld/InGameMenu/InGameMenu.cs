@@ -13,6 +13,11 @@ namespace Overworld {
 			OpenElement();
 		}
 
+		public void CloseMenu() {
+			inputManager.inGameMenuOpen = false;
+			CloseElement ();
+		}
+
 		public void DoAction<T>(T param) {
 		}
 

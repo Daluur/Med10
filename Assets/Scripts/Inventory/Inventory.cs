@@ -31,10 +31,12 @@ public class Inventory : MonoBehaviour {
 		}
 
 		AddItem (0);
-		AddItem (1);
-		AddItem (1);
-		AddItem (1);
-		AddItem (1);
+		AddItem (2);
+		AddItem (4);
+		AddItem (6);
+		AddItem (8);
+		AddItem (10);
+		AddItem (12);
 	}
 
 	public void AddItem(int id) {

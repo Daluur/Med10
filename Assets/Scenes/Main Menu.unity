@@ -259,7 +259,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 836683548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 764.7924, y: 1908.5195, z: -2626.6292}
+  m_LocalPosition: {x: 551.4651, y: 1517.3613, z: -1314.9723}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -721,6 +721,54 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 362a289b731a377459a4817b1ffed156, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1772944053 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1324206991654830, guid: 362a289b731a377459a4817b1ffed156,
+    type: 2}
+  m_PrefabInternal: {fileID: 1772944052}
+--- !u!114 &1772944054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1772944053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b918830a4779a43947eef6ace615da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1772944055 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1214687201271130, guid: 362a289b731a377459a4817b1ffed156,
+    type: 2}
+  m_PrefabInternal: {fileID: 1772944052}
+--- !u!114 &1772944056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1772944055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b918830a4779a43947eef6ace615da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1772944057 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1397762270382516, guid: 362a289b731a377459a4817b1ffed156,
+    type: 2}
+  m_PrefabInternal: {fileID: 1772944052}
+--- !u!114 &1772944058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1772944057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b918830a4779a43947eef6ace615da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2129007816 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114534684751651108, guid: 362a289b731a377459a4817b1ffed156,

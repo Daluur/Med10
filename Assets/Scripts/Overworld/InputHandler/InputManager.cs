@@ -15,7 +15,8 @@ namespace Overworld {
 		private List<IInteractable> distributeTo = new List<IInteractable>();
 		private Dictionary<KeyCode, List<IInteractable>> registerTo = new Dictionary<KeyCode, List<IInteractable>>();
 		private Vector3 playerMoveTo;
-		private bool inGameMenuOpen = false;
+		[HideInInspector]
+		public bool inGameMenuOpen = false;
 
 		// Use this for initialization
 		void Start () {
@@ -52,6 +53,10 @@ namespace Overworld {
 					EscapeBehaviour();
 					break;
 				case KeyCode.B:
+					FillDistributer(keyCode);
+					DistributeAction();
+					break;
+				case KeyCode.I:
 					FillDistributer(keyCode);
 					DistributeAction();
 					break;
