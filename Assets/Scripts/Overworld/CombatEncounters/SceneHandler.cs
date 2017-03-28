@@ -5,12 +5,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Overworld {
-	public class SceneHandler : MonoBehaviour {
+	public class SceneHandler : Singleton<SceneHandler> {
 
 		private Camera OWCam;
 		private InputManager inputManager;
 		private GameObject eventSystem;
 		private GameObject OWCanvas;
+
+		private int currencyToReward = 0;
+		private GameObject encounterObject;
+
+		private MapTypes mapType = MapTypes.ANY;
+		private DeckData deck;
 
 		// Use this for initialization
 		void Start () {
@@ -20,11 +26,23 @@ namespace Overworld {
 			OWCanvas = GameObject.FindGameObjectWithTag(TagConstants.OWCANVAS);
 		}
 
-		public void LoadScene(int type) {
+		public void LoadScene(MapTypes type, int deckID, int currencyReward = 0, GameObject encounterObject = null) {
+			mapType = type;
+			deck = DeckHandler.GetDeckFromID(deckID);
 			DisableObjectsCombatLoad();
 			SceneManager.LoadScene(1,LoadSceneMode.Additive);
 			SceneManager.sceneLoaded += OnSceneLoaded;
 			SceneManager.sceneUnloaded += EndEncounter;
+			currencyToReward = currencyReward;
+			this.encounterObject = encounterObject;
+		}
+
+		public MapTypes GetMapType() {
+			return mapType;
+		}
+
+		public DeckData GetDeck() {
+			return deck;
 		}
 
 		private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
@@ -56,6 +74,21 @@ namespace Overworld {
 			OWCanvas.SetActive(true);
 		}
 
+		//Add things here if they need to happen when a player wins a battle
+		public void Won() {
+			AwardCurrency();
+			DestroyEncounterObject();
+		}
+
+		private void AwardCurrency() {
+			CurrencyHandler.AddCurrency(currencyToReward);
+		}
+
+		private void DestroyEncounterObject() {
+			if (encounterObject != null) {
+				Destroy(encounterObject);
+			}
+		}
 
 	}
 }

@@ -6,6 +6,7 @@ using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 using CombatWorld.AI;
+using Overworld;
 using UnityEngine.SceneManagement;
 
 namespace CombatWorld {
@@ -14,7 +15,7 @@ namespace CombatWorld {
 		public Text winLoseText;
 		public Button endTurnButton;
 
-		public GameObject map;
+		List<GameObject> maps = new List<GameObject>();
 
 		List<Node> allNodes = new List<Node>();
 		List<SummonNode> playerSummonNodes = new List<SummonNode>();
@@ -32,10 +33,24 @@ namespace CombatWorld {
 		List<Unit> performingAction = new List<Unit>();
 
 		void Start() {
+			maps.AddRange(Resources.LoadAll<GameObject>("Art/3D/Maps"));
 			pathfinding = new Pathfinding();
-			GameObject go = Instantiate(map,transform.position,Quaternion.identity,transform) as GameObject;
-			go.transform.position = go.transform.position - new Vector3(go.GetComponentInChildren<Terrain>().terrainData.size.x / 2, 5, 0);
+			SpawnMap();
 			StartGame();
+		}
+
+		void SpawnMap() {
+			//Get correct map based on scenehandler info.
+			MapTypes type = MapTypes.ANY;
+			if (SceneHandler.instance != null) {
+				type = SceneHandler.instance.GetMapType();
+			}
+			if (type != MapTypes.ANY) {
+				maps.RemoveAll(g => g.GetComponent<MapInfo>().type != type);
+			}
+			GameObject go = Instantiate(maps[Random.Range(0, maps.Count)], transform.position, Quaternion.identity, transform) as GameObject;
+			go.transform.position = go.transform.position - new Vector3(go.GetComponentInChildren<Terrain>().terrainData.size.x / 2, 5, 0);
+			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
 		}
 
 		void StartGame() {
@@ -401,6 +416,7 @@ namespace CombatWorld {
 		void Won() {
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
+			SceneHandler.instance.Won();
 		}
 
 		void Lost() {

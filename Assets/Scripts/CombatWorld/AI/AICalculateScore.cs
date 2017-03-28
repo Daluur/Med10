@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
+using Overworld;
 using UnityEngine;
 
 namespace CombatWorld.AI {
@@ -49,6 +50,9 @@ namespace CombatWorld.AI {
 		public int triggerForDefensiveSpawns = 3, triggerForOffensiveSpawns = 3;
 
 		private void Start() {
+			if(SceneHandler.instance != null) {
+				unitsToSummon = SceneHandler.instance.GetDeck().unitIDs;
+			}
 			AIUtilityMethods.FillSubscriptionTowers();
 		}
 
