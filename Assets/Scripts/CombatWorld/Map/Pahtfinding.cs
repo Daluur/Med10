@@ -83,7 +83,7 @@ namespace CombatWorld.Map {
 				}
 			}
 			return 0;
-			throw new System.Exception("Could not find end node, is it hidden behind a tower?");
+			//throw new System.Exception("Could not find end node, is it hidden behind a tower?");
 		}
 
 	/*	public List<Node> GetAllReachableNodes(Node start, int dist) {
@@ -207,7 +207,7 @@ namespace CombatWorld.Map {
 				}
 			}
 			return null;
-			throw new System.NullReferenceException("Could not reach the target node!");
+			//throw new System.NullReferenceException("Could not reach the target node!");
 		}
 
 		public List<Node> GetPathFromToWithoutOccupants(Node start, Node end) {
@@ -241,7 +241,7 @@ namespace CombatWorld.Map {
 				}
 			}
 			return null;
-			throw new System.NullReferenceException("Could not reach the target node!");
+			//throw new System.NullReferenceException("Could not reach the target node!");
 		}
 
 		public List<Node> GetAllReachableNodes(Node start, int dist) {

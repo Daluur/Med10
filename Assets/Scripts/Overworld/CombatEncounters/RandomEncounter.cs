@@ -16,7 +16,6 @@ namespace Overworld {
 		private MapTypes type = MapTypes.ANY;
 		private SceneHandler sceneHandler;
 		private bool isRunning = false;
-		private Coroutine encounter;
 		public bool printChances = false;
 
 		public int currencyForWinning = 10;
@@ -66,7 +65,7 @@ namespace Overworld {
 			this.deckIDs = deckIDs;
 			this.type = type;
 			if(gameObject.activeInHierarchy && !isRunning)
-				encounter = StartCoroutine(CheckForEncounter());
+				StartCoroutine(CheckForEncounter());
 		}
 
 		public void RandomEncounterOff() {
@@ -75,7 +74,7 @@ namespace Overworld {
 
 		private void OnEnable() {
 			if (randEncounter)
-				encounter = StartCoroutine(CheckForEncounter());
+				StartCoroutine(CheckForEncounter());
 		}
 	}
 }
