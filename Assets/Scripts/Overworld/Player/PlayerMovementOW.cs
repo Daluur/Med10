@@ -13,7 +13,6 @@ namespace Overworld {
 
 		void Start() {
 			Register(this, KeyCode.Mouse0);
-
 			agent = GetComponent<NavMeshAgent>();
 			if (agent == null) {
 				Debug.LogError("The Player character needs a nav mesh agent to move around!!!!");
