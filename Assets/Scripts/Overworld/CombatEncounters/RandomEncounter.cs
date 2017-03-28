@@ -13,11 +13,15 @@ namespace Overworld {
 		public float startChance = 0f;
 		private float maximumChance = 1.1f;
 		public float chanceIncrease = 0.002f;
-		private int type = 0;
+		private MapTypes type = MapTypes.ANY;
 		private SceneHandler sceneHandler;
 		private bool isRunning = false;
 		private Coroutine encounter;
 		public bool printChances = false;
+
+		public int currencyForWinning = 10;
+
+		int[] deckIDs = new int[] { 0 };
 
 		private void Start() {
 			player = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
@@ -47,7 +51,7 @@ namespace Overworld {
 
 			if (currentChance >= randGenerator) {
 				currentChance = startChance;
-				sceneHandler.LoadScene(type);
+				sceneHandler.LoadScene(type, deckIDs[Random.Range(0, deckIDs.Length)], currencyForWinning);
 				player.GetComponent<PlayerMovementOW>().DoAction();
 				return true;
 			}
@@ -57,12 +61,12 @@ namespace Overworld {
 			}
 		}
 
-		public void RandomEncounterOn(int type) {
+		public void RandomEncounterOn(MapTypes type, int[] deckIDs) {
 			randEncounter = true;
+			this.deckIDs = deckIDs;
 			this.type = type;
 			if(gameObject.activeInHierarchy && !isRunning)
 				encounter = StartCoroutine(CheckForEncounter());
-
 		}
 
 		public void RandomEncounterOff() {

@@ -19,6 +19,9 @@ public class UnitMaker : EditorWindow {
 	ItemDatabase database;
 	List<Item> items = new List<Item>();
 
+	GameObject[] projectiles;
+	string[] projNames;
+
 	bool changesToList = false;
 
 	Vector2 scrollPos;
@@ -30,10 +33,11 @@ public class UnitMaker : EditorWindow {
 	}
 
 	void OnGUI() {
-
 		if (database == null) {
 			database = new ItemDatabase();
 			items = database.GetAllItems();
+			projectiles = Resources.LoadAll<GameObject>("EditorObjects/Projectiles");
+			projNames = GetProjectileNames();
 		}
 		Filter();
 		ShowExistingItems();
@@ -241,6 +245,11 @@ public class UnitMaker : EditorWindow {
 			GUILayout.Label("Attack anim: " + unit.Model.GetComponent<Unit>().attackName);
 		}
 		EditorGUILayout.EndHorizontal();
+		EditorGUILayout.BeginHorizontal();
+		if (unit.Model != null) {
+			GUILayout.Label("Projectile: " + unit.Model.GetComponent<Unit>().projectile.name);
+		}
+		EditorGUILayout.EndHorizontal();
 
 		EditorGUILayout.EndVertical();
 	}
@@ -310,6 +319,14 @@ public class UnitMaker : EditorWindow {
 			Animations anim = GetAnimFromString(editing.Model.GetComponent<Unit>().attackName);
 			anim = (Animations)EditorGUILayout.EnumPopup("Attack anim:", anim);
 			editing.Model.GetComponent<Unit>().attackName = GetStringFromAnim(anim);
+		}
+		EditorGUILayout.EndHorizontal();
+
+		EditorGUILayout.BeginHorizontal();
+		if (unit.Model != null) {
+			int projectileID = GetProjectileIndexFromObj(unit.Model.GetComponent<Unit>().projectile);
+			projectileID = EditorGUILayout.Popup("Projectile: ", projectileID , projNames);
+			unit.Model.GetComponent<Unit>().projectile = GetProjectileFromID(projectileID);
 		}
 		EditorGUILayout.EndHorizontal();
 
@@ -510,6 +527,28 @@ public class UnitMaker : EditorWindow {
 			default:
 				return "Normal";
 		}
+	}
+
+	string[] GetProjectileNames() {
+		string[] names = new string[projectiles.Length];
+		for (int i = 0; i < projectiles.Length; i++) {
+			names[i] = projectiles[i].name;
+		}
+		return names;
+	}
+
+	int GetProjectileIndexFromObj(GameObject proj) {
+		for (int i = 0; i < projectiles.Length; i++) {
+			if(projectiles[i] == proj) {
+				return i;
+			}
+		}
+		Debug.Log("Projectile is not present in Resources/EditorObjects/Projectiles");
+		return 0;
+	}
+
+	GameObject GetProjectileFromID(int id) {
+		return projectiles[id];
 	}
 
 	#endregion

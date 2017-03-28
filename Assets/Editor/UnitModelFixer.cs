@@ -59,6 +59,7 @@ public class UnitModelFixer : EditorWindow {
 	}
 
 	public static void FixModel(GameObject model) {
+		return;
 		if (model.GetComponent<Unit>() != null) {
 			//AddParticleSystem(model);
 			//FixSize(model);

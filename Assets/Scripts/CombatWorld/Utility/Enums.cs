@@ -24,4 +24,11 @@
 		Nature,
 		Lightning,
 	}
+
+	
+}
+public enum MapTypes {
+	Grass,
+	Snow,
+	ANY,
 }

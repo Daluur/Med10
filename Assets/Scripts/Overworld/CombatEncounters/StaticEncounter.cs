@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 namespace Overworld {
 	public class StaticEncounter : ContextInteraction, IInteractable {
 
+		public int currencyForWinning = 25;
+
+		public MapTypes type = MapTypes.ANY;
+
+		public int[] deckIDs = new int[1] { 0 };
 
 		private SceneHandler sceneHandler;
 
@@ -25,7 +30,7 @@ namespace Overworld {
 
 
 		public override void PerformClosenessAction() {
-			sceneHandler.LoadScene(0);
+			sceneHandler.LoadScene(0, deckIDs[UnityEngine.Random.Range(0,deckIDs.Length)], currencyForWinning, gameObject);
 
 		}
 

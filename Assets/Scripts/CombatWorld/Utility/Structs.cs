@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 namespace CombatWorld.Utility {
 
-	[System.Serializable]
+	[Serializable]
 	public struct CombatData {
 		public string name;
 		public int moveDistance;
@@ -59,11 +61,18 @@ namespace CombatWorld.Utility {
 		}
 	}
 
-	[System.Serializable]
+	[Serializable]
 	public struct SummonData {
 		public GameObject Unit;
 		public int Cost;
 		public CombatData data;
 	}
 
+}
+[Serializable]
+public struct DeckData {
+	public string deckName;
+	public int id;
+	public int[] unitIDs;
+	public CombatWorld.Utility.ElementalTypes type;
 }

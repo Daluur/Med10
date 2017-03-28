@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Overworld {
-	public class CurrencyHandler : MonoBehaviour {
+	public class CurrencyHandler : Singleton<CurrencyHandler> {
 
 		private static Text amountOfCurrencyUI;
 		private static int amountOfCurrency = 500;
