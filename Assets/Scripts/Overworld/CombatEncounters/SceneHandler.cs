@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 namespace Overworld {
 	public class SceneHandler : Singleton<SceneHandler> {
 
+		public Texture2D loadingTexture;
+
 		private Camera OWCam;
 		private InputManager inputManager;
 		private GameObject eventSystem;
@@ -17,6 +19,9 @@ namespace Overworld {
 
 		private MapTypes mapType = MapTypes.ANY;
 		private DeckData deck;
+
+		private Coroutine loading;
+		private AsyncOperation async;
 
 		// Use this for initialization
 		void Start () {
@@ -30,7 +35,7 @@ namespace Overworld {
 			mapType = type;
 			deck = DeckHandler.GetDeckFromID(deckID);
 			DisableObjectsCombatLoad();
-			SceneManager.LoadScene(1,LoadSceneMode.Additive);
+			loading = StartCoroutine(LoadingScene());
 			SceneManager.sceneLoaded += OnSceneLoaded;
 			SceneManager.sceneUnloaded += EndEncounter;
 			currencyToReward = currencyReward;
@@ -72,6 +77,16 @@ namespace Overworld {
 			inputManager.gameObject.SetActive(true);
 			eventSystem.SetActive(true);
 			OWCanvas.SetActive(true);
+		}
+
+		private IEnumerator LoadingScene() {
+			async = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+			yield return async;
+		}
+
+		private void OnGUI() {
+			if(async!=null)
+			GUI.DrawTexture(new Rect(0, 0, (100 * async.progress)*Screen.width/100, Screen.height), loadingTexture);
 		}
 
 		//Add things here if they need to happen when a player wins a battle
