@@ -21,6 +21,10 @@ namespace Overworld {
 			Register(this, KeyCode.Mouse0);
 			sceneHandler = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<SceneHandler>();
 			playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
+			if (deckIDs == null || deckIDs.Length == 0) {
+				Debug.LogError("This encounter has no decks! " + gameObject.name);
+				deckIDs = new int[] { 0 };
+			}
 		}
 
 		// Update is called once per frame
