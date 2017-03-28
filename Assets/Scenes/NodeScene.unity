@@ -550,13 +550,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1024775180}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 38, y: -981, z: -32}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: -1011.6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!114 &1024775186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,6 +568,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff2ae969e6248e49b2f7d9f93002854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CamPositions:
+  - {x: 0, y: -1011.6, z: -6}
+  - {x: 0, y: -1000, z: 0}
+  - {x: 0, y: -990, z: 8}
+  CamPosRotations:
+  - {x: 40, y: 0, z: 0}
+  - {x: 60, y: 0, z: 0}
+  - {x: 70, y: 0, z: 0}
 --- !u!1 &1248978505
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,8 +587,8 @@ GameObject:
   - component: {fileID: 1248978506}
   - component: {fileID: 1248978508}
   - component: {fileID: 1248978509}
-  - component: {fileID: 1248978511}
   - component: {fileID: 1248978510}
+  - component: {fileID: 1248978511}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -602,7 +610,7 @@ MonoBehaviour:
   winLosePanel: {fileID: 366912954}
   winLoseText: {fileID: 354958375}
   endTurnButton: {fileID: 1268836028}
-  map: {fileID: 1927969132801868, guid: dd431a41d6218ac468931b30a65baef0, type: 2}
+  map: {fileID: 1458254552479078, guid: dd431a41d6218ac468931b30a65baef0, type: 2}
 --- !u!4 &1248978507
 Transform:
   m_ObjectHideFlags: 0
@@ -650,15 +658,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1248978505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c1b2c587255b64badff20fbf1af3cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 01df695d0de545e449da7cc5c2328ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitsToSummon: 000000000400000007000000080000000300000002000000
-  summonPoints: 2
-  offensiveFactor: 0
-  defensiveFactor: 0
-  triggerForDefensiveSpawns: 2
-  triggerForOffensiveSpawns: 2
+  unitToSummon: {fileID: 1578989096024508, guid: 94bb0ce285c7ea845a43dd466544cda0,
+    type: 2}
+  data:
+    name: 
+    moveDistance: 3
+    attackValue: 2
+    healthValue: 5
+    cost: 0
+    shadow: 0
+    stone: 0
+    model: {fileID: 0}
+    type: 1
 --- !u!114 &1248978511
 MonoBehaviour:
   m_ObjectHideFlags: 0
