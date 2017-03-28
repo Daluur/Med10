@@ -52,6 +52,11 @@ namespace Overworld {
 			agent.ResetPath();
 		}
 
+		public void StopPlayer() {
+			agent.Stop();
+			agent.ResetPath();
+		}
+
 		public void DoAction<T>(T param) {
 			agent.Resume();
 			if (param.GetType() != typeof(Vector3)) {
