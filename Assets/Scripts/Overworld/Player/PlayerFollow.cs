@@ -14,6 +14,7 @@ namespace Overworld {
 		public float maxZoom = 25.5f, minZoom = 5.5f;
 		private float maxZoomOut, minZoomIn;
 		private InputManager inputManager;
+		public float speed = 4;
 
 		void Start () {
 			inputManager = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<InputManager>();
@@ -29,7 +30,7 @@ namespace Overworld {
 		}
 
 		void Update () {
-			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x,yOffset + following.transform.position.y,following.transform.position.z - offSet);
+			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x + offSet/8,yOffset + following.transform.position.y,following.transform.position.z - offSet);
 			CameraZoom();
 		}
 
@@ -39,11 +40,14 @@ namespace Overworld {
 			}
 			var displacment = Input.mouseScrollDelta.y;
 			var direction = (following.transform.position - camPos).normalized;
+			var offsetSpeeded = 1f * speed;
+			direction *= speed;
+
 			if (displacment < 0f) {
 				Debug.Log("zoom out");
 				if(camPos.y + 1f  <= maxZoomOut){
 					yOffset -= direction.y;
-					offSet -= 1f;
+					offSet -= offsetSpeeded;
 					camPos -= direction;
 				}
 			}
@@ -51,7 +55,7 @@ namespace Overworld {
 				Debug.Log("zoom in");
 				if(( camPos.y - 1 ) > minZoomIn) {
 					yOffset += direction.y;
-					offSet += 1f;
+					offSet += offsetSpeeded;
 					camPos += direction;
 				}
 			}
