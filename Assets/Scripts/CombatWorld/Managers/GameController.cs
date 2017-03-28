@@ -14,7 +14,7 @@ namespace CombatWorld {
 		public Text winLoseText;
 		public Button endTurnButton;
 
-		public GameObject map;
+		GameObject[] maps;
 
 		List<Node> allNodes = new List<Node>();
 		List<SummonNode> playerSummonNodes = new List<SummonNode>();
@@ -32,10 +32,16 @@ namespace CombatWorld {
 		List<Unit> performingAction = new List<Unit>();
 
 		void Start() {
+			maps = Resources.LoadAll<GameObject>("Art/3D/Maps");
 			pathfinding = new Pathfinding();
-			GameObject go = Instantiate(map,transform.position,Quaternion.identity,transform) as GameObject;
-			go.transform.position = go.transform.position - new Vector3(go.GetComponentInChildren<Terrain>().terrainData.size.x / 2, 5, 0);
+			SpawnMap();
 			StartGame();
+		}
+
+		void SpawnMap() {
+			//Get correct map based on scenehandler info.
+			GameObject go = Instantiate(maps[0], transform.position, Quaternion.identity, transform) as GameObject;
+			go.transform.position = go.transform.position - new Vector3(go.GetComponentInChildren<Terrain>().terrainData.size.x / 2, 5, 0);
 		}
 
 		void StartGame() {
