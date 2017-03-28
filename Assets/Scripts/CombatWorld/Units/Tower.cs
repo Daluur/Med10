@@ -14,10 +14,13 @@ namespace CombatWorld.Units {
 		[SerializeField]
 		private Node currentNode;
 
+		public HealthAttackVisualController healthIndicator;
+
 		void Start() {
 			if (!currentNode.HasOccupant()) {
 				currentNode.SetOccupant(this);
 			}
+			healthIndicator.Setup(health, 0);
 			GameController.instance.AddTower(team);
 		}
 
@@ -57,6 +60,7 @@ namespace CombatWorld.Units {
 
 		public void TakeDamage(DamagePackage damage) {
 			health -= damage.CalculateDamageAgainst();
+			healthIndicator.TookDamage(damage, health);
 			if (health <= 0) {
 				Die();
 			}

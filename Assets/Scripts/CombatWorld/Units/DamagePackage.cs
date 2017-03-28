@@ -6,6 +6,7 @@ namespace CombatWorld.Units {
 	public class DamagePackage {
 
 		int damage;
+		int damageDone;
 		ElementalTypes damageType = ElementalTypes.NONE;
 		IEntity source;
 		bool wasRetaliation = false;
@@ -26,45 +27,52 @@ namespace CombatWorld.Units {
 		}
 
 		public int CalculateDamageAgainst(ElementalTypes type = ElementalTypes.NONE) {
+			damageDone = damage;
 			switch (type) {
-				case ElementalTypes.NONE:
-					break;
 				case ElementalTypes.Fire:
 					if(damageType == ElementalTypes.Water) {
-						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
+						damageDone = damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if(damageType == ElementalTypes.Nature) {
-						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+						damageDone = (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
 				case ElementalTypes.Water:
 					if (damageType == ElementalTypes.Lightning) {
-						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
+						damageDone = damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if (damageType == ElementalTypes.Fire) {
-						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+						damageDone = (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
 				case ElementalTypes.Nature:
 					if (damageType == ElementalTypes.Fire) {
-						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
+						damageDone = damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if (damageType == ElementalTypes.Lightning) {
-						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+						damageDone = (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
 				case ElementalTypes.Lightning:
 					if (damageType == ElementalTypes.Nature) {
-						return damage * DamageConstants.EFFECTIVEMULTIPLIER;
+						damageDone = damage * DamageConstants.EFFECTIVEMULTIPLIER;
 					}
 					else if (damageType == ElementalTypes.Water) {
-						return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+						damageDone = (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 					}
 					break;
+				case ElementalTypes.NONE:
 				default:
 					break;
 			}
-			return damage;
+			return damageDone;
+		}
+
+		/// <summary>
+		/// Should only be used for combatText.
+		/// </summary>
+		public int GetCalculatedDMG() {
+			return damageDone;
 		}
 	}
 }

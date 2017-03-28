@@ -33,7 +33,8 @@ namespace CombatWorld {
 
 		void Start() {
 			pathfinding = new Pathfinding();
-			Instantiate(map,new Vector3(3,-1039,0),Quaternion.identity,transform);
+			GameObject go = Instantiate(map,transform.position,Quaternion.identity,transform) as GameObject;
+			go.transform.position = go.transform.position - new Vector3(go.GetComponentInChildren<Terrain>().terrainData.size.x / 2, 5, 0);
 			StartGame();
 		}
 
