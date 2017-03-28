@@ -15,6 +15,8 @@ namespace Overworld {
 		private int currencyToReward = 0;
 		private GameObject encounterObject;
 
+		private MapTypes mapType = MapTypes.ANY;
+
 		// Use this for initialization
 		void Start () {
 			inputManager = gameObject.GetComponent<InputManager>();
@@ -23,13 +25,18 @@ namespace Overworld {
 			OWCanvas = GameObject.FindGameObjectWithTag(TagConstants.OWCANVAS);
 		}
 
-		public void LoadScene(int type, int currencyReward = 0, GameObject encounterObject = null) {
+		public void LoadScene(MapTypes type, int currencyReward = 0, GameObject encounterObject = null) {
+			mapType = type;
 			DisableObjectsCombatLoad();
 			SceneManager.LoadScene(1,LoadSceneMode.Additive);
 			SceneManager.sceneLoaded += OnSceneLoaded;
 			SceneManager.sceneUnloaded += EndEncounter;
 			currencyToReward = currencyReward;
 			this.encounterObject = encounterObject;
+		}
+
+		public MapTypes GetMapType() {
+			return mapType;
 		}
 
 		private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {

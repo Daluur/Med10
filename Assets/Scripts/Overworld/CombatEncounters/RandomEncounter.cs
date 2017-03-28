@@ -13,7 +13,7 @@ namespace Overworld {
 		public float startChance = 0f;
 		private float maximumChance = 1.1f;
 		public float chanceIncrease = 0.002f;
-		private int type = 0;
+		private MapTypes type = MapTypes.ANY;
 		private SceneHandler sceneHandler;
 		private bool isRunning = false;
 		private Coroutine encounter;
@@ -59,7 +59,7 @@ namespace Overworld {
 			}
 		}
 
-		public void RandomEncounterOn(int type) {
+		public void RandomEncounterOn(MapTypes type) {
 			randEncounter = true;
 			this.type = type;
 			if(gameObject.activeInHierarchy && !isRunning)

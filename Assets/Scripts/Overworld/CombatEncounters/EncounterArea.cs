@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Overworld {
 	public class EncounterArea : MonoBehaviour {
 		private RandomEncounter randomEncounter;
-		public int type = 0;
+		public MapTypes type = MapTypes.ANY;
 		private void Start() {
 			randomEncounter = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<RandomEncounter>();
 		}

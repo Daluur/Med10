@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 namespace Overworld {
 	public class StaticEncounter : ContextInteraction, IInteractable {
 
-
 		public int currencyForWinning = 25;
+
+		public MapTypes type = MapTypes.ANY;
 
 		private SceneHandler sceneHandler;
 

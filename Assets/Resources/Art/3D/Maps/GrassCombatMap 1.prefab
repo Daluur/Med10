@@ -957,9 +957,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4957272785771752}
-  - component: {fileID: 114083576903105742}
+  - component: {fileID: 114513751707068516}
   m_Layer: 0
-  m_Name: GrassCombatMap
+  m_Name: GrassCombatMap 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5842,20 +5842,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114083576903105742
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458254552479078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f858f22a0d933d4fbcfffdd28a89fab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ID: 0
-  Name: grass
-  type: 0
 --- !u!114 &114092037470534054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6724,6 +6710,20 @@ MonoBehaviour:
   neighbours:
   - {fileID: 114236212203761058}
   - {fileID: 114843537892865264}
+--- !u!114 &114513751707068516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458254552479078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f858f22a0d933d4fbcfffdd28a89fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 1
+  Name: snow
+  type: 1
 --- !u!114 &114514132410475616
 MonoBehaviour:
   m_ObjectHideFlags: 1
