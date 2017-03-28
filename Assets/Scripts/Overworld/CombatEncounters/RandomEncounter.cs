@@ -21,6 +21,8 @@ namespace Overworld {
 
 		public int currencyForWinning = 10;
 
+		int[] deckIDs = new int[] { 0 };
+
 		private void Start() {
 			player = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
 			sceneHandler = GetComponent<SceneHandler>();
@@ -49,7 +51,7 @@ namespace Overworld {
 
 			if (currentChance >= randGenerator) {
 				currentChance = startChance;
-				sceneHandler.LoadScene(type, currencyForWinning);
+				sceneHandler.LoadScene(type, deckIDs[Random.Range(0, deckIDs.Length)], currencyForWinning);
 				player.GetComponent<PlayerMovementOW>().DoAction();
 				return true;
 			}
@@ -59,12 +61,12 @@ namespace Overworld {
 			}
 		}
 
-		public void RandomEncounterOn(MapTypes type) {
+		public void RandomEncounterOn(MapTypes type, int[] deckIDs) {
 			randEncounter = true;
+			this.deckIDs = deckIDs;
 			this.type = type;
 			if(gameObject.activeInHierarchy && !isRunning)
 				encounter = StartCoroutine(CheckForEncounter());
-
 		}
 
 		public void RandomEncounterOff() {

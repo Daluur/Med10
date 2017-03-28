@@ -16,6 +16,7 @@ namespace Overworld {
 		private GameObject encounterObject;
 
 		private MapTypes mapType = MapTypes.ANY;
+		private DeckData deck;
 
 		// Use this for initialization
 		void Start () {
@@ -25,8 +26,9 @@ namespace Overworld {
 			OWCanvas = GameObject.FindGameObjectWithTag(TagConstants.OWCANVAS);
 		}
 
-		public void LoadScene(MapTypes type, int currencyReward = 0, GameObject encounterObject = null) {
+		public void LoadScene(MapTypes type, int deckID, int currencyReward = 0, GameObject encounterObject = null) {
 			mapType = type;
+			deck = DeckHandler.GetDeckFromID(deckID);
 			DisableObjectsCombatLoad();
 			SceneManager.LoadScene(1,LoadSceneMode.Additive);
 			SceneManager.sceneLoaded += OnSceneLoaded;
@@ -37,6 +39,10 @@ namespace Overworld {
 
 		public MapTypes GetMapType() {
 			return mapType;
+		}
+
+		public DeckData GetDeck() {
+			return deck;
 		}
 
 		private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
