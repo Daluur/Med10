@@ -34,5 +34,9 @@ namespace Overworld {
 			meClicked = true;
 			CheckDistance();
 		}
+
+		public ControlUIElement GetControlElement() {
+			return null;
+		}
 	}
 }
