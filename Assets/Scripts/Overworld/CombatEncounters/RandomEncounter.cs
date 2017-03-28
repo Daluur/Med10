@@ -19,6 +19,8 @@ namespace Overworld {
 		private Coroutine encounter;
 		public bool printChances = false;
 
+		public int currencyForWinning = 10;
+
 		private void Start() {
 			player = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
 			sceneHandler = GetComponent<SceneHandler>();
@@ -47,7 +49,7 @@ namespace Overworld {
 
 			if (currentChance >= randGenerator) {
 				currentChance = startChance;
-				sceneHandler.LoadScene(type);
+				sceneHandler.LoadScene(type, currencyForWinning);
 				player.GetComponent<PlayerMovementOW>().DoAction();
 				return true;
 			}
