@@ -13,13 +13,11 @@ namespace Overworld {
 		private List<IInteractable> distributeTo = new List<IInteractable>();
 		private Dictionary<KeyCode, List<IInteractable>> registerTo = new Dictionary<KeyCode, List<IInteractable>>();
 		private Vector3 playerMoveTo;
-		private GameObject evtSystem;
 
 		// Use this for initialization
 		void Start () {
 			layerMaskPlayer = (1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER));
 			layerMaskInteractable = ( 1 << LayerMask.NameToLayer(LayerConstants.INTERACTABLELAYER) );
-			evtSystem = GameObject.FindGameObjectWithTag(TagConstants.OWEVENTSYSTEM);
 		}
 
 		// Update is called once per frame

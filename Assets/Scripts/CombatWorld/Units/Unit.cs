@@ -281,6 +281,7 @@ namespace CombatWorld.Units {
 			FinishedAction();
 		}
 
+#pragma warning disable 0162
 		public void TurnToStone() {
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
@@ -312,6 +313,7 @@ namespace CombatWorld.Units {
 			moved = attacked = true;
 			turnedToStone = true;
 		}
+#pragma warning restore 0162
 
 		public bool GetShadow() {
 			return shadowUnit;

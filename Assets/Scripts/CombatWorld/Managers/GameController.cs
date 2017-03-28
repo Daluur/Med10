@@ -262,13 +262,6 @@ namespace CombatWorld {
 			SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 		}
 
-		public void WaitForAction() {
-			Debug.LogError("OLD function, use AddWaitForUnit");
-			return;
-			endTurnButton.interactable = false;
-			waitingForAction = true;
-		}
-
 		public bool WaitingForAction() {
 			return performingAction.Count > 0;
 		}

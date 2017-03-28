@@ -59,11 +59,10 @@ public class UnitModelFixer : EditorWindow {
 	}
 
 	public static void FixModel(GameObject model) {
-		return;
 		if (model.GetComponent<Unit>() != null) {
 			//AddParticleSystem(model);
 			//FixSize(model);
-			UpdateCanvas(model);
+			//UpdateCanvas(model);
 			//Add stuff here, if units needs batch change.
 			return;
 		}
