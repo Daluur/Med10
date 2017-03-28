@@ -587,8 +587,8 @@ GameObject:
   - component: {fileID: 1248978506}
   - component: {fileID: 1248978508}
   - component: {fileID: 1248978509}
-  - component: {fileID: 1248978510}
   - component: {fileID: 1248978511}
+  - component: {fileID: 1248978510}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -658,21 +658,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1248978505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01df695d0de545e449da7cc5c2328ab4, type: 3}
+  m_Script: {fileID: 11500000, guid: 39c1b2c587255b64badff20fbf1af3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitToSummon: {fileID: 1578989096024508, guid: 94bb0ce285c7ea845a43dd466544cda0,
-    type: 2}
-  data:
-    name: 
-    moveDistance: 3
-    attackValue: 2
-    healthValue: 5
-    cost: 0
-    shadow: 0
-    stone: 0
-    model: {fileID: 0}
-    type: 1
+  unitsToSummon: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
+  summonPoints: 3
+  offensiveFactor: 0
+  defensiveFactor: 0
+  triggerForDefensiveSpawns: 3
+  triggerForOffensiveSpawns: 2
 --- !u!114 &1248978511
 MonoBehaviour:
   m_ObjectHideFlags: 0
