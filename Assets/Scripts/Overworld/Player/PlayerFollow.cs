@@ -13,8 +13,10 @@ namespace Overworld {
 		private Camera cam;
 		public float maxZoom = 25.5f, minZoom = 5.5f;
 		private float maxZoomOut, minZoomIn;
+		private InputManager inputManager;
 
 		void Start () {
+			inputManager = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<InputManager>();
 			cam = Camera.main;
 
 			if (following == null) {
@@ -27,26 +29,40 @@ namespace Overworld {
 		}
 
 		void Update () {
-			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x + 12,yOffset + following.transform.position.y,following.transform.position.z - offSet);
+			cam.gameObject.transform.position = new Vector3(following.gameObject.transform.position.x,yOffset + following.transform.position.y,following.transform.position.z - offSet);
 			CameraZoom();
 		}
 
 		void CameraZoom() {
+			if (inputManager.GetMouseBlocked()) {
+				return;
+			}
 			var displacment = Input.mouseScrollDelta.y;
+			var direction = (following.transform.position - camPos).normalized;
 			if (displacment < 0f) {
+				Debug.Log("zoom out");
 				if(camPos.y + 1f  <= maxZoomOut){
-					yOffset += 1f;
-					offSet += 1f;
-					camPos += new Vector3(0f, 1f, offSet);
+					yOffset -= direction.y;
+					offSet -= 1f;
+					camPos -= direction;
 				}
 			}
 			if (displacment > 0f) {
+				Debug.Log("zoom in");
 				if(( camPos.y - 1 ) > minZoomIn) {
-					yOffset -= 1f;
-					offSet -= 1f;
-					camPos -= new Vector3(0f, 1f, offSet);
+					yOffset += direction.y;
+					offSet += 1f;
+					camPos += direction;
 				}
 			}
+
+
+
+
+
+
+
+
 		}
 	}
 }
