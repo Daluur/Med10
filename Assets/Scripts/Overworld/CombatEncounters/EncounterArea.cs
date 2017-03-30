@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Overworld {
-	public class EncounterArea : MonoBehaviour {
+	public class EncounterArea : Encounter {
 
 		private RandomEncounter randomEncounter;
-		public MapTypes type = MapTypes.ANY;
-		public int[] deckIDs = new int[1] { 0 };
 		[HideInInspector]
 		public bool onTriggerEnter = true;
 		[HideInInspector]

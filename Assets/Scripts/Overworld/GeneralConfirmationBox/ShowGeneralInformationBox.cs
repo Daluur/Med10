@@ -66,6 +66,7 @@ namespace Overworld {
 		}
 
 		public override void PerformClosenessAction() {
+			GetComponents<ContextInteraction>().First(element => !element.Equals(this)).hasGeneralConfirmationBox = false;
 			ShowPopUp();
 
 		}

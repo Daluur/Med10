@@ -98,6 +98,11 @@ namespace Overworld {
 			CloseElement();
 		}
 
+		private void OnDisable() {
+			buttonOne.gameObject.SetActive(true);
+			buttonTwo.gameObject.SetActive(true);
+		}
+
 		private void RemoveListeners() {
 			buttonOne.onClick.RemoveAllListeners();
 			buttonTwo.onClick.RemoveAllListeners();

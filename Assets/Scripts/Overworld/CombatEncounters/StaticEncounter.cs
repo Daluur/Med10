@@ -6,14 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Overworld {
-	public class StaticEncounter : ContextInteraction, IInteractable {
-
-		public int currencyForWinning = 25;
-
-		public MapTypes type = MapTypes.ANY;
-
-		public int[] deckIDs = new int[1] { 0 };
-
+	public class StaticEncounter : Encounter, IInteractable {
 		private SceneHandler sceneHandler;
 
 		// Use this for initialization
