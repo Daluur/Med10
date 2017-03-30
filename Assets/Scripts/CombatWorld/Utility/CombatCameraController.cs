@@ -56,10 +56,12 @@ namespace CombatWorld {
 			}
 		}
 
+		Vector3 temp = Vector3.zero;
+
 		void FollowCam() {
 			newPos = transform.position;
 			newPos.x = AITarget.position.x;
-			transform.position = newPos;
+			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref temp, 0.3f);
 		}
 
 		public void StartAICAM() {
