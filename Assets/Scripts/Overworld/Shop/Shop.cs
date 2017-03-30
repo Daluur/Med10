@@ -17,7 +17,6 @@ namespace Overworld.Shops {
 		private ItemDatabase database;
 
 		void Start() {
-			Register(this, KeyCode.Escape);
 			Register(this, KeyCode.Q);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 			database = inventory.GetDatabase();
@@ -88,14 +87,14 @@ namespace Overworld.Shops {
 			if (isRunning || isShowing)
 				return;
 			CreateShop();
-			OpenElement(gameObject, size, true);
+			OpenElement();
 			inventoryPanel.OpenTheInventory();
 		}
 
 		public void CloseMenu() {
 			if (isRunning || !isShowing)
 				return;
-			CloseElement(gameObject);
+			CloseElement();
 		}
 
 		public void DoAction() {
@@ -103,6 +102,10 @@ namespace Overworld.Shops {
 		}
 
 		public void DoAction<T>(T param) {
+		}
+
+		public ControlUIElement GetControlElement() {
+			return this;
 		}
 	}
 }

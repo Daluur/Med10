@@ -11,6 +11,10 @@ namespace Overworld {
 
 		private void Start() {
 			randomEncounter = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<RandomEncounter>();
+			if (deckIDs == null || deckIDs.Length == 0) {
+				Debug.LogError("This encounter has no decks! " + gameObject.name);
+				deckIDs = new int[] { 0 };
+			}
 		}
 
 		public void OnTriggerEnter(Collider other) {

@@ -12,6 +12,11 @@ public class AudioHandler : Singleton<AudioHandler> {
 
 	public AudioSource source;
 
+	protected override void Awake() {
+		base.Awake();
+		DontDestroyOnLoad (gameObject);
+	}
+
 	public void PlayAttack() {
 		source.clip = attack[Random.Range(0, attack.Length)];
 		source.Play();
