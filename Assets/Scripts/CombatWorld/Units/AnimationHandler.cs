@@ -8,7 +8,6 @@ namespace CombatWorld.Units {
 
 		string attackName = "Melee Right Attack 01";
 		bool playingAnimation;
-		bool shadowUnit = false;
 		string walkTrigger = "Run";
 		string takeDamageTrigger = "Take Damage";
 		string dieTrigger = "Die";

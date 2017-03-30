@@ -4,27 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace CombatWorld.Units {
-	public class Projectile : MonoBehaviour {
+	public class BasicProjectile: MonoBehaviour {
 
-		Transform target;
-		float speed = 25;
+		public GameObject HitEffect;
+
+		protected Transform target;
+		public float speed = 25;
 		Action<DamagePackage> CB;
 		Action finishCB;
-		Vector3 dir;
+		protected  Vector3 dir;
 		DamagePackage damage;
 
 		public void Setup(Transform target, Action<DamagePackage> cb, DamagePackage damage, Action finishCB) {
 			this.target = target;
 			this.damage = damage;
-			transform.LookAt(target);
-			dir = target.transform.position - transform.position;
-			dir.Normalize();
 			CB = cb;
 			this.finishCB = finishCB;
 			StartCoroutine(Travel());
 		}
 
-		IEnumerator Travel() {
+		protected virtual IEnumerator Travel() {
+			transform.LookAt(target);
+			dir = target.transform.position - transform.position;
+			dir.Normalize();
 			bool hit = false;
 			while (!hit) {
 				transform.position += dir * speed * Time.deltaTime;
@@ -33,6 +35,13 @@ namespace CombatWorld.Units {
 				}
 				yield return new WaitForEndOfFrame();
 			}
+			if(HitEffect != null) {
+				Instantiate(HitEffect, transform.position, Quaternion.identity);
+			}
+			Hit();
+		}
+
+		protected void Hit() {
 			CB(damage);
 			finishCB();
 			Destroy(gameObject);

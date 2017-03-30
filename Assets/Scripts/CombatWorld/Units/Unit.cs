@@ -13,6 +13,8 @@ namespace CombatWorld.Units {
 		public string attackName = "Melee Right Attack 01";
 		public GameObject projectile;
 
+		private bool waitForProjectile = false;
+
 		private bool shadowUnit = false;
 		private bool stoneUnit = false;
 		bool turnedToStone = false;
@@ -145,7 +147,8 @@ namespace CombatWorld.Units {
 		}
 
 		void SpawnProjectile() {
-			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Projectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, FinishedAction);
+			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
+			waitForProjectile = true;
 			target = null;
 			if(health <= 0) {
 				Die();
@@ -205,6 +208,9 @@ namespace CombatWorld.Units {
 		}
 
 		void Death() {
+			if (waitForProjectile) {
+				return;
+			}
 			FinishedAction();
 			Destroy(gameObject);
 		}
@@ -214,12 +220,16 @@ namespace CombatWorld.Units {
 			FaceForward();
 		}
 
-		void FaceForward() {
-			transform.LookAt(transform.position + defaultFaceDirection, Vector3.up);
+		void ProjectileHit() {
+			waitForProjectile = false;
+			if(health <= 0) {
+				Death();
+			}
+			FinishedAction();
 		}
 
-		void FinishedImediateAction() {
-			doingAction = false;
+		void FaceForward() {
+			transform.LookAt(transform.position + defaultFaceDirection, Vector3.up);
 		}
 
 		public void SpawnEntity(Node node, Team team, CombatData data) {
@@ -271,6 +281,7 @@ namespace CombatWorld.Units {
 			FinishedAction();
 		}
 
+#pragma warning disable 0162
 		public void TurnToStone() {
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
@@ -302,6 +313,7 @@ namespace CombatWorld.Units {
 			moved = attacked = true;
 			turnedToStone = true;
 		}
+#pragma warning restore 0162
 
 		public bool GetShadow() {
 			return shadowUnit;

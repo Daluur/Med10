@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 namespace Overworld {
 	public class StaticEncounter : ContextInteraction, IInteractable {
 
+		public int currencyForWinning = 25;
+
+		public MapTypes type = MapTypes.ANY;
+
+		public int[] deckIDs = new int[1] { 0 };
 
 		private SceneHandler sceneHandler;
 
@@ -16,6 +21,10 @@ namespace Overworld {
 			Register(this, KeyCode.Mouse0);
 			sceneHandler = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<SceneHandler>();
 			playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
+			if (deckIDs == null || deckIDs.Length == 0) {
+				Debug.LogError("This encounter has no decks! " + gameObject.name);
+				deckIDs = new int[] { 0 };
+			}
 		}
 
 		// Update is called once per frame
@@ -25,7 +34,7 @@ namespace Overworld {
 
 
 		public override void PerformClosenessAction() {
-			sceneHandler.LoadScene(0);
+			sceneHandler.LoadScene(0, deckIDs[UnityEngine.Random.Range(0,deckIDs.Length)], currencyForWinning, gameObject);
 
 		}
 
