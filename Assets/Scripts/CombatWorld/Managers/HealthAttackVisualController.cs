@@ -7,14 +7,15 @@ using CombatWorld.Utility;
 namespace CombatWorld.Units {
 	public class HealthAttackVisualController : MonoBehaviour {
 
-		public Text health;
+		//public Text health;
 		public Text attack;
 		public Text CombatText;
 		public Image icon;
 		public Animator anim;
+		public Image healthbar;
 
 		public void Setup(int hp, int attackval, ElementalTypes type = ElementalTypes.NONE, bool shadow = false, bool stone = false) {
-			health.text = hp.ToString();
+			//health.text = hp.ToString();
 			attack.text = attackval.ToString();
 			if(shadow) {
 				ApplyShadowIcon();
@@ -27,16 +28,16 @@ namespace CombatWorld.Units {
 			}
 		}
 
-		int newHealth;
-
-		public void TookDamage(DamagePackage dmg, int newHealth) {
-			health.text = newHealth.ToString();
+		public void TookDamage(DamagePackage dmg, float healthPercent) {
+			//health.text = newHealth.ToString();
+			healthbar.fillAmount = healthPercent;
 			CombatText.text = "-"+dmg.GetCalculatedDMG();
 			anim.SetTrigger("TakeDMG");
 		}
 
-		public void GotMoreHealth(int newHealth, int bonus) {
-			health.text = newHealth.ToString();
+		public void GotMoreHealth(float healthPercent, int bonus) {
+			healthbar.fillAmount = healthPercent;
+			//health.text = newHealth.ToString();
 		}
 
 		public void ChangedAttackValue(int newVal) {
