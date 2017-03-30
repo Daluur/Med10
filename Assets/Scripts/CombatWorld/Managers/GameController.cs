@@ -104,6 +104,7 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
+					CombatCameraController.instance.StartAICAM();
 					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
@@ -113,6 +114,7 @@ namespace CombatWorld {
 					AICalculateScore.instance.DoAITurn();
 					break;
 				case Team.AI:
+					CombatCameraController.instance.EndAICAM();
 					currentTeam = Team.Player;
 					SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();

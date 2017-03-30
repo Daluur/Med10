@@ -259,6 +259,7 @@ namespace CombatWorld.Units {
 		}
 
 		IEnumerator MoveTo(List<Node> target) {
+			CombatCameraController.instance.SetTarget(transform);
 			animHelp.StartWalk();
 			target.Reverse();
 			for (int i = 0; i < target.Count; i++) {
