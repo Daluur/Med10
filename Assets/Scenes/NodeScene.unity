@@ -365,9 +365,55 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 1968044058289142, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
-      propertyPath: m_Name
-      value: Audio
+    - target: {fileID: 82753461852414274, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82753461852414274, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82753461852414274, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82753461852414274, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82549259882088750, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82549259882088750, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82549259882088750, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82258027287724712, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82258027287724712, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82258027287724712, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
@@ -610,7 +656,6 @@ MonoBehaviour:
   winLosePanel: {fileID: 366912954}
   winLoseText: {fileID: 354958375}
   endTurnButton: {fileID: 1268836028}
-  map: {fileID: 1458254552479078, guid: dd431a41d6218ac468931b30a65baef0, type: 2}
 --- !u!4 &1248978507
 Transform:
   m_ObjectHideFlags: 0
