@@ -33,6 +33,7 @@ namespace CombatWorld {
 		List<Unit> performingAction = new List<Unit>();
 
 		void Start() {
+			AudioHandler.instance.StartCWBGMusic();
 			maps.AddRange(Resources.LoadAll<GameObject>("Art/3D/Maps"));
 			pathfinding = new Pathfinding();
 			SpawnMap();
@@ -411,11 +412,13 @@ namespace CombatWorld {
 		void Won() {
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
+			AudioHandler.instance.PlayWinSound();
 			SceneHandler.instance.Won();
 		}
 
 		void Lost() {
 			winLoseText.text = "YOU LOST!";
+			AudioHandler.instance.PlayLoseSound();
 			winLosePanel.SetActive(true);
 		}
 

@@ -9,52 +9,56 @@ public class AudioHandler : Singleton<AudioHandler> {
 	public AudioClip die;
 	public AudioClip[] move;
 	public AudioClip[] click;
+	public AudioClip combatMusic;
+	public AudioClip overWorldMusic;
 
-	public AudioSource source;
+	public AudioSource effectSource;
+	public AudioSource BGSource;
+	public AudioSource specificSource;
 
 	protected override void Awake() {
 		base.Awake();
-		DontDestroyOnLoad (gameObject);
+		DontDestroyOnLoad(gameObject);
 	}
 
 	public void PlayAttack() {
-		source.clip = attack[Random.Range(0, attack.Length)];
-		source.Play();
+		effectSource.clip = attack[Random.Range(0, attack.Length)];
+		effectSource.Play();
 	}
 
 	public void PlayAttack(int i) {
-		source.clip = attack[i];
-		source.Play();
+		effectSource.clip = attack[i];
+		effectSource.Play();
 	}
 
 	public void PlayTakeDamage() {
-		source.clip = takeDamage[Random.Range(0, takeDamage.Length)];
-		source.Play();
+		effectSource.clip = takeDamage[Random.Range(0, takeDamage.Length)];
+		effectSource.Play();
 	}
 
 	public void PlayTakeDamage(int i) {
-		source.clip = takeDamage[i];
-		source.Play();
+		effectSource.clip = takeDamage[i];
+		effectSource.Play();
 	}
 
 	public void PlayDie() {
-		source.clip = die;
-		source.Play();
+		effectSource.clip = die;
+		effectSource.Play();
 	}
 
 	public void PlayMove() {
-		source.clip = move[Random.Range(0, move.Length)];
-		source.Play();
+		specificSource.clip = move[Random.Range(0, move.Length)];
+		specificSource.Play();
 	}
 
 	public void PlayClick() {
-		source.clip = click[Random.Range(0, click.Length)];
-		source.Play();
+		effectSource.clip = click[Random.Range(0, click.Length)];
+		effectSource.Play();
 	}
 
 	public void PlayClick(int i) {
-		source.clip = click[i];
-		source.Play();
+		effectSource.clip = click[i];
+		effectSource.Play();
 	}
 
 	public void PlayInteraction() {
@@ -65,4 +69,56 @@ public class AudioHandler : Singleton<AudioHandler> {
 		Debug.Log("Enter combat needs a sound");
 	}
 
+	public void PlayWinSound() {
+		Debug.Log("needs a sound");
+	}
+
+	public void PlayLoseSound() {
+		Debug.Log("needs a sound");
+	}
+
+	public void PlayQuestComplete() {
+		Debug.Log("needs a sound");
+	}
+
+	public void PlayCollectGold() {
+		Debug.Log("needs a sound");
+	}
+
+	public void PlayCollectKeyItem() {
+		Debug.Log("needs a sound");
+	}
+
+	public void PlayOpenShop() {
+		Debug.Log("needs a sound");
+	}
+
+	/// <summary>
+	/// Quest / Inventory
+	/// </summary>
+	public void PlayOpenWindow() {
+		Debug.Log("needs a sound");
+	}
+
+	public void PlayQuestUpdate() {
+		Debug.Log("needs a sound");
+	}
+
+	public void MoveInventorySound() {
+		Debug.Log("needs a sound");
+	}
+
+	public void PurchaseSound() {
+		Debug.Log("needs a sound");
+	}
+
+	public void StartOWBGMusic() {
+		BGSource.clip = overWorldMusic;
+		BGSource.Play();
+	}
+
+	public void StartCWBGMusic() {
+		BGSource.clip = combatMusic;
+		BGSource.Play();
+	}
 }
