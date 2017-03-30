@@ -10,6 +10,11 @@ namespace CombatWorld {
 		public Vector3[] CamPosRotations;
 		int currentZoom = 0;
 
+		void Start() {
+			transform.position = CamPositions[currentZoom] + new Vector3(transform.position.x, 0, 0);
+			transform.eulerAngles = CamPosRotations[currentZoom];
+		}
+
 		void LateUpdate() {
 			if (Input.GetMouseButton(0)) {
 				if (Input.GetAxis("Mouse X") != 0) {
