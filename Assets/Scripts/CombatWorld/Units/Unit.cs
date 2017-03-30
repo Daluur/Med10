@@ -200,6 +200,7 @@ namespace CombatWorld.Units {
 		public void Die() {
 			GameController.instance.UnitDied(team, currentNode);
 			currentNode.RemoveOccupant();
+			waitForDeathAnim = true;
 			if (turnedToStone) {
 				Death();
 			}
@@ -209,7 +210,14 @@ namespace CombatWorld.Units {
 		}
 
 		void Death() {
-			if (waitForProjectile) {
+			waitForDeathAnim = false;
+			RealDeath();
+		}
+
+		bool waitForDeathAnim = false;
+
+		void RealDeath() {
+			if(waitForProjectile || waitForDeathAnim) {
 				return;
 			}
 			FinishedAction();
@@ -223,10 +231,12 @@ namespace CombatWorld.Units {
 
 		void ProjectileHit() {
 			waitForProjectile = false;
-			if(health <= 0) {
-				Death();
+			if (health <= 0) {
+				RealDeath();
 			}
-			FinishedAction();
+			else {
+				FinishedAction();
+			}
 		}
 
 		void FaceForward() {
