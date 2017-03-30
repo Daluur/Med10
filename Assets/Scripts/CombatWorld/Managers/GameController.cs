@@ -33,6 +33,7 @@ namespace CombatWorld {
 		List<Unit> performingAction = new List<Unit>();
 
 		void Start() {
+			AudioHandler.instance.StartCWBGMusic();
 			maps.AddRange(Resources.LoadAll<GameObject>("Art/3D/Maps"));
 			pathfinding = new Pathfinding();
 			SpawnMap();
