@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Overworld;
 using UnityEngine;
@@ -7,13 +8,24 @@ using UnityEngine.AI;
 namespace Overworld {
 	public class ContextInteraction : InputSubscriber {
 
+		[HideInInspector]
 		public GameObject playerOW;
 		[HideInInspector]
 		public bool isRunning = false;
 		[HideInInspector]
 		public bool meClicked = false;
 		float distanceToOpen = Values.InteractDistance;
+		[HideInInspector]
+		public bool hasGeneralConfirmationBox = false;
 
+		protected override void Awake() {
+			AssignPlayer();
+			base.Awake();
+		}
+
+		public void AssignPlayer() {
+			playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
+		}
 
 		public void CheckDistance() {
 			if (!isRunning)

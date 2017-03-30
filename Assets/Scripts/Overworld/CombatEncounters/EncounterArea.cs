@@ -8,6 +8,10 @@ namespace Overworld {
 		private RandomEncounter randomEncounter;
 		public MapTypes type = MapTypes.ANY;
 		public int[] deckIDs = new int[1] { 0 };
+		[HideInInspector]
+		public bool onTriggerEnter = true;
+		[HideInInspector]
+		public bool onTriggerExit = true;
 
 		private void Start() {
 			randomEncounter = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<RandomEncounter>();
@@ -17,16 +21,26 @@ namespace Overworld {
 			}
 		}
 
+		public void DoOnTriggerEnter() {
+			onTriggerEnter = true;
+			randomEncounter.RandomEncounterOn(type, deckIDs);
+		}
+		public void DoOnTriggerExit() {
+			onTriggerExit = true;
+			randomEncounter.RandomEncounterOff();
+		}
+
 		public void OnTriggerEnter(Collider other) {
-			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER) {
+			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER || !onTriggerEnter) {
 				return;
 			}
+			Debug.Log(onTriggerEnter);
 			randomEncounter.RandomEncounterOn(type, deckIDs);
 			Debug.Log("Rand encounter on with type: " + type);
 		}
 
 		private void OnTriggerExit(Collider other) {
-			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER) {
+			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER || !onTriggerExit) {
 				return;
 			}
 			randomEncounter.RandomEncounterOff();

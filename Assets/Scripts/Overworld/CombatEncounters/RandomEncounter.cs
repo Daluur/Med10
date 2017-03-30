@@ -61,6 +61,7 @@ namespace Overworld {
 		}
 
 		public void RandomEncounterOn(MapTypes type, int[] deckIDs) {
+			GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.ENTEREDRANDOMENCOUNTEAREA);
 			randEncounter = true;
 			this.deckIDs = deckIDs;
 			this.type = type;
@@ -69,6 +70,7 @@ namespace Overworld {
 		}
 
 		public void RandomEncounterOff() {
+			GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.EXITEDRANDOMENCOUNTEAREA);
 			randEncounter = false;
 		}
 

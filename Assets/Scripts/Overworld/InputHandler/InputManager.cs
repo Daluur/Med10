@@ -14,13 +14,18 @@ namespace Overworld {
 		private LayerMask layerMaskPlayer, layerMaskInteractable;
 		private List<IInteractable> distributeTo = new List<IInteractable>();
 		private Dictionary<KeyCode, List<IInteractable>> registerTo = new Dictionary<KeyCode, List<IInteractable>>();
+		private List<IInteractable> registerNoKeycode = new List<IInteractable>();
 		private Vector3 playerMoveTo;
+		private PlayerMovementOW player;
+		private IInteractable playerInteractable;
 		private bool inGameMenuOpen = false;
 
 		// Use this for initialization
 		void Start () {
 			layerMaskPlayer = (1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER));
 			layerMaskInteractable = ( 1 << LayerMask.NameToLayer(LayerConstants.INTERACTABLELAYER) );
+			player = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<PlayerMovementOW>();
+			playerInteractable = player.gameObject.GetComponent<IInteractable>();
 		}
 
 		// Update is called once per frame
@@ -69,15 +74,21 @@ namespace Overworld {
 		private void WhatIsHit(Vector3 mousePos) {
 			Ray ray = Camera.main.ScreenPointToRay(mousePos);
 			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit, 500f, layerMaskInteractable)) {
+				if (!isMouseBlocked) {
+					playerMoveTo = hit.transform.position;
+					distributeTo.Add(playerInteractable);
+				}
+				distributeTo.AddRange(hit.collider.gameObject.GetComponents<IInteractable>());
+				return;
+			}
 			if (!isMouseBlocked) {
 				if (Physics.Raycast(ray, out hit, 500f, layerMaskPlayer)) {
 					playerMoveTo = hit.point;
-					distributeTo.Add(GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<IInteractable>());
+					distributeTo.Add(playerInteractable);
 				}
 			}
-			if (Physics.Raycast(ray, out hit, 500f, layerMaskInteractable)) {
-				distributeTo.Add(hit.collider.gameObject.GetComponent<IInteractable>());
-			}
+
 		}
 
 		private void FillDistributer(KeyCode keyCode) {
@@ -96,6 +107,14 @@ namespace Overworld {
 					}
 				}
 			}
+
+			foreach (var iinteractable in registerNoKeycode) {
+				if (iinteractable.GetControlElement() != null && iinteractable.GetControlElement().open) {
+					iinteractable.GetControlElement().CloseElement();
+					closedSomething = true;
+				}
+			}
+
 			if(closedSomething) {
 				inGameMenuOpen = false;
 				return;
@@ -148,6 +167,14 @@ namespace Overworld {
 			}
 		}
 
+		public void Register(IInteractable interactable) {
+			registerNoKeycode.Add(interactable);
+		}
+
+		public void UnRegister(IInteractable interactable) {
+			registerNoKeycode.Add(interactable);
+		}
+
 		public void BlockMouseUI() {
 			uiMouseLock.Add(true);
 			isMouseBlocked = true;
@@ -164,6 +191,13 @@ namespace Overworld {
 
 		public bool GetMouseBlocked() {
 			return isMouseBlocked;
+		}
+
+		public void StopPlayer() {
+			player.TemporaryStop();
+		}
+		public void ResumePlayer() {
+			player.ResumeFromTemporaryStop();
 		}
 	}
 }
