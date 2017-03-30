@@ -16,8 +16,24 @@ namespace CombatWorld
 		public GameObject ButtonTemplate;
 		public GameObject buttonPanel;
 		public GameObject buttonPanelP2;
+
+		[Space(20)]
+		[Header("Using Deck or UnitIDS?")]
+		public bool UseDeck = true;
+
+		[Space]
+		[Header("If using UnitsIDs.")]
+		[Header("If length of arrays are less than units")]
+		[Header("per team, the rest will be random.")]
+		public int unitsPerTeam = 6;
 		public int[] idsP1;
 		public int[] idsP2;
+
+		[Space]
+		[Header("If using decks.")]
+		[Header("Find and make decks in DeckHandler")]
+		public int p1DeckID;
+		public int p2DeckID;
 
 		List<UnitButton> buttons = new List<UnitButton>();
 		CombatData currentlySelectedData;
@@ -32,11 +48,18 @@ namespace CombatWorld
 				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(4));
 			}
 			else {
-				List<Item> p1Units = PVPdifferentUnits(idsP1);
-				List<Item> p2Units = PVPdifferentUnits(idsP2);
-				p1Units = GetRandomUnits(6 - p1Units.Count, p1Units);
-				p2Units = GetRandomUnits(6 - p2Units.Count, p2Units);
-
+				List<Item> p1Units;
+				List<Item> p2Units;
+				if (UseDeck) {
+					p1Units = PVPdifferentUnits(DeckHandler.GetDeckFromID(p1DeckID).unitIDs);
+					p2Units = PVPdifferentUnits(DeckHandler.GetDeckFromID(p2DeckID).unitIDs);
+				}
+				else {
+					p1Units = PVPdifferentUnits(idsP1);
+					p2Units = PVPdifferentUnits(idsP2);
+					p1Units = GetRandomUnits(unitsPerTeam - p1Units.Count, p1Units);
+					p2Units = GetRandomUnits(unitsPerTeam - p2Units.Count, p2Units);
+				}
 				SetupButtonsAndData(p1Units, Team.Player);
 				SetupButtonsAndData(p2Units, Team.AI);
 				//SetupButtonsAndData(PVPdifferentUnits(idsP1), Team.Player);

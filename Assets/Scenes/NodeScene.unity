@@ -207,6 +207,21 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1248978506}
+    - target: {fileID: 224653798112857942, guid: dde5fab992ca27f4c831f4ba883853a9,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224653798112857942, guid: dde5fab992ca27f4c831f4ba883853a9,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224653798112857942, guid: dde5fab992ca27f4c831f4ba883853a9,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dde5fab992ca27f4c831f4ba883853a9, type: 2}
   m_IsPrefabParent: 0
@@ -693,8 +708,12 @@ MonoBehaviour:
     type: 2}
   buttonPanel: {fileID: 595111260}
   buttonPanelP2: {fileID: 1494264428}
-  idsP1: 
+  UseDeck: 0
+  unitsPerTeam: 6
+  idsP1: 00000000010000000200000003000000070000000400000005000000
   idsP2: 
+  p1DeckID: 0
+  p2DeckID: 0
 --- !u!114 &1248978509
 MonoBehaviour:
   m_ObjectHideFlags: 0
