@@ -50,7 +50,7 @@ namespace CombatWorld.AI {
 		public int triggerForDefensiveSpawns = 3, triggerForOffensiveSpawns = 3;
 
 		private void Start() {
-			summonPoints = DamageConstants.STARTSUMMONPOINTS - DamageConstants.SUMMONPOINTSPERTURN;
+			summonPoints = DamageConstants.AISTARTSUMMONPOINTS - DamageConstants.SUMMONPOINTSPERTURN;
 			if (SceneHandler.instance != null) {
 				unitsToSummon = SceneHandler.instance.GetDeck().unitIDs;
 			}
