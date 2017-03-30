@@ -11,9 +11,6 @@ namespace Overworld {
 		Shop shop;
 
 		void Start () {
-			if (playerOW == null) {
-				playerOW = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
-			}
 			shop = GameObject.FindGameObjectWithTag("OWShop").GetComponent<Shop>();
 			Register(this, KeyCode.Mouse0);
 		}
@@ -23,6 +20,7 @@ namespace Overworld {
 		}
 
 		public override void PerformClosenessAction() {
+			hasGeneralConfirmationBox = false;
 			OpenMenu();
 		}
 
@@ -31,6 +29,8 @@ namespace Overworld {
 		}
 
 		public void DoAction<T>(T param) {
+			if(hasGeneralConfirmationBox)
+				return;
 			meClicked = true;
 			CheckDistance();
 		}
