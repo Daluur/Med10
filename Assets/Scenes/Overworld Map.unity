@@ -1433,7 +1433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: -123537.99}
+  m_AnchoredPosition: {x: -60, y: -123662.99}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &509547237
@@ -2477,8 +2477,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 865472439}
-  m_LocalRotation: {x: 0.019813063, y: 0.9606622, z: 0.26773953, w: -0.07107208}
-  m_LocalPosition: {x: 891.1224, y: -486.92386, z: 1457.5583}
+  m_LocalRotation: {x: 0.01981306, y: 0.9606622, z: 0.26773953, w: -0.07107208}
+  m_LocalPosition: {x: 891.1224, y: -486.9238, z: 1457.5581}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1573374630}
@@ -3156,6 +3156,7 @@ Prefab:
     - {fileID: 81916727981835730, guid: df60608a9a0a147419f932bdea10b31f, type: 2}
     - {fileID: 82866198130554732, guid: df60608a9a0a147419f932bdea10b31f, type: 2}
     - {fileID: 114659974869688596, guid: df60608a9a0a147419f932bdea10b31f, type: 2}
+    - {fileID: 114706111643280340, guid: df60608a9a0a147419f932bdea10b31f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: df60608a9a0a147419f932bdea10b31f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1035071220
@@ -3516,8 +3517,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1255204047}
-  m_LocalRotation: {x: 0.019813063, y: 0.9606622, z: 0.26773953, w: -0.07107208}
-  m_LocalPosition: {x: 891.1224, y: -539.27106, z: 1303.2971}
+  m_LocalRotation: {x: 0.01981306, y: 0.9606622, z: 0.26773953, w: -0.07107208}
+  m_LocalPosition: {x: 891.1224, y: -539.27094, z: 1303.2969}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4663,6 +4664,7 @@ MonoBehaviour:
   yOffset: 50
   maxZoom: 25.5
   minZoom: 5.5
+  speed: 4
 --- !u!4 &1732409755 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400006, guid: b544816461f324e56a39767fdeb5b114, type: 2}
