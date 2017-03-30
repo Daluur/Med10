@@ -30,6 +30,7 @@ namespace CombatWorld.AI {
 				}
 				if(type.Count>0){
 					SpawnUnit(node, unitsToSummon[type[0]]);
+					CombatCameraController.instance.SetTarget(node.transform);
 					summonPoints -= dataBase.FetchItemByID(unitsToSummon[type[0]]).SummonCost;
 					AICalculateScore.instance.SetSummonPoints(summonPoints);
 					type.RemoveAt(0);
