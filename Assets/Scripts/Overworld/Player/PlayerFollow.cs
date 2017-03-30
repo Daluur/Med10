@@ -44,7 +44,6 @@ namespace Overworld {
 			direction *= speed;
 
 			if (displacment < 0f) {
-				Debug.Log("zoom out");
 				if(camPos.y + 1f  <= maxZoomOut){
 					yOffset -= direction.y;
 					offSet -= offsetSpeeded;
@@ -52,21 +51,12 @@ namespace Overworld {
 				}
 			}
 			if (displacment > 0f) {
-				Debug.Log("zoom in");
 				if(( camPos.y - 1 ) > minZoomIn) {
 					yOffset += direction.y;
 					offSet += offsetSpeeded;
 					camPos += direction;
 				}
 			}
-
-
-
-
-
-
-
-
 		}
 	}
 }
