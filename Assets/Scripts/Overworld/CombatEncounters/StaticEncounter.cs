@@ -7,12 +7,10 @@ using UnityEngine.SceneManagement;
 
 namespace Overworld {
 	public class StaticEncounter : Encounter, IInteractable {
-		private SceneHandler sceneHandler;
 
 		// Use this for initialization
 		void Start () {
 			Register(this, KeyCode.Mouse0);
-			sceneHandler = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<SceneHandler>();
 			if (deckIDs == null || deckIDs.Length == 0) {
 				Debug.LogError("This encounter has no decks! " + gameObject.name);
 				deckIDs = new int[] { 0 };
@@ -27,8 +25,11 @@ namespace Overworld {
 
 		public override void PerformClosenessAction() {
 			hasGeneralConfirmationBox = false;
-			sceneHandler.LoadScene(0, deckIDs[UnityEngine.Random.Range(0,deckIDs.Length)], currencyForWinning, gameObject);
+			LoadCombat();
+		}
 
+		public override void LoadCombat() {
+			SceneHandler.instance.LoadScene(0, deckIDs[UnityEngine.Random.Range(0,deckIDs.Length)], currencyForWinning, gameObject);
 		}
 
 		public static void LoadCombatScene(int typeOfMap) {

@@ -77,17 +77,15 @@ namespace Overworld {
 		//Add things here if they need to happen when a player wins a battle
 		public void Won() {
 			AwardCurrency();
-			DestroyEncounterObject();
+			ProcessEncounteredObject();
 		}
 
 		private void AwardCurrency() {
 			CurrencyHandler.AddCurrency(currencyToReward);
 		}
 
-		private void DestroyEncounterObject() {
-			if (encounterObject != null) {
-				Destroy(encounterObject);
-			}
+		private void ProcessEncounteredObject() {
+			Destroy(encounterObject);
 		}
 
 	}
