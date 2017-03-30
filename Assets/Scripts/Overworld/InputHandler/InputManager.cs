@@ -18,7 +18,8 @@ namespace Overworld {
 		private Vector3 playerMoveTo;
 		private PlayerMovementOW player;
 		private IInteractable playerInteractable;
-		private bool inGameMenuOpen = false;
+		[HideInInspector]
+		public bool inGameMenuOpen = false;
 
 		// Use this for initialization
 		void Start () {
@@ -57,6 +58,10 @@ namespace Overworld {
 					EscapeBehaviour();
 					break;
 				case KeyCode.B:
+					FillDistributer(keyCode);
+					DistributeAction();
+					break;
+				case KeyCode.I:
 					FillDistributer(keyCode);
 					DistributeAction();
 					break;

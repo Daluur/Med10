@@ -20,6 +20,7 @@ namespace CombatWorld.Units {
 		bool turnedToStone = false;
 
 		private int health;
+		private int maxHealth;
 		private Team team;
 		private Node currentNode;
 
@@ -172,7 +173,7 @@ namespace CombatWorld.Units {
 			else {
 				animHelp.TakeDamage(TookDamage);
 			}
-			healthIndicator.TookDamage(damageIntake, health);
+			healthIndicator.TookDamage(damageIntake, (float)health/maxHealth);
 		}
 
 		void TookDamage() {
@@ -236,7 +237,7 @@ namespace CombatWorld.Units {
 			moveDistance = data.moveDistance;
 			damage = data.attackValue;
 			type = data.type;
-			health = data.healthValue;
+			maxHealth = health = data.healthValue;
 			this.team = team;
 			currentNode = node;
 			stoneUnit = data.stone;

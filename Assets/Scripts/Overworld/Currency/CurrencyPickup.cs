@@ -9,6 +9,7 @@ namespace Overworld {
 			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER) {
 				return;
 			}
+			AudioHandler.instance.PlayCollectGold();
 			CurrencyHandler.AddCurrency(amountOfCurrency);
 			Destroy(gameObject);
 		}

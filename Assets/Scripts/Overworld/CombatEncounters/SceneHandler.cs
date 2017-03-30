@@ -27,6 +27,7 @@ namespace Overworld {
 		}
 
 		public void LoadScene(MapTypes type, int deckID, int currencyReward = 0, GameObject encounterObject = null) {
+			AudioHandler.instance.PlayEnterCombat();
 			mapType = type;
 			deck = DeckHandler.GetDeckFromID(deckID);
 			DisableObjectsCombatLoad();

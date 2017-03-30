@@ -56,6 +56,7 @@ public class QuestManager : MonoBehaviour {
 		for (int i = 0; i < questList.Count; i++) {
 
 			if (questList[i].ID == id && questList[i].Progress == Quest.QuestProgress.COMPLETED) {
+				AudioHandler.instance.PlayQuestComplete();
 				questList [i].Progress = Quest.QuestProgress.DONE;
 				currentQuest++;
 
