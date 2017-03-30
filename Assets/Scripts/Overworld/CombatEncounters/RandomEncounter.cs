@@ -13,8 +13,6 @@ namespace Overworld {
 		public float startChance = 0f;
 		private float maximumChance = 1.1f;
 		public float chanceIncrease = 0.002f;
-		private MapTypes type = MapTypes.ANY;
-		private bool isRunning = false;
 		public bool printChances = false;
 
 
