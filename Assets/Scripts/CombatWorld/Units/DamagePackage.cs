@@ -83,7 +83,7 @@ namespace CombatWorld.Units {
 				return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 			}
 			else {
-				return damage - DamageConstants.EFFECTIVEBONUS;
+				return damage - DamageConstants.INEFFECTIVEPENALTY;
 			}
 		}
 #pragma warning restore 0162

@@ -38,6 +38,7 @@ public static class DamageConstants {
 	public const int STARTSUMMONPOINTS = 3;
 	public const bool EFFECTIVEMULT = false;
 	public const int EFFECTIVEBONUS = 5;
+	public const int INEFFECTIVEPENALTY = 5;
 }
 
 public static class StoneUnitOptions {
