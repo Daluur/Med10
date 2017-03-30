@@ -19,6 +19,7 @@ public class Slot : MonoBehaviour, IDropHandler {
 			droppedItem.slot = id;
 		}
 		else if(droppedItem.slot != id) {
+			AudioHandler.instance.MoveInventorySound();
 			Transform item = this.transform.GetChild (0);
 			item.GetComponent<ItemData> ().slot = droppedItem.slot;
 			item.transform.SetParent (inv.slots[droppedItem.slot].transform);

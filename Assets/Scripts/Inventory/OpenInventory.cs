@@ -23,6 +23,7 @@ namespace Overworld {
 		public void OpenTheInventory() {
 			if (isRunning || isShowing)
 				return;
+			AudioHandler.instance.PlayOpenWindow();
 			OpenElement();
 		}
 		public void CloseInventory() {
