@@ -11,6 +11,10 @@ public class AudioHandler : Singleton<AudioHandler> {
 	public AudioClip[] click;
 	public AudioClip combatMusic;
 	public AudioClip overWorldMusic;
+	public AudioClip[] inventory;
+	public AudioClip purchase;
+	public AudioClip[] window;
+
 
 	public AudioSource effectSource;
 	public AudioSource BGSource;
@@ -97,7 +101,13 @@ public class AudioHandler : Singleton<AudioHandler> {
 	/// Quest / Inventory
 	/// </summary>
 	public void PlayOpenWindow() {
-		Debug.Log("needs a sound");
+		effectSource.clip = window[0];
+		effectSource.Play();
+	}
+
+	public void PlayCloseWindow() {
+		effectSource.clip = window[1];
+		effectSource.Play();
 	}
 
 	public void PlayQuestUpdate() {
@@ -105,11 +115,18 @@ public class AudioHandler : Singleton<AudioHandler> {
 	}
 
 	public void MoveInventorySound() {
-		Debug.Log("needs a sound");
+		effectSource.clip = inventory[0];
+		effectSource.Play();
+	}
+
+	public void SwapInventorySound() {
+		effectSource.clip = inventory[1];
+		effectSource.Play();
 	}
 
 	public void PurchaseSound() {
-		Debug.Log("needs a sound");
+		effectSource.clip = purchase;
+		effectSource.Play();
 	}
 
 	public void StartOWBGMusic() {

@@ -28,6 +28,7 @@ namespace Overworld {
 			OpenElement();
 		}
 		public void CloseInventory() {
+			AudioHandler.instance.PlayCloseWindow();
 			CloseElement();
 		}
 
