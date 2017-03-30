@@ -23,7 +23,7 @@ namespace CombatWorld
 		CombatData currentlySelectedData;
 		ItemDatabase database;
 
-		int summonPoints = 2;
+		int summonPoints = DamageConstants.STARTSUMMONPOINTS;
 
 		private void Start() {
 			database = new ItemDatabase();
@@ -84,9 +84,15 @@ namespace CombatWorld
 
 		List<Item> CombatNotStartedFromOverWorld() {
 			List<Item> toReturn = new List<Item>();
-			for (int i = 0; i < 14; i++) {
+			/*for (int i = 0; i < 14; i++) {
 				toReturn.Add(database.FetchItemByID(i));
-			}
+			}*/
+			toReturn.Add(database.FetchItemByID(0));
+			toReturn.Add(database.FetchItemByID(3));
+			toReturn.Add(database.FetchItemByID(4));
+			toReturn.Add(database.FetchItemByID(7));
+			toReturn.Add(database.FetchItemByID(12));
+			toReturn.Add(database.FetchItemByID(13));
 			return toReturn;
 		}
 
@@ -130,7 +136,7 @@ namespace CombatWorld
 
 		void SpendPoints(int amount) {
 			if (GameController.playerVSPlayer && GameController.instance.currentTeam == Team.AI) {
-				AIController.instance.summonPoints -= amount;
+				AICalculateScore.instance.WithdrawSummonPoints(amount);
 				UpdateButtonsAndText();
 			}
 			else {
@@ -147,9 +153,9 @@ namespace CombatWorld
 		void UpdateButtonsAndText() {
 			if (GameController.playerVSPlayer && GameController.instance.currentTeam == Team.AI) {
 				foreach (UnitButton item in buttons) {
-					item.CheckCost(AIController.instance.summonPoints);
+					item.CheckCost(AICalculateScore.instance.summonPoints);
 				}
-				summonPointP2Text.text = "Summon points: " + AIController.instance.summonPoints;
+				summonPointP2Text.text = "Summon points: " + AICalculateScore.instance.summonPoints;
 			}
 			else {
 				foreach (UnitButton item in buttons) {
@@ -177,7 +183,7 @@ namespace CombatWorld
 					return false;
 				}
 			}
-			return true;
+			return false;
 		}
 
 		public Unit SummonAIUnitByID(SummonNode node, int id) {

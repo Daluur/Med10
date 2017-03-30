@@ -15,24 +15,31 @@ public class Inventory : MonoBehaviour {
 	public List<Item> items = new List<Item> ();
 	public List<GameObject> slots = new List<GameObject> ();
 
-	void Start() {
+	void Awake() {
 		database = new ItemDatabase();
+	}
 
+	void Start() {
 		slotAmount = 12;
 		inventoryPanel = GameObject.Find ("Inventory Panel");
 		slotPanel = inventoryPanel.transform.FindChild ("Slot Panel").gameObject;
 		for (int i = 0; i < slotAmount; i++) {
 			items.Add (new Item());
-			slots.Add (Instantiate (inventorySlot));
+			slots.Add (Instantiate (inventorySlot,slotPanel.transform));
 			slots [i].GetComponent<Slot> ().id = i;
-			slots [i].transform.SetParent (slotPanel.transform);
+			//slots [i].transform.SetParent (slotPanel.transform);
+			if (i < 6) {
+				slots[i].transform.FindChild ("Glow").gameObject.SetActive(true);
+			} 
 		}
 
 		AddItem (0);
-		AddItem (1);
-		AddItem (1);
-		AddItem (1);
-		AddItem (1);
+		AddItem (2);
+		AddItem (4);
+		AddItem (6);
+		AddItem (8);
+		AddItem (10);
+		AddItem (12);
 	}
 
 	public void AddItem(int id) {
@@ -41,9 +48,9 @@ public class Inventory : MonoBehaviour {
 		if (itemToAdd.Stackable && CheckItemInInventory(itemToAdd)) {
 			for (int i = 0; i < items.Count; i++) {
 				if (items[i].ID == id) {
-					ItemData data = slots [i].transform.GetChild (0).GetComponent<ItemData> ();
+					ItemData data = slots [i].transform.GetChild (1).GetComponent<ItemData> ();
 					data.amount++;
-					data.transform.GetChild (0).GetComponent<Text> ().text = data.amount.ToString ();
+					data.transform.GetChild (1).GetComponent<Text> ().text = data.amount.ToString ();
 
 					break;
 				}
@@ -59,17 +66,21 @@ public class Inventory : MonoBehaviour {
 					itemObject.GetComponent<ItemData> ().slot = i;
 					itemObject.GetComponent<Image> ().sprite = itemToAdd.Sprite;
 					itemObject.name = itemToAdd.Title;
-					ItemData data = slots[i].transform.GetChild (0).GetComponent<ItemData> ();
+					ItemData data = slots[i].transform.GetChild (1).GetComponent<ItemData> ();
 					data.amount = 1;
 					break;
 				} 
 			}
-
-			if (!items.Exists(x => x.ID == -1)) {
-				GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.NOTENOUGHINVENTORYSPACE);
-				//Debug.Log ("No more room in inventory - create popup message here");
-			} 
 		}
+	}
+
+	public bool HasInventorySpace() {
+		foreach (Item item in items) {
+			if(item.ID == -1) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	bool CheckItemInInventory(Item item) {
@@ -89,5 +100,9 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 		return toReturn;
+	}
+
+	public ItemDatabase GetDatabase() {
+		return database;
 	}
 }

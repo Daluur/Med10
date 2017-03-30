@@ -5,7 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Overworld {
-	public class RandomEncounter : MonoBehaviour {
+	public class RandomEncounter : Encounter {
 		private Vector3 lastPos = Vector3.zero, currPos;
 		private GameObject player;
 		private bool randEncounter = false;
@@ -13,15 +13,11 @@ namespace Overworld {
 		public float startChance = 0f;
 		private float maximumChance = 1.1f;
 		public float chanceIncrease = 0.002f;
-		private int type = 0;
-		private SceneHandler sceneHandler;
-		private bool isRunning = false;
-		private Coroutine encounter;
 		public bool printChances = false;
+
 
 		private void Start() {
 			player = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER);
-			sceneHandler = GetComponent<SceneHandler>();
 		}
 
 		private IEnumerator CheckForEncounter() {
@@ -47,7 +43,7 @@ namespace Overworld {
 
 			if (currentChance >= randGenerator) {
 				currentChance = startChance;
-				sceneHandler.LoadScene(type);
+				LoadCombat();
 				player.GetComponent<PlayerMovementOW>().DoAction();
 				return true;
 			}
@@ -57,21 +53,23 @@ namespace Overworld {
 			}
 		}
 
-		public void RandomEncounterOn(int type) {
+		public void RandomEncounterOn(MapTypes type, int[] deckIDs) {
+			GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.ENTEREDRANDOMENCOUNTEAREA);
 			randEncounter = true;
+			this.deckIDs = deckIDs;
 			this.type = type;
 			if(gameObject.activeInHierarchy && !isRunning)
-				encounter = StartCoroutine(CheckForEncounter());
-
+				StartCoroutine(CheckForEncounter());
 		}
 
 		public void RandomEncounterOff() {
+			GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.EXITEDRANDOMENCOUNTEAREA);
 			randEncounter = false;
 		}
 
 		private void OnEnable() {
 			if (randEncounter)
-				encounter = StartCoroutine(CheckForEncounter());
+				StartCoroutine(CheckForEncounter());
 		}
 	}
 }

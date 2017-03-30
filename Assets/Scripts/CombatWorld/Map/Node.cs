@@ -65,6 +65,13 @@ namespace CombatWorld.Map {
 			return (Unit)occupant;
 		}
 
+		public bool HasTower() {
+			if (occupant != null && occupant.GetType() == typeof(Tower)) {
+				return true;
+			}
+			return false;
+		}
+
 		#endregion
 
 		#region States

@@ -6,6 +6,7 @@ using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 using CombatWorld.AI;
+using Overworld;
 using UnityEngine.SceneManagement;
 
 namespace CombatWorld {
@@ -14,7 +15,7 @@ namespace CombatWorld {
 		public Text winLoseText;
 		public Button endTurnButton;
 
-		public GameObject map;
+		List<GameObject> maps = new List<GameObject>();
 
 		List<Node> allNodes = new List<Node>();
 		List<SummonNode> playerSummonNodes = new List<SummonNode>();
@@ -32,12 +33,27 @@ namespace CombatWorld {
 		List<Unit> performingAction = new List<Unit>();
 
 		public static bool playerVSPlayer = true;
-		public Text PVP;
 
 		void Start() {
+			AudioHandler.instance.StartCWBGMusic();
+			maps.AddRange(Resources.LoadAll<GameObject>("Art/3D/Maps"));
 			pathfinding = new Pathfinding();
-			Instantiate(map,new Vector3(3,-1039,0),Quaternion.identity,transform);
+			SpawnMap();
 			StartGame();
+		}
+
+		void SpawnMap() {
+			//Get correct map based on scenehandler info.
+			MapTypes type = MapTypes.ANY;
+			if (SceneHandler.instance != null) {
+				type = SceneHandler.instance.GetMapType();
+			}
+			if (type != MapTypes.ANY) {
+				maps.RemoveAll(g => g.GetComponent<MapInfo>().type != type);
+			}
+			GameObject go = Instantiate(maps[Random.Range(0, maps.Count)], transform.position, Quaternion.identity, transform) as GameObject;
+			go.transform.position = go.transform.position - new Vector3(go.GetComponentInChildren<Terrain>().terrainData.size.x / 2, 5, 0);
+			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
 		}
 
 		void StartGame() {
@@ -72,28 +88,36 @@ namespace CombatWorld {
 
 		#endregion
 
-		public void EndTurn() {
-			StartCoroutine(prepEndTurn());
-		}
-
 		public void TryEndTurn() {
 			if (waitingForAction) {
 				return;
 			}
+			if (playerVSPlayer) {
+				EndTurn();
+				return;
+			}
+			if(currentTeam != Team.Player) {
+				return;
+			}
 			EndTurn();
+		}
+
+		public void EndTurn() {
+			StartCoroutine(prepEndTurn());
 		}
 
 		IEnumerator prepEndTurn() {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
+					//CombatCameraController.instance.StartAICAM();
 					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
-					AIController.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERTURN);
+					AICalculateScore.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
 					StartTurn();
-					AIController.instance.MyTurn();
+					AICalculateScore.instance.DoAITurn();
 					if (playerVSPlayer) {
 						SummonHandler.instance.SetPlayerTurn(Team.AI);
 						SummonHandler.instance.GivePoints(0);
@@ -103,6 +127,7 @@ namespace CombatWorld {
 					}
 					break;
 				case Team.AI:
+					CombatCameraController.instance.EndAICAM();
 					currentTeam = Team.Player;
 					if (playerVSPlayer) {
 						SummonHandler.instance.SetPlayerTurn(Team.Player);
@@ -116,9 +141,6 @@ namespace CombatWorld {
 					break;
 				default:
 					break;
-			}
-			if (playerVSPlayer) {
-				PVP.text = currentTeam == Team.Player ? "Player 1" : "Player 2";
 			}
 		}
 
@@ -281,13 +303,6 @@ namespace CombatWorld {
 			SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 		}
 
-		public void WaitForAction() {
-			Debug.LogError("OLD function, use AddWaitForUnit");
-			return;
-			endTurnButton.interactable = false;
-			waitingForAction = true;
-		}
-
 		public bool WaitingForAction() {
 			return performingAction.Count > 0;
 		}
@@ -337,9 +352,10 @@ namespace CombatWorld {
 		public void UnitDied(Team team, Node node) {
 			if(team == Team.AI) {
 				SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERKILL);
+				AICalculateScore.instance.RemoveAIUnit(node.GetUnit());
 			}
 			else {
-				AIController.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERKILL);
+				AICalculateScore.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERKILL);
 			}
 			node.ResetState();
 		}
@@ -363,7 +379,7 @@ namespace CombatWorld {
 					Lost();
 					return;
 				}
-				AIController.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERTOWERKILL);
+				AICalculateScore.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERTOWERKILL);
 			}
 		}
 
@@ -436,10 +452,13 @@ namespace CombatWorld {
 		void Won() {
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
+			AudioHandler.instance.PlayWinSound();
+			SceneHandler.instance.Won();
 		}
 
 		void Lost() {
 			winLoseText.text = "YOU LOST!";
+			AudioHandler.instance.PlayLoseSound();
 			winLosePanel.SetActive(true);
 		}
 
@@ -453,6 +472,10 @@ namespace CombatWorld {
 
 		public List<SummonNode> GetAISummonNodes() {
 			return AISummonNodes;
+		}
+
+		public List<SummonNode> GetPlayerSummonNodes() {
+			return playerSummonNodes;
 		}
 
 		#endregion

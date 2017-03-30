@@ -9,15 +9,20 @@ namespace CombatWorld.Units {
 	public class Tower : MonoBehaviour, IEntity {
 
 		private int health = DamageConstants.TOWERHP;
+		private int maxHealth = DamageConstants.TOWERHP;
 		[SerializeField]
 		private Team team;
 		[SerializeField]
 		private Node currentNode;
 
+		public HealthAttackVisualController healthIndicator;
+
 		void Start() {
 			if (!currentNode.HasOccupant()) {
 				currentNode.SetOccupant(this);
 			}
+			healthIndicator.Setup(health, 0);
+			healthIndicator.UpdateHealthText(health + "/" + maxHealth);
 			GameController.instance.AddTower(team);
 		}
 
@@ -57,6 +62,8 @@ namespace CombatWorld.Units {
 
 		public void TakeDamage(DamagePackage damage) {
 			health -= damage.CalculateDamageAgainst();
+			healthIndicator.TookDamage(damage, (float)health/maxHealth);
+			healthIndicator.UpdateHealthText(health + "/" + maxHealth);
 			if (health <= 0) {
 				Die();
 			}

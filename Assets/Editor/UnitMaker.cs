@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using CombatWorld.Utility;
+using CombatWorld.Units;
 using LitJson;
 
 
@@ -18,6 +19,9 @@ public class UnitMaker : EditorWindow {
 	ItemDatabase database;
 	List<Item> items = new List<Item>();
 
+	GameObject[] projectiles;
+	string[] projNames;
+
 	bool changesToList = false;
 
 	Vector2 scrollPos;
@@ -29,10 +33,11 @@ public class UnitMaker : EditorWindow {
 	}
 
 	void OnGUI() {
-
 		if (database == null) {
 			database = new ItemDatabase();
 			items = database.GetAllItems();
+			projectiles = Resources.LoadAll<GameObject>("EditorObjects/Projectiles");
+			projNames = GetProjectileNames();
 		}
 		Filter();
 		ShowExistingItems();
@@ -234,6 +239,18 @@ public class UnitMaker : EditorWindow {
 			GUILayout.Label("No model");
 		}
 		EditorGUILayout.EndHorizontal();
+
+		EditorGUILayout.BeginHorizontal();
+		if (unit.Model != null) {
+			GUILayout.Label("Attack anim: " + unit.Model.GetComponent<Unit>().attackName);
+		}
+		EditorGUILayout.EndHorizontal();
+		EditorGUILayout.BeginHorizontal();
+		if (unit.Model != null) {
+			GUILayout.Label("Projectile: " + unit.Model.GetComponent<Unit>().projectile.name);
+		}
+		EditorGUILayout.EndHorizontal();
+
 		EditorGUILayout.EndVertical();
 	}
 
@@ -296,6 +313,23 @@ public class UnitMaker : EditorWindow {
 			GUILayout.Label("No model");
 		}
 		EditorGUILayout.EndHorizontal();
+
+		EditorGUILayout.BeginHorizontal();
+		if (unit.Model != null) {
+			Animations anim = GetAnimFromString(editing.Model.GetComponent<Unit>().attackName);
+			anim = (Animations)EditorGUILayout.EnumPopup("Attack anim:", anim);
+			editing.Model.GetComponent<Unit>().attackName = GetStringFromAnim(anim);
+		}
+		EditorGUILayout.EndHorizontal();
+
+		EditorGUILayout.BeginHorizontal();
+		if (unit.Model != null) {
+			int projectileID = GetProjectileIndexFromObj(unit.Model.GetComponent<Unit>().projectile);
+			projectileID = EditorGUILayout.Popup("Projectile: ", projectileID , projNames);
+			unit.Model.GetComponent<Unit>().projectile = GetProjectileFromID(projectileID);
+		}
+		EditorGUILayout.EndHorizontal();
+
 		EditorGUILayout.BeginHorizontal();
 		if (GUILayout.Button("Done editing")) {
 			editing = null;
@@ -384,6 +418,73 @@ public class UnitMaker : EditorWindow {
 		Stone,
 	}
 
+	enum Animations {
+		MeleeRightAttack01,
+		MeleeRightAttack02,
+		MeleeRightAttack03,
+		MeleeLeftAttack01,
+		LeftPunchAttack,
+		RightPunchAttack,
+		ProjectileRightAttack01,
+		CrossbowAttack,
+		CastSpell01,
+		CastSpell02,
+	}
+
+	Animations GetAnimFromString(string name) {
+		switch (name) {
+			case "Melee Right Attack 02":
+				return Animations.MeleeRightAttack02;
+			case "Melee Right Attack 03":
+				return Animations.MeleeRightAttack03;
+			case "Melee Left Attack 01":
+				return Animations.MeleeLeftAttack01;
+			case "Left Punch Attack":
+				return Animations.LeftPunchAttack;
+			case "Right Punch Attack":
+				return Animations.RightPunchAttack;
+			case "Projectile Right Attack 01":
+				return Animations.ProjectileRightAttack01;
+			case "Crossbow Attack":
+				return Animations.CrossbowAttack;
+			case "Cast Spell 01":
+				return Animations.CastSpell01;
+			case "Cast Spell 02":
+				return Animations.CastSpell02;
+			case "Melee Right Attack 01":
+			case "":
+			default:
+				return Animations.MeleeRightAttack01;
+		}
+	}
+
+	string GetStringFromAnim(Animations anim) {
+		switch (anim) {
+			case Animations.MeleeRightAttack01:
+				return "Melee Right Attack 01";
+			case Animations.MeleeRightAttack02:
+				return "Melee Right Attack 02";
+			case Animations.MeleeRightAttack03:
+				return "Melee Right Attack 03";
+			case Animations.MeleeLeftAttack01:
+				return "Melee Left Attack 01";
+			case Animations.LeftPunchAttack:
+				return "Left Punch Attack";
+			case Animations.RightPunchAttack:
+				return "Right Punch Attack";
+			case Animations.ProjectileRightAttack01:
+				return "Projectile Right Attack 01";
+			case Animations.CrossbowAttack:
+				return "Crossbow Attack";
+			case Animations.CastSpell01:
+				return "Cast Spell 01";
+			case Animations.CastSpell02:
+				return "Cast Spell 02";
+			default:
+				return "Melee Right Attack 01";
+		}
+	}
+
 	SimpleType GetSimpleTypeFromUnit(Item unit) {
 		if(unit.Shadow && unit.Stone) {
 			Debug.LogError("A unit is both shadow and stone, should never happen! " + unit.Title);
@@ -426,6 +527,28 @@ public class UnitMaker : EditorWindow {
 			default:
 				return "Normal";
 		}
+	}
+
+	string[] GetProjectileNames() {
+		string[] names = new string[projectiles.Length];
+		for (int i = 0; i < projectiles.Length; i++) {
+			names[i] = projectiles[i].name;
+		}
+		return names;
+	}
+
+	int GetProjectileIndexFromObj(GameObject proj) {
+		for (int i = 0; i < projectiles.Length; i++) {
+			if(projectiles[i] == proj) {
+				return i;
+			}
+		}
+		Debug.Log("Projectile is not present in Resources/EditorObjects/Projectiles");
+		return 0;
+	}
+
+	GameObject GetProjectileFromID(int id) {
+		return projectiles[id];
 	}
 
 	#endregion

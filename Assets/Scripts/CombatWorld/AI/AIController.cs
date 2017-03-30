@@ -20,13 +20,16 @@ namespace CombatWorld.AI {
 
 		public int summonPoints = 2;
 
+		void Start() {
+			unitToSummon = Resources.LoadAll<GameObject>("Art/3D/Units/")[0];
+		}
+
 		public void MyTurn() {
 			if (GameController.playerVSPlayer) {
 				return;
 			}
 			CheckForDeadUnits();
 			StartCoroutine(SummonUnit());
-			
 		}
 
 		IEnumerator SummonUnit() {

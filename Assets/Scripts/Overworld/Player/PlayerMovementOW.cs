@@ -9,16 +9,10 @@ namespace Overworld {
 
 		private NavMeshAgent agent;
 		private Animator animator;
-		private bool isRunning = false;
 		public GameObject clickMoveToObject;
-		public float distanceToStopRunAnimation = 1f;
-
-
 
 		void Start() {
-
 			Register(this, KeyCode.Mouse0);
-
 			agent = GetComponent<NavMeshAgent>();
 			if (agent == null) {
 				Debug.LogError("The Player character needs a nav mesh agent to move around!!!!");
@@ -35,25 +29,28 @@ namespace Overworld {
 		void PlayerMoveToMouseInput(Vector3 hitPoint) {
 			if (agent.SetDestination(hitPoint)) {
 				Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
-				if (!isRunning) {
-					StartCoroutine(MovementAnimation());
-				}
 			}
 		}
 
-		private IEnumerator MovementAnimation() {
-			isRunning = true;
-			animator.SetTrigger("Run");
-			while (Vector3.Distance(gameObject.transform.position,agent.destination)>distanceToStopRunAnimation) {
-				yield return new WaitForEndOfFrame();
-			}
-			animator.SetTrigger("Run");
-			isRunning = false;
+		private void Update() {
+			animator.SetFloat("Speed", agent.velocity.magnitude);
 		}
 
-		public void DoAction() {
+		public void TemporaryStop() {
 			agent.Stop();
-			agent.ResetPath();
+		}
+
+		public void ResumeFromTemporaryStop() {
+			agent.Resume();
+		}
+
+		/// <summary>
+		/// Stops the player, specific usage of DoAction for the player
+		/// </summary>
+		public void DoAction() {
+			//Debug.Log("ASDASD");
+			//agent.Stop();
+			//agent.ResetPath();
 		}
 
 		public void DoAction<T>(T param) {
@@ -63,6 +60,10 @@ namespace Overworld {
 				return;
 			}
 			PlayerMoveToMouseInput((Vector3)(param as Vector3?));
+		}
+
+		public ControlUIElement GetControlElement() {
+			return null;
 		}
 	}
 }
