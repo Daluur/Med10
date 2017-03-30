@@ -29,15 +29,17 @@ namespace CombatWorld.Units {
 		}
 
 		public void TookDamage(DamagePackage dmg, float healthPercent) {
-			//health.text = newHealth.ToString();
 			healthbar.fillAmount = healthPercent;
 			CombatText.text = "-"+dmg.GetCalculatedDMG();
 			anim.SetTrigger("TakeDMG");
 		}
 
+		public void UpdateHealthText(string text) {
+			attack.text = text;
+		}
+
 		public void GotMoreHealth(float healthPercent, int bonus) {
 			healthbar.fillAmount = healthPercent;
-			//health.text = newHealth.ToString();
 		}
 
 		public void ChangedAttackValue(int newVal) {
