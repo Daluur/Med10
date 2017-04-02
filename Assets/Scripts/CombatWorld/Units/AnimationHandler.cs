@@ -91,7 +91,7 @@ namespace CombatWorld.Units {
 		}
 
 		public void FinishedDefend(Action cb) {
-			anim.Stop();
+			anim.StopPlayback(); //not sure this is correct. But at the time of writing, we did not use it. used anim.Stop() prior to 5.6
 			cb();
 		}
 
