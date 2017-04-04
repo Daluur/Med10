@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataCollection : Singleton<DataCollection> {
 
-	private void Awake() {
+	protected override void Awake() {
 		base.Awake();
 		DontDestroyOnLoad(gameObject);
 		UnlearnedActions.Add(ActionType.FireTrade);
@@ -13,8 +13,10 @@ public class DataCollection : Singleton<DataCollection> {
 		UnlearnedActions.Add(ActionType.NatureTrade);
 		UnlearnedActions.Add(ActionType.StoneUsage);
 		UnlearnedActions.Add(ActionType.ShadowUsage);
-		CurrentlyTeaching.Add(ActionType.FireTrade);
+		StartTeachNewRandomUnlearnedAction();
 	}
+
+	public int performanceThreshold = 3;
 
 	List<ActionType> UnlearnedActions = new List<ActionType>();
 	List<ActionType> LearnedActions = new List<ActionType>();
@@ -34,6 +36,9 @@ public class DataCollection : Singleton<DataCollection> {
 
 	public void CombatEnd() {
 		foreach (ActionType action in performedThisCombat.Keys) {
+			if(performedThisCombat[action] < 3) {
+				continue;
+			}
 			if (LearnedActions.Contains(action)) {
 				continue;
 			}
@@ -57,28 +62,56 @@ public class DataCollection : Singleton<DataCollection> {
 		if (CurrentlyTeaching.Count == 0) {
 			CurrentlyTeaching.Add(UnlearnedActions[Random.Range(0, UnlearnedActions.Count)]);
 		}
-		performedThisCombat.Clear();
 		DebugInfo();
+		performedThisCombat.Clear();
+	}
+
+	public List<ActionType> GetLearnedActions() {
+		return LearnedActions;
+	}
+
+	public List<ActionType> GetThinkLearnedActions() {
+		return ThinkLearnedActions;
+	}
+
+	public List<ActionType> GetCurrentlyTeaching() {
+		return CurrentlyTeaching;
+	}
+
+	public void StartTeachNewRandomUnlearnedAction() {
+		while (true) { //Needs to test if unlearned actually has a type that has not already been taught, and is not currently being taught.
+			ActionType type = UnlearnedActions[Random.Range(0, UnlearnedActions.Count)];
+			if (!CurrentlyTeaching.Contains(type)) {
+				CurrentlyTeaching.Add(type);
+				return;
+			}
+		}
 	}
 
 	void DebugInfo() {
-		Debug.Log("End combat analysis");
-		Debug.Log("learned actions");
+		Debug.LogError("End of combat analysis");
+		Debug.LogWarning("did this combat!");
+		foreach (ActionType act in performedThisCombat.Keys) {
+			Debug.Log(act.ToString());
+		}
+		Debug.LogWarning("learned actions");
 		foreach (ActionType act in LearnedActions) {
 			Debug.Log(act.ToString());
 		}
-		Debug.Log("maybe learned");
+		Debug.LogWarning("maybe learned");
 		foreach (ActionType act in ThinkLearnedActions) {
 			Debug.Log(act.ToString());
 		}
-		Debug.Log("not learned");
+		Debug.LogWarning("not learned");
 		foreach (ActionType act in UnlearnedActions) {
 			Debug.Log(act.ToString());
 		}
-		Debug.Log("currently teaching");
+		Debug.LogWarning("currently teaching");
 		foreach (ActionType act in CurrentlyTeaching) {
 			Debug.Log(act.ToString());
 		}
+		Debug.LogWarning("now teaching: " + CurrentlyTeaching[0].ToString());
+		Debug.LogError("End of end of combat analysis");
 	}
 }
 
