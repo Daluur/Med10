@@ -15,39 +15,59 @@ public class AudioHandler : Singleton<AudioHandler> {
 	public AudioClip purchase;
 	public AudioClip[] window;
 
-
-	public AudioSource effectSource;
+	public AudioSource[] effectSource;
 	public AudioSource BGSource;
 	public AudioSource specificSource;
+
+	//public Dictionary<int, int> sourcesUsed = new Dictionary<int, int>(); //Only used for debug.
 
 	protected override void Awake() {
 		base.Awake();
 		DontDestroyOnLoad(gameObject);
+		/*for (int i = 0; i < effectSource.Length; i++) { //Only used for debug.
+			sourcesUsed.Add(i, 0);
+		}*/
+	}
+
+	//Only used for debug.
+	/*void Update() {
+		if (Input.GetKeyDown(KeyCode.S)) {
+			for (int i = 0; i < effectSource.Length; i++) {
+				Debug.Log(i + " used: " + sourcesUsed[i] +" times");
+			}
+		}
+	}*/
+
+	void PlayEffectSound(AudioClip clip) {
+		for (int i = 0; i < effectSource.Length; i++) {
+			if (!effectSource[i].isPlaying) {
+				effectSource[i].clip = clip;
+				effectSource[i].Play();
+				//sourcesUsed[i] = sourcesUsed[i] + 1; //Only used for debug.
+				return;
+			}
+		}
+		Debug.LogWarning("Tried to play an effect sound, but no sources were avaible. We might need to add more.");
 	}
 
 	public void PlayAttack() {
-		effectSource.clip = attack[Random.Range(0, attack.Length)];
-		effectSource.Play();
+		PlayEffectSound(attack[Random.Range(0, attack.Length)]);
 	}
 
 	public void PlayAttack(int i) {
-		effectSource.clip = attack[i];
-		effectSource.Play();
+		PlayEffectSound(attack[i]);
 	}
 
 	public void PlayTakeDamage() {
-		effectSource.clip = takeDamage[Random.Range(0, takeDamage.Length)];
-		effectSource.Play();
+		PlayEffectSound(takeDamage[Random.Range(0, takeDamage.Length)]);
 	}
 
 	public void PlayTakeDamage(int i) {
-		effectSource.clip = takeDamage[i];
-		effectSource.Play();
+		PlayEffectSound(takeDamage[i]);
 	}
 
 	public void PlayDie() {
-		effectSource.clip = die;
-		effectSource.Play();
+		PlayEffectSound(die);
 	}
 
 	public void PlayMove() {
@@ -56,13 +76,11 @@ public class AudioHandler : Singleton<AudioHandler> {
 	}
 
 	public void PlayClick() {
-		effectSource.clip = click[Random.Range(0, click.Length)];
-		effectSource.Play();
+		PlayEffectSound(click[Random.Range(0, click.Length)]);
 	}
 
 	public void PlayClick(int i) {
-		effectSource.clip = click[i];
-		effectSource.Play();
+		PlayEffectSound(click[i]);
 	}
 
 	public void PlayInteraction() {
@@ -101,13 +119,11 @@ public class AudioHandler : Singleton<AudioHandler> {
 	/// Quest / Inventory
 	/// </summary>
 	public void PlayOpenWindow() {
-		effectSource.clip = window[0];
-		effectSource.Play();
+		PlayEffectSound(window[0]);
 	}
 
 	public void PlayCloseWindow() {
-		effectSource.clip = window[1];
-		effectSource.Play();
+		PlayEffectSound(window[1]);
 	}
 
 	public void PlayQuestUpdate() {
@@ -115,18 +131,15 @@ public class AudioHandler : Singleton<AudioHandler> {
 	}
 
 	public void MoveInventorySound() {
-		effectSource.clip = inventory[0];
-		effectSource.Play();
+		PlayEffectSound(inventory[0]);
 	}
 
 	public void SwapInventorySound() {
-		effectSource.clip = inventory[1];
-		effectSource.Play();
+		PlayEffectSound(inventory[1]);
 	}
 
 	public void PurchaseSound() {
-		effectSource.clip = purchase;
-		effectSource.Play();
+		PlayEffectSound(purchase);
 	}
 
 	public void StartOWBGMusic() {
