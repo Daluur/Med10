@@ -9,5 +9,8 @@ namespace CombatWorld.Map {
 		public int ID;
 		public string Name;
 		public MapTypes type;
+
+		public int mapLength;
+
 	}
 }
