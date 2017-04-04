@@ -50,7 +50,8 @@ namespace CombatWorld {
 				maps.RemoveAll(g => g.GetComponent<MapInfo>().type != type);
 			}
 			GameObject go = Instantiate(maps[Random.Range(0, maps.Count)], transform.position, Quaternion.identity, transform) as GameObject;
-			go.transform.position = go.transform.position - new Vector3(go.GetComponentInChildren<Terrain>().terrainData.size.x / 2, 5, 0);
+			//go.transform.position = go.transform.position - new Vector3(go.GetComponent<MapInfo>().mapLength * 2, 5, 0);
+			CombatCameraController.instance.setBoundary(new Vector2(-go.GetComponent<MapInfo>().mapLength, go.GetComponent<MapInfo>().mapLength));
 			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
 		}
 

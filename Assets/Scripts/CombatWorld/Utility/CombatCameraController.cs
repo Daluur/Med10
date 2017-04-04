@@ -48,6 +48,10 @@ namespace CombatWorld {
 			}
 		}
 
+		public void setBoundary (Vector2 v) {
+			minMaxXPos = v;
+		}
+
 		void PlayerControlledCam() {
 			if (Input.GetMouseButton(0)) {
 				if (Input.GetAxis("Mouse X") != 0) {
