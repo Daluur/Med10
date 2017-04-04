@@ -20,7 +20,7 @@ namespace CombatWorld {
 		}
 			
 		void LateUpdate() {
-			if (following) {
+			if (following && AITarget != null) {
 				FollowCam();
 			}
 			if(!AICam) {

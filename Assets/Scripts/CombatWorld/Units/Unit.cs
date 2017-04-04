@@ -266,6 +266,9 @@ namespace CombatWorld.Units {
 				ma.startColor = Color.black;
 			}
 			FaceForward();
+			if(shadowUnit && team == Team.Player) {
+				DataCollection.instance.PerformedAction(ActionType.ShadowUsage);
+			}
 		}
 
 		IEnumerator MoveTo(List<Node> target) {
@@ -295,6 +298,9 @@ namespace CombatWorld.Units {
 
 #pragma warning disable 0162
 		public void TurnToStone() {
+			if(team == Team.Player) {
+				DataCollection.instance.PerformedAction(ActionType.StoneUsage);
+			}
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;

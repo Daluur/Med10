@@ -410,6 +410,7 @@ namespace CombatWorld {
 		}
 
 		void Won() {
+			DataCollection.instance.CombatEnd();
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
 			AudioHandler.instance.PlayWinSound();
@@ -417,6 +418,7 @@ namespace CombatWorld {
 		}
 
 		void Lost() {
+			DataCollection.instance.CombatEnd();
 			winLoseText.text = "YOU LOST!";
 			AudioHandler.instance.PlayLoseSound();
 			winLosePanel.SetActive(true);

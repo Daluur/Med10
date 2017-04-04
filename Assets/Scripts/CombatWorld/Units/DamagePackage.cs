@@ -70,6 +70,24 @@ namespace CombatWorld.Units {
 
 #pragma warning disable 0162
 		int GetEffectiveDamage(int damage) {
+			if(source.GetTeam() == Team.Player) {
+				switch (damageType) {
+					case ElementalTypes.Fire:
+						DataCollection.instance.PerformedAction(ActionType.FireTrade);
+						break;
+					case ElementalTypes.Water:
+						DataCollection.instance.PerformedAction(ActionType.WaterTrade);
+						break;
+					case ElementalTypes.Nature:
+						DataCollection.instance.PerformedAction(ActionType.NatureTrade);
+						break;
+					case ElementalTypes.Lightning:
+						DataCollection.instance.PerformedAction(ActionType.LightningTrade);
+						break;
+					default:
+						break;
+				}
+			}
 			if (DamageConstants.EFFECTIVEMULT) {
 				return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 			}
