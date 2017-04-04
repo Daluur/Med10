@@ -33,11 +33,22 @@ namespace CombatWorld {
 		List<Unit> performingAction = new List<Unit>();
 
 		void Start() {
+			if (GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER)) {
+				StartCoroutine(FadeIn());
+			}
 			AudioHandler.instance.StartCWBGMusic();
 			maps.AddRange(Resources.LoadAll<GameObject>("Art/3D/Maps"));
 			pathfinding = new Pathfinding();
 			SpawnMap();
 			StartGame();
+		}
+
+		IEnumerator FadeIn() {
+			yield return new WaitForSeconds(1f);
+			while (FadingLoadingScreen.instance.isFading) {
+				yield return new WaitForSeconds(0.3f);
+			}
+			FadingLoadingScreen.instance.StartFadeIn();
 		}
 
 		void SpawnMap() {
@@ -262,6 +273,14 @@ namespace CombatWorld {
 		}
 
 		public void Forfeit() {
+			StartCoroutine(Unload());
+		}
+
+		private IEnumerator Unload() {
+			FadingLoadingScreen.instance.StartFadeOut();
+			while (FadingLoadingScreen.instance.isFading) {
+				yield return new WaitForSeconds(0.1f);
+			}
 			SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 		}
 
