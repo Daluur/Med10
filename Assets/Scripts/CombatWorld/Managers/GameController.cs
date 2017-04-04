@@ -34,6 +34,7 @@ namespace CombatWorld {
 
 		void Start() {
 			StartCoroutine(FadeIn());
+			AudioHandler.instance.StartCWBGMusic();
 			maps.AddRange(Resources.LoadAll<GameObject>("Art/3D/Maps"));
 			pathfinding = new Pathfinding();
 			SpawnMap();
@@ -112,6 +113,7 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
+					CombatCameraController.instance.StartAICAM();
 					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
@@ -121,6 +123,7 @@ namespace CombatWorld {
 					AICalculateScore.instance.DoAITurn();
 					break;
 				case Team.AI:
+					CombatCameraController.instance.EndAICAM();
 					currentTeam = Team.Player;
 					SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
@@ -426,11 +429,13 @@ namespace CombatWorld {
 		void Won() {
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
+			AudioHandler.instance.PlayWinSound();
 			SceneHandler.instance.Won();
 		}
 
 		void Lost() {
 			winLoseText.text = "YOU LOST!";
+			AudioHandler.instance.PlayLoseSound();
 			winLosePanel.SetActive(true);
 		}
 

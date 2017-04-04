@@ -35,6 +35,10 @@ public static class DamageConstants {
 	public const int SUMMONPOINTSPERTURN = 2;
 	public const int SUMMONPOINTSPERKILL = 1;
 	public const int SUMMONPOINTSPERTOWERKILL = 3;
+	public const int STARTSUMMONPOINTS = 3;
+	public const bool EFFECTIVEMULT = false;
+	public const int EFFECTIVEBONUS = 5;
+	public const int INEFFECTIVEPENALTY = 5;
 }
 
 public static class StoneUnitOptions {
@@ -52,4 +56,6 @@ public static class GameNotificationConstants {
 	public const string NOTENOUGHINVENTORYSPACE = "There is no more room in the inventory";
 	public const string TOOFARAWAY = "This cannot be done, it is too far away";
 	public const string OBSTRUCTEDNODE = "I cannot move there";
+	public const string ENTEREDRANDOMENCOUNTEAREA = "You have now entered an area containing random enemies";
+	public const string EXITEDRANDOMENCOUNTEAREA = "You have now exited an area containing random enemies";
 }

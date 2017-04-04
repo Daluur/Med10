@@ -13,7 +13,6 @@ namespace Overworld {
 
 		void Start() {
 			Register(this, KeyCode.Mouse0);
-
 			agent = GetComponent<NavMeshAgent>();
 			if (agent == null) {
 				Debug.LogError("The Player character needs a nav mesh agent to move around!!!!");
@@ -37,19 +36,21 @@ namespace Overworld {
 			animator.SetFloat("Speed", agent.velocity.magnitude);
 		}
 
-		/*private IEnumerator MovementAnimation() {
-			isRunning = true;
-			animator.SetTrigger("Run");
-			while (agent.hasPath || agent.pathPending) {
-				yield return new WaitForEndOfFrame();
-			}
-			animator.SetTrigger("Run");
-			isRunning = false;
-		}*/
-
-		public void DoAction() {
+		public void TemporaryStop() {
 			agent.Stop();
-			agent.ResetPath();
+		}
+
+		public void ResumeFromTemporaryStop() {
+			agent.Resume();
+		}
+
+		/// <summary>
+		/// Stops the player, specific usage of DoAction for the player
+		/// </summary>
+		public void DoAction() {
+			//Debug.Log("ASDASD");
+			//agent.Stop();
+			//agent.ResetPath();
 		}
 
 		public void DoAction<T>(T param) {

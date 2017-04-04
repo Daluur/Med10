@@ -19,6 +19,7 @@ namespace CombatWorld.AI {
 		public Unit myUnit;
 
 		public void PerformTask(AITask task) {
+			CombatCameraController.instance.SetTarget(myUnit.transform);
 			AITaskImplementations.DoAIAction(this, task);
 		}
 

@@ -31,34 +31,34 @@ namespace CombatWorld.Units {
 			switch (type) {
 				case ElementalTypes.Fire:
 					if(damageType == ElementalTypes.Water) {
-						damageDone = damage * DamageConstants.EFFECTIVEMULTIPLIER;
+						damageDone = GetEffectiveDamage(damage);
 					}
 					else if(damageType == ElementalTypes.Nature) {
-						damageDone = (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+						damageDone = GetInEffectivDamage(damage);
 					}
 					break;
 				case ElementalTypes.Water:
 					if (damageType == ElementalTypes.Lightning) {
-						damageDone = damage * DamageConstants.EFFECTIVEMULTIPLIER;
+						damageDone = GetEffectiveDamage(damage);
 					}
 					else if (damageType == ElementalTypes.Fire) {
-						damageDone = (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+						damageDone = GetInEffectivDamage(damage);
 					}
 					break;
 				case ElementalTypes.Nature:
 					if (damageType == ElementalTypes.Fire) {
-						damageDone = damage * DamageConstants.EFFECTIVEMULTIPLIER;
+						damageDone = GetEffectiveDamage(damage);
 					}
 					else if (damageType == ElementalTypes.Lightning) {
-						damageDone = (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+						damageDone = GetInEffectivDamage(damage);
 					}
 					break;
 				case ElementalTypes.Lightning:
 					if (damageType == ElementalTypes.Nature) {
-						damageDone = damage * DamageConstants.EFFECTIVEMULTIPLIER;
+						damageDone = GetEffectiveDamage(damage);
 					}
 					else if (damageType == ElementalTypes.Water) {
-						damageDone = (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+						damageDone = GetInEffectivDamage(damage);
 					}
 					break;
 				case ElementalTypes.NONE:
@@ -67,6 +67,26 @@ namespace CombatWorld.Units {
 			}
 			return damageDone;
 		}
+
+#pragma warning disable 0162
+		int GetEffectiveDamage(int damage) {
+			if (DamageConstants.EFFECTIVEMULT) {
+				return damage * DamageConstants.EFFECTIVEMULTIPLIER;
+			}
+			else {
+				return damage + DamageConstants.EFFECTIVEBONUS;
+			}
+		}
+
+		int GetInEffectivDamage(int damage) {
+			if (DamageConstants.EFFECTIVEMULT) {
+				return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
+			}
+			else {
+				return damage - DamageConstants.INEFFECTIVEPENALTY;
+			}
+		}
+#pragma warning restore 0162
 
 		/// <summary>
 		/// Should only be used for combatText.

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
@@ -14,7 +15,10 @@ namespace CombatWorld.AI {
 
 		private static readonly int triggerForOffensiveSpawns = AICalculateScore.instance.triggerForOffensiveSpawns;
 
-		public static void SpawnUnits() {
+		public static bool summoning { get; protected set; }
+
+		public static IEnumerator SpawnUnits() {
+			summoning = true;
 			summonPoints = AICalculateScore.instance.summonPoints;
 			var summonNodes = GameController.instance.GetAISummonNodes();
 			var type = EvaluateUnitToSpawn();
@@ -30,12 +34,15 @@ namespace CombatWorld.AI {
 				}
 				if(type.Count>0){
 					SpawnUnit(node, unitsToSummon[type[0]]);
+					CombatCameraController.instance.SetTarget(node.transform);
 					summonPoints -= dataBase.FetchItemByID(unitsToSummon[type[0]]).SummonCost;
 					AICalculateScore.instance.SetSummonPoints(summonPoints);
 					type.RemoveAt(0);
+					yield return new WaitForSeconds(0.5f);
 				}
 			}
 			type.Clear();
+			summoning = false;
 		}
 
 		private static void SpawnUnit(SummonNode node, int type) {

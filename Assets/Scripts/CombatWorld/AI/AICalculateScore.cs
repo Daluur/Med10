@@ -43,14 +43,15 @@ namespace CombatWorld.AI {
 
 		private List<Unit> playerUnits = new List<Unit>();
 
-		public int summonPoints = 3;
+		public int summonPoints { get; protected set; }
 
 		public int offensiveFactor = 0, defensiveFactor = 0;
 
 		public int triggerForDefensiveSpawns = 3, triggerForOffensiveSpawns = 3;
 
 		private void Start() {
-			if(SceneHandler.instance != null) {
+			summonPoints = DamageConstants.STARTSUMMONPOINTS - DamageConstants.SUMMONPOINTSPERTURN;
+			if (SceneHandler.instance != null) {
 				unitsToSummon = SceneHandler.instance.GetDeck().unitIDs;
 			}
 			AIUtilityMethods.FillSubscriptionTowers();
@@ -92,7 +93,10 @@ namespace CombatWorld.AI {
 			while (GameController.instance.WaitingForAction()) {
 				yield return new WaitForSeconds(0.2f);
 			}
-			AISummon.SpawnUnits();
+			StartCoroutine(AISummon.SpawnUnits());
+			while (AISummon.summoning) {
+				yield return new WaitForSeconds(0.2f);
+			}
 			Debug.Log("AI turn ended, summon points left: " + summonPoints);
 			AIUtilityMethods.ResetTowerFocus();
 			GameController.instance.EndTurn();

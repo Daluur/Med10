@@ -20,6 +20,7 @@ namespace CombatWorld.Units {
 		bool turnedToStone = false;
 
 		private int health;
+		private int maxHealth;
 		private Team team;
 		private Node currentNode;
 
@@ -147,8 +148,8 @@ namespace CombatWorld.Units {
 		}
 
 		void SpawnProjectile() {
-			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
 			waitForProjectile = true;
+			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
 			target = null;
 			if(health <= 0) {
 				Die();
@@ -172,7 +173,7 @@ namespace CombatWorld.Units {
 			else {
 				animHelp.TakeDamage(TookDamage);
 			}
-			healthIndicator.TookDamage(damageIntake, health);
+			healthIndicator.TookDamage(damageIntake, (float)health/maxHealth);
 		}
 
 		void TookDamage() {
@@ -199,6 +200,7 @@ namespace CombatWorld.Units {
 		public void Die() {
 			GameController.instance.UnitDied(team, currentNode);
 			currentNode.RemoveOccupant();
+			waitForDeathAnim = true;
 			if (turnedToStone) {
 				Death();
 			}
@@ -208,7 +210,14 @@ namespace CombatWorld.Units {
 		}
 
 		void Death() {
-			if (waitForProjectile) {
+			waitForDeathAnim = false;
+			RealDeath();
+		}
+
+		bool waitForDeathAnim = false;
+
+		void RealDeath() {
+			if(waitForProjectile || waitForDeathAnim) {
 				return;
 			}
 			FinishedAction();
@@ -222,10 +231,12 @@ namespace CombatWorld.Units {
 
 		void ProjectileHit() {
 			waitForProjectile = false;
-			if(health <= 0) {
-				Death();
+			if (health <= 0) {
+				RealDeath();
 			}
-			FinishedAction();
+			else {
+				FinishedAction();
+			}
 		}
 
 		void FaceForward() {
@@ -236,7 +247,7 @@ namespace CombatWorld.Units {
 			moveDistance = data.moveDistance;
 			damage = data.attackValue;
 			type = data.type;
-			health = data.healthValue;
+			maxHealth = health = data.healthValue;
 			this.team = team;
 			currentNode = node;
 			stoneUnit = data.stone;
@@ -258,6 +269,7 @@ namespace CombatWorld.Units {
 		}
 
 		IEnumerator MoveTo(List<Node> target) {
+			CombatCameraController.instance.SetTarget(transform);
 			animHelp.StartWalk();
 			target.Reverse();
 			for (int i = 0; i < target.Count; i++) {

@@ -79,6 +79,7 @@ namespace Overworld.Shops {
 			if (!CurrencyHandler.RemoveCurrency(price)) {
 				return;
 			}
+			AudioHandler.instance.PurchaseSound();
 			EnableUnlockedUnits();
 			inventory.AddItem(unitID);
 		}
@@ -86,6 +87,7 @@ namespace Overworld.Shops {
 		public void OpenMenu() {
 			if (isRunning || isShowing)
 				return;
+			AudioHandler.instance.PlayOpenShop();
 			CreateShop();
 			OpenElement();
 			inventoryPanel.OpenTheInventory();

@@ -33,6 +33,7 @@ namespace Overworld {
 		}
 
 		public void LoadScene(MapTypes type, int deckID, int currencyReward = 0, GameObject encounterObject = null) {
+			AudioHandler.instance.PlayEnterCombat();
 			mapType = type;
 			StartCoroutine(LoadingScene());
 			deck = DeckHandler.GetDeckFromID(deckID);
@@ -105,17 +106,15 @@ namespace Overworld {
 		//Add things here if they need to happen when a player wins a battle
 		public void Won() {
 			AwardCurrency();
-			DestroyEncounterObject();
+			ProcessEncounteredObject();
 		}
 
 		private void AwardCurrency() {
 			CurrencyHandler.AddCurrency(currencyToReward);
 		}
 
-		private void DestroyEncounterObject() {
-			if (encounterObject != null) {
-				Destroy(encounterObject);
-			}
+		private void ProcessEncounteredObject() {
+			Destroy(encounterObject);
 		}
 
 	}
