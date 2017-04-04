@@ -37,11 +37,17 @@ namespace Overworld {
 		}
 
 		public void TemporaryStop() {
-			agent.Stop();
+			agent.isStopped = true;
 		}
 
 		public void ResumeFromTemporaryStop() {
-			agent.Resume();
+			//agent.Resume();
+			agent.isStopped = false;
+		}
+
+		public void Stop() {
+			agent.isStopped = true;
+			agent.ResetPath();
 		}
 
 		/// <summary>
@@ -54,7 +60,7 @@ namespace Overworld {
 		}
 
 		public void DoAction<T>(T param) {
-			agent.Resume();
+			agent.isStopped = false;
 			if (param.GetType() != typeof(Vector3)) {
 				Debug.LogError("To move the character give it a Vector3 to move to");
 				return;
