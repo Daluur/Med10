@@ -11,13 +11,16 @@ public class FadingLoadingScreen : Singleton<FadingLoadingScreen> {
 	// Use this for initialization
 	void Start () {
 		img = GetComponent<Image>();
+		gameObject.SetActive(false);
 	}
 
 	public void StartFadeIn() {
+		gameObject.SetActive(true);
 		StartCoroutine(FadeIn());
 	}
 
 	public void StartFadeOut() {
+		gameObject.SetActive(true);
 		StartCoroutine(FadeOut());
 	}
 
@@ -32,6 +35,7 @@ public class FadingLoadingScreen : Singleton<FadingLoadingScreen> {
 			yield return new WaitForSeconds(0.05f);
 		}
 		isFading = false;
+		gameObject.SetActive(false);
 		yield return null;
 	}
 
