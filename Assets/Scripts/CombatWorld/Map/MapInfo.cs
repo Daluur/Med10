@@ -11,6 +11,7 @@ namespace CombatWorld.Map {
 		public MapTypes type;
 
 		public int mapLength;
+		public int boundary;
 
 	}
 }
