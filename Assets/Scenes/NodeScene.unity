@@ -224,6 +224,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1248978506}
+    - target: {fileID: 1909002731740420, guid: dde5fab992ca27f4c831f4ba883853a9, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dde5fab992ca27f4c831f4ba883853a9, type: 2}
   m_IsPrefabParent: 0
@@ -272,7 +276,7 @@ Prefab:
     - target: {fileID: 224260196914184918, guid: 373e077801daf26449bb08e8c1498e4f,
         type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224260196914184918, guid: 373e077801daf26449bb08e8c1498e4f,
         type: 2}
@@ -329,6 +333,10 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1024775184}
+    - target: {fileID: 1445594025924216, guid: 373e077801daf26449bb08e8c1498e4f, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 373e077801daf26449bb08e8c1498e4f, type: 2}
   m_IsPrefabParent: 0
@@ -480,7 +488,7 @@ Prefab:
     - target: {fileID: 224716057322755080, guid: 1c7877e88eec763498a87019b2800fbe,
         type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224716057322755080, guid: 1c7877e88eec763498a87019b2800fbe,
         type: 2}
@@ -556,6 +564,7 @@ GameObject:
   - component: {fileID: 1024775183}
   - component: {fileID: 1024775182}
   - component: {fileID: 1024775186}
+  - component: {fileID: 1024775181}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -563,6 +572,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!45 &1024775181
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1024775180}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: aa5b6f5a646878f47a786335b2a9ba98, type: 2}
 --- !u!124 &1024775182
 Behaviour:
   m_ObjectHideFlags: 0
@@ -690,7 +707,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1248978508
 MonoBehaviour:
@@ -827,7 +844,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &2014736635
 GameObject:
@@ -889,7 +906,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2121014786 stripped
 GameObject:
