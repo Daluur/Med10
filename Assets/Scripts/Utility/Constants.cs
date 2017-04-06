@@ -2,6 +2,13 @@
 
 }
 
+public static class CursorTextureConstants {
+	public const string NORMALCURSOR = "HandNormal";
+	public const string COMBATCURSOR = "HandSword";
+	public const string INTERACTIONCURSOR = "HandInteract";
+	public const string CURSORFOLDER = "Art/2D/Cursor";
+}
+
 
 public static class LayerConstants {
 	public const string GROUNDLAYER = "Ground";
