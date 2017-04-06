@@ -19,6 +19,9 @@ namespace CombatWorld.Units {
 				if ((transform.position - target.transform.position).magnitude < 1) {
 					hit = true;
 				}
+				if (dir != (target.transform.position - transform.position).normalized) {
+					hit = true;
+				}
 				yield return new WaitForEndOfFrame();
 			}
 			if (HitEffect != null) {
