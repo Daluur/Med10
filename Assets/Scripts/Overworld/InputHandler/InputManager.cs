@@ -182,6 +182,7 @@ namespace Overworld {
 
 		public void BlockMouseUI() {
 			uiMouseLock.Add(true);
+			StopPlayer();
 			isMouseBlocked = true;
 		}
 
