@@ -33,6 +33,7 @@ namespace Overworld {
 		}
 
 		public void LoadScene(MapTypes type, int deckID, int currencyReward = 0, GameObject encounterObject = null) {
+			inputManager.BlockMouseUI();
 			AudioHandler.instance.PlayEnterCombat();
 			mapType = type;
 			StartCoroutine(LoadingScene());
@@ -61,6 +62,7 @@ namespace Overworld {
 			StartCoroutine(FadeIn());
 			SceneManager.sceneLoaded -= OnSceneLoaded;
 			SceneManager.sceneUnloaded -= EndEncounter;
+			inputManager.UnblockMouseUI();
 		}
 
 		private IEnumerator FadeIn() {
