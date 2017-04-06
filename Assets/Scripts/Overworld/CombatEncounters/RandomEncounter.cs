@@ -44,7 +44,7 @@ namespace Overworld {
 			if (currentChance >= randGenerator) {
 				currentChance = startChance;
 				LoadCombat();
-				player.GetComponent<PlayerMovementOW>().DoAction();
+				player.GetComponent<PlayerMovementOW>().TemporaryStop();
 				return true;
 			}
 			else {
