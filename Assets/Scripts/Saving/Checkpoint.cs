@@ -5,6 +5,7 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour {
 
 	public int id = -1;
+	bool teleported = false;
 
 	void Start() {
 		if (id == -1) {
@@ -12,7 +13,7 @@ public class Checkpoint : MonoBehaviour {
 		}
 		if(id == SaveLoadHandler.Instance.GetCheckpoint()){
 			GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<Overworld.PlayerMovementOW>().TeleportPlayer(transform.position);
-			Debug.Log("I am the saved checkpoint!");
+			teleported = true;
 		}
 	}
 
@@ -20,6 +21,11 @@ public class Checkpoint : MonoBehaviour {
 		if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER) {
 			return;
 		}
+		if (teleported) {
+			teleported = false;
+			return;
+		}
 		SaveLoadHandler.Instance.Save(id);
+		GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.GAMEWASSAVED);
 	}
 }

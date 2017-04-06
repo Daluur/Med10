@@ -95,7 +95,7 @@ namespace Overworld {
 			while (FadingLoadingScreen.instance.isFading) {
 				yield return new WaitForSeconds(0.1f);
 			}
-			async = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+			async = SceneManager.LoadSceneAsync("NodeScene", LoadSceneMode.Additive);
 			yield return new WaitForSeconds(0.5f);
 			DisableObjectsCombatLoad();
 			isLoading = false;
