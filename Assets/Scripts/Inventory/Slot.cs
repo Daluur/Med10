@@ -22,6 +22,7 @@ public class Slot : MonoBehaviour, IDropHandler {
 		}
 		else if(droppedItem.slot != id) {
 			Transform item = this.transform.GetChild (1);
+			inv.items[droppedItem.slot] = item.GetComponent<ItemData>().item;
 			AudioHandler.instance.SwapInventorySound();
 			item.GetComponent<ItemData> ().slot = droppedItem.slot;
 			item.transform.SetParent (inv.slots[droppedItem.slot].transform);
@@ -31,7 +32,7 @@ public class Slot : MonoBehaviour, IDropHandler {
 			droppedItem.transform.SetParent (this.transform);
 			droppedItem.transform.position = this.transform.position;
 
-			inv.items [droppedItem.slot] = item.GetComponent<ItemData> ().item;
+			
 			inv.items [id] = droppedItem.item;
 		}
 	}

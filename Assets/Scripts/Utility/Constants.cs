@@ -65,4 +65,5 @@ public static class GameNotificationConstants {
 	public const string OBSTRUCTEDNODE = "I cannot move there";
 	public const string ENTEREDRANDOMENCOUNTEAREA = "You have now entered an area containing random enemies";
 	public const string EXITEDRANDOMENCOUNTEAREA = "You have now exited an area containing random enemies";
+	public const string GAMEWASSAVED = "The game has been saved!";
 }

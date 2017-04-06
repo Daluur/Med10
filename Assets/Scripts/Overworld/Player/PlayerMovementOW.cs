@@ -11,7 +11,8 @@ namespace Overworld {
 		private Animator animator;
 		public GameObject clickMoveToObject;
 
-		void Start() {
+		protected override void Awake() {
+			base.Awake();
 			Register(this, KeyCode.Mouse0);
 			agent = GetComponent<NavMeshAgent>();
 			if (agent == null) {
@@ -70,6 +71,10 @@ namespace Overworld {
 
 		public ControlUIElement GetControlElement() {
 			return null;
+		}
+
+		public void TeleportPlayer(Vector3 pos) {
+			agent.Warp(pos);
 		}
 	}
 }
