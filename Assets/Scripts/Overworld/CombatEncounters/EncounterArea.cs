@@ -33,7 +33,6 @@ namespace Overworld {
 			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER || !onTriggerEnter) {
 				return;
 			}
-			Debug.Log(onTriggerEnter);
 			randomEncounter.RandomEncounterOn(type, deckIDs);
 			Debug.Log("Rand encounter on with type: " + type);
 		}

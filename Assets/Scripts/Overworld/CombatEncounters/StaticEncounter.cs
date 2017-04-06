@@ -63,5 +63,16 @@ namespace Overworld {
 		public ControlUIElement GetControlElement() {
 			return null;
 		}
+
+		protected override void OnMouseEnter() {
+			base.OnMouseEnter();
+			Tooltip.instance.Activate(this);
+		}
+
+		protected override void OnMouseExit() {
+			base.OnMouseExit();
+			Tooltip.instance.Deactivate();
+		}
+
 	}
 }
