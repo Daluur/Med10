@@ -14,6 +14,7 @@ namespace Overworld {
 		private float maximumChance = 1.1f;
 		public float chanceIncrease = 0.002f;
 		public bool printChances = false;
+		private Coroutine encounterRoller;
 
 
 		private void Start() {
@@ -43,8 +44,8 @@ namespace Overworld {
 
 			if (currentChance >= randGenerator) {
 				currentChance = startChance;
+				TempStopRandEncounter();
 				LoadCombat();
-				player.GetComponent<PlayerMovementOW>().TemporaryStop();
 				return true;
 			}
 			else {
@@ -59,12 +60,19 @@ namespace Overworld {
 			this.deckIDs = deckIDs;
 			this.type = type;
 			if(gameObject.activeInHierarchy && !isRunning)
-				StartCoroutine(CheckForEncounter());
+				encounterRoller = StartCoroutine(CheckForEncounter());
 		}
 
 		public void RandomEncounterOff() {
 			GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.EXITEDRANDOMENCOUNTEAREA);
 			randEncounter = false;
+			StopCoroutine(encounterRoller);
+			encounterRoller = null;
+		}
+
+		public void TempStopRandEncounter() {
+			StopCoroutine(encounterRoller);
+			encounterRoller = null;
 		}
 
 		private void OnEnable() {
