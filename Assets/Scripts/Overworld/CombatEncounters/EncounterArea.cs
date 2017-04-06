@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +43,12 @@ namespace Overworld {
 				return;
 			}
 			randomEncounter.RandomEncounterOff();
+		}
+
+		protected override void OnMouseEnter() {
+		}
+
+		protected override void OnMouseExit() {
 		}
 	}
 }
