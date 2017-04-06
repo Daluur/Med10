@@ -10,7 +10,7 @@ namespace Overworld {
 		private static int amountOfCurrency = 500;
 
 		private void Start() {
-			//TODO: Find how much currency I have, from save game
+			amountOfCurrency = SaveLoadHandler.Instance.GetGold();
 			amountOfCurrencyUI = GetComponent<Text>();
 			UpdateCurrencyUI();
 		}

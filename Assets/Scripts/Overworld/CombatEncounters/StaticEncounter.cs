@@ -8,20 +8,23 @@ using UnityEngine.SceneManagement;
 namespace Overworld {
 	public class StaticEncounter : Encounter, IInteractable {
 
+		public int StaticEncounterID = -1;
+
 		// Use this for initialization
 		void Start () {
-			Register(this, KeyCode.Mouse0);
+			if (SaveLoadHandler.Instance.AmIDefeated(StaticEncounterID)) {
+				Destroy(gameObject);
+				return;
+			}
 			if (deckIDs == null || deckIDs.Length == 0) {
 				Debug.LogError("This encounter has no decks! " + gameObject.name);
 				deckIDs = new int[] { 0 };
 			}
+			if(StaticEncounterID == -1) {
+				Debug.LogError("This encounter has no ID! " + gameObject.name);
+			}
+			Register(this, KeyCode.Mouse0);
 		}
-
-		// Update is called once per frame
-		void Update () {
-
-		}
-
 
 		public override void PerformClosenessAction() {
 			hasGeneralConfirmationBox = false;

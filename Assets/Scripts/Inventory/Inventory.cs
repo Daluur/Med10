@@ -33,13 +33,12 @@ public class Inventory : MonoBehaviour {
 			} 
 		}
 
-		AddItem (0);
-		AddItem (2);
-		AddItem (4);
-		AddItem (6);
-		AddItem (8);
-		AddItem (10);
-		AddItem (12);
+		List<int> savedInventory = SaveLoadHandler.Instance.GetInventory();
+		for (int i = 0; i < savedInventory.Count; i++) {
+			if (savedInventory[i] != -1) {
+				AddItemAtSlot(savedInventory[i], i);
+			}
+		}
 	}
 
 	public void AddItem(int id) {
@@ -74,6 +73,23 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
+	public void AddItemAtSlot(int id, int slotid) {
+		Item itemToAdd = database.FetchItemByID(id);
+		if (items[slotid].ID == -1) {
+			items[slotid] = itemToAdd;
+			GameObject itemObject = Instantiate(inventoryItem, slots[slotid].transform, false);
+			itemObject.GetComponent<ItemData>().item = itemToAdd;
+			itemObject.GetComponent<ItemData>().slot = slotid;
+			itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite;
+			itemObject.name = itemToAdd.Title;
+			ItemData data = slots[slotid].transform.GetChild(1).GetComponent<ItemData>();
+			data.amount = 1;
+		}
+		else {
+			Debug.LogError("There were already an item in that slot. Is this called outside of load?");
+		}
+	}
+
 	public bool HasInventorySpace() {
 		foreach (Item item in items) {
 			if(item.ID == -1) {
@@ -100,6 +116,10 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 		return toReturn;
+	}
+
+	public List<Item> GetEntireInventory() {
+		return items;
 	}
 
 	public ItemDatabase GetDatabase() {

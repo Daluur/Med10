@@ -114,6 +114,7 @@ namespace Overworld {
 		}
 
 		private void ProcessEncounteredObject() {
+			SaveLoadHandler.Instance.BeatAStaticEncounter(encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			Destroy(encounterObject);
 		}
 
