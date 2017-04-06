@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Overworld {
 	public class InputManager : MonoBehaviour {
@@ -34,6 +35,10 @@ namespace Overworld {
 			HandleInputs();
 		}
 
+		public void FakeInput(KeyCode keyCode) {
+			HandleSpecificKeys(keyCode);
+		}
+
 		void HandleInputs() {
 			foreach (var keyCode in registerTo.Keys) {
 				if (Input.GetKeyDown(keyCode)) {
@@ -44,6 +49,9 @@ namespace Overworld {
 
 		private void HandleSpecificKeys(KeyCode keyCode) {
 			if(inGameMenuOpen && !keyCode.Equals(KeyCode.Escape)){
+				return;
+			}
+			if (keyCode.Equals(KeyCode.Mouse0) && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) {
 				return;
 			}
 			switch (keyCode) {
