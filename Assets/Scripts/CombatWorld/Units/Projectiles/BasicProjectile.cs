@@ -12,7 +12,7 @@ namespace CombatWorld.Units {
 		public float speed = 25;
 		Action<DamagePackage> CB;
 		Action finishCB;
-		protected  Vector3 dir;
+		protected Vector3 dir;
 		DamagePackage damage;
 
 		public void Setup(Transform target, Action<DamagePackage> cb, DamagePackage damage, Action finishCB) {
@@ -31,6 +31,9 @@ namespace CombatWorld.Units {
 			while (!hit) {
 				transform.position += dir * speed * Time.deltaTime;
 				if((transform.position - target.transform.position).magnitude < 1) {
+					hit = true;
+				}
+				if(dir != (target.transform.position - transform.position).normalized) {
 					hit = true;
 				}
 				yield return new WaitForEndOfFrame();
