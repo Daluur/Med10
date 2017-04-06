@@ -119,11 +119,13 @@ namespace CombatWorld.Map {
 		#region Cursor
 
 		private void OnMouseEnter() {
-			CursorSingleton.instance.SetCursor(state);
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor(state);
 		}
 
 		private void OnMouseExit() {
-			CursorSingleton.instance.SetCursor();
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor();
 		}
 
 		#endregion
