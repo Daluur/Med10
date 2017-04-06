@@ -24,7 +24,7 @@ namespace CombatWorld
 			database = new ItemDatabase();
 			GameObject inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT);
 			if (inventory != null) {
-				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(4));
+				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(6));
 			}
 			else {
 				SetupButtonsAndData(CombatNotStartedFromOverWorld());
