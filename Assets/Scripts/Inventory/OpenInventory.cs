@@ -12,6 +12,10 @@ namespace Overworld {
 			Register (this, KeyCode.I);
 		}
 
+		public void Button() {
+			inputManager.FakeInput(KeyCode.B);
+		}
+
 		public void DoAction() {
 			if (!isShowing && !isRunning) {
 				OpenTheInventory();
