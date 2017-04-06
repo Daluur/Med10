@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e320da2946f1aa4e953ec835f5b2955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inGameMenuOpen: 0
 --- !u!114 &114706111643280340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,7 +121,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 305ef1447af40db4e95622a08ec682bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
+  open: 0
+  playerOW: {fileID: 0}
+  isRunning: 0
+  meClicked: 0
+  hasGeneralConfirmationBox: 0
+  type: 2
+  deckIDs: 00000000
+  currencyForWinning: 10
   startChance: 0
   chanceIncrease: 0.002
   printChances: 1
-  currencyForWinning: 10
