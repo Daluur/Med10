@@ -85,7 +85,6 @@ public class SaveLoadHandler {
 		JsonWriter writer = new JsonWriter(sb);
 		writer.PrettyPrint = true;
 		JsonMapper.ToJson(data, writer);
-		Debug.Log(sb.ToString());
 		File.WriteAllText(Application.dataPath + "/StreamingAssets/SaveGame.json", sb.ToString());
 	}
 
@@ -125,7 +124,6 @@ public class SaveLoadHandler {
 			checkpoint = loadedData.checkpoint;
 		}
 		loaded = true;
-		Debug.Log("Loaded");
 	}
 
 	public bool AmIDefeated(int id) {

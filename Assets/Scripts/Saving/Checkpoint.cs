@@ -6,15 +6,13 @@ public class Checkpoint : MonoBehaviour {
 
 	public int id = -1;
 	bool teleported = false;
+	public Transform TPPos;
 
-	void Start() {
+	void Awake() {
 		if (id == -1) {
 			Debug.LogError("This checkpoint has no ID! " + gameObject.name);
 		}
-		if(id == SaveLoadHandler.Instance.GetCheckpoint()){
-			GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<Overworld.PlayerMovementOW>().TeleportPlayer(transform.position);
-			teleported = true;
-		}
+		CheckpointManager.instance.AssignCheckpoint(id, this);
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -27,5 +25,14 @@ public class Checkpoint : MonoBehaviour {
 		}
 		SaveLoadHandler.Instance.Save(id);
 		GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.GAMEWASSAVED);
+	}
+
+	/// <summary>
+	/// DO ONLY USE THIS IF YOU ARE GOING TO TELEPORT THE PLAYER!
+	/// </summary>
+	/// <returns></returns>
+	public Vector3 GetTPPos() {
+		teleported = true;
+		return TPPos.position;
 	}
 }

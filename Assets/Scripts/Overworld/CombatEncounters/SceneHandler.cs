@@ -109,6 +109,10 @@ namespace Overworld {
 			ProcessEncounteredObject();
 		}
 
+		public void Lost() {
+			CheckpointManager.instance.TeleportPlayerToLatestCheckpoint();
+		}
+
 		private void AwardCurrency() {
 			CurrencyHandler.AddCurrency(currencyToReward);
 		}

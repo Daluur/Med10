@@ -439,8 +439,9 @@ namespace CombatWorld {
 
 		void Lost() {
 			winLoseText.text = "YOU LOST!";
-			AudioHandler.instance.PlayLoseSound();
 			winLosePanel.SetActive(true);
+			AudioHandler.instance.PlayLoseSound();
+			SceneHandler.instance.Lost();
 		}
 
 		public void GiveUp() {
