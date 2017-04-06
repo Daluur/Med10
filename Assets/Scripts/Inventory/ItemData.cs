@@ -10,11 +10,11 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 	public int slot;
 
 	private Inventory inv;
-	private Tooltip tooltip;
+	//private Tooltip tooltip;
 
 	void Start() {
 		inv = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory> ();
-		tooltip = inv.GetComponent<Tooltip> ();
+		//tooltip = inv.GetComponent<Tooltip> ();
 	}
 
 	/* -- When a drag event is started, if there is an object in the slot  -- //
@@ -48,10 +48,10 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 	}
 		
 	public void OnPointerEnter(PointerEventData eventData) {
-		tooltip.Activate (item);
+		Tooltip.instance.Activate (item);
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
-		tooltip.Deactivate ();
+		Tooltip.instance.Deactivate ();
 	}
 }
