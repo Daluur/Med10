@@ -2,6 +2,13 @@
 
 }
 
+public static class CursorTextureConstants {
+	public const string NORMALCURSOR = "HandNormal";
+	public const string COMBATCURSOR = "HandSword";
+	public const string INTERACTIONCURSOR = "HandInteract";
+	public const string CURSORFOLDER = "Art/2D/Cursor";
+}
+
 
 public static class LayerConstants {
 	public const string GROUNDLAYER = "Ground";
@@ -31,13 +38,13 @@ public static class DamageConstants {
 	public const int EFFECTIVEMULTIPLIER = 2;
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
 	public const bool ALLOWRETALIATIONAFTERDEATH = true;
-	public const int TOWERHP = 100;
+	public const int TOWERHP = 50;
 	public const int SUMMONPOINTSPERTURN = 2;
 	public const int SUMMONPOINTSPERKILL = 1;
 	public const int SUMMONPOINTSPERTOWERKILL = 3;
-	public const int STARTSUMMONPOINTS = 3;
+	public const int STARTSUMMONPOINTS = 8;
 	public const bool EFFECTIVEMULT = false;
-	public const int EFFECTIVEBONUS = 5;
+	public const int EFFECTIVEBONUS = 10;
 	public const int INEFFECTIVEPENALTY = 5;
 }
 
@@ -46,7 +53,7 @@ public static class StoneUnitOptions {
 	public const bool STONEUNITTAKESSTATICDMG = true;
 	public const bool STONEUNITSGETDOUBLEHEALTH = false;
 	public const bool STONEUNITCANRETALIATE = true;
-	public const int STONEUNITRETALIATEDMG = 5;
+	public const int STONEUNITRETALIATEDMG = 10;
 	public const int STONEUNITDMGTAKEN = 5;
 }
 
@@ -58,4 +65,5 @@ public static class GameNotificationConstants {
 	public const string OBSTRUCTEDNODE = "I cannot move there";
 	public const string ENTEREDRANDOMENCOUNTEAREA = "You have now entered an area containing random enemies";
 	public const string EXITEDRANDOMENCOUNTEAREA = "You have now exited an area containing random enemies";
+	public const string GAMEWASSAVED = "The game has been saved!";
 }

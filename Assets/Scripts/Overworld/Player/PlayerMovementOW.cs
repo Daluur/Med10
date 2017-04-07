@@ -11,7 +11,8 @@ namespace Overworld {
 		private Animator animator;
 		public GameObject clickMoveToObject;
 
-		void Start() {
+		protected override void Awake() {
+			base.Awake();
 			Register(this, KeyCode.Mouse0);
 			agent = GetComponent<NavMeshAgent>();
 			if (agent == null) {
@@ -37,11 +38,17 @@ namespace Overworld {
 		}
 
 		public void TemporaryStop() {
-			agent.Stop();
+			agent.isStopped = true;
 		}
 
 		public void ResumeFromTemporaryStop() {
-			agent.Resume();
+			//agent.Resume();
+			agent.isStopped = false;
+		}
+
+		public void Stop() {
+			agent.isStopped = true;
+			agent.ResetPath();
 		}
 
 		/// <summary>
@@ -54,7 +61,7 @@ namespace Overworld {
 		}
 
 		public void DoAction<T>(T param) {
-			agent.Resume();
+			agent.isStopped = false;
 			if (param.GetType() != typeof(Vector3)) {
 				Debug.LogError("To move the character give it a Vector3 to move to");
 				return;
@@ -64,6 +71,10 @@ namespace Overworld {
 
 		public ControlUIElement GetControlElement() {
 			return null;
+		}
+
+		public void TeleportPlayer(Vector3 pos) {
+			agent.Warp(pos);
 		}
 	}
 }

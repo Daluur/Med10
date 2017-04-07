@@ -13,13 +13,10 @@ public class GameNotificationsSystem : Singleton<GameNotificationsSystem> {
 
 	void Start () {
 		text = GetComponentInChildren<Text>();
-
 	}
 
 	public void DisplayMessage(string message) {
-
 		UpdateMessage(message);
-
 	}
 
 	public void UpdateMessage(string message) {

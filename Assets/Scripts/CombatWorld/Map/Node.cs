@@ -106,8 +106,24 @@ namespace CombatWorld.Map {
 			}
 		}
 
+		public HighlightState GetState() {
+			return state;
+		}
+
 		public void ResetState() {
 			SetState(HighlightState.None);
+		}
+
+		#endregion
+
+		#region Cursor
+
+		private void OnMouseEnter() {
+			CursorSingleton.instance.SetCursor(state);
+		}
+
+		private void OnMouseExit() {
+			CursorSingleton.instance.SetCursor();
 		}
 
 		#endregion

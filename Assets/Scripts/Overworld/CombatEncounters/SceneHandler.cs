@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 namespace Overworld {
 	public class SceneHandler : Singleton<SceneHandler> {
 
+		public Texture2D loadingTexture;
+		private bool isLoading;
+
 		private Camera OWCam;
 		private InputManager inputManager;
 		private GameObject eventSystem;
@@ -18,6 +21,9 @@ namespace Overworld {
 		private MapTypes mapType = MapTypes.ANY;
 		private DeckData deck;
 
+		private Coroutine loading;
+		private AsyncOperation async;
+
 		// Use this for initialization
 		void Start () {
 			inputManager = gameObject.GetComponent<InputManager>();
@@ -27,15 +33,16 @@ namespace Overworld {
 		}
 
 		public void LoadScene(MapTypes type, int deckID, int currencyReward = 0, GameObject encounterObject = null) {
+			inputManager.BlockMouseUI();
 			AudioHandler.instance.PlayEnterCombat();
 			mapType = type;
+			StartCoroutine(LoadingScene());
 			deck = DeckHandler.GetDeckFromID(deckID);
-			DisableObjectsCombatLoad();
-			SceneManager.LoadScene(1,LoadSceneMode.Additive);
 			SceneManager.sceneLoaded += OnSceneLoaded;
 			SceneManager.sceneUnloaded += EndEncounter;
 			currencyToReward = currencyReward;
 			this.encounterObject = encounterObject;
+
 		}
 
 		public MapTypes GetMapType() {
@@ -52,27 +59,50 @@ namespace Overworld {
 
 		private void EndEncounter(Scene scene) {
 			EnabeleObjectsCombatLoad();
+			StartCoroutine(FadeIn());
 			SceneManager.sceneLoaded -= OnSceneLoaded;
 			SceneManager.sceneUnloaded -= EndEncounter;
+			inputManager.UnblockMouseUI();
+		}
+
+		private IEnumerator FadeIn() {
+			FadingLoadingScreen.instance.StartFadeIn();
+			while (FadingLoadingScreen.instance.isFading) {
+				yield return new WaitForSeconds(0.1f);
+			}
+			yield return null;
 		}
 
 		private IEnumerator WaitForSceneLoad() {
 			yield return new WaitForSeconds(0.3f);
 			SceneManager.SetActiveScene(SceneManager.GetSceneByName("NodeScene"));
-			inputManager.gameObject.SetActive(false);
 		}
 
 		private void DisableObjectsCombatLoad() {
 			OWCam.gameObject.SetActive(false);
-			eventSystem.SetActive(false);
 			OWCanvas.SetActive(false);
+			inputManager.gameObject.SetActive(false);
 		}
 
 		private void EnabeleObjectsCombatLoad() {
 			OWCam.gameObject.SetActive(true);
-			inputManager.gameObject.SetActive(true);
 			eventSystem.SetActive(true);
 			OWCanvas.SetActive(true);
+			inputManager.gameObject.SetActive(true);
+		}
+
+		private IEnumerator LoadingScene() {
+			eventSystem.SetActive(false);
+			FadingLoadingScreen.instance.StartFadeOut();
+			while (FadingLoadingScreen.instance.isFading) {
+				yield return new WaitForSeconds(0.1f);
+			}
+			async = SceneManager.LoadSceneAsync("NodeScene", LoadSceneMode.Additive);
+			yield return new WaitForSeconds(0.5f);
+			DisableObjectsCombatLoad();
+			isLoading = false;
+			yield return new WaitForSeconds(0.4f);
+			inputManager.gameObject.SetActive(true);
 		}
 
 		//Add things here if they need to happen when a player wins a battle
@@ -81,11 +111,16 @@ namespace Overworld {
 			ProcessEncounteredObject();
 		}
 
+		public void Lost() {
+			CheckpointManager.instance.TeleportPlayerToLatestCheckpoint();
+		}
+
 		private void AwardCurrency() {
 			CurrencyHandler.AddCurrency(currencyToReward);
 		}
 
 		private void ProcessEncounteredObject() {
+			SaveLoadHandler.Instance.BeatAStaticEncounter(encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			Destroy(encounterObject);
 		}
 

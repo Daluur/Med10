@@ -17,11 +17,11 @@ namespace Overworld.Shops {
 		int cost;
 
 		Item item;
-		Tooltip tooltip;
+		//Tooltip tooltip;
 
 		void Awake() {
 			button = GetComponentInChildren<Button>();
-			tooltip = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Tooltip>();
+			//tooltip = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Tooltip>();
 		}
 
 		public ShopButton Setup(Action<int, int> cb, Item item) {
@@ -59,11 +59,11 @@ namespace Overworld.Shops {
 		}
 
 		public void OnPointerEnter(PointerEventData eventData) {
-			tooltip.Activate(item);
+			Tooltip.instance.Activate(item);
 		}
 
 		public void OnPointerExit(PointerEventData eventData) {
-			tooltip.Deactivate();
+			Tooltip.instance.Deactivate();
 		}
 	}
 }

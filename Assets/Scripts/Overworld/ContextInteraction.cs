@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using Overworld;
 using UnityEngine;
 using UnityEngine.AI;
@@ -65,6 +66,13 @@ namespace Overworld {
 			return toScale;
 		}
 
+		protected virtual void OnMouseEnter() {
+			CursorSingleton.instance.SetCursor(gameObject);
+		}
 
+		protected virtual void OnMouseExit() {
+			CursorSingleton.instance.SetCursor();
+
+		}
 	}
 }
