@@ -44,7 +44,7 @@ namespace CombatWorld.Utility {
 				}
 
 			transform.position = new Vector3(pos.x + 100, pos.y - 35, pos.z);
-			data = "<color="+color+"><b>" + unit.data.name + "</b></color>\n\n<b>Health: </b>" + unit.data.healthValue + " / " + "MaxHealth \n<b>Type: </b>" + unit.data.GetStringFromType(unit.data.type) + " " + special + "\n<b>Moves: </b>" + unit.GetMoveDistance() + "\n<b>Summon Cost: </b>" + unit.data.cost;
+			data = "<color="+color+"><b>" + unit.data.name + "</b></color>\n\n<b>Health: </b>" + unit.GetHealth() + " / " + unit.data.healthValue + "\n<b>Type: </b>" + unit.data.GetStringFromType(unit.data.type) + " " + special + "\n<b>Moves: </b>" + unit.GetMoveDistance() + "\n<b>Summon Cost: </b>" + unit.data.cost;
 			tooltip.text = data;
 			gameObject.SetActive(true);
 		}
