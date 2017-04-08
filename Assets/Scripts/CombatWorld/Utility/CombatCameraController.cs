@@ -12,7 +12,7 @@ namespace CombatWorld {
 
 		bool AICam = false;
 		bool following = false;
-		Transform AITarget;
+		Transform target;
 
 		void Start() {
 			transform.position = CamPositions[currentZoom] + new Vector3(transform.position.x, 0, 0);
@@ -66,8 +66,12 @@ namespace CombatWorld {
 		Vector3 temp = Vector3.zero;
 
 		void FollowCam() {
+			if(target == null) {
+				following = false;
+				return;
+			}
 			newPos = transform.position;
-			newPos.x = AITarget.position.x;
+			newPos.x = target.position.x;
 			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref temp, 0.3f);
 		}
 
@@ -82,7 +86,7 @@ namespace CombatWorld {
 		}
 
 		public void SetTarget(Transform target) {
-			AITarget = target;
+			this.target = target;
 			following = true;
 		}
 	}
