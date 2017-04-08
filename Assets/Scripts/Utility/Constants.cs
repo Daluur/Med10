@@ -31,7 +31,7 @@ public static class TagConstants {
 }
 
 public static class Values {
-	public const float InteractDistance = 25;
+	public const float InteractDistance = 1.5f;
 }
 
 public static class DamageConstants {
