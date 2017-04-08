@@ -65,7 +65,7 @@ namespace CombatWorld.AI {
 		private IEnumerator WaitForActions() {
 			offensiveFactor = OffensiveFactorCalculation();
 			defensiveFactor = DefensiveFactorCalculation();
-			Debug.Log("Turn started with offensive: " + offensiveFactor + " and defensive: " + defensiveFactor + " and: " + summonPoints);
+			//Debug.Log("Turn started with offensive: " + offensiveFactor + " and defensive: " + defensiveFactor + " and: " + summonPoints);
 			foreach (var unit in aiUnits) {
 				Debug.Log("we are now at offensive: " + offensiveFactor + " and defensive: " + defensiveFactor);
 				while (GameController.instance.WaitingForAction()) {
@@ -152,16 +152,14 @@ namespace CombatWorld.AI {
 							task.score = AIScoringMethods.AttackCalculation(unit, task.toAttack);
 							if (AIUtilityMethods.IsUnitNextToAITower(task.toAttack.GetUnit()))
 								task.score *= 1000;
-							Debug.Log(task.score);
 						}
 						break;
 					case PossibleTasks.MoveAttack:
 						if (task.toAttack.HasTower())
-							task.score = 11 + ( offensiveFactor * 2 - defensiveFactor ) * 1000;
+							task.score = 11 + ( offensiveFactor * 2 - defensiveFactor ) * 1000000;
 						else if (task.toAttack.HasUnit()) {
 							distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
 							task.score = AIScoringMethods.AttackCalculation(unit, task.toAttack) + distance;
-							Debug.Log(task.score);
 						}
 						break;
 					case PossibleTasks.MoveAttackDefensive:

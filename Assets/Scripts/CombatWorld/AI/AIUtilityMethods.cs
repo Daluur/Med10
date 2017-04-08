@@ -136,11 +136,12 @@ namespace CombatWorld.AI {
 			turnsToTower = 10;
 			if (path == null)
 				return null;
+
 			if (path.Count > unit.GetMoveDistance()) {
-				endNode = AIUtilityMethods.GetPathThisTurn(path, unit.GetMoveDistance(), unit);
+				endNode = GetPathThisTurn(path, unit.GetMoveDistance(), unit);
 				turnsToTower = Mathf.RoundToInt(path.Count / unit.GetMoveDistance());
 			}
-			else {
+			else if(pathfinding.GetPathFromTo(unit.GetNode(), neighbor)!=null && pathfinding.GetPathFromTo(unit.GetNode(), neighbor).Count <= unit.GetMoveDistance()){
 				endNode.Add(neighbor);
 				turnsToTower = 1;
 			}
