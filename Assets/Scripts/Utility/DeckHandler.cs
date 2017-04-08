@@ -56,7 +56,7 @@ static class DeckHandler {
 			difficulty = "Easy",
 			id = 5,
 			type = "Stone",
-			unitIDs = new int[] { 10, 11, 12, 13 },
+			unitIDs = new int[] { 10, 11 },
 		},
 	};
 

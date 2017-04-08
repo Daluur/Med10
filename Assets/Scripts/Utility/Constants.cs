@@ -31,20 +31,20 @@ public static class TagConstants {
 }
 
 public static class Values {
-	public const float InteractDistance = 25;
+	public const float InteractDistance = 1.5f;
 }
 
 public static class DamageConstants {
 	public const int EFFECTIVEMULTIPLIER = 2;
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
 	public const bool ALLOWRETALIATIONAFTERDEATH = true;
-	public const int TOWERHP = 100;
+	public const int TOWERHP = 50;
 	public const int SUMMONPOINTSPERTURN = 2;
 	public const int SUMMONPOINTSPERKILL = 1;
 	public const int SUMMONPOINTSPERTOWERKILL = 3;
-	public const int STARTSUMMONPOINTS = 3;
+	public const int STARTSUMMONPOINTS = 8;
 	public const bool EFFECTIVEMULT = false;
-	public const int EFFECTIVEBONUS = 5;
+	public const int EFFECTIVEBONUS = 10;
 	public const int INEFFECTIVEPENALTY = 5;
 }
 
@@ -53,7 +53,7 @@ public static class StoneUnitOptions {
 	public const bool STONEUNITTAKESSTATICDMG = true;
 	public const bool STONEUNITSGETDOUBLEHEALTH = false;
 	public const bool STONEUNITCANRETALIATE = true;
-	public const int STONEUNITRETALIATEDMG = 5;
+	public const int STONEUNITRETALIATEDMG = 10;
 	public const int STONEUNITDMGTAKEN = 5;
 }
 
