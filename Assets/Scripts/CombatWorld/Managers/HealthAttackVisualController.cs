@@ -14,6 +14,9 @@ namespace CombatWorld.Units {
 		public Animator anim;
 		public Image healthbar;
 
+		public Animator anim2;
+		public Text summonPointText;
+
 		public void Setup(int hp, int attackval, ElementalTypes type = ElementalTypes.NONE, bool shadow = false, bool stone = false) {
 			//health.text = hp.ToString();
 			attack.text = attackval.ToString();
@@ -32,6 +35,12 @@ namespace CombatWorld.Units {
 			healthbar.fillAmount = healthPercent;
 			CombatText.text = "-"+dmg.GetCalculatedDMG();
 			anim.SetTrigger("TakeDMG");
+		}
+
+		public void SummonPoint(bool spawned, int price = Values.SUMMONPOINTSONKILL) {
+			var initString = spawned ? "-" : "+";
+			summonPointText.text = initString + price;
+			anim2.SetTrigger("playing");
 		}
 
 		public void UpdateHealthText(string text) {

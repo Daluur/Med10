@@ -49,6 +49,7 @@ namespace CombatWorld.Units {
 		public HealthAttackVisualController healthIndicator;
 
 		void Start() {
+			//healthIndicator = GetComponentInChildren<HealthAttackVisualController>();
 			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName, shadowUnit);
 		}
 
@@ -201,6 +202,9 @@ namespace CombatWorld.Units {
 			GameController.instance.UnitDied(team, currentNode);
 			currentNode.RemoveOccupant();
 			waitForDeathAnim = true;
+			if (team == Team.AI) {
+				healthIndicator.SummonPoint(false);
+			}
 			if (turnedToStone) {
 				Death();
 			}
@@ -254,6 +258,8 @@ namespace CombatWorld.Units {
 			shadowUnit = data.shadow;
 			node.SetOccupant(this);
 			this.data = data;
+			if (healthIndicator == null)
+				healthIndicator = GetComponentInChildren<HealthAttackVisualController>();
 			healthIndicator.Setup(health, damage, type, shadowUnit, stoneUnit);
 			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
