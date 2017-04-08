@@ -49,7 +49,6 @@ namespace CombatWorld.Units {
 		public HealthAttackVisualController healthIndicator;
 
 		void Start() {
-			//healthIndicator = GetComponentInChildren<HealthAttackVisualController>();
 			animHelp = GetComponentInChildren<AnimationHandler>().Setup(attackName, shadowUnit);
 		}
 
