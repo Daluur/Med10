@@ -134,9 +134,12 @@ namespace CombatWorld.Units {
 			attacked = moved = true;
 			damagePack = new DamagePackage(damage, this, type);
 			DealDamage();
+			if (target.GetNode().HasUnit()) {
+				target.GetNode().GetUnit().RetaliationAttack(this);
+			}
 		}
 
-		void RetaliationAttack(IEntity target) {
+		public void RetaliationAttack(IEntity target) {
 			this.target = target;
 			damagePack = new DamagePackage(damage, this, type, true);
 			DealDamage();
@@ -151,9 +154,9 @@ namespace CombatWorld.Units {
 			waitForProjectile = true;
 			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
 			target = null;
-			if(health <= 0) {
+			/*if(health <= 0) {
 				Die();
-			}
+			}*/
 		}
 
 		DamagePackage damageIntake = null;
@@ -179,20 +182,22 @@ namespace CombatWorld.Units {
 		void TookDamage() {
 			if(health <= 0) {
 				//Die unless it can do retaliation.
-				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
+				/*if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
 					RetaliationAttack(damageIntake.GetSource());
 					return;
 				}
 				else {
 					Die();
 					return;
-				}
-			}
-			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
-			else if(!damageIntake.WasRetaliation() && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
-				RetaliationAttack(damageIntake.GetSource());
+				}*/
+				Die();
 				return;
 			}
+			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
+			/*else if(!damageIntake.WasRetaliation() && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
+				RetaliationAttack(damageIntake.GetSource());
+				return;
+			}*/
 			damageIntake = null;
 			FinishedAction();
 		}
