@@ -115,20 +115,26 @@ namespace CombatWorld.Map {
 		}
 
 		#endregion
-
+		
 		#region Cursor
 
 		private void OnMouseEnter() {
-			CursorSingleton.instance.SetCursor(state);
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor(state);
 		}
 
 		private void OnMouseExit() {
-			CursorSingleton.instance.SetCursor();
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor();
 		}
 
 		#endregion
 
 		#region Input
+
+		private void OnMouseDown() {
+			HandleInput();
+		}
 
 		public virtual void HandleInput() {
 			switch (state) {

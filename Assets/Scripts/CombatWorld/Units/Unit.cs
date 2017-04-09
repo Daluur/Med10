@@ -337,12 +337,18 @@ namespace CombatWorld.Units {
 
 		void OnMouseEnter() {
 			TooltipHandler.instance.CreateTooltip(transform.position, this);
-			CursorSingleton.instance.SetCursor(currentNode.GetState());
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor(currentNode.GetState());
 		}
 
 		void OnMouseExit() {
 			TooltipHandler.instance.CloseTooltip();
-			CursorSingleton.instance.SetCursor();
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor();
+		}
+
+		void OnDestroy() {
+			TooltipHandler.instance.CloseTooltip();
 		}
 
 		private void OnMouseDown() {

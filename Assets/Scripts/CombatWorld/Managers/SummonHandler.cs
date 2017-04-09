@@ -73,7 +73,9 @@ namespace CombatWorld
 		public void GivePoints(int amount) {
 			summonPoints += amount;
 			UpdateButtonsAndText();
-			GameNotificationsSystem.instance.DisplayMessage("You gained " + amount + " summon points!");
+			if(GameNotificationsSystem.instance != null){
+				GameNotificationsSystem.instance.DisplayMessage("You gained " + amount + " summon points!");
+			}
 		}
 
 		void UpdateButtonsAndText() {
