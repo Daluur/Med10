@@ -23,7 +23,7 @@ namespace Overworld {
 
 		}
 
-		public void DoAction<T>(T param) {
+		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
 			CheckDistance();
 		}
 

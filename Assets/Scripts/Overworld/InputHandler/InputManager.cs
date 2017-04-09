@@ -24,6 +24,7 @@ namespace Overworld {
 
 		public GameObject interactionIndicator;
 		public Vector3 fakePosForInteractionIndicator = new Vector3(1000, 1000, 1000);
+		private Vector3 hitNormal = Vector3.zero;
 
 		// Use this for initialization
 		void Start () {
@@ -102,11 +103,13 @@ namespace Overworld {
 			}
 			if (!isMouseBlocked) {
 				if (Physics.Raycast(ray, out hit, 500f, layerMaskPlayer)) {
-					playerMoveTo = hit.point;
-					distributeTo.Add(playerInteractable);
+					if(Vector3.Dot(hit.normal.normalized, Vector3.up.normalized) > 0.3f){
+						playerMoveTo = hit.point;
+						distributeTo.Add(playerInteractable);
+						hitNormal = hit.normal.normalized;
+					}
 				}
 			}
-
 		}
 
 		private void FillDistributer(KeyCode keyCode) {
@@ -145,7 +148,7 @@ namespace Overworld {
 
 		private void DistributeAction(Vector3 playerMoveTo) {
 			foreach (var interactable in distributeTo) {
-				interactable.DoAction(playerMoveTo);
+				interactable.DoAction(playerMoveTo, hitNormal);
 			}
 			distributeTo.Clear();
 		}

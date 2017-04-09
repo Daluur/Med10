@@ -42,7 +42,7 @@ namespace Overworld {
 			meClicked = false;
 		}
 
-		public void DoAction<T>(T param) {
+		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
 			if (hasShown)
 				return;
 			switch (typeOfGeneralInformationTrigger) {
