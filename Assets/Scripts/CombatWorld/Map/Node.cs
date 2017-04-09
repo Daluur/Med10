@@ -37,7 +37,7 @@ namespace CombatWorld.Map {
 		public bool HasAttackableNeighbour() {
 			if (HasUnit()) {
 				foreach (Node node in neighbours) {
-					if (node.HasUnit() && node.GetUnit().GetTeam() != GetUnit().GetTeam()) {
+					if ((node.HasUnit() && node.GetUnit().GetTeam() != GetUnit().GetTeam()) || (node.HasTower() && node.GetOccupant().GetTeam() != GetUnit().GetTeam())) {
 						return true;
 					}
 				}
