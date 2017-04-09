@@ -17,7 +17,7 @@ namespace CombatWorld.Units {
 
 		private bool shadowUnit = false;
 		private bool stoneUnit = false;
-		bool turnedToStone = false;
+		public bool turnedToStone = false;
 
 		private int health;
 		private int maxHealth;

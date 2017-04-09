@@ -101,7 +101,7 @@ namespace CombatWorld.Map {
 					GetComponentInChildren<Renderer>().material.color = Color.green;
 					break;
 				case HighlightState.NoMoreMoves:
-					if (HasAttackableNeighbour()) {
+					if (HasAttackableNeighbour() || (GetUnit().IsStoneUnit() && !GetUnit().turnedToStone)) {
 						GetComponentInChildren<Renderer>().material.color = Color.blue;
 					}
 					else {
