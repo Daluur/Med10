@@ -34,6 +34,17 @@ namespace CombatWorld.Map {
 			return neighbours;
 		}
 
+		public bool HasAttackableNeighbour() {
+			if (HasUnit()) {
+				foreach (Node node in neighbours) {
+					if (node.HasUnit() && node.GetUnit().GetTeam() != GetUnit().GetTeam()) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		#endregion
 
 		#region occupantCode
@@ -90,7 +101,12 @@ namespace CombatWorld.Map {
 					GetComponentInChildren<Renderer>().material.color = Color.green;
 					break;
 				case HighlightState.NoMoreMoves:
-					GetComponentInChildren<Renderer>().material.color = Color.blue;
+					if (HasAttackableNeighbour()) {
+						GetComponentInChildren<Renderer>().material.color = Color.blue;
+					}
+					else {
+						GetComponentInChildren<Renderer>().material.color = Color.black;
+					}
 					break;
 				case HighlightState.NotMoveable:
 					GetComponentInChildren<Renderer>().material.color = Color.black;

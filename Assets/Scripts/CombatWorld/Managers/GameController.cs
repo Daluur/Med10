@@ -168,6 +168,7 @@ namespace CombatWorld {
 				HighlightSelectableUnits();
 			}
 			else {
+				HighlightSelectableUnits();
 				if (selectedUnit.CanMove()) {
 					if (selectedUnit.IsShadowUnit()) {
 						HighlightMoveableNodes(pathfinding.GetAllReachableNodes(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
@@ -206,9 +207,12 @@ namespace CombatWorld {
 		}
 
 		void HighlightMoveableNodes(List<Node> reacheableNodes) {
+			HighlightSelectableUnits();
 			foreach (Node node in reacheableNodes) {
 				if (node.HasOccupant()) {
-					node.SetState(HighlightState.NotMoveable);
+					if(node.HasUnit() && node.GetUnit().GetTeam() != selectedUnit.GetTeam()) {
+						node.SetState(HighlightState.NotMoveable);
+					}
 				}
 				else {
 					node.SetState(HighlightState.Moveable);
@@ -245,6 +249,9 @@ namespace CombatWorld {
 		}
 
 		public void MoveUnit(Node node) {
+			if(selectedUnit.GetTeam() == Team.Player) {
+				movingPlayerUnit = true;
+			}
 			selectedUnit.Move(pathfinding.GetPathTo(node));
 		}
 
@@ -257,8 +264,13 @@ namespace CombatWorld {
 			SelectTeamNodes();
 		}
 
+		bool movingPlayerUnit = false;
+
 		public void UnitMadeAction() {
-			selectedUnit = null;
+			if (!movingPlayerUnit || (selectedUnit != null && !selectedUnit.GetNode().HasAttackableNeighbour())) {
+				selectedUnit = null;
+			}
+			movingPlayerUnit = false;
 			waitingForAction = false;
 			if (currentTeam == Team.Player) {
 				SelectTeamNodes();
