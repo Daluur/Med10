@@ -154,6 +154,9 @@ namespace CombatWorld.Units {
 
 		void SpawnProjectile() {
 			waitForProjectile = true;
+			if(health <= 0) {
+				waitForDeathAnim = true;
+			}
 			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
 			target = null;
 			if (!DamageConstants.ATTACKATSAMETIME) {
