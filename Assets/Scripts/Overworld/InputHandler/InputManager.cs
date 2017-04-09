@@ -22,12 +22,17 @@ namespace Overworld {
 		[HideInInspector]
 		public bool inGameMenuOpen = false;
 
+		public GameObject interactionIndicator;
+		public Vector3 fakePosForInteractionIndicator = new Vector3(1000, 1000, 1000);
+
 		// Use this for initialization
 		void Start () {
 			layerMaskPlayer = (1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER));
 			layerMaskInteractable = ( 1 << LayerMask.NameToLayer(LayerConstants.INTERACTABLELAYER) );
 			player = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<PlayerMovementOW>();
 			playerInteractable = player.gameObject.GetComponent<IInteractable>();
+			interactionIndicator = (GameObject) Instantiate(interactionIndicator, fakePosForInteractionIndicator,
+				Quaternion.identity);
 		}
 
 		// Update is called once per frame
@@ -213,5 +218,20 @@ namespace Overworld {
 		public void ResumePlayer() {
 			player.ResumeFromTemporaryStop();
 		}
+
+		public void TakeInteractionIndicatorFocus(GameObject go) {
+			Debug.Log(go.name);
+			interactionIndicator.transform.position = go.transform.position;
+			interactionIndicator.transform.position += new Vector3(0,0.075f,0);
+			RaycastHit hit;
+			if (Physics.Raycast(go.transform.position, -Vector3.up, out hit)) {
+				interactionIndicator.transform.position = hit.point;
+			}
+		}
+
+		public void ResetInteractionIndicatorFocus() {
+			interactionIndicator.transform.position = fakePosForInteractionIndicator;
+		}
+
 	}
 }

@@ -36,7 +36,6 @@ namespace Overworld {
 						break;
 				}
 			}
-
 		}
 
 		public void DoAction() {
