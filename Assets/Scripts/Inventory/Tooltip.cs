@@ -49,8 +49,8 @@ public class Tooltip : Singleton<Tooltip> {
 	}
 
 	private string EncounterString(DeckData deckData) {
-		var tmp = "<b>" + deckData.deckName + "</b>" + "\nType: <color=" + GetColor(deckData.type) + ">" + deckData.type +
-		          "</color>" + "\nDifficulty: " + deckData.difficulty;
+		var tmp = "<b>" + deckData.deckName + "</b>" + "\nTypes: <color=" + GetColor(deckData.type1) + ">" + deckData.type1 +
+			"</color>" + ", <color="+ GetColor(deckData.type2) + ">" + deckData.type2 + "</color>" + "\nDifficulty: " + deckData.difficulty;
 		return tmp;
 	}
 

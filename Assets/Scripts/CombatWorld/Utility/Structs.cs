@@ -74,5 +74,6 @@ public struct DeckData {
 	public string deckName, difficulty;
 	public int id;
 	public int[] unitIDs;
-	public string type;
+	public string type1;
+	public string type2;
 }
