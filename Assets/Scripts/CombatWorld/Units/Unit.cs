@@ -239,12 +239,12 @@ namespace CombatWorld.Units {
 
 		void ProjectileHit() {
 			waitForProjectile = false;
-			if (health <= 0) {
+			/*if (health <= 0) {
 				RealDeath();
 			}
-			else {
+			else {*/
 				FinishedAction();
-			}
+			//}
 		}
 
 		void FaceForward() {
