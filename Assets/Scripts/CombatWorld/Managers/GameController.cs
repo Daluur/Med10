@@ -14,6 +14,7 @@ namespace CombatWorld {
 		public GameObject winLosePanel;
 		public Text winLoseText;
 		public Button endTurnButton;
+		public Animator endButtonAnim;
 
 		List<GameObject> maps = new List<GameObject>();
 
@@ -121,6 +122,7 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
+					endButtonAnim.SetTrigger("MoreMoves");
 					AITurn();
 					CombatCameraController.instance.StartAICAM();
 					endTurnButton.interactable = false;
@@ -246,6 +248,7 @@ namespace CombatWorld {
 
 		public void SummonNodeClickHandler(SummonNode node) {
 			SummonHandler.instance.SummonUnit(node);
+			CheckPlayerHasMoves();
 		}
 
 		public void MoveUnit(Node node) {
@@ -275,6 +278,7 @@ namespace CombatWorld {
 			if (currentTeam == Team.Player) {
 				SelectTeamNodes();
 				endTurnButton.interactable = true;
+				CheckPlayerHasMoves();
 			}
 		}
 
@@ -368,6 +372,22 @@ namespace CombatWorld {
 		private void GiveTurnSummonPoints() {
 			summonPointTurnNumber.text = DamageConstants.SUMMONPOINTSPERTURN.ToString();
 			summonPointTurnAnim.SetTrigger("TurnPoints");
+		}
+
+		private void CheckPlayerHasMoves() {
+			if(SummonHandler.instance.HasPointsToSummon()){
+				foreach (Node node in playerSummonNodes) {
+					if (!node.HasOccupant()) {
+						return;
+					}
+				}
+			}
+			foreach (Node node in allNodes) {
+				if(node.HasUnit() && node.GetUnit().GetTeam() == Team.Player && (node.GetUnit().CanMove() || (node.GetUnit().CanAttack() && node.HasAttackableNeighbour()))) {
+					return;
+				}
+			}
+			endButtonAnim.SetTrigger("NoMoreMoves");
 		}
 
 		#region SummonPoints
