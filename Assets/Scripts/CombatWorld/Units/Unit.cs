@@ -352,6 +352,10 @@ namespace CombatWorld.Units {
 				CursorSingleton.instance.SetCursor();
 		}
 
+		void OnDestroy() {
+			TooltipHandler.instance.CloseTooltip();
+		}
+
 		private void OnMouseDown() {
 			currentNode.HandleInput();
 		}

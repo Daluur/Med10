@@ -18,7 +18,9 @@ namespace CombatWorld.Utility {
 		}
 
 		public void CloseTooltip() {
-			tooltip.Hide();
+			if (tooltip != null) {
+				tooltip.Hide();
+			}
 		}
 	}
 }

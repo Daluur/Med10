@@ -32,6 +32,10 @@ namespace CombatWorld {
 		bool waitingForAction = false;
 		List<Unit> performingAction = new List<Unit>();
 
+		public Text TurnIndicator;
+		public Text summonPointTurnNumber;
+		public Animator summonPointTurnAnim;
+
 		void Start() {
 			if (GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER)) {
 				StartCoroutine(FadeIn());
@@ -41,6 +45,7 @@ namespace CombatWorld {
 			pathfinding = new Pathfinding();
 			SpawnMap();
 			StartGame();
+			summonPointTurnNumber.text = DamageConstants.SUMMONPOINTSPERTURN.ToString();
 		}
 
 		IEnumerator FadeIn() {
@@ -116,8 +121,7 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
-					if(CombatTurnIndication.instance!=null)
-						CombatTurnIndication.instance.EnemyTurn();
+					AITurn();
 					CombatCameraController.instance.StartAICAM();
 					endTurnButton.interactable = false;
 					ResetAllNodes();
@@ -128,8 +132,7 @@ namespace CombatWorld {
 					AICalculateScore.instance.DoAITurn();
 					break;
 				case Team.AI:
-					if(CombatTurnIndication.instance!=null)
-						CombatTurnIndication.instance.PlayerTurn();
+					PlayerTurn();
 					CombatCameraController.instance.EndAICAM();
 					currentTeam = Team.Player;
 					SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERTURN);
@@ -331,6 +334,28 @@ namespace CombatWorld {
 				}
 			}
 			return units;
+		}
+
+		private void PlayerTurn() {
+			TurnIndicator.text = "Your turn";
+			GiveTurnSummonPoints();
+			StartCoroutine(HideText());	
+		}
+
+		private void AITurn() {
+			TurnIndicator.text = "Enemy turn";
+			StartCoroutine(HideText());
+		}
+
+		private IEnumerator HideText() {
+			TurnIndicator.gameObject.SetActive(true);
+			yield return new WaitForSeconds(1);
+			TurnIndicator.gameObject.SetActive(false);
+		}
+
+		private void GiveTurnSummonPoints() {
+			summonPointTurnNumber.text = DamageConstants.SUMMONPOINTSPERTURN.ToString();
+			summonPointTurnAnim.SetTrigger("TurnPoints");
 		}
 
 		#region SummonPoints

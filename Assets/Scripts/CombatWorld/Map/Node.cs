@@ -115,7 +115,7 @@ namespace CombatWorld.Map {
 		}
 
 		#endregion
-
+		
 		#region Cursor
 
 		private void OnMouseEnter() {
@@ -131,6 +131,10 @@ namespace CombatWorld.Map {
 		#endregion
 
 		#region Input
+
+		private void OnMouseDown() {
+			HandleInput();
+		}
 
 		public virtual void HandleInput() {
 			switch (state) {

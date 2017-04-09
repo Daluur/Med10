@@ -58,7 +58,6 @@ namespace CombatWorld
 			GameObject unit = Instantiate(currentlySelectedData.model, node.transform.position, Quaternion.identity) as GameObject;
 			unit.GetComponent<Unit>().SpawnEntity(node, Team.Player, currentlySelectedData);
 			unit.transform.parent = transform;
-			unit.GetComponentInChildren<HealthAttackVisualController>().SummonPoint(true, currentlySelectedData.cost);
 		}
 
 		public void SummonButtonPressed(CombatData CD) {
@@ -74,15 +73,16 @@ namespace CombatWorld
 		public void GivePoints(int amount) {
 			summonPoints += amount;
 			UpdateButtonsAndText();
-			if(GameNotificationsSystem.instance!=null)
-			GameNotificationsSystem.instance.DisplayMessage("You gained " + amount + " summon points!");
+			/*if(GameNotificationsSystem.instance != null){
+				GameNotificationsSystem.instance.DisplayMessage("You gained " + amount + " summon points!");
+			}*/
 		}
 
 		void UpdateButtonsAndText() {
 			foreach (UnitButton item in buttons) {
 				item.CheckCost(summonPoints);
 			}
-			summonPointText.text = "Summon points: " + summonPoints;
+			summonPointText.text = summonPoints.ToString();
 		}
 
 		public bool HasPointsToSummon() {
