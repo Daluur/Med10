@@ -298,18 +298,27 @@ namespace CombatWorld.Units {
 			FaceForward();
 		}
 
+		Vector3 moveDir;
+
 		IEnumerator MoveTo(List<Node> target) {
 			CombatCameraController.instance.SetTarget(transform);
+			if(target.Count == 1) {
+				FinishedAction();
+				yield break;
+			}
 			animHelp.StartWalk();
 			target.Reverse();
-			for (int i = 0; i < target.Count; i++) {
+			for (int i = 1; i < target.Count; i++) {
+				moveDir = (target[i].transform.position - transform.position).normalized;
 				transform.LookAt(target[i].transform);
 				bool moving = true;
 				while (moving) {
-					transform.position += (target[i].transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
-					if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
+					transform.position += moveDir * moveSpeed * Time.deltaTime;
+					/*if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
 						moving = false;
-						
+					}*/
+					if((target[i].transform.position - transform.position).normalized != moveDir) {
+						moving = false;
 					}
 					yield return new WaitForEndOfFrame();
 				}
