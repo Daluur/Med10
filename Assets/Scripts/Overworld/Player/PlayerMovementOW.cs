@@ -10,6 +10,7 @@ namespace Overworld {
 		private NavMeshAgent agent;
 		private Animator animator;
 		public GameObject clickMoveToObject;
+		public float rotatedOffSetYClickMoveAnim = 0.06f;
 
 		protected override void Awake() {
 			base.Awake();
@@ -27,9 +28,13 @@ namespace Overworld {
 			animator = GetComponentInChildren<Animator>();
 		}
 
-		void PlayerMoveToMouseInput(Vector3 hitPoint) {
+		void PlayerMoveToMouseInput(Vector3 hitPoint, Vector3 hitNormal) {
 			if (agent.SetDestination(hitPoint)) {
-				Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
+				var go = (GameObject)Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
+				if (hitNormal.y < 1) {
+					go.transform.position += new Vector3(0, rotatedOffSetYClickMoveAnim, 0);
+				}
+				go.transform.rotation =Quaternion.FromToRotation(Vector3.up, hitNormal);
 			}
 		}
 
@@ -51,23 +56,20 @@ namespace Overworld {
 			agent.ResetPath();
 		}
 
-		/// <summary>
-		/// Stops the player, specific usage of DoAction for the player
-		/// </summary>
 		public void DoAction() {
-			//Debug.Log("ASDASD");
-			//agent.Stop();
-			//agent.ResetPath();
+
 		}
 
-		public void DoAction<T>(T param) {
+		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
 			agent.isStopped = false;
 			if (param.GetType() != typeof(Vector3)) {
 				Debug.LogError("To move the character give it a Vector3 to move to");
 				return;
 			}
-			PlayerMoveToMouseInput((Vector3)(param as Vector3?));
+			PlayerMoveToMouseInput((Vector3)(param as Vector3?) , m);
 		}
+
+
 
 		public ControlUIElement GetControlElement() {
 			return null;
