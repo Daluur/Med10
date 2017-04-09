@@ -39,7 +39,7 @@ namespace CombatWorld.Units {
 
 		public CombatData data;
 
-		private float moveSpeed = 12.5f;
+		private float moveSpeed = 7f;
 
 		private AnimationHandler animHelp;
 

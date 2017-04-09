@@ -136,6 +136,7 @@ namespace CombatWorld {
 				case Team.AI:
 					PlayerTurn();
 					CombatCameraController.instance.EndAICAM();
+					CombatCameraController.instance.PlayerTurnsCam(GettAllUnitsOfTeam(Team.Player));
 					currentTeam = Team.Player;
 					SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
