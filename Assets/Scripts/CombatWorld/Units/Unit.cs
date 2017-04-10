@@ -298,7 +298,7 @@ namespace CombatWorld.Units {
 			FaceForward();
 		}
 
-		Vector3 moveDir;
+		//Vector3 moveDir;
 
 		IEnumerator MoveTo(List<Node> target) {
 			CombatCameraController.instance.SetTarget(transform);
@@ -309,17 +309,17 @@ namespace CombatWorld.Units {
 			animHelp.StartWalk();
 			target.Reverse();
 			for (int i = 1; i < target.Count; i++) {
-				moveDir = (target[i].transform.position - transform.position).normalized;
 				transform.LookAt(target[i].transform);
+				//moveDir = (target[i].transform.position - transform.position).normalized;
 				bool moving = true;
 				while (moving) {
-					transform.position += moveDir * moveSpeed * Time.deltaTime;
-					/*if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
-						moving = false;
-					}*/
-					if((target[i].transform.position - transform.position).normalized != moveDir) {
+					transform.position += (target[i].transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
+					if ((transform.position - target[i].transform.position).magnitude < 0.5f) {
 						moving = false;
 					}
+					/*if((target[i].transform.position - transform.position).normalized != moveDir) {
+						moving = false;
+					}*/
 					yield return new WaitForEndOfFrame();
 				}
 			}
