@@ -17,7 +17,7 @@ namespace CombatWorld.Units {
 
 		private bool shadowUnit = false;
 		private bool stoneUnit = false;
-		bool turnedToStone = false;
+		public bool turnedToStone = false;
 
 		private int health;
 		private int maxHealth;
@@ -39,7 +39,7 @@ namespace CombatWorld.Units {
 
 		public CombatData data;
 
-		private float moveSpeed = 12.5f;
+		private float moveSpeed = 7f;
 
 		private AnimationHandler animHelp;
 
@@ -134,9 +134,14 @@ namespace CombatWorld.Units {
 			attacked = moved = true;
 			damagePack = new DamagePackage(damage, this, type);
 			DealDamage();
+			if (DamageConstants.ATTACKATSAMETIME) {
+				if (target.GetNode().HasUnit()) {
+					target.GetNode().GetUnit().RetaliationAttack(this);
+				}
+			}
 		}
 
-		void RetaliationAttack(IEntity target) {
+		public void RetaliationAttack(IEntity target) {
 			this.target = target;
 			damagePack = new DamagePackage(damage, this, type, true);
 			DealDamage();
@@ -149,10 +154,15 @@ namespace CombatWorld.Units {
 
 		void SpawnProjectile() {
 			waitForProjectile = true;
+			if(health <= 0) {
+				waitForDeathAnim = true;
+			}
 			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
 			target = null;
-			if(health <= 0) {
-				Die();
+			if (!DamageConstants.ATTACKATSAMETIME) {
+				if(health <= 0) {
+					Die();
+				}
 			}
 		}
 
@@ -177,21 +187,31 @@ namespace CombatWorld.Units {
 		}
 
 		void TookDamage() {
-			if(health <= 0) {
-				//Die unless it can do retaliation.
-				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
-					RetaliationAttack(damageIntake.GetSource());
-					return;
-				}
-				else {
+			if (DamageConstants.ATTACKATSAMETIME) {
+				if (health <= 0) {
 					Die();
 					return;
 				}
 			}
-			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
-			else if(!damageIntake.WasRetaliation() && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
-				RetaliationAttack(damageIntake.GetSource());
-				return;
+			else {
+				if (health <= 0) {
+					//Die unless it can do retaliation.
+					if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
+						RetaliationAttack(damageIntake.GetSource());
+						return;
+					}
+					else {
+						Die();
+						return;
+					}
+					Die();
+					return;
+				}
+				//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
+				else if(!damageIntake.WasRetaliation() && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
+					RetaliationAttack(damageIntake.GetSource());
+					return;
+				}
 			}
 			damageIntake = null;
 			FinishedAction();
@@ -234,8 +254,13 @@ namespace CombatWorld.Units {
 
 		void ProjectileHit() {
 			waitForProjectile = false;
-			if (health <= 0) {
-				RealDeath();
+			if (!DamageConstants.ATTACKATSAMETIME) {
+				if (health <= 0) {
+					RealDeath();
+				}
+				else {
+					FinishedAction();
+				}
 			}
 			else {
 				FinishedAction();
@@ -273,18 +298,27 @@ namespace CombatWorld.Units {
 			FaceForward();
 		}
 
+		Vector3 moveDir;
+
 		IEnumerator MoveTo(List<Node> target) {
 			CombatCameraController.instance.SetTarget(transform);
+			if(target.Count == 1) {
+				FinishedAction();
+				yield break;
+			}
 			animHelp.StartWalk();
 			target.Reverse();
-			for (int i = 0; i < target.Count; i++) {
+			for (int i = 1; i < target.Count; i++) {
+				moveDir = (target[i].transform.position - transform.position).normalized;
 				transform.LookAt(target[i].transform);
 				bool moving = true;
 				while (moving) {
-					transform.position += (target[i].transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
-					if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
+					transform.position += moveDir * moveSpeed * Time.deltaTime;
+					/*if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
 						moving = false;
-						
+					}*/
+					if((target[i].transform.position - transform.position).normalized != moveDir) {
+						moving = false;
 					}
 					yield return new WaitForEndOfFrame();
 				}

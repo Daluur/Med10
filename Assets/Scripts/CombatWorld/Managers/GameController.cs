@@ -14,6 +14,7 @@ namespace CombatWorld {
 		public GameObject winLosePanel;
 		public Text winLoseText;
 		public Button endTurnButton;
+		public Animator endButtonAnim;
 
 		List<GameObject> maps = new List<GameObject>();
 
@@ -121,6 +122,7 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
+					endButtonAnim.SetTrigger("MoreMoves");
 					AITurn();
 					CombatCameraController.instance.StartAICAM();
 					endTurnButton.interactable = false;
@@ -134,6 +136,7 @@ namespace CombatWorld {
 				case Team.AI:
 					PlayerTurn();
 					CombatCameraController.instance.EndAICAM();
+					CombatCameraController.instance.PlayerTurnsCam(GettAllUnitsOfTeam(Team.Player));
 					currentTeam = Team.Player;
 					SummonHandler.instance.GivePoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
@@ -168,6 +171,7 @@ namespace CombatWorld {
 				HighlightSelectableUnits();
 			}
 			else {
+				HighlightSelectableUnits();
 				if (selectedUnit.CanMove()) {
 					if (selectedUnit.IsShadowUnit()) {
 						HighlightMoveableNodes(pathfinding.GetAllReachableNodes(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
@@ -206,9 +210,12 @@ namespace CombatWorld {
 		}
 
 		void HighlightMoveableNodes(List<Node> reacheableNodes) {
+			HighlightSelectableUnits();
 			foreach (Node node in reacheableNodes) {
 				if (node.HasOccupant()) {
-					node.SetState(HighlightState.NotMoveable);
+					if(node.HasUnit() && node.GetUnit().GetTeam() != selectedUnit.GetTeam()) {
+						node.SetState(HighlightState.NotMoveable);
+					}
 				}
 				else {
 					node.SetState(HighlightState.Moveable);
@@ -242,9 +249,13 @@ namespace CombatWorld {
 
 		public void SummonNodeClickHandler(SummonNode node) {
 			SummonHandler.instance.SummonUnit(node);
+			CheckPlayerHasMoves();
 		}
 
 		public void MoveUnit(Node node) {
+			if(selectedUnit.GetTeam() == Team.Player) {
+				movingPlayerUnit = true;
+			}
 			selectedUnit.Move(pathfinding.GetPathTo(node));
 		}
 
@@ -257,12 +268,18 @@ namespace CombatWorld {
 			SelectTeamNodes();
 		}
 
+		bool movingPlayerUnit = false;
+
 		public void UnitMadeAction() {
-			selectedUnit = null;
+			if (!movingPlayerUnit || (selectedUnit != null && !selectedUnit.GetNode().HasAttackableNeighbour())) {
+				selectedUnit = null;
+			}
+			movingPlayerUnit = false;
 			waitingForAction = false;
 			if (currentTeam == Team.Player) {
 				SelectTeamNodes();
 				endTurnButton.interactable = true;
+				CheckPlayerHasMoves();
 			}
 		}
 
@@ -356,6 +373,22 @@ namespace CombatWorld {
 		private void GiveTurnSummonPoints() {
 			summonPointTurnNumber.text = DamageConstants.SUMMONPOINTSPERTURN.ToString();
 			summonPointTurnAnim.SetTrigger("TurnPoints");
+		}
+
+		private void CheckPlayerHasMoves() {
+			if(SummonHandler.instance.HasPointsToSummon()){
+				foreach (Node node in playerSummonNodes) {
+					if (!node.HasOccupant()) {
+						return;
+					}
+				}
+			}
+			foreach (Node node in allNodes) {
+				if(node.HasUnit() && node.GetUnit().GetTeam() == Team.Player && (node.GetUnit().CanMove() || (node.GetUnit().CanAttack() && node.HasAttackableNeighbour()))) {
+					return;
+				}
+			}
+			endButtonAnim.SetTrigger("NoMoreMoves");
 		}
 
 		#region SummonPoints

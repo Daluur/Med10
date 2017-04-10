@@ -46,6 +46,8 @@ public static class DamageConstants {
 	public const bool EFFECTIVEMULT = false;
 	public const int EFFECTIVEBONUS = 10;
 	public const int INEFFECTIVEPENALTY = 5;
+
+	public const bool ATTACKATSAMETIME = false;
 }
 
 public static class StoneUnitOptions {
