@@ -28,6 +28,7 @@ namespace Overworld {
 
 		// Use this for initialization
 		void Start () {
+			AudioHandler.instance.StartOWBGMusic();
 			layerMaskPlayer = (1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER));
 			layerMaskInteractable = ( 1 << LayerMask.NameToLayer(LayerConstants.INTERACTABLELAYER) );
 			player = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<PlayerMovementOW>();
@@ -39,6 +40,10 @@ namespace Overworld {
 		// Update is called once per frame
 		void Update () {
 			HandleInputs();
+		}
+
+		void OnEnable() {
+			AudioHandler.instance.StartOWBGMusic();
 		}
 
 		public void FakeInput(KeyCode keyCode) {
