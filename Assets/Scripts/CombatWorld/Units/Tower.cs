@@ -37,7 +37,10 @@ namespace CombatWorld.Units {
 			}
 			currentNode.neighbours.Clear();
 			currentNode.RemoveOccupant();
-			Destroy(gameObject);
+			if (team == Team.AI) {
+				healthIndicator.SummonPoint(false);
+			}
+			Destroy(gameObject,1);
 		}
 
 		public int GetHealth() {
