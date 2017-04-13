@@ -71,6 +71,9 @@ namespace Overworld {
 		}
 
 		public void TempStopRandEncounter() {
+			if(encounterRoller == null) {
+				return;
+			}
 			StopCoroutine(encounterRoller);
 			encounterRoller = null;
 		}

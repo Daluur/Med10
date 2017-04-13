@@ -8,7 +8,7 @@ using UnityEngine;
 namespace CombatWorld.AI {
 	public class AISummon {
 		private static int summonPoints = AICalculateScore.instance.summonPoints;
-		private static readonly int[] unitsToSummon = AICalculateScore.instance.unitsToSummon;
+		private static int[] unitsToSummon;
 		private static readonly ItemDatabase dataBase = new ItemDatabase();
 
 		private static readonly int triggerForDefensiveSpawns = AICalculateScore.instance.triggerForDefensiveSpawns;
@@ -17,7 +17,8 @@ namespace CombatWorld.AI {
 
 		public static bool summoning { get; protected set; }
 
-		public static IEnumerator SpawnUnits() {
+		public static IEnumerator SpawnUnits(int[] units) {
+			unitsToSummon = units;
 			summoning = true;
 			summonPoints = AICalculateScore.instance.summonPoints;
 			var summonNodes = GameController.instance.GetAISummonNodes();

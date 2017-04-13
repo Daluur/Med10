@@ -65,7 +65,7 @@ namespace CombatWorld.AI {
 		private IEnumerator WaitForActions() {
 			offensiveFactor = OffensiveFactorCalculation();
 			defensiveFactor = DefensiveFactorCalculation();
-			//Debug.Log("Turn started with offensive: " + offensiveFactor + " and defensive: " + defensiveFactor + " and: " + summonPoints);
+			Debug.Log("Turn started with offensive: " + offensiveFactor + " and defensive: " + defensiveFactor + " and: " + summonPoints);
 			foreach (var unit in aiUnits) {
 				Debug.Log("we are now at offensive: " + offensiveFactor + " and defensive: " + defensiveFactor);
 				while (GameController.instance.WaitingForAction()) {
@@ -93,7 +93,7 @@ namespace CombatWorld.AI {
 			while (GameController.instance.WaitingForAction()) {
 				yield return new WaitForSeconds(0.2f);
 			}
-			StartCoroutine(AISummon.SpawnUnits());
+			StartCoroutine(AISummon.SpawnUnits(unitsToSummon));
 			while (AISummon.summoning) {
 				yield return new WaitForSeconds(0.2f);
 			}
