@@ -158,7 +158,6 @@ namespace CombatWorld.Units {
 				waitForDeathAnim = true;
 			}
 			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
-			target = null;
 			if (!DamageConstants.ATTACKATSAMETIME) {
 				if(health <= 0) {
 					Die();
@@ -172,7 +171,7 @@ namespace CombatWorld.Units {
 			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
 			if (turnedToStone && StoneUnitOptions.STONEUNITTAKESSTATICDMG) {
-				health -= StoneUnitOptions.STONEUNITDMGTAKEN;
+				health -= damageIntake.TargetWasStone();
 			}
 			else {
 				health -= damageIntake.CalculateDamageAgainst(type);
@@ -213,6 +212,9 @@ namespace CombatWorld.Units {
 					return;
 				}
 			}
+			if (damageIntake.WasRetaliation()) {
+				FaceForward();
+			}
 			damageIntake = null;
 			FinishedAction();
 		}
@@ -249,7 +251,6 @@ namespace CombatWorld.Units {
 
 		void FinishedAction() {
 			GameController.instance.PerformedAction(this);
-			FaceForward();
 		}
 
 		void ProjectileHit() {
@@ -264,6 +265,9 @@ namespace CombatWorld.Units {
 			}
 			else {
 				FinishedAction();
+			}
+			if ((damagePack.WasRetaliation() && health > 0) || target.GetNode().HasTower()) {
+				FaceForward();
 			}
 		}
 
@@ -330,6 +334,7 @@ namespace CombatWorld.Units {
 				yield break;
 			}*/
 			FinishedAction();
+			FaceForward();
 		}
 
 #pragma warning disable 0162

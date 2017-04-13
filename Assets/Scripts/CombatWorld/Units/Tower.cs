@@ -37,7 +37,10 @@ namespace CombatWorld.Units {
 			}
 			currentNode.neighbours.Clear();
 			currentNode.RemoveOccupant();
-			Destroy(gameObject);
+			if (team == Team.AI) {
+				healthIndicator.SummonPoint(false);
+			}
+			Destroy(gameObject,1);
 		}
 
 		public int GetHealth() {
@@ -67,6 +70,20 @@ namespace CombatWorld.Units {
 			if (health <= 0) {
 				Die();
 			}
+		}
+
+		void OnMouseEnter() {
+			if (CursorSingleton.instance != null)
+				CursorSingleton.instance.SetCursor(currentNode.GetState());
+		}
+
+		void OnMouseExit() {
+			if (CursorSingleton.instance != null)
+				CursorSingleton.instance.SetCursor();
+		}
+
+		private void OnMouseDown() {
+			currentNode.HandleInput();
 		}
 	}
 }

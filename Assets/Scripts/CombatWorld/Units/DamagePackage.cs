@@ -68,6 +68,11 @@ namespace CombatWorld.Units {
 			return damageDone;
 		}
 
+		public int TargetWasStone() {
+			damageDone = StoneUnitOptions.STONEUNITDMGTAKEN;
+			return damageDone;
+		}
+
 #pragma warning disable 0162
 		int GetEffectiveDamage(int damage) {
 			if (DamageConstants.EFFECTIVEMULT) {
