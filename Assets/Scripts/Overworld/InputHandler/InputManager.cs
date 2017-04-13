@@ -43,6 +43,7 @@ namespace Overworld {
 		}
 
 		void OnEnable() {
+			ResetInteractionIndicatorFocus();
 			AudioHandler.instance.StartOWBGMusic();
 		}
 
