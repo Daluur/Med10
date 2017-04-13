@@ -374,7 +374,7 @@ namespace CombatWorld.Units {
 			FinishedAction();
 		}
 
-		void OnMouseEnter() {
+		void OnMouseOver() {
 			TooltipHandler.instance.CreateTooltip(transform.position, this);
 			if(CursorSingleton.instance!=null)
 				CursorSingleton.instance.SetCursor(currentNode.GetState());

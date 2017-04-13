@@ -134,7 +134,7 @@ namespace CombatWorld.Map {
 		
 		#region Cursor
 
-		private void OnMouseEnter() {
+		private void OnMouseOver() {
 			if(CursorSingleton.instance!=null)
 				CursorSingleton.instance.SetCursor(state);
 		}
