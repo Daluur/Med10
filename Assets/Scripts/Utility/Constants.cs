@@ -30,7 +30,7 @@ public static class TagConstants {
 }
 
 public static class Values {
-	public const float InteractDistance = 1.5f;
+	public const float InteractDistance = 1.9f;
 	public const int SUMMONPOINTSONKILL = 1;
 }
 
