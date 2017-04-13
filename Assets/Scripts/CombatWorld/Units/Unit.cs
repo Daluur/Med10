@@ -172,7 +172,7 @@ namespace CombatWorld.Units {
 			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
 			if (turnedToStone && StoneUnitOptions.STONEUNITTAKESSTATICDMG) {
-				health -= StoneUnitOptions.STONEUNITDMGTAKEN;
+				health -= damageIntake.TargetWasStone();
 			}
 			else {
 				health -= damageIntake.CalculateDamageAgainst(type);
