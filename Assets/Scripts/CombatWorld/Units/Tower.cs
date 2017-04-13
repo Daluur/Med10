@@ -68,5 +68,19 @@ namespace CombatWorld.Units {
 				Die();
 			}
 		}
+
+		void OnMouseEnter() {
+			if (CursorSingleton.instance != null)
+				CursorSingleton.instance.SetCursor(currentNode.GetState());
+		}
+
+		void OnMouseExit() {
+			if (CursorSingleton.instance != null)
+				CursorSingleton.instance.SetCursor();
+		}
+
+		private void OnMouseDown() {
+			currentNode.HandleInput();
+		}
 	}
 }
