@@ -72,7 +72,7 @@ namespace CombatWorld.Units {
 			}
 		}
 
-		void OnMouseEnter() {
+		void OnMouseOver() {
 			if (CursorSingleton.instance != null)
 				CursorSingleton.instance.SetCursor(currentNode.GetState());
 		}
