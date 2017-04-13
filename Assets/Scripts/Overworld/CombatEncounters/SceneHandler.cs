@@ -24,6 +24,8 @@ namespace Overworld {
 		private Coroutine loading;
 		private AsyncOperation async;
 
+		private bool hasStartedLoading;
+
 		// Use this for initialization
 		void Start () {
 			inputManager = gameObject.GetComponent<InputManager>();
@@ -33,6 +35,10 @@ namespace Overworld {
 		}
 
 		public void LoadScene(MapTypes type, int deckID, int currencyReward = 0, GameObject encounterObject = null) {
+			if (hasStartedLoading) {
+				return;
+			}
+			hasStartedLoading = true;
 			inputManager.BlockMouseUI();
 			AudioHandler.instance.PlayEnterCombat();
 			mapType = type;
@@ -58,6 +64,7 @@ namespace Overworld {
 		}
 
 		private void EndEncounter(Scene scene) {
+			hasStartedLoading = false;
 			EnabeleObjectsCombatLoad();
 			StartCoroutine(FadeIn());
 			SceneManager.sceneLoaded -= OnSceneLoaded;
