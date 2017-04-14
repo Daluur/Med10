@@ -44,7 +44,9 @@ namespace Overworld {
 
 		void OnEnable() {
 			ResetInteractionIndicatorFocus();
-			AudioHandler.instance.StartOWBGMusic();
+			if (AudioHandler.instance != null) {
+				AudioHandler.instance.StartOWBGMusic();
+			}
 		}
 
 		public void FakeInput(KeyCode keyCode) {
