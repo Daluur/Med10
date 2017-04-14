@@ -143,6 +143,9 @@ public class AudioHandler : Singleton<AudioHandler> {
 	}
 
 	public void StartOWBGMusic() {
+		if(BGSource.clip == overWorldMusic) {
+			return;
+		}
 		BGSource.clip = overWorldMusic;
 		BGSource.Play();
 	}

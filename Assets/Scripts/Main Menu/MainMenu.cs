@@ -9,6 +9,10 @@ public class MainMenu : MonoBehaviour {
 	public Text volumeNum;
 	public Slider volumeSlider;
 
+	void Start() {
+		AudioHandler.instance.StartOWBGMusic();
+	}
+
 	void Update () {
 		volume = (int)volumeSlider.value;
 		AudioListener.volume = volume/100f;
