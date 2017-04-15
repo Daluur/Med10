@@ -8,20 +8,23 @@ using UnityEngine.SceneManagement;
 namespace Overworld {
 	public class StaticEncounter : Encounter, IInteractable {
 
+		public int StaticEncounterID = -1;
+
 		// Use this for initialization
 		void Start () {
-			Register(this, KeyCode.Mouse0);
+			if (SaveLoadHandler.Instance.AmIDefeated(StaticEncounterID)) {
+				Destroy(gameObject);
+				return;
+			}
 			if (deckIDs == null || deckIDs.Length == 0) {
 				Debug.LogError("This encounter has no decks! " + gameObject.name);
 				deckIDs = new int[] { 0 };
 			}
+			if(StaticEncounterID == -1) {
+				Debug.LogError("This encounter has no ID! " + gameObject.name);
+			}
+			Register(this, KeyCode.Mouse0);
 		}
-
-		// Update is called once per frame
-		void Update () {
-
-		}
-
 
 		public override void PerformClosenessAction() {
 			hasGeneralConfirmationBox = false;
@@ -53,7 +56,7 @@ namespace Overworld {
 			meClicked = false;
 		}
 
-		public void DoAction<T>(T param) {
+		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
 			if(hasGeneralConfirmationBox)
 				return;
 			meClicked = true;
@@ -63,5 +66,16 @@ namespace Overworld {
 		public ControlUIElement GetControlElement() {
 			return null;
 		}
+
+		protected override void OnMouseEnter() {
+			base.OnMouseEnter();
+			Tooltip.instance.Activate(this);
+		}
+
+		protected override void OnMouseExit() {
+			base.OnMouseExit();
+			Tooltip.instance.Deactivate();
+		}
+
 	}
 }

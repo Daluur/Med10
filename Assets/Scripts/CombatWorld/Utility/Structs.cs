@@ -71,8 +71,9 @@ namespace CombatWorld.Utility {
 }
 [Serializable]
 public struct DeckData {
-	public string deckName;
+	public string deckName, difficulty;
 	public int id;
 	public int[] unitIDs;
-	public CombatWorld.Utility.ElementalTypes type;
+	public string type1;
+	public string type2;
 }

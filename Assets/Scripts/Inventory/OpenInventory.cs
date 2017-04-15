@@ -12,6 +12,10 @@ namespace Overworld {
 			Register (this, KeyCode.I);
 		}
 
+		public void Button() {
+			inputManager.FakeInput(KeyCode.B);
+		}
+
 		public void DoAction() {
 			if (!isShowing && !isRunning) {
 				OpenTheInventory();
@@ -32,7 +36,7 @@ namespace Overworld {
 			CloseElement();
 		}
 
-		public void DoAction<T>(T param) {
+		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
 		}
 
 		public ControlUIElement GetControlElement() {

@@ -14,6 +14,7 @@ namespace CombatWorld {
 		public GameObject winLosePanel;
 		public Text winLoseText;
 		public Button endTurnButton;
+		public Animator endButtonAnim;
 
 		List<GameObject> maps = new List<GameObject>();
 
@@ -34,12 +35,28 @@ namespace CombatWorld {
 
 		public static bool playerVSPlayer = true;
 
+		public Text TurnIndicator;
+		public Text summonPointTurnNumber;
+		public Animator summonPointTurnAnim;
+
 		void Start() {
+			if (GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER)) {
+				StartCoroutine(FadeIn());
+			}
 			AudioHandler.instance.StartCWBGMusic();
 			maps.AddRange(Resources.LoadAll<GameObject>("Art/3D/Maps"));
 			pathfinding = new Pathfinding();
 			SpawnMap();
 			StartGame();
+			summonPointTurnNumber.text = DamageConstants.SUMMONPOINTSPERTURN.ToString();
+		}
+
+		IEnumerator FadeIn() {
+			yield return new WaitForSeconds(1f);
+			while (FadingLoadingScreen.instance.isFading) {
+				yield return new WaitForSeconds(0.3f);
+			}
+			FadingLoadingScreen.instance.StartFadeIn();
 		}
 
 		void SpawnMap() {
@@ -52,7 +69,8 @@ namespace CombatWorld {
 				maps.RemoveAll(g => g.GetComponent<MapInfo>().type != type);
 			}
 			GameObject go = Instantiate(maps[Random.Range(0, maps.Count)], transform.position, Quaternion.identity, transform) as GameObject;
-			go.transform.position = go.transform.position - new Vector3(go.GetComponentInChildren<Terrain>().terrainData.size.x / 2, 5, 0);
+			go.transform.position = go.transform.position - new Vector3(go.GetComponent<MapInfo>().mapLength, 0, 0);
+			CombatCameraController.instance.setBoundary(new Vector2(-go.GetComponent<MapInfo>().mapLength, go.GetComponent<MapInfo>().mapLength));
 			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
 		}
 
@@ -111,6 +129,8 @@ namespace CombatWorld {
 			switch (currentTeam) {
 				case Team.Player:
 					//CombatCameraController.instance.StartAICAM();
+					endButtonAnim.SetTrigger("MoreMoves");
+					AITurn();
 					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
@@ -127,7 +147,9 @@ namespace CombatWorld {
 					}
 					break;
 				case Team.AI:
-					CombatCameraController.instance.EndAICAM();
+					PlayerTurn();
+					//CombatCameraController.instance.EndAICAM();
+					CombatCameraController.instance.PlayerTurnsCam(GettAllUnitsOfTeam(Team.Player));
 					currentTeam = Team.Player;
 					if (playerVSPlayer) {
 						SummonHandler.instance.SetPlayerTurn(Team.Player);
@@ -166,6 +188,7 @@ namespace CombatWorld {
 				HighlightSelectableUnits();
 			}
 			else {
+				HighlightSelectableUnits();
 				if (selectedUnit.CanMove()) {
 					if (selectedUnit.IsShadowUnit()) {
 						HighlightMoveableNodes(pathfinding.GetAllReachableNodes(selectedUnit.GetNode(), selectedUnit.GetMoveDistance()));
@@ -215,9 +238,12 @@ namespace CombatWorld {
 		}
 
 		void HighlightMoveableNodes(List<Node> reacheableNodes) {
+			HighlightSelectableUnits();
 			foreach (Node node in reacheableNodes) {
 				if (node.HasOccupant()) {
-					node.SetState(HighlightState.NotMoveable);
+					if(node.HasUnit() && node.GetUnit().GetTeam() != selectedUnit.GetTeam()) {
+						node.SetState(HighlightState.NotMoveable);
+					}
 				}
 				else {
 					node.SetState(HighlightState.Moveable);
@@ -261,9 +287,13 @@ namespace CombatWorld {
 
 		public void SummonNodeClickHandler(SummonNode node) {
 			SummonHandler.instance.SummonUnit(node);
+			CheckPlayerHasMoves();
 		}
 
 		public void MoveUnit(Node node) {
+			if(selectedUnit.GetTeam() == Team.Player) {
+				movingPlayerUnit = true;
+			}
 			selectedUnit.Move(pathfinding.GetPathTo(node));
 		}
 
@@ -276,12 +306,18 @@ namespace CombatWorld {
 			SelectTeamNodes();
 		}
 
+		bool movingPlayerUnit = false;
+
 		public void UnitMadeAction() {
-			selectedUnit = null;
+			if (!movingPlayerUnit || (selectedUnit != null && !selectedUnit.GetNode().HasAttackableNeighbour())) {
+				selectedUnit = null;
+			}
+			movingPlayerUnit = false;
 			waitingForAction = false;
 			if (currentTeam == Team.Player || playerVSPlayer) {
 				SelectTeamNodes();
 				endTurnButton.interactable = true;
+				CheckPlayerHasMoves();
 			}
 		}
 
@@ -300,6 +336,14 @@ namespace CombatWorld {
 		}
 
 		public void Forfeit() {
+			StartCoroutine(Unload());
+		}
+
+		private IEnumerator Unload() {
+			FadingLoadingScreen.instance.StartFadeOut();
+			while (FadingLoadingScreen.instance.isFading) {
+				yield return new WaitForSeconds(0.1f);
+			}
 			SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 		}
 
@@ -345,6 +389,44 @@ namespace CombatWorld {
 				}
 			}
 			return units;
+		}
+
+		private void PlayerTurn() {
+			TurnIndicator.text = "Your turn";
+			GiveTurnSummonPoints();
+			StartCoroutine(HideText());	
+		}
+
+		private void AITurn() {
+			TurnIndicator.text = "Enemy turn";
+			StartCoroutine(HideText());
+		}
+
+		private IEnumerator HideText() {
+			TurnIndicator.gameObject.SetActive(true);
+			yield return new WaitForSeconds(1);
+			TurnIndicator.gameObject.SetActive(false);
+		}
+
+		private void GiveTurnSummonPoints() {
+			summonPointTurnNumber.text = DamageConstants.SUMMONPOINTSPERTURN.ToString();
+			summonPointTurnAnim.SetTrigger("TurnPoints");
+		}
+
+		private void CheckPlayerHasMoves() {
+			if(SummonHandler.instance.HasPointsToSummon()){
+				foreach (Node node in playerSummonNodes) {
+					if (!node.HasOccupant()) {
+						return;
+					}
+				}
+			}
+			foreach (Node node in allNodes) {
+				if(node.HasUnit() && node.GetUnit().GetTeam() == Team.Player && (node.GetUnit().CanMove() || (node.GetUnit().CanAttack() && node.HasAttackableNeighbour()))) {
+					return;
+				}
+			}
+			endButtonAnim.SetTrigger("NoMoreMoves");
 		}
 
 		#region SummonPoints
@@ -458,8 +540,9 @@ namespace CombatWorld {
 
 		void Lost() {
 			winLoseText.text = "YOU LOST!";
-			AudioHandler.instance.PlayLoseSound();
 			winLosePanel.SetActive(true);
+			AudioHandler.instance.PlayLoseSound();
+			SceneHandler.instance.Lost();
 		}
 
 		public void GiveUp() {

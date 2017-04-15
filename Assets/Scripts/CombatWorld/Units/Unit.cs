@@ -17,7 +17,7 @@ namespace CombatWorld.Units {
 
 		private bool shadowUnit = false;
 		private bool stoneUnit = false;
-		bool turnedToStone = false;
+		public bool turnedToStone = false;
 
 		private int health;
 		private int maxHealth;
@@ -39,7 +39,7 @@ namespace CombatWorld.Units {
 
 		public CombatData data;
 
-		private float moveSpeed = 12.5f;
+		private float moveSpeed = 7f;
 
 		private AnimationHandler animHelp;
 
@@ -134,9 +134,14 @@ namespace CombatWorld.Units {
 			attacked = moved = true;
 			damagePack = new DamagePackage(damage, this, type);
 			DealDamage();
+			if (DamageConstants.ATTACKATSAMETIME) {
+				if (target.GetNode().HasUnit()) {
+					target.GetNode().GetUnit().RetaliationAttack(this);
+				}
+			}
 		}
 
-		void RetaliationAttack(IEntity target) {
+		public void RetaliationAttack(IEntity target) {
 			this.target = target;
 			damagePack = new DamagePackage(damage, this, type, true);
 			DealDamage();
@@ -149,10 +154,14 @@ namespace CombatWorld.Units {
 
 		void SpawnProjectile() {
 			waitForProjectile = true;
-			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
-			target = null;
 			if(health <= 0) {
-				Die();
+				waitForDeathAnim = true;
+			}
+			Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<BasicProjectile>().Setup(target.GetTransform(), target.TakeDamage, damagePack, ProjectileHit);
+			if (!DamageConstants.ATTACKATSAMETIME) {
+				if(health <= 0) {
+					Die();
+				}
 			}
 		}
 
@@ -162,7 +171,7 @@ namespace CombatWorld.Units {
 			GameController.instance.AddWaitForUnit(this);
 			damageIntake = damage;
 			if (turnedToStone && StoneUnitOptions.STONEUNITTAKESSTATICDMG) {
-				health -= StoneUnitOptions.STONEUNITDMGTAKEN;
+				health -= damageIntake.TargetWasStone();
 			}
 			else {
 				health -= damageIntake.CalculateDamageAgainst(type);
@@ -177,21 +186,34 @@ namespace CombatWorld.Units {
 		}
 
 		void TookDamage() {
-			if(health <= 0) {
-				//Die unless it can do retaliation.
-				if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
-					RetaliationAttack(damageIntake.GetSource());
-					return;
-				}
-				else {
+			if (DamageConstants.ATTACKATSAMETIME) {
+				if (health <= 0) {
 					Die();
 					return;
 				}
 			}
-			//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
-			else if(!damageIntake.WasRetaliation() && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
-				RetaliationAttack(damageIntake.GetSource());
-				return;
+			else {
+				if (health <= 0) {
+					//Die unless it can do retaliation.
+					if (!damageIntake.WasRetaliation() && DamageConstants.ALLOWRETALIATIONAFTERDEATH && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
+						RetaliationAttack(damageIntake.GetSource());
+						return;
+					}
+					else {
+						Die();
+						return;
+					}
+					Die();
+					return;
+				}
+				//Didn't die, retaliates, if attack was not retaliation (no infinite loops ;) )
+				else if(!damageIntake.WasRetaliation() && (!turnedToStone || StoneUnitOptions.STONEUNITCANRETALIATE)) {
+					RetaliationAttack(damageIntake.GetSource());
+					return;
+				}
+			}
+			if (damageIntake.WasRetaliation()) {
+				FaceForward();
 			}
 			damageIntake = null;
 			FinishedAction();
@@ -201,6 +223,9 @@ namespace CombatWorld.Units {
 			GameController.instance.UnitDied(team, currentNode);
 			currentNode.RemoveOccupant();
 			waitForDeathAnim = true;
+			if (team == Team.AI) {
+				healthIndicator.SummonPoint(false);
+			}
 			if (turnedToStone) {
 				Death();
 			}
@@ -226,16 +251,23 @@ namespace CombatWorld.Units {
 
 		void FinishedAction() {
 			GameController.instance.PerformedAction(this);
-			FaceForward();
 		}
 
 		void ProjectileHit() {
 			waitForProjectile = false;
-			if (health <= 0) {
-				RealDeath();
+			if (!DamageConstants.ATTACKATSAMETIME) {
+				if (health <= 0) {
+					RealDeath();
+				}
+				else {
+					FinishedAction();
+				}
 			}
 			else {
 				FinishedAction();
+			}
+			if ((damagePack.WasRetaliation() && health > 0) || target.GetNode().HasTower()) {
+				FaceForward();
 			}
 		}
 
@@ -254,6 +286,8 @@ namespace CombatWorld.Units {
 			shadowUnit = data.shadow;
 			node.SetOccupant(this);
 			this.data = data;
+			if (healthIndicator == null)
+				healthIndicator = GetComponentInChildren<HealthAttackVisualController>();
 			healthIndicator.Setup(health, damage, type, shadowUnit, stoneUnit);
 			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
@@ -268,19 +302,28 @@ namespace CombatWorld.Units {
 			FaceForward();
 		}
 
+		//Vector3 moveDir;
+
 		IEnumerator MoveTo(List<Node> target) {
 			CombatCameraController.instance.SetTarget(transform);
+			if(target.Count == 1) {
+				FinishedAction();
+				yield break;
+			}
 			animHelp.StartWalk();
 			target.Reverse();
-			for (int i = 0; i < target.Count; i++) {
+			for (int i = 1; i < target.Count; i++) {
 				transform.LookAt(target[i].transform);
+				//moveDir = (target[i].transform.position - transform.position).normalized;
 				bool moving = true;
 				while (moving) {
 					transform.position += (target[i].transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
-					if ((transform.position - target[i].transform.position).magnitude < 0.2f) {
+					if ((transform.position - target[i].transform.position).magnitude < 0.5f) {
 						moving = false;
-						
 					}
+					/*if((target[i].transform.position - transform.position).normalized != moveDir) {
+						moving = false;
+					}*/
 					yield return new WaitForEndOfFrame();
 				}
 			}
@@ -291,6 +334,7 @@ namespace CombatWorld.Units {
 				yield break;
 			}*/
 			FinishedAction();
+			FaceForward();
 		}
 
 #pragma warning disable 0162
@@ -335,12 +379,24 @@ namespace CombatWorld.Units {
 			FinishedAction();
 		}
 
-		void OnMouseEnter() {
+		void OnMouseOver() {
 			TooltipHandler.instance.CreateTooltip(transform.position, this);
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor(currentNode.GetState());
 		}
 
 		void OnMouseExit() {
 			TooltipHandler.instance.CloseTooltip();
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor();
+		}
+
+		void OnDestroy() {
+			TooltipHandler.instance.CloseTooltip();
+		}
+
+		private void OnMouseDown() {
+			currentNode.HandleInput();
 		}
 	}
 }

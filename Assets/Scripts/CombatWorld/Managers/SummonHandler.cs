@@ -45,7 +45,7 @@ namespace CombatWorld
 			database = new ItemDatabase();
 			GameObject inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT);
 			if (inventory != null) {
-				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(4));
+				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(6));
 			}
 			else {
 				List<Item> p1Units;
@@ -171,6 +171,9 @@ namespace CombatWorld
 		public void GivePoints(int amount) {
 			summonPoints += amount;
 			UpdateButtonsAndText();
+			/*if(GameNotificationsSystem.instance != null){
+				GameNotificationsSystem.instance.DisplayMessage("You gained " + amount + " summon points!");
+			}*/
 		}
 
 		void UpdateButtonsAndText() {

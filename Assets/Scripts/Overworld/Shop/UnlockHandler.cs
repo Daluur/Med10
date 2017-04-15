@@ -24,13 +24,21 @@ namespace Overworld.Shops {
 		bool newUnlock = true;
 
 		private UnlockHandler() {
-			UnlockedUnits.Add(0);
-			UnlockedUnits.Add(12);
-			UnlockedUnits.Add(13);
-			UnlockedUnits.Add(1);
-			UnlockedUnits.Add(2);
-			UnlockedUnits.Add(3);
-			UnlockedUnits.Add(4);
+			List<int> savedUnlocks = SaveLoadHandler.Instance.GetUnlockedUnits();
+			if (savedUnlocks.Count != 0) {
+				foreach (int item in savedUnlocks) {
+					UnlockedUnits.Add(item);
+				}
+			}
+			else {
+				/*for (int i = 0; i < 14; i++) {
+					UnlockedUnits.Add (i);
+				}*/
+//				UnlockedUnits.Add(0);
+				UnlockedUnits.Add(12);
+				UnlockedUnits.Add(13);
+//				UnlockedUnits.Add(1);
+			}
 		}
 
 		public void UnlockUnitByID(int id) {

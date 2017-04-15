@@ -96,7 +96,7 @@ namespace CombatWorld.AI {
 			while (GameController.instance.WaitingForAction()) {
 				yield return new WaitForSeconds(0.2f);
 			}
-			StartCoroutine(AISummon.SpawnUnits());
+			StartCoroutine(AISummon.SpawnUnits(unitsToSummon));
 			while (AISummon.summoning) {
 				yield return new WaitForSeconds(0.2f);
 			}
@@ -155,16 +155,14 @@ namespace CombatWorld.AI {
 							task.score = AIScoringMethods.AttackCalculation(unit, task.toAttack);
 							if (AIUtilityMethods.IsUnitNextToAITower(task.toAttack.GetUnit()))
 								task.score *= 1000;
-							Debug.Log(task.score);
 						}
 						break;
 					case PossibleTasks.MoveAttack:
 						if (task.toAttack.HasTower())
-							task.score = 11 + ( offensiveFactor * 2 - defensiveFactor ) * 1000;
+							task.score = 11 + ( offensiveFactor * 2 - defensiveFactor ) * 1000000;
 						else if (task.toAttack.HasUnit()) {
 							distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
 							task.score = AIScoringMethods.AttackCalculation(unit, task.toAttack) + distance;
-							Debug.Log(task.score);
 						}
 						break;
 					case PossibleTasks.MoveAttackDefensive:

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,7 +33,6 @@ namespace Overworld {
 			if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER || !onTriggerEnter) {
 				return;
 			}
-			Debug.Log(onTriggerEnter);
 			randomEncounter.RandomEncounterOn(type, deckIDs);
 			Debug.Log("Rand encounter on with type: " + type);
 		}
@@ -42,6 +42,12 @@ namespace Overworld {
 				return;
 			}
 			randomEncounter.RandomEncounterOff();
+		}
+
+		protected override void OnMouseEnter() {
+		}
+
+		protected override void OnMouseExit() {
 		}
 	}
 }

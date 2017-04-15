@@ -10,8 +10,10 @@ namespace Overworld {
 		private NavMeshAgent agent;
 		private Animator animator;
 		public GameObject clickMoveToObject;
+		public float rotatedOffSetYClickMoveAnim = 0.06f;
 
-		void Start() {
+		protected override void Awake() {
+			base.Awake();
 			Register(this, KeyCode.Mouse0);
 			agent = GetComponent<NavMeshAgent>();
 			if (agent == null) {
@@ -26,9 +28,13 @@ namespace Overworld {
 			animator = GetComponentInChildren<Animator>();
 		}
 
-		void PlayerMoveToMouseInput(Vector3 hitPoint) {
+		void PlayerMoveToMouseInput(Vector3 hitPoint, Vector3 hitNormal) {
 			if (agent.SetDestination(hitPoint)) {
-				Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
+				var go = (GameObject)Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
+				if (hitNormal.y < 1) {
+					go.transform.position += new Vector3(0, rotatedOffSetYClickMoveAnim, 0);
+				}
+				go.transform.rotation =Quaternion.FromToRotation(Vector3.up, hitNormal);
 			}
 		}
 
@@ -37,33 +43,40 @@ namespace Overworld {
 		}
 
 		public void TemporaryStop() {
-			agent.Stop();
+			agent.isStopped = true;
 		}
 
 		public void ResumeFromTemporaryStop() {
-			agent.Resume();
+			//agent.Resume();
+			agent.isStopped = false;
 		}
 
-		/// <summary>
-		/// Stops the player, specific usage of DoAction for the player
-		/// </summary>
+		public void Stop() {
+			agent.isStopped = true;
+			agent.ResetPath();
+		}
+
 		public void DoAction() {
-			//Debug.Log("ASDASD");
-			//agent.Stop();
-			//agent.ResetPath();
+
 		}
 
-		public void DoAction<T>(T param) {
-			agent.Resume();
+		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
+			agent.isStopped = false;
 			if (param.GetType() != typeof(Vector3)) {
 				Debug.LogError("To move the character give it a Vector3 to move to");
 				return;
 			}
-			PlayerMoveToMouseInput((Vector3)(param as Vector3?));
+			PlayerMoveToMouseInput((Vector3)(param as Vector3?) , m);
 		}
+
+
 
 		public ControlUIElement GetControlElement() {
 			return null;
+		}
+
+		public void TeleportPlayer(Vector3 pos) {
+			agent.Warp(pos);
 		}
 	}
 }

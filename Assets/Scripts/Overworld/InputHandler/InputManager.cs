@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Overworld {
 	public class InputManager : MonoBehaviour {
@@ -21,17 +22,35 @@ namespace Overworld {
 		[HideInInspector]
 		public bool inGameMenuOpen = false;
 
+		public GameObject interactionIndicator;
+		public Vector3 fakePosForInteractionIndicator = new Vector3(1000, 1000, 1000);
+		private Vector3 hitNormal = Vector3.zero;
+
 		// Use this for initialization
 		void Start () {
+			AudioHandler.instance.StartOWBGMusic();
 			layerMaskPlayer = (1 << LayerMask.NameToLayer(LayerConstants.GROUNDLAYER));
 			layerMaskInteractable = ( 1 << LayerMask.NameToLayer(LayerConstants.INTERACTABLELAYER) );
 			player = GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER).GetComponent<PlayerMovementOW>();
 			playerInteractable = player.gameObject.GetComponent<IInteractable>();
+			interactionIndicator = (GameObject) Instantiate(interactionIndicator, fakePosForInteractionIndicator,
+				Quaternion.identity);
 		}
 
 		// Update is called once per frame
 		void Update () {
 			HandleInputs();
+		}
+
+		void OnEnable() {
+			ResetInteractionIndicatorFocus();
+			if (AudioHandler.instance != null) {
+				AudioHandler.instance.StartOWBGMusic();
+			}
+		}
+
+		public void FakeInput(KeyCode keyCode) {
+			HandleSpecificKeys(keyCode);
 		}
 
 		void HandleInputs() {
@@ -44,6 +63,9 @@ namespace Overworld {
 
 		private void HandleSpecificKeys(KeyCode keyCode) {
 			if(inGameMenuOpen && !keyCode.Equals(KeyCode.Escape)){
+				return;
+			}
+			if (keyCode.Equals(KeyCode.Mouse0) && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) {
 				return;
 			}
 			switch (keyCode) {
@@ -89,11 +111,13 @@ namespace Overworld {
 			}
 			if (!isMouseBlocked) {
 				if (Physics.Raycast(ray, out hit, 500f, layerMaskPlayer)) {
-					playerMoveTo = hit.point;
-					distributeTo.Add(playerInteractable);
+					if(Vector3.Dot(hit.normal.normalized, Vector3.up.normalized) > 0.3f){
+						playerMoveTo = hit.point;
+						distributeTo.Add(playerInteractable);
+						hitNormal = hit.normal.normalized;
+					}
 				}
 			}
-
 		}
 
 		private void FillDistributer(KeyCode keyCode) {
@@ -132,7 +156,7 @@ namespace Overworld {
 
 		private void DistributeAction(Vector3 playerMoveTo) {
 			foreach (var interactable in distributeTo) {
-				interactable.DoAction(playerMoveTo);
+				interactable.DoAction(playerMoveTo, hitNormal);
 			}
 			distributeTo.Clear();
 		}
@@ -182,6 +206,7 @@ namespace Overworld {
 
 		public void BlockMouseUI() {
 			uiMouseLock.Add(true);
+			StopPlayer();
 			isMouseBlocked = true;
 		}
 
@@ -204,5 +229,20 @@ namespace Overworld {
 		public void ResumePlayer() {
 			player.ResumeFromTemporaryStop();
 		}
+
+		public void TakeInteractionIndicatorFocus(GameObject go) {
+			Debug.Log(go.name);
+			interactionIndicator.transform.position = go.transform.position;
+			interactionIndicator.transform.position += new Vector3(0,0.075f,0);
+			RaycastHit hit;
+			if (Physics.Raycast(go.transform.position, -Vector3.up, out hit)) {
+				interactionIndicator.transform.position = hit.point;
+			}
+		}
+
+		public void ResetInteractionIndicatorFocus() {
+			interactionIndicator.transform.position = fakePosForInteractionIndicator;
+		}
+
 	}
 }

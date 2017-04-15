@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using Overworld;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,8 +29,11 @@ namespace Overworld {
 		}
 
 		public void CheckDistance() {
-			if (!isRunning)
+			if (!isRunning){
 				StartCoroutine(IsCloseEnough());
+				inputManager.TakeInteractionIndicatorFocus(gameObject);
+			}
+
 		}
 
 		private IEnumerator IsCloseEnough() {
@@ -37,11 +41,13 @@ namespace Overworld {
 			while (meClicked) {
 				if (DistanceBetweenObjAndPlayer()) {
 					PerformClosenessAction();
+					inputManager.ResetInteractionIndicatorFocus();
 					isRunning = false;
 					yield break;
 				}
 				yield return new WaitForSeconds(0.3f);
 			}
+			inputManager.ResetInteractionIndicatorFocus();
 			isRunning = false;
 			yield return null;
 		}
@@ -65,6 +71,13 @@ namespace Overworld {
 			return toScale;
 		}
 
+		protected virtual void OnMouseEnter() {
+			CursorSingleton.instance.SetCursor(gameObject);
+		}
 
+		protected virtual void OnMouseExit() {
+			CursorSingleton.instance.SetCursor();
+
+		}
 	}
 }

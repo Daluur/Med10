@@ -34,6 +34,17 @@ namespace CombatWorld.Map {
 			return neighbours;
 		}
 
+		public bool HasAttackableNeighbour() {
+			if (HasUnit()) {
+				foreach (Node node in neighbours) {
+					if ((node.HasUnit() && node.GetUnit().GetTeam() != GetUnit().GetTeam()) || (node.HasTower() && node.GetOccupant().GetTeam() != GetUnit().GetTeam())) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		#endregion
 
 		#region occupantCode
@@ -90,7 +101,12 @@ namespace CombatWorld.Map {
 					GetComponentInChildren<Renderer>().material.color = Color.green;
 					break;
 				case HighlightState.NoMoreMoves:
-					GetComponentInChildren<Renderer>().material.color = Color.blue;
+					if (HasAttackableNeighbour() || (GetUnit().IsStoneUnit() && !GetUnit().turnedToStone)) {
+						GetComponentInChildren<Renderer>().material.color = Color.blue;
+					}
+					else {
+						GetComponentInChildren<Renderer>().material.color = Color.black;
+					}
 					break;
 				case HighlightState.NotMoveable:
 					GetComponentInChildren<Renderer>().material.color = Color.black;
@@ -106,13 +122,35 @@ namespace CombatWorld.Map {
 			}
 		}
 
+		public HighlightState GetState() {
+			return state;
+		}
+
 		public void ResetState() {
 			SetState(HighlightState.None);
 		}
 
 		#endregion
+		
+		#region Cursor
+
+		private void OnMouseOver() {
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor(state);
+		}
+
+		private void OnMouseExit() {
+			if(CursorSingleton.instance!=null)
+				CursorSingleton.instance.SetCursor();
+		}
+
+		#endregion
 
 		#region Input
+
+		private void OnMouseDown() {
+			HandleInput();
+		}
 
 		public virtual void HandleInput() {
 			switch (state) {

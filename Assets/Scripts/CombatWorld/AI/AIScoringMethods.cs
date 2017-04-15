@@ -3,7 +3,7 @@ using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 using UnityEngine;
-//ddfgh
+
 namespace CombatWorld.AI {
 	public class AIScoringMethods  {
 		private static Pathfinding pathfinding = new Pathfinding();
