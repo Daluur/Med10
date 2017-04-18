@@ -42,13 +42,6 @@ public class QuestManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if (Input.GetKeyDown(KeyCode.K)) {
-			CompleteQuest (currentQuest);
-		}
-		if (Input.GetKeyDown(KeyCode.P)) {
-			gate1.gameObject.transform.localEulerAngles = new Vector3(0,-135,0);
-			gate2.gameObject.transform.localEulerAngles = new Vector3(0,-45,0);
-		}
 		if (Input.GetKeyDown(KeyCode.L)) {
 			fog.SetActive (false);
 		}
@@ -76,6 +69,14 @@ public class QuestManager : MonoBehaviour {
 		currentQuest++;
 		AudioHandler.instance.PlayQuestComplete();
 		questList [currentQuest].Progress = Quest.QuestProgress.DONE;
+
+		if (id == 0) {
+			gate1.gameObject.transform.localEulerAngles = new Vector3(0,-135,0);
+			gate2.gameObject.transform.localEulerAngles = new Vector3(0,-45,0);
+		} 
+		else if (id == 2) {
+			fog.SetActive (false);
+		}
 				
 		questTitle.GetComponent<Text> ().text = questList [currentQuest].Title;
 		questDescription.GetComponent<Text> ().text = questList [currentQuest].Description;

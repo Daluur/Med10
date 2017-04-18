@@ -115,6 +115,7 @@ namespace Overworld {
 		//Add things here if they need to happen when a player wins a battle
 		public void Won() {
 			AwardCurrency();
+			QuestManager.questManager.CompleteQuest (encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			ProcessEncounteredObject();
 		}
 
