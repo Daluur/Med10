@@ -911,11 +911,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 956195cb696a2af4ca5d616bd2635ef0, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &664362666 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1710159462820168, guid: aba21f05b666bde488d0d6e59e6cd236,
-    type: 2}
-  m_PrefabInternal: {fileID: 1482706835}
 --- !u!1 &677143692 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1766258740416850, guid: bd7b17105770b244c9807ad7623c75c9,
@@ -1124,12 +1119,12 @@ Prefab:
     - target: {fileID: 224807318188038394, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.9894737
       objectReference: {fileID: 0}
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -15746.268
+      value: -15756.89
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1154,7 +1149,7 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -14.682743
+      value: -14.787321
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1164,12 +1159,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 15.365486
+      value: 15.574642
       objectReference: {fileID: 0}
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 29.365486
+      value: 29.574642
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1629,6 +1624,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aba21f05b666bde488d0d6e59e6cd236, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1482706836 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4079644097719058, guid: aba21f05b666bde488d0d6e59e6cd236,
+    type: 2}
+  m_PrefabInternal: {fileID: 1482706835}
 --- !u!1001 &1498546375
 Prefab:
   m_ObjectHideFlags: 0
@@ -2172,7 +2172,7 @@ GameObject:
   - component: {fileID: 1697216397}
   - component: {fileID: 1697216396}
   - component: {fileID: 1697216400}
-  - component: {fileID: 1697216401}
+  - component: {fileID: 1697216395}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2180,6 +2180,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1697216395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1697216394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e15a78c66aaa842adbd0fbb3572a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  following: {fileID: 1482706836}
+  DefinedOffset: {x: 0, y: 2.4, z: 3.6}
+  distanceToPlayer: 7
 --- !u!124 &1697216396
 Behaviour:
   m_ObjectHideFlags: 0
@@ -2251,23 +2265,6 @@ Skybox:
   m_GameObject: {fileID: 1697216394}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: aa5b6f5a646878f47a786335b2a9ba98, type: 2}
---- !u!114 &1697216401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1697216394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 822d6ec9e4e411649a350dda0b693c4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  following: {fileID: 664362666}
-  offSet: -9
-  yOffset: 6
-  maxZoom: 25.5
-  minZoom: 5.5
-  speed: 4
 --- !u!1 &1728680060
 GameObject:
   m_ObjectHideFlags: 0
