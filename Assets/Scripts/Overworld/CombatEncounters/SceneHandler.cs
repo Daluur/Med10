@@ -135,7 +135,7 @@ namespace Overworld {
 
 		public void Lost() {
 			CheckpointManager.instance.TeleportPlayerToLatestCheckpoint();
-			LearnedEverything();
+			MoreToLearn();
 		}
 
 		private void AwardCurrency() {
