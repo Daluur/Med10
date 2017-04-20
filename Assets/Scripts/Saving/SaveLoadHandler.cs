@@ -148,6 +148,10 @@ public class SaveLoadHandler {
 
 	#endregion
 
+	public int GetCurrentIsland() {
+		return checkpoint;
+	}
+
 	public void Reset() {
 		StartingValues();
 		WriteToJSON();

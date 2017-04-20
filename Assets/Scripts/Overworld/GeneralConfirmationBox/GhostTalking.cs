@@ -27,10 +27,10 @@ namespace Overworld {
 			Register(this);
 		}
 
-		public void ShowPopUp(string text, int ghostID) {
+		public void ShowPopUp(string text) {
 			inputManager.StopPlayer();
 			displayText.text = text;
-			ghostPic.sprite = ghostPictures[ghostID];
+			ghostPic.sprite = ghostPictures[SaveLoadHandler.Instance.GetCurrentIsland()];
 			gameObject.SetActive(true);
 			StartCoroutine(WaitWithPopUp());
 		}
