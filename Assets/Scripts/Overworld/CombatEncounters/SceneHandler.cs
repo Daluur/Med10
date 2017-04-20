@@ -135,7 +135,7 @@ namespace Overworld {
 
 		public void Lost() {
 			CheckpointManager.instance.TeleportPlayerToLatestCheckpoint();
-			MoreToLearn();
+			GhostTalking.instance.ShowPopUp("You a fucking newb!");
 		}
 
 		private void AwardCurrency() {
