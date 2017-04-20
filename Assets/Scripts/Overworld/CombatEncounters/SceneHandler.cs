@@ -117,10 +117,25 @@ namespace Overworld {
 			AwardCurrency();
 			QuestManager.questManager.CompleteQuest (encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			ProcessEncounteredObject();
+			if (true) { // Change this to bool for check learned all on the island.
+				LearnedEverything();
+			}
+			else {
+				MoreToLearn();
+			}
+		}
+
+		void LearnedEverything() {
+			encounterObject.GetComponent<StaticEncounter>().Beaten();
+		}
+
+		void MoreToLearn() {
+			encounterObject.GetComponent<StaticEncounter>().MoveToNewSpawnPos();
 		}
 
 		public void Lost() {
 			CheckpointManager.instance.TeleportPlayerToLatestCheckpoint();
+			LearnedEverything();
 		}
 
 		private void AwardCurrency() {
@@ -129,7 +144,6 @@ namespace Overworld {
 
 		private void ProcessEncounteredObject() {
 			SaveLoadHandler.Instance.BeatAStaticEncounter(encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
-			Destroy(encounterObject);
 		}
 
 	}

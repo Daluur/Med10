@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Overworld;
 using UnityEngine;
@@ -9,9 +8,13 @@ namespace Overworld {
 	public class StaticEncounter : Encounter, IInteractable {
 
 		public int StaticEncounterID = -1;
+		public Transform[] spawnPoints;
+		private int currentPos;
+		public Teleporter teleporterPad;
 
 		// Use this for initialization
 		void Start () {
+			currentPos = 0;
 			if (SaveLoadHandler.Instance.AmIDefeated(StaticEncounterID)) {
 				Destroy(gameObject);
 				return;
@@ -77,5 +80,22 @@ namespace Overworld {
 			Tooltip.instance.Deactivate();
 		}
 
+		public void MoveToNewSpawnPos() {
+			if(spawnPoints.Length == 0) {
+				Debug.LogError("This encounter has no spawnpoints!" + gameObject.name);
+				return;
+			}
+			int newPos;
+			do {
+				newPos = Random.Range(0, spawnPoints.Length);
+			} while (newPos == currentPos);
+			currentPos = newPos;
+			transform.position = spawnPoints[currentPos].position;
+		}
+
+		public void Beaten() {
+			teleporterPad.Activate();
+			Destroy(gameObject);
+		}
 	}
 }
