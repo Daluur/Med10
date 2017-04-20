@@ -297,9 +297,6 @@ namespace CombatWorld {
 			SelectTeamNodes();
 		}
 
-		public void Forfeit() {
-			StartCoroutine(Unload());
-		}
 
 		private IEnumerator Unload() {
 			FadingLoadingScreen.instance.StartFadeOut();
@@ -492,22 +489,34 @@ namespace CombatWorld {
 		}
 
 		void Won() {
+			won = true;
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
 			AudioHandler.instance.PlayWinSound();
-			SceneHandler.instance.Won();
 		}
 
 		void Lost() {
+			won = false;
 			winLoseText.text = "YOU LOST!";
 			winLosePanel.SetActive(true);
 			AudioHandler.instance.PlayLoseSound();
-			SceneHandler.instance.Lost();
 		}
 
 		public void GiveUp() {
 			Lost();
 		}
+
+		public void Forfeit() {
+			StartCoroutine(Unload());
+			if (won) {
+				SceneHandler.instance.Won();
+			}
+			else {
+				SceneHandler.instance.Lost();
+			}
+		}
+
+		bool won;
 
 		#endregion
 
