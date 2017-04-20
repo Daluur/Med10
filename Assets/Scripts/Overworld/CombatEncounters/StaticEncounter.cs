@@ -16,7 +16,7 @@ namespace Overworld {
 		void Start () {
 			currentPos = 0;
 			if (SaveLoadHandler.Instance.AmIDefeated(StaticEncounterID)) {
-				Destroy(gameObject);
+				Beaten();
 				return;
 			}
 			if (deckIDs == null || deckIDs.Length == 0) {
