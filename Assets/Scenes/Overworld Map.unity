@@ -410,6 +410,31 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114668225904304826, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224634962445416726, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224634962445416726, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224733460769066204, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 224733460769066204, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 82.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1a55a64cbe820b243804302ca7616fb2, type: 2}
   m_IsPrefabParent: 0
@@ -684,6 +709,10 @@ Prefab:
     - target: {fileID: 1207321222830190, guid: fda0ba6a9c601fb40b0a1bcb2cc5fc3d, type: 2}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541938640793086, guid: fda0ba6a9c601fb40b0a1bcb2cc5fc3d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fda0ba6a9c601fb40b0a1bcb2cc5fc3d, type: 2}
@@ -1119,12 +1148,12 @@ Prefab:
     - target: {fileID: 224807318188038394, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.9894737
+      value: 0.98947376
       objectReference: {fileID: 0}
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -15756.89
+      value: -16041.477
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1149,7 +1178,7 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -14.787321
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1159,12 +1188,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 15.574642
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 29.574642
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1352,9 +1381,77 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 1903267510}
+    - target: {fileID: 1542465368245690, guid: 205598e2e027df94eac4afdcad9351dc, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 205598e2e027df94eac4afdcad9351dc, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1050781586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1050781587}
+  - component: {fileID: 1050781589}
+  - component: {fileID: 1050781588}
+  m_Layer: 0
+  m_Name: TutorialShop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1050781587
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1050781586}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.1941986, y: -1.0974542, z: 0.17280579}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2003001516}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1050781588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1050781586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
+  open: 0
+  playerOW: {fileID: 0}
+  isRunning: 0
+  meClicked: 0
+  hasGeneralConfirmationBox: 0
+  typeOfGeneralInformationTrigger: 0
+  typeOfGeneralInformation: 0
+  displayText: Click on the summoning tower to enter the shop.
+  buttonOne: OKAY
+  buttonTwo: CANCEL
+--- !u!65 &1050781589
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1050781586}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1082847728 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1242809551423298, guid: f90e4e03ccde4564ea82a2a19cd98aea,
@@ -1510,6 +1607,10 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 1688948099}
+    - target: {fileID: 1542465368245690, guid: 205598e2e027df94eac4afdcad9351dc, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 205598e2e027df94eac4afdcad9351dc, type: 2}
   m_IsPrefabParent: 0
@@ -1844,6 +1945,22 @@ Prefab:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1916778042942450, guid: f90e4e03ccde4564ea82a2a19cd98aea, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487793018079068, guid: f90e4e03ccde4564ea82a2a19cd98aea, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442176402263388, guid: f90e4e03ccde4564ea82a2a19cd98aea, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1294821158974164, guid: f90e4e03ccde4564ea82a2a19cd98aea, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f90e4e03ccde4564ea82a2a19cd98aea, type: 2}
   m_IsPrefabParent: 0
@@ -1930,7 +2047,7 @@ GameObject:
   - component: {fileID: 1641945959}
   - component: {fileID: 1641945957}
   m_Layer: 0
-  m_Name: TutorialTrigger
+  m_Name: TutorialMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1955,7 +2072,7 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: Tutorial Test
+  displayText: Click on a ground tile to move your character.
   buttonOne: OKAY
   buttonTwo: CANCEL
 --- !u!65 &1641945959
@@ -1976,12 +2093,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1641945956}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.88, y: 0.6, z: 73.01}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.8058017, y: -1.0974542, z: 0.17280579}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 2003001516}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1688948098
 Prefab:
@@ -2152,6 +2269,11 @@ Prefab:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 114055166398857104, guid: 66d383c36f6a3d04e94d38be028d583b,
+        type: 2}
+      propertyPath: teleporterPad
+      value: 
+      objectReference: {fileID: 1751759066}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 66d383c36f6a3d04e94d38be028d583b, type: 2}
   m_IsPrefabParent: 0
@@ -2250,13 +2372,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1697216394}
-  m_LocalRotation: {x: 0.010156076, y: 0.9379856, z: -0.34542686, w: 0.027572662}
+  m_LocalRotation: {x: 0, y: 0.93839055, z: -0.34557667, w: 0}
   m_LocalPosition: {x: 1.1426642, y: 6.111055, z: 82.44938}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 27.614002, y: 172.72401, z: 0}
+  m_LocalEulerAnglesHint: {x: 40.434002, y: 180, z: 0}
 --- !u!45 &1697216400
 Skybox:
   m_ObjectHideFlags: 0
@@ -2293,6 +2415,70 @@ Transform:
   m_Father: {fileID: 1924187836}
   m_RootOrder: 97
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1748524224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1748524225}
+  - component: {fileID: 1748524227}
+  - component: {fileID: 1748524226}
+  m_Layer: 0
+  m_Name: TutorialEncounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1748524225
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1748524224}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.19, y: -1.0974542, z: 8.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2003001516}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1748524226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1748524224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
+  open: 0
+  playerOW: {fileID: 0}
+  isRunning: 0
+  meClicked: 0
+  hasGeneralConfirmationBox: 0
+  typeOfGeneralInformationTrigger: 0
+  typeOfGeneralInformation: 0
+  displayText: Click on an enemy to engage in combat.
+  buttonOne: OKAY
+  buttonTwo: CANCEL
+--- !u!65 &1748524227
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1748524224}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1751759066 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114484445277134710, guid: 205598e2e027df94eac4afdcad9351dc,
@@ -2365,6 +2551,103 @@ Transform:
   m_PrefabParentObject: {fileID: 4163322729579558, guid: 956195cb696a2af4ca5d616bd2635ef0,
     type: 2}
   m_PrefabInternal: {fileID: 659228258}
+--- !u!1 &1962160751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1962160752}
+  - component: {fileID: 1962160754}
+  - component: {fileID: 1962160753}
+  m_Layer: 0
+  m_Name: TutorialEncounter (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1962160752
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1962160751}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.19, y: -1.0974542, z: 8.169998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2003001516}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1962160753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1962160751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
+  open: 0
+  playerOW: {fileID: 0}
+  isRunning: 0
+  meClicked: 0
+  hasGeneralConfirmationBox: 0
+  typeOfGeneralInformationTrigger: 1
+  typeOfGeneralInformation: 0
+  displayText: While hoevering over the enemy you can see its difficulty and what
+    type units it has.
+  buttonOne: OKAY
+  buttonTwo: CANCEL
+--- !u!65 &1962160754
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1962160751}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2003001515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2003001516}
+  m_Layer: 0
+  m_Name: Tutorials
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2003001516
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2003001515}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.6858017, y: 1.6974542, z: 72.8372}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1641945960}
+  - {fileID: 1050781587}
+  - {fileID: 1748524225}
+  - {fileID: 1962160752}
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2008217871
 Prefab:
   m_ObjectHideFlags: 0
