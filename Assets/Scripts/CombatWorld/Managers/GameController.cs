@@ -11,10 +11,6 @@ using UnityEngine.SceneManagement;
 
 namespace CombatWorld {
 	public class GameController : Singleton<GameController> {
-		bool first = true;
-		bool secondTurn = false;
-		bool thirdTurn = false;
-
 		public GameObject winLosePanel;
 		public Text winLoseText;
 		public Button endTurnButton;
@@ -73,13 +69,11 @@ namespace CombatWorld {
 			GameObject go = Instantiate(maps[Random.Range(0, maps.Count)], transform.position, Quaternion.identity, transform) as GameObject;
 			go.transform.position = go.transform.position - new Vector3(go.GetComponent<MapInfo>().mapLength, 0, 0);
 			CombatCameraController.instance.setBoundary(new Vector2(-go.GetComponent<MapInfo>().mapLength, go.GetComponent<MapInfo>().mapLength));
-			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
+//			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
 
-			if (first) {
-				first = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("Your goal is to destroy the enemies towers, before it destroys yours.\n\n" +
-					"To engage in battle, you must first summon a unit to the battlefield. Summoning costs 'summon points', which are displayed next to the units name. You can only summon units to the square summon pads on your side of the map.\n\n" +
-					"Click on a unit from the summon menu that you can afford, and then on an available summon pad. Summoning a unit counts as a move for that unit, and it cannot perform any more actions that round.", "Okay");
+			if (TutorialHandler.instance.combatFirstTurn) {
+				GeneralConfirmationBox.instance.ShowPopUp ("Your goal is to destroy the enemy towers.\n" +
+					"Click a unit and then a square summon pad to summon. This costs 'summon points', displayed next to the units name", "Okay");
 			}
 		}
 
@@ -165,18 +159,6 @@ namespace CombatWorld {
 				if (node.HasUnit() && node.GetOccupant().GetTeam() == currentTeam){
 					node.GetUnit().NewTurn();
 				}
-			}
-
-			if (first) {
-				first = false;
-				secondTurn = true;
-			}
-			if (secondTurn) {
-				secondTurn = false;
-				thirdTurn = true;
-			}
-			if (thirdTurn) {
-				thirdTurn = false;
 			}
 		}
 
@@ -374,22 +356,30 @@ namespace CombatWorld {
 		}
 
 		private void PlayerTurn() {
+			if (TutorialHandler.instance.combatFirstTurn) {
+				TutorialHandler.instance.combatFirstTurn = false;
+				TutorialHandler.instance.combatSecondTurn = true;
+			}
+
 			TurnIndicator.text = "Your turn";
 			GiveTurnSummonPoints();
 			StartCoroutine(HideText());	
-			if (secondTurn) {
-				secondTurn = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("You will gain 2 summon points at the start of your turn each round.\n\nClick on a summoned unit to move it.", "Okay");
+
+			if (TutorialHandler.instance.combatSecondTurn) {
+				GeneralConfirmationBox.instance.ShowPopUp ("You will gain 2 summon points at the start of your turn each round.\nClick on a summoned unit to move it.", "Okay");
 			}
-			if (thirdTurn) {
-				thirdTurn = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("Attacking, even if you haven't moved before doing it, ends the units turn.\n\n" +
-					"The yellow number above your unit indicates how much damage it will do when attacking.\n\n" +
-					"The red line is the health bar, which indicates how much damage the unit can take. Hover over the unit to see exact health points.", "Okay");
+			if (TutorialHandler.instance.combatThirdTurn) {
+				TutorialHandler.instance.combatThirdTurn = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("Attacking ends the units turn.\n" +
+					"The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "Okay");
 			}
 		}
 
 		private void AITurn() {
+			if (TutorialHandler.instance.combatSecondTurn) {
+				TutorialHandler.instance.combatSecondTurn = false;
+				TutorialHandler.instance.combatThirdTurn = true;
+			}
 			TurnIndicator.text = "Enemy turn";
 			StartCoroutine(HideText());
 		}
@@ -522,6 +512,10 @@ namespace CombatWorld {
 		}
 
 		void Won() {
+			if (TutorialHandler.instance.firstWin) {
+				TutorialHandler.instance.firstWin = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("Winning a battle will grant you gold and new summon recipes", "Okay");
+			}
 			won = true;
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
@@ -529,6 +523,10 @@ namespace CombatWorld {
 		}
 
 		void Lost() {
+			if (TutorialHandler.instance.firstLoss) {
+				TutorialHandler.instance.firstLoss = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("Losing a battle will send you back to your last checkpoint.", "Okay");
+			}
 			won = false;
 			winLoseText.text = "YOU LOST!";
 			winLosePanel.SetActive(true);

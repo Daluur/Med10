@@ -9,9 +9,6 @@ using UnityEngine.EventSystems;
 
 namespace Overworld {
 	public class InputManager : MonoBehaviour {
-
-		bool firstInven = true;
-
 		private List<bool> uiMouseLock = new List<bool>();
 		private bool isMouseBlocked = false;
 		private LayerMask layerMaskPlayer, layerMaskInteractable;
@@ -88,9 +85,9 @@ namespace Overworld {
 				case KeyCode.I:
 					FillDistributer (keyCode);
 					DistributeAction ();
-				if (firstInven) {
-					firstInven = false;
-					GeneralConfirmationBox.instance.ShowPopUp ("You are able to carry 12 units at a time.\n\nThe 6 slots with a green glow are your combat slots, these are the units that you will bring with you to battle.\n\nDrag units to different slots to change your battle lineup.", "Okay");
+				if (TutorialHandler.instance.firstInventory) {
+					TutorialHandler.instance.firstInventory = false;
+					GeneralConfirmationBox.instance.ShowPopUp ("You can carry 12 units at a time.\nThe 6 glowing slots are your combat slots, you will bring these units to battle.\nDrag units to different slots to change lineup.", "Okay");
 				}
 				break;
 				case KeyCode.Q:
@@ -237,7 +234,7 @@ namespace Overworld {
 		}
 
 		public void TakeInteractionIndicatorFocus(GameObject go) {
-			Debug.Log(go.name);
+//			Debug.Log(go.name);
 			interactionIndicator.transform.position = go.transform.position;
 			interactionIndicator.transform.position += new Vector3(0,0.075f,0);
 			RaycastHit hit;

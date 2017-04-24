@@ -11,8 +11,6 @@ namespace CombatWorld
 {
 	public class SummonHandler : Singleton<SummonHandler>
 	{
-		bool first = true;
-
 		public Text summonPointText;
 		public GameObject ButtonTemplate;
 		public GameObject buttonPanel;
@@ -72,9 +70,9 @@ namespace CombatWorld
 			summonPoints -= amount;
 			UpdateButtonsAndText();
 
-			if (first) {
-				first = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("When you have performed all your moves, end your turn, after which the opponent will take theirs.", "Okay");
+			if (TutorialHandler.instance.summonFirst) {
+				TutorialHandler.instance.summonFirst = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("Units cannot make other moves the round they are summoned.\nWhen you have performed all your moves, end your turn, after which the opponent will take theirs.", "Okay");
 			}
 		}
 

@@ -207,10 +207,10 @@ namespace CombatWorld.AI {
 				}
 				if(ind!=-1&&calculatedSummonPoints-units[ind].cost>=0){
 					calculatedSummonPoints -= units[ind].cost;
-					Debug.Log("Wanting to summon: " + units[ind].model.name + " for: " + units[ind].cost + " " + calculatedSummonPoints);
+//					Debug.Log("Wanting to summon: " + units[ind].model.name + " for: " + units[ind].cost + " " + calculatedSummonPoints);
 					index.Add(ind);
 					mostOfType = RelativeMostOfType(units[ind].type);
-					Debug.Log(mostOfType);
+//					Debug.Log(mostOfType);
 				}
 				iterator++;
 			}

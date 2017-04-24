@@ -83,7 +83,7 @@ namespace CombatWorld.AI {
 
 
 		private static void MoveTo(Node moveTo, Unit unit) {
-			Debug.Log("moving to: " + moveTo);
+//			Debug.Log("moving to: " + moveTo);
 			var path = unit.GetShadow() ? pathFinding.GetPathFromToWithoutOccupants(unit.GetNode(), moveTo) : pathFinding.GetPathFromTo(unit.GetNode(), moveTo);
 			if (path!=null) {
 				unit.Move(path);
@@ -92,14 +92,14 @@ namespace CombatWorld.AI {
 
 		private static void MoveToAndAttack(Node moveTo, Node toAttack, Unit unit) {
 			performingAction = true;
-			Debug.Log("Move and attack");
+//			Debug.Log("Move and attack");
 			var path = unit.GetShadow() ? pathFinding.GetPathFromToWithoutOccupants(unit.GetNode(), moveTo) : pathFinding.GetPathFromTo(unit.GetNode(), moveTo);
 			unit.Move(path, false);
 			unit.StartCoroutine(MoveAndAttackWait(unit, toAttack));
 		}
 
 		private static void Attack(Node toAttack, Unit unit) {
-			Debug.Log("Attack");
+		//	Debug.Log("Attack");
 			unit.Attack(toAttack.GetOccupant());
 		}
 

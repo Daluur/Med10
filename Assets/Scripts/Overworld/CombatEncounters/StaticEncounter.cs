@@ -94,6 +94,7 @@ namespace Overworld {
 		}
 
 		public void Beaten() {
+			GeneralConfirmationBox.instance.ShowPopUp ("The portal to the next island is now open.", "Okay");
 			teleporterPad.Activate();
 			Destroy(gameObject);
 		}

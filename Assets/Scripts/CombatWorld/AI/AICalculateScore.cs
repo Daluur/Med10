@@ -65,9 +65,9 @@ namespace CombatWorld.AI {
 		private IEnumerator WaitForActions() {
 			offensiveFactor = OffensiveFactorCalculation();
 			defensiveFactor = DefensiveFactorCalculation();
-			Debug.Log("Turn started with offensive: " + offensiveFactor + " and defensive: " + defensiveFactor + " and: " + summonPoints);
+//			Debug.Log("Turn started with offensive: " + offensiveFactor + " and defensive: " + defensiveFactor + " and: " + summonPoints);
 			foreach (var unit in aiUnits) {
-				Debug.Log("we are now at offensive: " + offensiveFactor + " and defensive: " + defensiveFactor);
+//				Debug.Log("we are now at offensive: " + offensiveFactor + " and defensive: " + defensiveFactor);
 				while (GameController.instance.WaitingForAction()) {
 					yield return new WaitForSeconds(0.1f);
 				}
@@ -97,7 +97,7 @@ namespace CombatWorld.AI {
 			while (AISummon.summoning) {
 				yield return new WaitForSeconds(0.2f);
 			}
-			Debug.Log("AI turn ended, summon points left: " + summonPoints);
+			//Debug.Log("AI turn ended, summon points left: " + summonPoints);
 			AIUtilityMethods.ResetTowerFocus();
 			GameController.instance.EndTurn();
 			RemoveDeadUnits();
@@ -130,7 +130,7 @@ namespace CombatWorld.AI {
 
 			if(toChoose != null)
 				Debug.Log("Chose: " + toChoose.task + " with end: "+toChoose.endNode+" with score: "+toChoose.score);
-			return toChoose;
+				return toChoose;
 		}
 
 		private void CalculateScore(Unit unit, List<AITask> tasks) {
@@ -204,7 +204,7 @@ namespace CombatWorld.AI {
 						task.score = 2;
 						break;
 					default:
-						Debug.Log("This task has not been implemented yet");
+						//Debug.Log("This task has not been implemented yet");
 						break;
 				}
 			}
@@ -250,7 +250,7 @@ namespace CombatWorld.AI {
 				}
 			}
 			if (atkNextToTowers != 0) {
-				Debug.Log(atkNextToTowers + " attackvalue next to towers");
+				//Debug.Log(atkNextToTowers + " attackvalue next to towers");
 				turnsToKillTowers = hpOfTowers / atkNextToTowers;
 			}
 			//Debug.Log("turns to kill towers" + turnsToKillTowers);

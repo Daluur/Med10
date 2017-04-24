@@ -9,8 +9,6 @@ using Overworld;
 
 namespace CombatWorld.Units {
 	public class Unit : MonoBehaviour, IEntity {
-		bool first = true;
-
 		[Tooltip("Name of the trigger. Useable: \nMelee Right Attack 01 \nMelee Right Attack 02 \nMelee Right Attack 03 \nMelee Left Attack 01 \nLeft Punch Attack \nRight Punch Attack \nProjectile Right Attack 01 \nCrossbow Attack \nCast Spell 01 \nCast Spell 02")]
 		public string attackName = "Melee Right Attack 01";
 		public GameObject projectile;
@@ -399,12 +397,11 @@ namespace CombatWorld.Units {
 
 		private void OnMouseDown() {
 			currentNode.HandleInput();
-			if (first) {
-				first = false;
-
-				GeneralConfirmationBox.instance.ShowPopUp ("The green spaces indicate where the unit can move to. Click on one of the spaces to move your unit to it.\n\n" +
-					"You can only move once with a unit per turn, it can however attack if it moves to a spot with an enemy unit next to it.\n\n" +
-					"The unit can move a maximum amount of spaces, which can be seen by hovering over the unit to reveal the stats.", "Okay");
+			print (TutorialHandler.instance.unitFirst);
+			if (TutorialHandler.instance.unitFirst) {
+				TutorialHandler.instance.unitFirst = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("Click on a green spot to move to it.\n" +
+					"You can only move once with a unit per turn, it can however attack if it moves to a spot with an enemy unit next to it.", "Okay");
 			}
 		}
 	}
