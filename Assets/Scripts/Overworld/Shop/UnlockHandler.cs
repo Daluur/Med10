@@ -36,7 +36,6 @@ namespace Overworld.Shops {
 				}*/
 //				UnlockedUnits.Add(0);
 				UnlockedUnits.Add(12);
-				UnlockedUnits.Add(13);
 //				UnlockedUnits.Add(1);
 			}
 		}

@@ -162,10 +162,9 @@ public class SaveLoadHandler {
 		InventoryUnits = new List<int>();
 		UnlockedUnits = new List<int>();
 
-		InventoryUnits.Add(12);
-		InventoryUnits.Add(13);
+		InventoryUnits.Add (12);
 
-		gold = 0;
+		gold = 50;
 		checkpoint = 0;
 	}
 }
