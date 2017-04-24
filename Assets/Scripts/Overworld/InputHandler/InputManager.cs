@@ -10,6 +10,8 @@ using UnityEngine.EventSystems;
 namespace Overworld {
 	public class InputManager : MonoBehaviour {
 
+		bool firstInven = true;
+
 		private List<bool> uiMouseLock = new List<bool>();
 		private bool isMouseBlocked = false;
 		private LayerMask layerMaskPlayer, layerMaskInteractable;
@@ -84,9 +86,13 @@ namespace Overworld {
 					DistributeAction();
 					break;
 				case KeyCode.I:
-					FillDistributer(keyCode);
-					DistributeAction();
-					break;
+					FillDistributer (keyCode);
+					DistributeAction ();
+				if (firstInven) {
+					firstInven = false;
+					GeneralConfirmationBox.instance.ShowPopUp ("You are able to carry 12 units at a time.\n\nThe 6 slots with a green glow are your combat slots, these are the units that you will bring with you to battle.\n\nDrag units to different slots to change your battle lineup.", "Okay");
+				}
+				break;
 				case KeyCode.Q:
 					FillDistributer(keyCode);
 					DistributeAction();

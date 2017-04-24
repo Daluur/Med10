@@ -5,11 +5,14 @@ using UnityEngine.UI;
 using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
+using Overworld;
 
 namespace CombatWorld
 {
 	public class SummonHandler : Singleton<SummonHandler>
 	{
+		bool first = true;
+
 		public Text summonPointText;
 		public GameObject ButtonTemplate;
 		public GameObject buttonPanel;
@@ -68,6 +71,11 @@ namespace CombatWorld
 		void SpendPoints(int amount) {
 			summonPoints -= amount;
 			UpdateButtonsAndText();
+
+			if (first) {
+				first = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("When you have performed all your moves, end your turn, after which the opponent will take theirs.", "Okay");
+			}
 		}
 
 		public void GivePoints(int amount) {

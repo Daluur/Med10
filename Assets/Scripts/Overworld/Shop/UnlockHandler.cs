@@ -34,7 +34,7 @@ namespace Overworld.Shops {
 				/*for (int i = 0; i < 14; i++) {
 					UnlockedUnits.Add (i);
 				}*/
-//				UnlockedUnits.Add(0);
+				UnlockedUnits.Add(0);
 				UnlockedUnits.Add(12);
 				UnlockedUnits.Add(13);
 //				UnlockedUnits.Add(1);

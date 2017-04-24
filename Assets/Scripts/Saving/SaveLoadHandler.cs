@@ -165,7 +165,7 @@ public class SaveLoadHandler {
 		InventoryUnits.Add(12);
 		InventoryUnits.Add(13);
 
-		gold = 0;
+		gold = 50;
 		checkpoint = 0;
 	}
 }

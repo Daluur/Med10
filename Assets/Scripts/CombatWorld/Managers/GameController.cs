@@ -11,6 +11,10 @@ using UnityEngine.SceneManagement;
 
 namespace CombatWorld {
 	public class GameController : Singleton<GameController> {
+		bool first = true;
+		bool secondTurn = false;
+		bool thirdTurn = false;
+
 		public GameObject winLosePanel;
 		public Text winLoseText;
 		public Button endTurnButton;
@@ -70,6 +74,13 @@ namespace CombatWorld {
 			go.transform.position = go.transform.position - new Vector3(go.GetComponent<MapInfo>().mapLength, 0, 0);
 			CombatCameraController.instance.setBoundary(new Vector2(-go.GetComponent<MapInfo>().mapLength, go.GetComponent<MapInfo>().mapLength));
 			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
+
+			if (first) {
+				first = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("Your goal is to destroy the enemies towers, before it destroys yours.\n\n" +
+					"To engage in battle, you must first summon a unit to the battlefield. Summoning costs 'summon points', which are displayed next to the units name. You can only summon units to the square summon pads on your side of the map.\n\n" +
+					"Click on a unit from the summon menu that you can afford, and then on an available summon pad. Summoning a unit counts as a move for that unit, and it cannot perform any more actions that round.", "Okay");
+			}
 		}
 
 		void StartGame() {
@@ -154,6 +165,18 @@ namespace CombatWorld {
 				if (node.HasUnit() && node.GetOccupant().GetTeam() == currentTeam){
 					node.GetUnit().NewTurn();
 				}
+			}
+
+			if (first) {
+				first = false;
+				secondTurn = true;
+			}
+			if (secondTurn) {
+				secondTurn = false;
+				thirdTurn = true;
+			}
+			if (thirdTurn) {
+				thirdTurn = false;
 			}
 		}
 
@@ -354,6 +377,16 @@ namespace CombatWorld {
 			TurnIndicator.text = "Your turn";
 			GiveTurnSummonPoints();
 			StartCoroutine(HideText());	
+			if (secondTurn) {
+				secondTurn = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("You will gain 2 summon points at the start of your turn each round.\n\nClick on a summoned unit to move it.", "Okay");
+			}
+			if (thirdTurn) {
+				thirdTurn = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("Attacking, even if you haven't moved before doing it, ends the units turn.\n\n" +
+					"The yellow number above your unit indicates how much damage it will do when attacking.\n\n" +
+					"The red line is the health bar, which indicates how much damage the unit can take. Hover over the unit to see exact health points.", "Okay");
+			}
 		}
 
 		private void AITurn() {

@@ -7,15 +7,21 @@ using Overworld.Shops;
 namespace Overworld {
 
 	public class TowerBehavior : ContextInteraction, IInteractable {
-
+		bool first = true;
 		Shop shop;
 
 		void Start () {
 			shop = GameObject.FindGameObjectWithTag("OWShop").GetComponent<Shop>();
 			Register(this, KeyCode.Mouse0);
+			//UnityAction call = () => contextInteraction.PerformClosenessAction();
 		}
 
 		private void OpenMenu() {
+			if (first) {
+				first = false;
+				GeneralConfirmationBox.instance.ShowPopUp ("Spending your crystals here summons a unit to your inventory. Only units that you have the recipe for can be summoned.", "Okay");
+			}
+
 			shop.OpenMenu();
 		}
 
