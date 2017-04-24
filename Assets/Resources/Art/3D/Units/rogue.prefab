@@ -200,7 +200,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4156542948673506}
-  - component: {fileID: 95369986521109876}
+  - component: {fileID: 135450184975163340}
+  - component: {fileID: 114516807761297238}
   m_Layer: 0
   m_Name: rogue
   m_TagString: Untagged
@@ -1324,23 +1325,47 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1533859919876546}
   m_Mesh: {fileID: 4300000, guid: 157f2822f4fae1949ad23ab362f215b3, type: 3}
---- !u!95 &95369986521109876
-Animator:
-  serializedVersion: 3
+--- !u!114 &114516807761297238
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1223789136590406}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 3fa9fe884e5443b4a8b75a5a706c2f90, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1d1c391c89206eb449fcae5681a13ef1, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca93806752ae1c4fb8592e0d857be49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackName: Melee Right Attack 01
+  projectile: {fileID: 1640924473077204, guid: 5949e6c3b12c17145a3532f8b2c7834b, type: 2}
+  turnedToStone: 0
+  doingAction: 0
+  data:
+    name: 
+    moveDistance: 0
+    attackValue: 0
+    healthValue: 0
+    cost: 0
+    shadow: 0
+    stone: 0
+    model: {fileID: 0}
+    type: 0
+  particles: {fileID: 198357646311000188, guid: 687846ba1e3179041aec1e731a31cfeb,
+    type: 2}
+  healthIndicator: {fileID: 114686928701855678, guid: 687846ba1e3179041aec1e731a31cfeb,
+    type: 2}
+--- !u!135 &135450184975163340
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223789136590406}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137954475122907454
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
