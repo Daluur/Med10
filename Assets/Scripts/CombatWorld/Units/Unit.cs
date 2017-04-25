@@ -397,13 +397,6 @@ namespace CombatWorld.Units {
 
 		private void OnMouseDown() {
 			currentNode.HandleInput();
-			if (TutorialHandler.instance != null) {
-				if (TutorialHandler.instance.unitFirst) {
-					TutorialHandler.instance.unitFirst = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Click on a green spot to move to it.\n" +
-						"You can only move once with a unit per turn, it can however attack if it moves to a spot with an enemy unit next to it.", "Okay");
-				}
-			}
 		}
 	}
 }
