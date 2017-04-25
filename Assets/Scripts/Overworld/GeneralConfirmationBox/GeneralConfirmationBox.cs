@@ -77,7 +77,7 @@ namespace Overworld {
 			if (buttonAction != null) {
 				buttonOne.onClick.AddListener(buttonAction);
 			}
-			buttonOne.onClick.AddListener(ClosePopUp);
+			buttonOne.onClick.AddListener(CloseElement);
 		}
 
 		private void DoPopUp(string text, string buttonOneText, string buttonTwoText, UnityAction buttonAction = null) {
@@ -86,8 +86,8 @@ namespace Overworld {
 			buttonTwo.GetComponent<RectTransform>().anchoredPosition = bTwoPos;
 			buttonOne.GetComponentInChildren<Text>().text = buttonOneText;
 			buttonTwo.GetComponentInChildren<Text>().text = buttonTwoText;
-			buttonOne.onClick.AddListener(ClosePopUp);
-			buttonTwo.onClick.AddListener(ClosePopUp);
+			buttonOne.onClick.AddListener(CloseElement);
+			buttonTwo.onClick.AddListener(CloseElement);
 			if(buttonAction!=null){
 				buttonTwo.onClick.AddListener(buttonAction);
 			}
@@ -96,11 +96,11 @@ namespace Overworld {
 			}
 		}
 
-		private void ClosePopUp() {
+		public override void CloseElement() {
 			isOpen = false;
 			RemoveListeners();
 			inputManager.ResumePlayer();
-			CloseElement();
+			base.CloseElement();
 		}
 
 		private void OnDisable() {

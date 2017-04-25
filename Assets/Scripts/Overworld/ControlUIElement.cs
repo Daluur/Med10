@@ -20,7 +20,7 @@ namespace Overworld {
 			StartCoroutine(OpenAUIElement(gameObject, size, true));
 		}
 
-		public void CloseElement() {
+		public virtual void CloseElement() {
 			if(isRunning)
 				return;
 			StartCoroutine(OpenAUIElement(gameObject, Vector2.zero, false));
