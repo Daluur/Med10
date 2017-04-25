@@ -75,7 +75,7 @@ public class QuestManager : MonoBehaviour {
 			gate2.gameObject.transform.localEulerAngles = new Vector3(0,-45,0);
 		} 
 		else if (id == 2) {
-			fog.SetActive (false);
+			//fog.SetActive (false);
 		}
 				
 		questTitle.GetComponent<Text> ().text = questList [currentQuest].Title;
