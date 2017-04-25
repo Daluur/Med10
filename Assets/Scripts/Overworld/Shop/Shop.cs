@@ -82,7 +82,10 @@ namespace Overworld.Shops {
 			AudioHandler.instance.PurchaseSound();
 			EnableUnlockedUnits();
 			inventory.AddItem(unitID);
-			GeneralConfirmationBox.instance.ShowPopUp ("You are able to carry 12 units at a time.\nClose the shop by pressing the X icon - or close all windows by pressing ESC.", "Okay");
+			if (TutorialHandler.instance.firstShop) {
+				GeneralConfirmationBox.instance.ShowPopUp ("You are able to carry 12 units at a time.\nClose the shop by pressing the X icon - or close all windows by pressing ESC.", "Okay");
+			}
+
 		}
 
 		public void OpenMenu() {
