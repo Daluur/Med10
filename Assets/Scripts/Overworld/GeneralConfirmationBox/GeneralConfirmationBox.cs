@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace Overworld {
 	public class GeneralConfirmationBox : ControlUIElement, IInteractable {
 		public static GeneralConfirmationBox instance;
-
+		private bool isOpen;
 		protected override void Awake() {
 			if (instance == null) {
 				instance = this;
@@ -56,11 +56,15 @@ namespace Overworld {
 
 			if (buttonTextTwo == null) {
 				DoPopUp(text, buttonTextOne, buttonAction);
-				OpenElement();
+				if(!isOpen)
+					OpenElement();
+				isOpen = true;
 				return;
 			}
 			DoPopUp(text, buttonTextOne, buttonTextTwo, buttonAction);
-			OpenElement();
+			if(!isOpen)
+				OpenElement();
+			isOpen = true;
 		}
 
 		private void DoPopUp(string text, string buttonText, UnityAction buttonAction) {
@@ -93,6 +97,7 @@ namespace Overworld {
 		}
 
 		private void ClosePopUp() {
+			isOpen = false;
 			RemoveListeners();
 			inputManager.ResumePlayer();
 			CloseElement();
