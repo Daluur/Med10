@@ -69,11 +69,13 @@ namespace CombatWorld {
 			GameObject go = Instantiate(maps[Random.Range(0, maps.Count)], transform.position, Quaternion.identity, transform) as GameObject;
 			go.transform.position = go.transform.position - new Vector3(go.GetComponent<MapInfo>().mapLength, 0, 0);
 			CombatCameraController.instance.setBoundary(new Vector2(-go.GetComponent<MapInfo>().mapLength, go.GetComponent<MapInfo>().mapLength));
-//			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
+			//			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
 
-			if (TutorialHandler.instance.combatFirstTurn) {
-				GeneralConfirmationBox.instance.ShowPopUp ("Your goal is to destroy the enemy towers.\n" +
-					"Click a unit and then a square summon pad to summon. This costs 'summon points', displayed next to the units name", "Okay");
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatFirstTurn) {
+					GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers.\n" +
+						"Click a unit and then a square summon pad to summon. This costs 'summon points', displayed next to the units name", "Okay");
+				}
 			}
 		}
 
@@ -356,30 +358,40 @@ namespace CombatWorld {
 		}
 
 		private void PlayerTurn() {
-			if (TutorialHandler.instance.combatFirstTurn) {
-				TutorialHandler.instance.combatFirstTurn = false;
-				TutorialHandler.instance.combatSecondTurn = true;
-			}
-
 			TurnIndicator.text = "Your turn";
 			GiveTurnSummonPoints();
-			StartCoroutine(HideText());	
+			StartCoroutine(HideText());
 
-			if (TutorialHandler.instance.combatSecondTurn) {
-				GeneralConfirmationBox.instance.ShowPopUp ("You will gain 2 summon points at the start of your turn each round.\nClick on a summoned unit to move it.", "Okay");
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatSecondTurn) {
+					GeneralConfirmationBox.instance.ShowPopUp("You will gain 2 summon points at the start of your turn each round.\nClick on a summoned unit to move it.", "Okay");
+				}
 			}
-			if (TutorialHandler.instance.combatThirdTurn) {
-				TutorialHandler.instance.combatThirdTurn = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("Attacking ends the units turn.\n" +
-					"The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "Okay");
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatThirdTurn) {
+					TutorialHandler.instance.combatThirdTurn = false;
+					GeneralConfirmationBox.instance.ShowPopUp("Attacking ends the units turn.\n" +
+						"The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "Okay");
+				}
 			}
 		}
 
 		private void AITurn() {
-			if (TutorialHandler.instance.combatSecondTurn) {
-				TutorialHandler.instance.combatSecondTurn = false;
-				TutorialHandler.instance.combatThirdTurn = true;
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatSecondTurn) {
+					TutorialHandler.instance.combatSecondTurn = false;
+					TutorialHandler.instance.combatThirdTurn = true;
+				}
 			}
+
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatFirstTurn) {
+					TutorialHandler.instance.combatFirstTurn = false;
+					TutorialHandler.instance.combatSecondTurn = true;
+					TutorialHandler.instance.combatThirdTurn = false;
+				}
+			}
+
 			TurnIndicator.text = "Enemy turn";
 			StartCoroutine(HideText());
 		}
@@ -512,9 +524,11 @@ namespace CombatWorld {
 		}
 
 		void Won() {
-			if (TutorialHandler.instance.firstWin) {
-				TutorialHandler.instance.firstWin = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("Winning a battle will grant you gold and new summon recipes", "Okay");
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.firstWin) {
+					TutorialHandler.instance.firstWin = false;
+					GeneralConfirmationBox.instance.ShowPopUp("Winning a battle will grant you gold and new summon recipes", "Okay");
+				}
 			}
 			won = true;
 			winLoseText.text = "YOU WON!";
@@ -523,9 +537,11 @@ namespace CombatWorld {
 		}
 
 		void Lost() {
-			if (TutorialHandler.instance.firstLoss) {
-				TutorialHandler.instance.firstLoss = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("Losing a battle will send you back to your last checkpoint.", "Okay");
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.firstLoss) {
+					TutorialHandler.instance.firstLoss = false;
+					GeneralConfirmationBox.instance.ShowPopUp("Losing a battle will send you back to your last checkpoint.", "Okay");
+				}
 			}
 			won = false;
 			winLoseText.text = "YOU LOST!";

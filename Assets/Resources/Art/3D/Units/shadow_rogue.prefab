@@ -948,7 +948,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980896620117024}
   m_LocalRotation: {x: 0.005758585, y: -0.7079601, z: -0.7062254, w: 0.0022365446}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
   m_LocalScale: {x: 0.5000001, y: 0.5000001, z: 0.5000001}
   m_Children: []
   m_Father: {fileID: 4774620383559768}
@@ -1828,6 +1828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: Melee Right Attack 01
   projectile: {fileID: 1640924473077204, guid: 5949e6c3b12c17145a3532f8b2c7834b, type: 2}
+  turnedToStone: 0
   doingAction: 0
   data:
     name: 
@@ -2200,7 +2201,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -93865453
+  randomSeed: 613710436
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5174,7 +5175,7 @@ ParticleSystem:
     enabled: 1
     startLifetime:
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5213,7 +5214,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       minMaxState: 0
-      scalar: 1
+      scalar: 0.7
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5315,7 +5316,7 @@ ParticleSystem:
       maxColor: {r: 0.9019608, g: 0, b: 1, a: 1}
     startSize:
       minMaxState: 0
-      scalar: 5
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:

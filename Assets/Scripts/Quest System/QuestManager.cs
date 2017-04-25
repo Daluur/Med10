@@ -42,10 +42,6 @@ public class QuestManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if (Input.GetKeyDown(KeyCode.L)) {
-			fog.SetActive (false);
-		}
-
 	}
 		
 
