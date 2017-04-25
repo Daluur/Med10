@@ -42,8 +42,8 @@ namespace CombatWorld
 			toReturn.Add(database.FetchItemByID(3));
 			toReturn.Add(database.FetchItemByID(4));
 			toReturn.Add(database.FetchItemByID(7));
+			toReturn.Add(database.FetchItemByID(11));
 			toReturn.Add(database.FetchItemByID(12));
-			toReturn.Add(database.FetchItemByID(13));
 			return toReturn;
 		}
 
@@ -70,9 +70,11 @@ namespace CombatWorld
 			summonPoints -= amount;
 			UpdateButtonsAndText();
 
-			if (TutorialHandler.instance.summonFirst) {
-				TutorialHandler.instance.summonFirst = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("Units cannot make other moves the round they are summoned.\nWhen you have performed all your moves, end your turn, after which the opponent will take theirs.", "Okay");
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.summonFirst) {
+					TutorialHandler.instance.summonFirst = false;
+					GeneralConfirmationBox.instance.ShowPopUp("Units cannot make other moves the round they are summoned.\nWhen you have performed all your moves, end your turn, after which the opponent will take theirs.", "Okay");
+				}
 			}
 		}
 
