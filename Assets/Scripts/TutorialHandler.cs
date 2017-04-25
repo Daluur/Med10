@@ -21,5 +21,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	public bool firstInventory = true;
 	[HideInInspector]
 	public bool firstShop = true;
+	[HideInInspector]
+	public bool firstBuy = true;
 
 }
