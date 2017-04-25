@@ -8,9 +8,9 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	[HideInInspector]
 	public bool combatFirstTurn = true;
 	[HideInInspector]
-	public bool combatSecondTurn = true;
+	public bool combatSecondTurn = false;
 	[HideInInspector]
-	public bool combatThirdTurn = true;
+	public bool combatThirdTurn = false;
 	[HideInInspector]
 	public bool summonFirst = true;
 	[HideInInspector]
