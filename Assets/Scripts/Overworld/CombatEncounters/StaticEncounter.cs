@@ -16,7 +16,7 @@ namespace Overworld {
 		void Start () {
 			currentPos = 0;
 			if (SaveLoadHandler.Instance.AmIDefeated(StaticEncounterID)) {
-				Beaten();
+				Beaten(true);
 				return;
 			}
 			if (deckIDs == null || deckIDs.Length == 0) {
@@ -93,8 +93,10 @@ namespace Overworld {
 			transform.position = spawnPoints[currentPos].position;
 		}
 
-		public void Beaten() {
-			GeneralConfirmationBox.instance.ShowPopUp ("The portal to the next island is now open.", "Okay");
+		public void Beaten(bool saveFix = false) {
+			if (!saveFix) {
+				GeneralConfirmationBox.instance.ShowPopUp("The portal to the next island is now open.", "Okay");
+			}
 			teleporterPad.Activate();
 			Destroy(gameObject);
 		}
