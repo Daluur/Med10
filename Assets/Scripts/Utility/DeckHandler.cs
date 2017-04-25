@@ -22,7 +22,7 @@ static class DeckHandler {
 			difficulty = "Easy",
 			id = 0,
 			type1 = "Normal",
-			type2 = ".",
+			type2 = "",
 			unitIDs = new int[] { 12 },
 		},
 		new DeckData {
@@ -30,7 +30,7 @@ static class DeckHandler {
 			difficulty = "Medium",
 			id = 1,
 			type1 = "Nature",
-			type2 = ".",
+			type2 = "",
 			unitIDs = new int[] { 6, 7 },
 		},
 		new DeckData {
@@ -46,7 +46,7 @@ static class DeckHandler {
 			difficulty = "Medium",
 			id = 3,
 			type1 = "ALL",
-			type2 = ".",
+			type2 = "",
 			unitIDs = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 },
 		},
 		new DeckData {
