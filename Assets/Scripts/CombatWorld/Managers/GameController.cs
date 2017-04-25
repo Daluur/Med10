@@ -358,13 +358,6 @@ namespace CombatWorld {
 		}
 
 		private void PlayerTurn() {
-			if (TutorialHandler.instance != null) {
-				if (TutorialHandler.instance.combatFirstTurn) {
-					TutorialHandler.instance.combatFirstTurn = false;
-					TutorialHandler.instance.combatSecondTurn = true;
-				}
-			}
-
 			TurnIndicator.text = "Your turn";
 			GiveTurnSummonPoints();
 			StartCoroutine(HideText());
@@ -390,6 +383,15 @@ namespace CombatWorld {
 					TutorialHandler.instance.combatThirdTurn = true;
 				}
 			}
+
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatFirstTurn) {
+					TutorialHandler.instance.combatFirstTurn = false;
+					TutorialHandler.instance.combatSecondTurn = true;
+					TutorialHandler.instance.combatThirdTurn = false;
+				}
+			}
+
 			TurnIndicator.text = "Enemy turn";
 			StartCoroutine(HideText());
 		}
