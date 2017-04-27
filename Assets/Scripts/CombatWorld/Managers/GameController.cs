@@ -129,7 +129,7 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
-					endButtonAnim.SetTrigger("MoreMoves");
+					endButtonAnim.SetBool("MoreMoves",true);
 					AITurn();
 					CombatCameraController.instance.StartAICAM();
 					endTurnButton.interactable = false;
@@ -420,7 +420,7 @@ namespace CombatWorld {
 					return;
 				}
 			}
-			endButtonAnim.SetTrigger("NoMoreMoves");
+			endButtonAnim.SetBool("MoreMoves",false);
 		}
 
 		#region SummonPoints
