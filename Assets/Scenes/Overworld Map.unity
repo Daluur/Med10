@@ -331,9 +331,107 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: Different unit types are strong against eachother, both dealing more
-    damage and receiving less.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &186600561
 BoxCollider:
@@ -650,6 +748,26 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 224634962445416726, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224634962445416726, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224733460769066204, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224733460769066204, guid: 1a55a64cbe820b243804302ca7616fb2,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114993111574109446, guid: 1a55a64cbe820b243804302ca7616fb2, type: 2}
@@ -1079,8 +1197,83 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: You have unlocked the basic NATURE, LIGHTNING, and SHADOW unit recipes.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &581254920
 BoxCollider:
@@ -1525,12 +1718,12 @@ Prefab:
     - target: {fileID: 224807318188038394, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.98947364
+      value: 0.9894737
       objectReference: {fileID: 0}
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -19334.393
+      value: -19592.822
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1555,7 +1748,7 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -14.646237
+      value: -14.5034485
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1565,12 +1758,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 15.292475
+      value: 15.006897
       objectReference: {fileID: 0}
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 29.292475
+      value: 29.006897
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1692,8 +1885,68 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: FIRE units are strong against NATURE, but weak to WATER.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &810570882
 BoxCollider:
@@ -1832,6 +2085,7 @@ MonoBehaviour:
   firstLoss: 1
   firstInventory: 1
   firstShop: 1
+  firstBuy: 1
 --- !u!1001 &1030535079
 Prefab:
   m_ObjectHideFlags: 0
@@ -1932,8 +2186,59 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: Click on the summoning tower to enter the shop.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &1050781589
 BoxCollider:
@@ -2192,8 +2497,57 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: You have unlocked all of the remaining units.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &1432120031
 BoxCollider:
@@ -2674,8 +3028,60 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: You have unlocked the upgraded FIRE unit recipe.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &1561343456
 BoxCollider:
@@ -2730,8 +3136,10 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: Click on a ground tile to move your character.
-  buttonOne: OKAY
+  displayText:
+  - Mathias is a..
+  buttonOne:
+  - Next
   buttonTwo: CANCEL
 --- !u!65 &1641945959
 BoxCollider:
@@ -3151,8 +3559,50 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: Click on an enemy to engage in combat.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &1748524227
 BoxCollider:
@@ -3221,9 +3671,110 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: You can open your inventory by pressing I, or clicking the bag symbol
-    in the bottom of the screen.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &1786393523
 BoxCollider:
@@ -3314,9 +3865,99 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: Some units have special abilities, such as SHADOW units, which can
-    move through others.
-  buttonOne: OKAY
+  displayText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  buttonOne:
+  - 
+  - 
+  - 
+  - 
   buttonTwo: CANCEL
 --- !u!65 &1840116223
 BoxCollider:

@@ -8,7 +8,9 @@ namespace Overworld {
 
 		public ShowTypeGeneralInformation typeOfGeneralInformationTrigger;
 		public TypeOfGeneralInformation typeOfGeneralInformation;
-		public string displayText = "Empty", buttonOne = "BACKTEMPLATE", buttonTwo = "Next template";
+		public string[] displayText = { "Empty"};
+		public string[] buttonOne = { "BACKTEMPLATE" };
+		public string buttonTwo = "Next template";
 		private ContextInteraction interaction;
 		private UnityAction call;
 		private bool hasShown = false;
@@ -35,6 +37,9 @@ namespace Overworld {
 						call = () => trigger.DoOnTriggerExit();
 						break;
 				}
+			}
+			if(buttonOne.Length != displayText.Length) {
+				Debug.LogError("button length and display lenght not the same! "+gameObject.name);
 			}
 		}
 
@@ -67,7 +72,6 @@ namespace Overworld {
 		public override void PerformClosenessAction() {
 			GetComponents<ContextInteraction>().First(element => !element.Equals(this)).hasGeneralConfirmationBox = false;
 			ShowPopUp();
-
 		}
 
 		private void OnTriggerEnter(Collider other) {
@@ -87,10 +91,27 @@ namespace Overworld {
 			if (hasShown)
 				return;
 			if(typeOfGeneralInformation == TypeOfGeneralInformation.OneButton){
-				GeneralConfirmationBox.instance.ShowPopUp(displayText, buttonOne, call);
+				if (displayText.Length == 2) {
+					GeneralConfirmationBox.instance.ShowPopUp(displayText[0], buttonOne[0], 
+						() => GeneralConfirmationBox.instance.ShowPopUp(displayText[1], buttonOne[1]));
+				}
+				else if (displayText.Length == 3) {
+					GeneralConfirmationBox.instance.ShowPopUp(displayText[0], buttonOne[0], 
+						() => GeneralConfirmationBox.instance.ShowPopUp(displayText[1], buttonOne[1],
+						() => GeneralConfirmationBox.instance.ShowPopUp(displayText[2], buttonOne[2])));
+				}
+				else if (displayText.Length == 4) {
+					GeneralConfirmationBox.instance.ShowPopUp(displayText[0], buttonOne[0],
+						() => GeneralConfirmationBox.instance.ShowPopUp(displayText[1], buttonOne[1],
+						() => GeneralConfirmationBox.instance.ShowPopUp(displayText[2], buttonOne[2],
+						() => GeneralConfirmationBox.instance.ShowPopUp(displayText[3], buttonOne[3]))));
+				}
+				else {
+					GeneralConfirmationBox.instance.ShowPopUp(displayText[0], buttonOne[0], call);
+				}
 			}
 			else {
-				GeneralConfirmationBox.instance.ShowPopUp(displayText, buttonOne, call, buttonTwo);
+				GeneralConfirmationBox.instance.ShowPopUp(displayText[0], buttonOne[0], call, buttonTwo);
 			}
 			hasShown = true;
 		}

@@ -77,7 +77,9 @@ namespace Overworld {
 			if (buttonAction != null) {
 				buttonOne.onClick.AddListener(buttonAction);
 			}
-			buttonOne.onClick.AddListener(CloseElement);
+			else {
+				buttonOne.onClick.AddListener(CloseElement);
+			}
 		}
 
 		private void DoPopUp(string text, string buttonOneText, string buttonTwoText, UnityAction buttonAction = null) {
