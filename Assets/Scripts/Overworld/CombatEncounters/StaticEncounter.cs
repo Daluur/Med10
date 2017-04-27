@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Overworld;
+using Overworld.Shops;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +11,7 @@ namespace Overworld {
 		public Transform[] spawnPoints;
 		private int currentPos;
 		public Teleporter teleporterPad;
+		public int[] unitsToUnlock;
 
 		// Use this for initialization
 		void Start () {
@@ -96,6 +97,9 @@ namespace Overworld {
 		public void Beaten(bool saveFix = false) {
 			if (!saveFix) {
 				GeneralConfirmationBox.instance.ShowPopUp("The portal to the next island is now open.", "Okay");
+			}
+			foreach (int id in unitsToUnlock) {
+				UnlockHandler.Instance.UnlockUnitByID(id);
 			}
 			teleporterPad.Activate();
 			Destroy(gameObject);
