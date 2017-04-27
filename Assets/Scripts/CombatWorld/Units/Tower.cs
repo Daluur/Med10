@@ -66,10 +66,12 @@ namespace CombatWorld.Units {
 		}
 
 		public void TakeDamage(DamagePackage damage) {
+			damage.info.towerHit = true;
 			health -= damage.CalculateDamageAgainst();
 			healthIndicator.TookDamage(damage, (float)health/maxHealth);
 			healthIndicator.UpdateHealthText(health + "/" + maxHealth);
 			if (health <= 0) {
+				damage.info.killHit = true;
 				Die();
 			}
 		}

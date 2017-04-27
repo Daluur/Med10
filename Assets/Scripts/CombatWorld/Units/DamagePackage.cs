@@ -10,12 +10,16 @@ namespace CombatWorld.Units {
 		ElementalTypes damageType = ElementalTypes.NONE;
 		IEntity source;
 		bool wasRetaliation = false;
+		public CombatTrades info = new CombatTrades();
 
 		public DamagePackage(int damage, IEntity source, ElementalTypes type = ElementalTypes.NONE, bool retaliation = false) {
 			this.damage = damage;
 			this.source = source;
 			damageType = type;
 			wasRetaliation = retaliation;
+			info.attacker = type;
+			info.initiator = source.GetTeam();
+			DataGathering.Instance.AddCombatTrade(info);
 		}
 		
 		public IEntity GetSource() {
@@ -27,6 +31,7 @@ namespace CombatWorld.Units {
 		}
 
 		public int CalculateDamageAgainst(ElementalTypes type = ElementalTypes.NONE) {
+			info.defender = type;
 			damageDone = damage;
 			switch (type) {
 				case ElementalTypes.Fire:
@@ -75,6 +80,7 @@ namespace CombatWorld.Units {
 
 #pragma warning disable 0162
 		int GetEffectiveDamage(int damage) {
+			info.good = true;
 			if (DamageConstants.EFFECTIVEMULT) {
 				return damage * DamageConstants.EFFECTIVEMULTIPLIER;
 			}
@@ -84,6 +90,7 @@ namespace CombatWorld.Units {
 		}
 
 		int GetInEffectivDamage(int damage) {
+			info.bad = true;
 			if (DamageConstants.EFFECTIVEMULT) {
 				return (int)(damage * DamageConstants.INEFFECTIVEMULTIPLIER);
 			}

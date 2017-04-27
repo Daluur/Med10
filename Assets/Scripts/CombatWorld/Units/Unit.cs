@@ -188,6 +188,7 @@ namespace CombatWorld.Units {
 		void TookDamage() {
 			if (DamageConstants.ATTACKATSAMETIME) {
 				if (health <= 0) {
+					damageIntake.info.killHit = true;
 					Die();
 					return;
 				}
@@ -200,9 +201,11 @@ namespace CombatWorld.Units {
 						return;
 					}
 					else {
+						damageIntake.info.killHit = true;
 						Die();
 						return;
 					}
+					damageIntake.info.killHit = true;
 					Die();
 					return;
 				}
