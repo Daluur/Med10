@@ -139,6 +139,8 @@ namespace CombatWorld.AI {
 				switch (task.task) {
 					case PossibleTasks.MoveOffensive:
 						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if (distance > unit.GetMoveDistance())
+							continue;
 						var subscribedTower = AIUtilityMethods.FindSubscribedTower(task.towerToMoveTo);
 						task.score = ( distance + ( offensiveFactor * 2 - defensiveFactor ) -
 									   ( ( subscribedTower != null ) ? subscribedTower.amountFocusingThisTower : 0 ) * 3 ) *
@@ -155,10 +157,12 @@ namespace CombatWorld.AI {
 						}
 						break;
 					case PossibleTasks.MoveAttack:
+						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if(distance > unit.GetMoveDistance())
+							continue;
 						if (task.toAttack.HasTower())
 							task.score = 11 + ( offensiveFactor * 2 - defensiveFactor ) * 1000000;
 						else if (task.toAttack.HasUnit()) {
-							distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
 							task.score = AIScoringMethods.AttackCalculation(unit, task.toAttack) + distance;
 						}
 						break;
@@ -167,6 +171,9 @@ namespace CombatWorld.AI {
 									 AIUtilityMethods.FindSubscribedTower(task.towerToMoveTo).amountFocusingThisTower * 4;
 						break;
 					case PossibleTasks.MoveDefensive:
+						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if(distance > unit.GetMoveDistance())
+							continue;
 						var myTowers = GameController.instance.GetTowersForTeam(Team.AI);
 						task.score = 2;
 						foreach (var tower in myTowers) {
@@ -180,7 +187,10 @@ namespace CombatWorld.AI {
 						}
 						break;
 					case PossibleTasks.MoveBlock:
-						task.score = 5 + pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode) +
+						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if(distance > unit.GetMoveDistance())
+							continue;
+						task.score = 5 + distance +
 									 ( defensiveFactor * 2 - offensiveFactor ) *
 									 ( 4 / ( task.turnsToTower > 0 ? task.turnsToTower : 4 ) ) * AIUtilityMethods.FindSubscribedTower(task.towerToMoveTo)
 										 .amountFocusingThisTower;
