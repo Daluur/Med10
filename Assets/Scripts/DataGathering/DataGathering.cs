@@ -31,6 +31,20 @@ public class DataGathering {
 
 	#region CW things
 
+	#region Generel stuff
+
+	int amountOfCombats = 0;
+
+	public void StartNewCombat() {
+		amountOfCombats++;
+		TradesFromLastCombat.Clear();
+		SummonedUnitsLastCombat.Clear();
+	}
+
+	#endregion
+
+	#region Trades
+
 	List<CombatTrades> AllTrades = new List<CombatTrades>();
 	List<CombatTrades> TradesFromLastCombat = new List<CombatTrades>();
 
@@ -39,15 +53,93 @@ public class DataGathering {
 		AllTrades.Add(newTrade);
 	}
 
-	int turnedToStoneCount = 0;
+	public List<CombatTrades> GetTradesFromLastCombat() {
+		return TradesFromLastCombat;
+	}
+
+	public List<CombatTrades> GetAllTrades() {
+		return AllTrades;
+	}
+
+	#endregion
+
+	#region Summons
+
+	List<SummonPlayerData> AllSummonedUnits = new List<SummonPlayerData>();
+	List<SummonPlayerData> SummonedUnitsLastCombat = new List<SummonPlayerData>();
+
+	public void SummonedNewUnit(SummonPlayerData type) {
+		AllSummonedUnits.Add(type);
+		SummonedUnitsLastCombat.Add(type);
+	}
+
+	public List<SummonPlayerData> GetSummonedLastCombat() {
+		return SummonedUnitsLastCombat;
+	}
+
+	public List<SummonPlayerData> GetAllSummonedUnits() {
+		return AllSummonedUnits;
+	}
+
+	public bool HasEverSummonType(ElementalTypes type) {
+		foreach (SummonPlayerData data in AllSummonedUnits) {
+			if(data.type == type) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool HasSummonedTypeLastCombat(ElementalTypes type) {
+		foreach (SummonPlayerData data in SummonedUnitsLastCombat) {
+			if (data.type == type) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool HasEverSummonedSpecial(bool stone, bool shadow) {
+		foreach (SummonPlayerData data in AllSummonedUnits) {
+			if (stone && data.stone) {
+				return true;
+			}
+			if (shadow && data.shadow) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool HasSummonedSpecialLastCombat(bool stone, bool shadow) {
+		foreach (SummonPlayerData data in SummonedUnitsLastCombat) {
+			if(stone && data.stone) {
+				return true;
+			}
+			if(shadow && data.shadow) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	#endregion
+
+	#region stone
+
+	public int turnedToStoneCount = 0;
 
 	public void TurnedUnitToStone() {
 		Debug.Log("turned to stone");
 		turnedToStoneCount++;
 	}
 
-	int movedShadowUnitThroughEnemyUnitCount = 0;
-	int movedShadowUnitThroughFriendlyUnitCount = 0;
+	#endregion
+
+	#region Shadow
+
+	public int movedShadowUnitThroughEnemyUnitCount = 0;
+	public int movedShadowUnitThroughFriendlyUnitCount = 0;
 
 	public void MovedShadowThroughEnemyUnit() {
 		Debug.Log("Moved through enemy");
@@ -59,9 +151,13 @@ public class DataGathering {
 		movedShadowUnitThroughFriendlyUnitCount++;
 	}
 
-	bool hasAttackedTower = false;
-	bool hasKilledATower = false;
-	int stoodBesideTowerNotAttackingcount = 0;
+	#endregion
+
+	#region Tower
+
+	public bool hasAttackedTower = false;
+	public bool hasKilledATower = false;
+	public int stoodBesideTowerNotAttackingcount = 0;
 
 	public void AttackedTower() {
 		Debug.Log("Attacked tower");
@@ -79,8 +175,19 @@ public class DataGathering {
 	}
 
 	#endregion
-}
 
+	#region Decks
+
+	List<int> UnitsBroughtToLastCombat = new List<int>();
+
+	public void UnitsBroughtToCombat(List<int> units) {
+		UnitsBroughtToLastCombat = units;
+	}
+
+	#endregion
+
+	#endregion
+}
 
 public class CombatTrades {
 	public ElementalTypes attacker;
@@ -90,4 +197,10 @@ public class CombatTrades {
 	public Team initiator;
 	public bool towerHit = false;
 	public bool killHit;
+}
+
+public class SummonPlayerData {
+	public ElementalTypes type;
+	public bool stone;
+	public bool shadow;
 }

@@ -80,6 +80,7 @@ namespace CombatWorld {
 		}
 
 		void StartGame() {
+			DataGathering.Instance.StartNewCombat();
 			currentTeam = Team.Player;
 			ResetAllNodes();
 			SelectTeamNodes();

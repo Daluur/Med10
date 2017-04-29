@@ -25,7 +25,12 @@ namespace CombatWorld
 			database = new ItemDatabase();
 			GameObject inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT);
 			if (inventory != null) {
-				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(6));
+				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT));
+				List<int> unitIDs = new List<int>();
+				foreach (var item in inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT)) {
+					unitIDs.Add(item.ID);
+				}
+				DataGathering.Instance.UnitsBroughtToCombat(unitIDs);
 			}
 			else {
 				SetupButtonsAndData(CombatNotStartedFromOverWorld());

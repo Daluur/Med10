@@ -279,6 +279,9 @@ namespace CombatWorld.Units {
 		}
 
 		public void SpawnEntity(Node node, Team team, CombatData data) {
+			if(team == Team.Player) {
+				DataGathering.Instance.SummonedNewUnit(new SummonPlayerData() {type = data.type, shadow = data.shadow, stone = data.stone });
+			}
 			moveDistance = data.moveDistance;
 			damage = data.attackValue;
 			type = data.type;
