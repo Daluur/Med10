@@ -30,13 +30,19 @@ namespace Overworld {
 
 		void PlayerMoveToMouseInput(Vector3 hitPoint, Vector3 hitNormal) {
 			if (agent.SetDestination(hitPoint)) {
+
 				var go = (GameObject)Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
 				if (hitNormal.y < 1) {
 					go.transform.position += new Vector3(0, rotatedOffSetYClickMoveAnim, 0);
 				}
-				go.transform.rotation =Quaternion.FromToRotation(Vector3.up, hitNormal);
+				go.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitNormal);
 			}
 		}
+
+		void PlayerMoveToInteractableInput(Vector3 hitPoint) {
+			agent.SetDestination(hitPoint);
+		}
+
 
 		private void Update() {
 			animator.SetFloat("Speed", agent.velocity.magnitude);
@@ -66,7 +72,12 @@ namespace Overworld {
 				Debug.LogError("To move the character give it a Vector3 to move to");
 				return;
 			}
-			PlayerMoveToMouseInput((Vector3)(param as Vector3?) , m);
+			if (m != Vector3.zero) {
+				PlayerMoveToMouseInput((Vector3)(param as Vector3?) , m);
+				return;
+			}
+			PlayerMoveToInteractableInput((Vector3)(param as Vector3?));
+
 		}
 
 

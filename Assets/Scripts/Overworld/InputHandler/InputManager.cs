@@ -108,6 +108,7 @@ namespace Overworld {
 				if (!isMouseBlocked) {
 					playerMoveTo = hit.transform.position;
 					distributeTo.Add(playerInteractable);
+					hitNormal = Vector3.zero;
 				}
 				distributeTo.AddRange(hit.collider.gameObject.GetComponents<IInteractable>());
 				return;
