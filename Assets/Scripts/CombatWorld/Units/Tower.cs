@@ -39,10 +39,11 @@ namespace CombatWorld.Units {
 			currentNode.RemoveOccupant();
 			if (team == Team.AI) {
 				healthIndicator.SummonPoint(false);
+				DataGathering.Instance.KilledTower();
 			}
 			Instantiate (Resources.Load ("Art/3D/Explosion") as GameObject, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
 			Instantiate (Resources.Load ("Art/3D/DeadTower") as GameObject, new Vector3(this.transform.position.x + 1, this.transform.position.y + 1, this.transform.position.z), Quaternion.identity);
-			Destroy(gameObject,1);
+			Destroy(gameObject);
 		}
 
 		public int GetHealth() {
@@ -66,6 +67,9 @@ namespace CombatWorld.Units {
 		}
 
 		public void TakeDamage(DamagePackage damage) {
+			if(team == Team.AI) {
+				DataGathering.Instance.AttackedTower();
+			}
 			damage.info.towerHit = true;
 			health -= damage.CalculateDamageAgainst();
 			healthIndicator.TookDamage(damage, (float)health/maxHealth);

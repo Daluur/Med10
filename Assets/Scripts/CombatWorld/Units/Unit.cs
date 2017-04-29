@@ -316,6 +316,18 @@ namespace CombatWorld.Units {
 			animHelp.StartWalk();
 			target.Reverse();
 			for (int i = 1; i < target.Count; i++) {
+				if (shadowUnit) {
+					if (target[i].HasOccupant()) {
+						if (target[i].GetOccupant().GetTeam() == Team.AI) {
+							DataGathering.Instance.MovedShadowThroughEnemyUnit();
+						}
+						else {
+							if (target[i].HasUnit() && target[i].GetUnit() != this) {
+								DataGathering.Instance.MovedShadowThrougFriendlyUnit();
+							}
+						}
+					}
+				}
 				transform.LookAt(target[i].transform);
 				//moveDir = (target[i].transform.position - transform.position).normalized;
 				bool moving = true;
@@ -345,6 +357,9 @@ namespace CombatWorld.Units {
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
+			}
+			if(team == Team.Player) {
+				DataGathering.Instance.TurnedUnitToStone();
 			}
 			int healthBonus = 0;
 			if (StoneUnitOptions.STONEUNITSGETSATTACKASHEALTH) {
