@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CombatWorld.Utility;
 
 public class PlayerData {
 
@@ -24,6 +25,48 @@ public class PlayerData {
 	public bool GetHasPlayerMoved() {
 		return DataGathering.Instance.HasMoved;
 	}
+
+	#endregion
+
+	#region Trades
+
+	/// <summary>
+	/// Only Trades initiated by the player.
+	/// </summary>
+	/// <returns></returns>
+	public int GetNumberOfGoodTradesLastCombat() {
+		return DataGathering.Instance.GetNumberOfPlayerBadTradesLastCombat();
+	}
+
+	/// <summary>
+	/// Only Trades initiated by the player.
+	/// </summary>
+	/// <returns></returns>
+	public int GetNumberOfGoodTradesTotal() {
+		return DataGathering.Instance.GetNumberOfPlayerGoodTradesTotal();
+	}
+
+	#endregion
+
+	#region Summons
+
+	public bool GetHasEverSummonedOfType(ElementalTypes type) {
+		return DataGathering.Instance.HasEverSummonType(type);
+	}
+
+	public bool GetHasSummonedOfTypeLastCombat(ElementalTypes type) {
+		return DataGathering.Instance.HasSummonedTypeLastCombat(type);
+	}
+
+	public bool GetHasEverSummonedSpecial(bool stone, bool shadow) {
+		return DataGathering.Instance.HasEverSummonedSpecial(stone, shadow);
+	}
+
+	public bool GetHasSummonedSpecialLastCombat(bool stone, bool shadow) {
+		return DataGathering.Instance.HasSummonedSpecialLastCombat(stone, shadow);
+	}
+
+
 
 	#endregion
 

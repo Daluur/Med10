@@ -61,6 +61,86 @@ public class DataGathering {
 		return AllTrades;
 	}
 
+	public int GetNumberOfPlayerGoodTradesTotal() {
+		int count = 0;
+		foreach (CombatTrades trade in AllTrades) {
+			if (trade.initiator == Team.Player && trade.good) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int GetNumberOfPlayerBadTradesTotal() {
+		int count = 0;
+		foreach (CombatTrades trade in AllTrades) {
+			if (trade.initiator == Team.Player && trade.bad) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int GetNumberOfAIGoodTradesTotal() {
+		int count = 0;
+		foreach (CombatTrades trade in AllTrades) {
+			if (trade.initiator == Team.AI && trade.good) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int GetNumberOfAIBadTradesTotal() {
+		int count = 0;
+		foreach (CombatTrades trade in AllTrades) {
+			if (trade.initiator == Team.AI && trade.bad) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int GetNumberOfPlayerGoodTradesLastCombat() {
+		int count = 0;
+		foreach (CombatTrades trade in TradesFromLastCombat) {
+			if (trade.initiator == Team.Player && trade.good) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int GetNumberOfPlayerBadTradesLastCombat() {
+		int count = 0;
+		foreach (CombatTrades trade in TradesFromLastCombat) {
+			if (trade.initiator == Team.Player && trade.bad) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int GetNumberOfAIGoodTradesLastCombat() {
+		int count = 0;
+		foreach (CombatTrades trade in TradesFromLastCombat) {
+			if (trade.initiator == Team.AI && trade.good) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int GetNumberOfAIBadTradesLastCombat() {
+		int count = 0;
+		foreach (CombatTrades trade in TradesFromLastCombat) {
+			if (trade.initiator == Team.AI && trade.bad) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 	#endregion
 
 	#region Summons
