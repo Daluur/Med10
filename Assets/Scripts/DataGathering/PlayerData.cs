@@ -46,6 +46,14 @@ public class PlayerData {
 		return DataGathering.Instance.GetNumberOfPlayerGoodTradesTotal();
 	}
 
+	public List<CombatTrades> GetAllTrades() {
+		return DataGathering.Instance.GetAllTrades();
+	}
+
+	public List<CombatTrades> GetTradesFromLastCombat() {
+		return DataGathering.Instance.GetTradesFromLastCombat();
+	}
+
 	#endregion
 
 	#region Summons
