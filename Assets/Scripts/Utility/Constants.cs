@@ -32,6 +32,7 @@ public static class TagConstants {
 public static class Values {
 	public const float InteractDistance = 1.9f;
 	public const int SUMMONPOINTSONKILL = 1;
+	public const int NUMOFUNITSTOBRINGTOCOMBAT = 6;
 }
 
 public static class DamageConstants {

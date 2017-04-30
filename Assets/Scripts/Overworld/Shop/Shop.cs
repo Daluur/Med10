@@ -29,13 +29,15 @@ namespace Overworld.Shops {
 		void CreateShop() {
 			GetUnits();
 			EnableUnlockedUnits();
-			//DestroyOldButtons();
-			//CreateNewButtons();
 		}
 
+		int currentSiblingIndex = 0;
+
 		void EnableUnlockedUnits() {
+			currentSiblingIndex = 0;
 			foreach (ShopButton button in createdButtons) {
 				if (unitsToShow.Contains(button.ID)) {
+					button.GetComponent<RectTransform>().SetSiblingIndex(currentSiblingIndex++);
 					button.IsUnlocked();
 					button.CheckCanAfford(CurrencyHandler.GetCurrentGold());
 				}
@@ -44,21 +46,6 @@ namespace Overworld.Shops {
 				}
 			}
 		}
-		
-		/*void DestroyOldButtons() {
-			foreach (GameObject go in createdButtons) {
-				Destroy(go);
-			}
-			createdButtons.Clear();
-		}
-
-		void CreateNewButtons() {
-			foreach (int i in unitsToShow) {
-				GameObject go = Instantiate(buttonObj, transform) as GameObject;
-				go.GetComponent<ShopButton>().Setup(AddItem, database.FetchItemByID(i));
-				createdButtons.Add(go);
-			}
-		}*/
 
 		void CreateButtons() {
 			foreach (Item item in database.GetAllItems()) {

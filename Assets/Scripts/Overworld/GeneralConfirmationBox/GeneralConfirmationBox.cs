@@ -78,7 +78,7 @@ namespace Overworld {
 				buttonOne.onClick.AddListener(buttonAction);
 			}
 			else {
-				buttonOne.onClick.AddListener(CloseElement);
+				buttonOne.onClick.AddListener(RealClose);
 			}
 		}
 
@@ -88,8 +88,8 @@ namespace Overworld {
 			buttonTwo.GetComponent<RectTransform>().anchoredPosition = bTwoPos;
 			buttonOne.GetComponentInChildren<Text>().text = buttonOneText;
 			buttonTwo.GetComponentInChildren<Text>().text = buttonTwoText;
-			buttonOne.onClick.AddListener(CloseElement);
-			buttonTwo.onClick.AddListener(CloseElement);
+			buttonOne.onClick.AddListener(RealClose);
+			buttonTwo.onClick.AddListener(RealClose);
 			if(buttonAction!=null){
 				buttonTwo.onClick.AddListener(buttonAction);
 			}
@@ -99,6 +99,10 @@ namespace Overworld {
 		}
 
 		public override void CloseElement() {
+			buttonOne.onClick.Invoke();
+		}
+
+		void RealClose() {
 			isOpen = false;
 			RemoveListeners();
 			inputManager.ResumePlayer();
