@@ -41,6 +41,30 @@ public class DataGathering {
 		SummonedUnitsLastCombat.Clear();
 	}
 
+	bool hasEverSelectedUnit = false;
+	Unit currentlySelectedUnit;
+
+	public void SelectedUnit(Unit unit) {
+		hasEverSelectedUnit = true;
+		currentlySelectedUnit = unit;
+	}
+
+	public bool HasEverHadSelectedUnit() {
+		return hasEverSelectedUnit;
+	}
+
+	public void DeselectUnit() {
+		currentlySelectedUnit = null;
+	}
+
+	public bool HasUnitSelected() {
+		return currentlySelectedUnit != null;
+	}
+
+	public Unit GetCurrentlySelectedUnit() {
+		return currentlySelectedUnit;
+	}
+
 	#endregion
 
 	#region Trades

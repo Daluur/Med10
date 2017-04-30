@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CombatWorld.Utility;
+using CombatWorld.Units;
 
 public class PlayerData {
 
@@ -174,6 +175,26 @@ public class PlayerData {
 
 	public bool GetPlayerHadTypeInDeck(ElementalTypes type) {
 		return DataGathering.Instance.PlayerHasTypeInDeck(type);
+	}
+
+	#endregion
+
+	#region
+
+	public bool GetHasEverSelectedAUnit() {
+		return DataGathering.Instance.HasEverHadSelectedUnit();
+	}
+
+	public bool GetHasCurrentlyAUnitSelected() {
+		return DataGathering.Instance.HasUnitSelected();
+	}
+
+	/// <summary>
+	/// Can return null! You can use GetHasCurrentlyAUnitSelected to see if it will be null.
+	/// </summary>
+	/// <returns></returns>
+	public Unit GetCurrentlySelectedUnit() {
+		return DataGathering.Instance.GetCurrentlySelectedUnit();
 	}
 
 	#endregion
