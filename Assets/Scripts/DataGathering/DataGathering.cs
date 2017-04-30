@@ -259,9 +259,63 @@ public class DataGathering {
 	#region Decks
 
 	List<int> UnitsBroughtToLastCombat = new List<int>();
+	List<int> AIUnitsBroughtToLastCombat = new List<int>();
 
 	public void UnitsBroughtToCombat(List<int> units) {
 		UnitsBroughtToLastCombat = units;
+	}
+
+	public void AILastDeck(List<int> units) {
+		AIUnitsBroughtToLastCombat = units;
+	}
+
+	public List<SimpleUnit> GetPlayerDeckAsSimpleUnits() {
+		List<SimpleUnit> units = new List<SimpleUnit>();
+		SimpleUnit unit;
+		foreach (int i in UnitsBroughtToLastCombat) {
+			unit = new SimpleUnit();
+			unit.ID = i;
+			unit.type = Utility.GetElementalTypeFromID(i);
+			unit.shadow = Utility.GetIsShadowFromID(i);
+			unit.stone = Utility.GetIsStoneFromID(i);
+			units.Add(unit);
+		}
+		return units;
+	}
+
+	public List<SimpleUnit> GetAIDeckAsSimpleUnits() {
+		List<SimpleUnit> units = new List<SimpleUnit>();
+		SimpleUnit unit;
+		foreach (int i in AIUnitsBroughtToLastCombat) {
+			unit = new SimpleUnit();
+			unit.ID = i;
+			unit.type = Utility.GetElementalTypeFromID(i);
+			unit.shadow = Utility.GetIsShadowFromID(i);
+			unit.stone = Utility.GetIsStoneFromID(i);
+			units.Add(unit);
+		}
+		return units;
+	}
+
+	public bool PlayerHasSpecialInDeck(bool stone, bool shadow) {
+		foreach (int i in UnitsBroughtToLastCombat) {
+			if(shadow && (i == 8 || i == 9)) {
+				return true;
+			}
+			if(stone && (i == 10 || i == 11)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool PlayerHasTypeInDeck(ElementalTypes type) {
+		foreach (int i in UnitsBroughtToLastCombat) {
+			if(Utility.GetElementalTypeFromID(i) == type) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	#endregion
@@ -283,4 +337,11 @@ public class SummonPlayerData {
 	public ElementalTypes type;
 	public bool stone;
 	public bool shadow;
+}
+
+public class SimpleUnit {
+	public int ID;
+	public ElementalTypes type;
+	public bool shadow = false;
+	public bool stone = false;
 }

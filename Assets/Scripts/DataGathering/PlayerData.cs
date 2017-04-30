@@ -157,4 +157,24 @@ public class PlayerData {
 	}
 
 	#endregion
+
+	#region Decks
+
+	public List<SimpleUnit> GetPlayerLastDeckAsSimpleUnits() {
+		return DataGathering.Instance.GetPlayerDeckAsSimpleUnits();
+	}
+
+	public List<SimpleUnit> GetAILastDeckAsSimpleUnits() {
+		return DataGathering.Instance.GetAIDeckAsSimpleUnits();
+	}
+
+	public bool GetPlayerHadSpecialInDeck(bool stone, bool shadow) {
+		return DataGathering.Instance.PlayerHasSpecialInDeck(stone, shadow);
+	}
+
+	public bool GetPlayerHadTypeInDeck(ElementalTypes type) {
+		return DataGathering.Instance.PlayerHasTypeInDeck(type);
+	}
+
+	#endregion
 }

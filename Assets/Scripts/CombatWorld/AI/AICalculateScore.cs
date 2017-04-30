@@ -53,6 +53,7 @@ namespace CombatWorld.AI {
 			summonPoints = DamageConstants.STARTSUMMONPOINTS - DamageConstants.SUMMONPOINTSPERTURN;
 			if (SceneHandler.instance != null) {
 				unitsToSummon = SceneHandler.instance.GetDeck().unitIDs;
+				DataGathering.Instance.AILastDeck(new List<int>(unitsToSummon));
 			}
 			AIUtilityMethods.FillSubscriptionTowers();
 		}
