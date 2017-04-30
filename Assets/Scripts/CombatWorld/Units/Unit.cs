@@ -188,6 +188,7 @@ namespace CombatWorld.Units {
 		void TookDamage() {
 			if (DamageConstants.ATTACKATSAMETIME) {
 				if (health <= 0) {
+					damageIntake.info.killHit = true;
 					Die();
 					return;
 				}
@@ -200,9 +201,11 @@ namespace CombatWorld.Units {
 						return;
 					}
 					else {
+						damageIntake.info.killHit = true;
 						Die();
 						return;
 					}
+					damageIntake.info.killHit = true;
 					Die();
 					return;
 				}
@@ -276,6 +279,9 @@ namespace CombatWorld.Units {
 		}
 
 		public void SpawnEntity(Node node, Team team, CombatData data) {
+			if(team == Team.Player) {
+				DataGathering.Instance.SummonedNewUnit(new SummonPlayerData() {type = data.type, shadow = data.shadow, stone = data.stone });
+			}
 			moveDistance = data.moveDistance;
 			damage = data.attackValue;
 			type = data.type;
@@ -313,6 +319,18 @@ namespace CombatWorld.Units {
 			animHelp.StartWalk();
 			target.Reverse();
 			for (int i = 1; i < target.Count; i++) {
+				if (shadowUnit) {
+					if (target[i].HasOccupant()) {
+						if (target[i].GetOccupant().GetTeam() == Team.AI) {
+							DataGathering.Instance.MovedShadowThroughEnemyUnit();
+						}
+						else {
+							if (target[i].HasUnit() && target[i].GetUnit() != this) {
+								DataGathering.Instance.MovedShadowThrougFriendlyUnit();
+							}
+						}
+					}
+				}
 				transform.LookAt(target[i].transform);
 				//moveDir = (target[i].transform.position - transform.position).normalized;
 				bool moving = true;
@@ -342,6 +360,9 @@ namespace CombatWorld.Units {
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
+			}
+			if(team == Team.Player) {
+				DataGathering.Instance.TurnedUnitToStone();
 			}
 			int healthBonus = 0;
 			if (StoneUnitOptions.STONEUNITSGETSATTACKASHEALTH) {

@@ -80,6 +80,7 @@ namespace CombatWorld {
 		}
 
 		void StartGame() {
+			DataGathering.Instance.StartNewCombat();
 			currentTeam = Team.Player;
 			ResetAllNodes();
 			SelectTeamNodes();
@@ -131,6 +132,7 @@ namespace CombatWorld {
 				case Team.Player:
 					endButtonAnim.SetBool("MoreMoves",true);
 					AITurn();
+					DoBaordCalculations();
 					CombatCameraController.instance.StartAICAM();
 					endTurnButton.interactable = false;
 					ResetAllNodes();
@@ -153,6 +155,22 @@ namespace CombatWorld {
 					break;
 				default:
 					break;
+			}
+		}
+
+		void DoBaordCalculations() {
+			//Check if player has stood beside tower and did not attack it.
+			//TODO: make a check, that it should not do this, if the player has killed a tower already.
+			foreach (Node node in allNodes) {
+				if(node.HasUnit() && node.GetUnit().GetTeam() == Team.Player) {
+					if (node.GetUnit().CanAttack()) {
+						foreach (Node nodeNeighbour in node.GetUnit().GetNode().GetNeighbours()) {
+							if (nodeNeighbour.HasTower() && nodeNeighbour.GetOccupant().GetTeam() == Team.AI) {
+								DataGathering.Instance.StoodBesideTowerAndDidNotAttack();
+							}
+						}
+					}
+				}
 			}
 		}
 

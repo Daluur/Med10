@@ -30,11 +30,15 @@ namespace Overworld {
 
 		void PlayerMoveToMouseInput(Vector3 hitPoint, Vector3 hitNormal) {
 			if (agent.SetDestination(hitPoint)) {
+				//TODO maybe add a check, so it does not have to do this all the time.
+				if(agent.remainingDistance > agent.stoppingDistance) {
+					DataGathering.Instance.HasMoved = true;
+				}
 				var go = (GameObject)Instantiate(clickMoveToObject, hitPoint, Quaternion.identity);
 				if (hitNormal.y < 1) {
 					go.transform.position += new Vector3(0, rotatedOffSetYClickMoveAnim, 0);
 				}
-				go.transform.rotation =Quaternion.FromToRotation(Vector3.up, hitNormal);
+				go.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitNormal);
 			}
 		}
 
