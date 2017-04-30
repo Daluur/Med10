@@ -187,6 +187,46 @@ public class PlayerData {
 		return DataGathering.Instance.PlayerHasTypeInDeck(type);
 	}
 
+	/// <summary>
+	/// A unit can counter several units. E.g. 1 fire unit against 4 nature will count as 4. Thus, 4 fire against 4 nature will be 16.
+	/// </summary>
+	/// <returns></returns>
+	public int GetCountOfUnitsCounteringAI() {
+		List<SimpleUnit> AIUnits = GetAILastDeckAsSimpleUnits();
+		List<SimpleUnit> PlayerUnits = GetPlayerLastDeckAsSimpleUnits();
+		int count = 0;
+
+		foreach (SimpleUnit PlayerUnit in PlayerUnits) {
+			foreach (SimpleUnit AIUnit in AIUnits) {
+				if (Utility.TypeCounters(PlayerUnit.type, AIUnit.type)) {
+					count++;
+				}
+			}
+		}
+
+		return count;
+	}
+
+	/// <summary>
+	/// A unit can counter several units. E.g. 1 fire unit against 4 nature will count as 4. Thus, 4 fire against 4 nature will be 16.
+	/// </summary>
+	/// <returns></returns>
+	public int GetCountOfUnitsGettingCounteredByAI() {
+		List<SimpleUnit> AIUnits = GetAILastDeckAsSimpleUnits();
+		List<SimpleUnit> PlayerUnits = GetPlayerLastDeckAsSimpleUnits();
+		int count = 0;
+
+		foreach (SimpleUnit AIUnit in PlayerUnits) {
+			foreach (SimpleUnit PlayerUnit in AIUnits) {
+				if (Utility.TypeCounters(AIUnit.type, PlayerUnit.type)) {
+					count++;
+				}
+			}
+		}
+
+		return count;
+	}
+
 	#endregion
 
 	#region UnitSelection

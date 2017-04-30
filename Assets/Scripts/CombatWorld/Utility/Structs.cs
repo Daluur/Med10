@@ -95,6 +95,25 @@ namespace CombatWorld.Utility {
 		public static bool GetIsStoneFromID(int id) {
 			return id == 10 || id == 11;
 		}
+
+		public static bool TypeCounters(ElementalTypes type1, ElementalTypes type2) {
+			if(type1 == ElementalTypes.NONE || type2 == ElementalTypes.NONE) {
+				return false;
+			}
+			if (type1 == ElementalTypes.Fire && type2 == ElementalTypes.Nature) {
+				return true;
+			}
+			if(type1 == ElementalTypes.Water && type2 == ElementalTypes.Fire) {
+				return true;
+			}
+			if(type1 == ElementalTypes.Lightning && type2 == ElementalTypes.Water) {
+				return true;
+			}
+			if(type1 == ElementalTypes.Nature && type2 == ElementalTypes.Lightning) {
+				return true;
+			}
+			return false;
+		}
 	}
 
 }
