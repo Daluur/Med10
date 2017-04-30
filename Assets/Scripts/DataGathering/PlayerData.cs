@@ -58,6 +58,14 @@ public class PlayerData {
 
 	#region Summons
 
+	public bool GetHasEverSummonedAUnit() {
+		return DataGathering.Instance.GetAllSummonedUnits().Count != 0;
+	}
+
+	public bool GetHasSummonedAUnitLastCombat() {
+		return DataGathering.Instance.GetSummonedLastCombat().Count != 0;
+	}
+
 	public bool GetHasEverSummonedOfType(ElementalTypes type) {
 		return DataGathering.Instance.HasEverSummonType(type);
 	}
