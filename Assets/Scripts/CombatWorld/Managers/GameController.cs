@@ -174,6 +174,16 @@ namespace CombatWorld {
 			}
 		}
 
+		public int GetAmountOfOccupiedPlayerSummonSpots() {
+			int temp = playerSummonNodes.Count;
+			foreach (SummonNode node in playerSummonNodes) {
+				if (node.HasOccupant()) {
+					temp--;
+				}
+			}
+			return temp;
+		}
+
 		void StartTurn() {
 			foreach (Node node in allNodes) {
 				if (node.HasUnit() && node.GetOccupant().GetTeam() == currentTeam){

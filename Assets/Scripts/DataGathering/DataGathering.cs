@@ -39,7 +39,12 @@ public class DataGathering {
 		amountOfCombats++;
 		TradesFromLastCombat.Clear();
 		SummonedUnitsLastCombat.Clear();
+		SSS.Clear();
 	}
+
+	#endregion
+
+	#region UnitSelection
 
 	bool hasEverSelectedUnit = false;
 	Unit currentlySelectedUnit;
@@ -169,6 +174,8 @@ public class DataGathering {
 
 	#region Summons
 
+	#region Overall
+
 	List<SummonPlayerData> AllSummonedUnits = new List<SummonPlayerData>();
 	List<SummonPlayerData> SummonedUnitsLastCombat = new List<SummonPlayerData>();
 
@@ -226,6 +233,22 @@ public class DataGathering {
 		}
 		return false;
 	}
+
+	#endregion
+
+	#region Specifics
+
+	List<SpecificSummonStats> SSS = new List<SpecificSummonStats>();
+
+	public void NewUnitSummoned(SpecificSummonStats ss) {
+		SSS.Add(ss);
+	}
+
+	public SpecificSummonStats GetLatestSummonStat() {
+		return SSS[SSS.Count - 1];
+	}
+
+	#endregion
 
 	#endregion
 
@@ -361,6 +384,12 @@ public class SummonPlayerData {
 	public ElementalTypes type;
 	public bool stone;
 	public bool shadow;
+}
+
+public class SpecificSummonStats {
+	public int cost;
+	public int spotsLeftAfter;
+	public int pointsLeftAfter;
 }
 
 public class SimpleUnit {

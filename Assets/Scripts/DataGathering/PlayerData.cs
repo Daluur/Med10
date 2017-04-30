@@ -59,6 +59,8 @@ public class PlayerData {
 
 	#region Summons
 
+	#region Overall
+
 	public bool GetHasEverSummonedAUnit() {
 		return DataGathering.Instance.GetAllSummonedUnits().Count != 0;
 	}
@@ -83,7 +85,15 @@ public class PlayerData {
 		return DataGathering.Instance.HasSummonedSpecialLastCombat(stone, shadow);
 	}
 
+	#endregion
 
+	#region Specific
+
+	public SpecificSummonStats GetLatestSummonedPlayerUnitInfo() {
+		return DataGathering.Instance.GetLatestSummonStat();
+	}
+
+	#endregion
 
 	#endregion
 
@@ -179,7 +189,7 @@ public class PlayerData {
 
 	#endregion
 
-	#region
+	#region UnitSelection
 
 	public bool GetHasEverSelectedAUnit() {
 		return DataGathering.Instance.HasEverHadSelectedUnit();
