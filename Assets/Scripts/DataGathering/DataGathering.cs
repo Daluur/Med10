@@ -370,6 +370,8 @@ public class DataGathering {
 	#endregion
 }
 
+#region ExtraClasses
+
 public class CombatTrades {
 	public ElementalTypes attacker;
 	public ElementalTypes defender;
@@ -398,3 +400,5 @@ public class SimpleUnit {
 	public bool shadow = false;
 	public bool stone = false;
 }
+
+#endregion
