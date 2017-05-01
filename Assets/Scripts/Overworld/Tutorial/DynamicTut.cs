@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CombatWorld;
 using Overworld;
 using UnityEngine;
 
@@ -8,28 +9,49 @@ public class DynamicTut : MonoBehaviour {
 	public bool isDynamic;
 	private string textToShow = "", buttonOne = "Okay";
 	public float moveDelay = 3f, endTurnDelay = 4f, playerSelectionDelay = 4f;
+
+	private bool showGoalAndSummon, summonSickness, playerMovement, winning, losing, playerAttacking, endTurn;
+
 	//TODO: Add all the different types of tuts we want to be shown in here
-	public ShowGeneralInformationBox tutMove;
 
 	void Start () {
 		if(isDynamic){
 			Debug.LogWarning("Tutorial is dynamic!");
+			TutorialHandler.instance.isDynamic = isDynamic;
 		}
 		else{
 			Debug.LogWarning("Tutorial is NOT dynamic!");
+			TutorialHandler.instance.isDynamic = isDynamic;
 		}
-		tutMove.dynamicTut = isDynamic;
-		ShowGoalAndSummon();
+
 	}
 
 
 	void Update () {
 	}
 
+
+	public void ContinueTheDynamicTutCycle() {
+		if(!isDynamic)
+			return;
+		if(!showGoalAndSummon)
+			ShowGoalAndSummon();
+		if(!summonSickness)
+			ShowSummonSicknessAndTurn();
+		if(!playerMovement)
+			PlayerMovingUnit();
+		if(!winning)
+			PlayerWinning();
+		if(!losing)
+			PlayerLosing();
+		if(!playerAttacking)
+			PlayerAttackingUnit();
+	}
+
+
 	void ShowGoalAndSummon() {
-		textToShow = "Your goal is to destroy the enemy towers.\n" +
-		             "Click a unit and then a square summon pad to summon. This costs 'summon points', displayed next to the units name";
-		StartCoroutine(TimerForPlayerMove(textToShow, buttonOne));
+		summonSickness = true;
+		StartCoroutine(TimerForPlayerMove());
 	}
 
 	void ShowSummonSicknessAndTurn() {
@@ -40,6 +62,9 @@ public class DynamicTut : MonoBehaviour {
 
 	}
 
+	void PlayerSelection() {
+		StartCoroutine(TimeForPlayerSelectingUnit());
+	}
 
 	void PlayerMovement() {
 
@@ -51,32 +76,36 @@ public class DynamicTut : MonoBehaviour {
 	void PlayerAttackingUnit() {
 	}
 
+	void PlayerEndTurn() {
+		StartCoroutine(TimeForPlayerEndTurn());
+	}
+
 	void PlayerWinning() {
-		//TODO: TutorialHandler refactor, to actually be the one that shows the right thing
 	}
 
 	void PlayerLosing() {
 	}
 
 	IEnumerator TimeForPlayerSelectingUnit() {
-		yield return new WaitForSeconds(endTurnDelay);
+		yield return new WaitForSeconds(playerSelectionDelay);
+		if(DataGathering.Instance.HasEverHadSelectedUnit())
+			yield break;
 		Debug.Log("See if player selects a unit");
-
 	}
-
 
 	IEnumerator TimeForPlayerEndTurn() {
 		yield return new WaitForSeconds(endTurnDelay);
-		Debug.Log("Check for summon points left and/or summon spots filled");
-
+		if(DataGathering.Instance.GetAllSummonedUnits().Count != 0 || GameController.instance.GetAmountOfOccupiedPlayerSummonSpots() >= 2 )
+			yield break;
+		TutorialHandler.instance.EndTurn(true);
 	}
 
-	IEnumerator TimerForPlayerMove(string text, string button) {
+	IEnumerator TimerForPlayerMove() {
 		yield return new WaitForSeconds(moveDelay);
-		Debug.Log("Needs Datagathering HasSummoned a unit");
+		Debug.Log("Needs Datagathering Has Moved a unit");
 		/*if (DataGathering.Instance.HasMoved) {
 			yield break;
 		}*/
-		GeneralConfirmationBox.instance.ShowPopUp(text, button);
+		TutorialHandler.instance.ShowGoalAndSummon(true);
 	}
 }
