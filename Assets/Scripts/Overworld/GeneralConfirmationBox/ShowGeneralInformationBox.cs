@@ -14,6 +14,7 @@ namespace Overworld {
 		private ContextInteraction interaction;
 		private UnityAction call;
 		private bool hasShown = false;
+		public bool dynamicTut;
 
 		private void Start() {
 			Register(this, KeyCode.Mouse0);
@@ -70,11 +71,15 @@ namespace Overworld {
 		}
 
 		public override void PerformClosenessAction() {
+			if(dynamicTut)
+				return;
 			GetComponents<ContextInteraction>().First(element => !element.Equals(this)).hasGeneralConfirmationBox = false;
 			ShowPopUp();
 		}
 
 		private void OnTriggerEnter(Collider other) {
+			if(dynamicTut)
+				return;
 			if(other.tag != TagConstants.OVERWORLDPLAYER && typeOfGeneralInformationTrigger != ShowTypeGeneralInformation.OnTriggerEnter)
 				return;
 			ShowPopUp();
@@ -82,12 +87,14 @@ namespace Overworld {
 
 
 		private void OnTriggerExit(Collider other) {
+			if(dynamicTut)
+				return;
 			if(other.tag!= TagConstants.OVERWORLDPLAYER && typeOfGeneralInformationTrigger != ShowTypeGeneralInformation.OnTriggerExit)
 				return;
 			ShowPopUp();
 		}
 
-		private void ShowPopUp() {
+		public void ShowPopUp() {
 			if (hasShown)
 				return;
 			if(typeOfGeneralInformation == TypeOfGeneralInformation.OneButton){

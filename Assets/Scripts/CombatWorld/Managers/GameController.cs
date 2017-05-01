@@ -71,12 +71,11 @@ namespace CombatWorld {
 			CombatCameraController.instance.setBoundary(new Vector2(-go.GetComponent<MapInfo>().mapLength, go.GetComponent<MapInfo>().mapLength));
 			//			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
 
-			if (TutorialHandler.instance != null) {
+/*			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatFirstTurn) {
-					GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers.\n" +
-						"Click a unit and then a square summon pad to summon. This costs 'summon points', displayed next to the units name", "Okay");
+
 				}
-			}
+			}*/
 		}
 
 		void StartGame() {
