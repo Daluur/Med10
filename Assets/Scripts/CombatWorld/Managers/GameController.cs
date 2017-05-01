@@ -173,6 +173,16 @@ namespace CombatWorld {
 			}
 		}
 
+		public int GetAmountOfOccupiedPlayerSummonSpots() {
+			int temp = playerSummonNodes.Count;
+			foreach (SummonNode node in playerSummonNodes) {
+				if (node.HasOccupant()) {
+					temp--;
+				}
+			}
+			return temp;
+		}
+
 		void StartTurn() {
 			foreach (Node node in allNodes) {
 				if (node.HasUnit() && node.GetOccupant().GetTeam() == currentTeam){
@@ -258,6 +268,7 @@ namespace CombatWorld {
 
 		public void HighlightSummonNodes() {
 			selectedUnit = null;
+			DataGathering.Instance.DeselectUnit();
 			ResetAllNodes();
 			if (currentTeam == Team.Player) {
 				foreach (SummonNode node in playerSummonNodes) {
@@ -297,6 +308,7 @@ namespace CombatWorld {
 		public void UnitMadeAction() {
 			if (!movingPlayerUnit || (selectedUnit != null && !selectedUnit.GetNode().HasAttackableNeighbour())) {
 				selectedUnit = null;
+				DataGathering.Instance.DeselectUnit();
 			}
 			movingPlayerUnit = false;
 			waitingForAction = false;
@@ -309,6 +321,7 @@ namespace CombatWorld {
 
 		public void SetSelectedUnit(Unit unit) {
 			selectedUnit = unit;
+			DataGathering.Instance.SelectedUnit(unit);
 		}
 
 		public Unit GetSelectedUnit() {
@@ -317,6 +330,7 @@ namespace CombatWorld {
 
 		public void ClickedNothing() {
 			selectedUnit = null;
+			DataGathering.Instance.DeselectUnit();
 			ResetAllNodes();
 			SelectTeamNodes();
 		}
