@@ -395,14 +395,13 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatSecondTurn) {
-					GeneralConfirmationBox.instance.ShowPopUp("You will gain 2 summon points at the start of your turn each round.\nClick on a summoned unit to move it.", "Okay");
+					TutorialHandler.instance.StartingTurnSecondTurn();
 				}
 			}
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatThirdTurn) {
 					TutorialHandler.instance.combatThirdTurn = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Attacking ends the units turn.\n" +
-						"The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "Okay");
+					TutorialHandler.instance.StartingThirdTurn();
 				}
 			}
 		}
@@ -558,7 +557,7 @@ namespace CombatWorld {
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {
 					TutorialHandler.instance.firstWin = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Winning a battle will grant you gold and new summon recipes", "Okay");
+					TutorialHandler.instance.Winning();
 				}
 			}
 			won = true;
@@ -571,7 +570,7 @@ namespace CombatWorld {
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstLoss) {
 					TutorialHandler.instance.firstLoss = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Losing a battle will send you back to your last checkpoint.", "Okay");
+					TutorialHandler.instance.LosingCombat();
 				}
 			}
 			won = false;

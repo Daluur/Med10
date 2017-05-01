@@ -96,7 +96,7 @@ namespace Overworld {
 
 		public void Beaten(bool saveFix = false) {
 			if (!saveFix) {
-				GeneralConfirmationBox.instance.ShowPopUp("The portal to the next island is now open.", "Okay");
+
 			}
 			foreach (int id in unitsToUnlock) {
 				UnlockHandler.Instance.UnlockUnitByID(id);

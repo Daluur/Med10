@@ -39,6 +39,7 @@ namespace Overworld {
 						break;
 				}
 			}
+			//TODO: Is this needed?
 			if(buttonOne.Length != displayText.Length) {
 				Debug.LogError("button length and display lenght not the same! "+gameObject.name);
 			}
