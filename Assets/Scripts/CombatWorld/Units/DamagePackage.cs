@@ -19,6 +19,7 @@ namespace CombatWorld.Units {
 			wasRetaliation = retaliation;
 			info.attacker = type;
 			info.initiator = source.GetTeam();
+			info.retaliation = retaliation;
 			DataGathering.Instance.AddCombatTrade(info);
 		}
 		

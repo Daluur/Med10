@@ -377,6 +377,7 @@ public class CombatTrades {
 	public ElementalTypes defender;
 	public bool good;
 	public bool bad;
+	public bool retaliation;
 	public Team initiator;
 	public bool towerHit = false;
 	public bool killHit;
