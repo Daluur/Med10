@@ -172,11 +172,11 @@ public class PlayerData {
 	#region Decks
 
 	public List<SimpleUnit> GetPlayerLastDeckAsSimpleUnits() {
-		return DataGathering.Instance.GetPlayerDeckAsSimpleUnits();
+		return DataGathering.Instance.GetPlayerDeckAsSimpleUnitsLastCombat();
 	}
 
 	public List<SimpleUnit> GetAILastDeckAsSimpleUnits() {
-		return DataGathering.Instance.GetAIDeckAsSimpleUnits();
+		return DataGathering.Instance.GetAIDeckAsSimpleUnitsLastCombat();
 	}
 
 	public bool GetPlayerHadSpecialInDeck(bool stone, bool shadow) {
@@ -185,6 +185,18 @@ public class PlayerData {
 
 	public bool GetPlayerHadTypeInDeck(ElementalTypes type) {
 		return DataGathering.Instance.PlayerHasTypeInDeck(type);
+	}
+
+	public List<DeckDataClass> GetAllDeckData() {
+		return DataGathering.Instance.GetAllDeckData();
+	}
+
+	public List<SimpleUnit> GetSpecificPlayerDeckFromDeckDataClass(DeckDataClass DDC) {
+		return DataGathering.Instance.GetSimpleUnitsFromDeckData(DDC);
+	}
+
+	public List<SimpleUnit> GetSpecificAIDeckFromDeckDataClass(DeckDataClass DDC) {
+		return DataGathering.Instance.GetSimpleUnitsFromDeckData(DDC, true);
 	}
 
 	/// <summary>
