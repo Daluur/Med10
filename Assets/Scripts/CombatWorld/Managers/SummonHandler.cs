@@ -79,7 +79,7 @@ namespace CombatWorld
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.summonFirst) {
 					TutorialHandler.instance.summonFirst = false;
-					TutorialHandler.instance.FirstSummon(false);
+					TutorialHandler.instance.FirstSummon();
 				}
 			}
 		}

@@ -81,8 +81,8 @@ public class DynamicTut : Singleton<DynamicTut> {
 		FilterTowerAttacks(ref playerTrades);
 		FilterTowerAttacks(ref aiTrades);
 
-		var score = playerTrades.FindAll(element => element.good).Count - playerTrades.FindAll(element => element.bad).Count;
-		var aiScore =  aiTrades.FindAll(element => element.good).Count - aiTrades.FindAll(element => element.bad).Count;
+		var score = playerTrades.FindAll(element => element.good && !element.retaliation).Count - playerTrades.FindAll(element => element.bad && !element.retaliation && !element.killHit).Count;
+		var aiScore =  aiTrades.FindAll(element => element.good && !element.retaliation).Count - aiTrades.FindAll(element => element.bad && !element.retaliation && !element.killHit).Count;
 
 		//TODO: Understand which type of bad attack triggered this and use that, or use general knowledge?
 		var atk = playerTrades.Find(element => element.bad).attacker;
@@ -109,7 +109,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 		FilterTowerAttacks(ref playerTrades);
 		FilterTowerAttacks(ref aiTrades);
 
-		var score = (playerTrades.Count - playerTrades.FindAll(element => element.killHit).Count) - (aiTrades.Count - aiTrades.FindAll(element => element.killHit).Count);
+		var score = (playerTrades.FindAll(element => element.retaliation).Count) - (aiTrades.FindAll(element => element.retaliation).Count);
 
 		if (score < 0) {
 			Debug.Log("THE PLAYER NEEDS TO BE TAUGHT ABOUT RETALIATION");
@@ -210,6 +210,6 @@ public class DynamicTut : Singleton<DynamicTut> {
 		/*if (DataGathering.Instance.HasMoved) {
 			yield break;
 		}*/
-		TutorialHandler.instance.ShowGoalAndSummon(true);
+		TutorialHandler.instance.ShowGoalAndSummon();
 	}
 }

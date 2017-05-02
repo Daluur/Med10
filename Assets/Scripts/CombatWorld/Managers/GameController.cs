@@ -74,7 +74,7 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatFirstTurn) {
-					TutorialHandler.instance.ShowGoalAndSummon(false);
+					TutorialHandler.instance.ShowGoalAndSummon();
 
 				}
 			}
@@ -397,13 +397,13 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatSecondTurn) {
-					TutorialHandler.instance.StartingTurnSecondTurn(false);
+					TutorialHandler.instance.StartingTurnSecondTurn();
 				}
 			}
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatThirdTurn) {
 					TutorialHandler.instance.combatThirdTurn = false;
-					TutorialHandler.instance.StartingThirdTurn(false);
+					TutorialHandler.instance.StartingThirdTurn();
 				}
 			}
 		}
@@ -559,7 +559,7 @@ namespace CombatWorld {
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {
 					TutorialHandler.instance.firstWin = false;
-					TutorialHandler.instance.Winning(false);
+					TutorialHandler.instance.Winning();
 				}
 			}
 			won = true;
@@ -572,7 +572,7 @@ namespace CombatWorld {
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstLoss) {
 					TutorialHandler.instance.firstLoss = false;
-					TutorialHandler.instance.LosingCombat(false);
+					TutorialHandler.instance.LosingCombat();
 				}
 			}
 			won = false;
