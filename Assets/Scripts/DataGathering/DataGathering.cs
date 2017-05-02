@@ -25,7 +25,7 @@ public class DataGathering {
 
 	//Movement
 	private bool hasMoved;
-	public bool HasMoved { get { return hasMoved; } set { hasMoved = value; Debug.Log("moved"); } }
+	public bool HasMoved { get { return hasMoved; } set { hasMoved = value; } }
 
 	#endregion
 
@@ -257,7 +257,6 @@ public class DataGathering {
 	public int turnedToStoneCount = 0;
 
 	public void TurnedUnitToStone() {
-		Debug.Log("turned to stone");
 		turnedToStoneCount++;
 	}
 
@@ -269,12 +268,10 @@ public class DataGathering {
 	public int movedShadowUnitThroughFriendlyUnitCount = 0;
 
 	public void MovedShadowThroughEnemyUnit() {
-		Debug.Log("Moved through enemy");
 		movedShadowUnitThroughEnemyUnitCount++;
 	}
 
 	public void MovedShadowThrougFriendlyUnit() {
-		Debug.Log("Moved through friendly");
 		movedShadowUnitThroughFriendlyUnitCount++;
 	}
 
@@ -287,17 +284,14 @@ public class DataGathering {
 	public int stoodBesideTowerNotAttackingcount = 0;
 
 	public void AttackedTower() {
-		Debug.Log("Attacked tower");
 		hasAttackedTower = true;
 	}
 
 	public void KilledTower() {
-		Debug.Log("Killed a tower");
 		hasKilledATower = true;
 	}
 
 	public void StoodBesideTowerAndDidNotAttack() {
-		Debug.Log("did not attack tower");
 		stoodBesideTowerNotAttackingcount++;
 	}
 
@@ -375,6 +369,9 @@ public class DataGathering {
 public class CombatTrades {
 	public ElementalTypes attacker;
 	public ElementalTypes defender;
+	public bool shadow;
+	public bool movedThroughUnit;
+	public bool stone;
 	public bool good;
 	public bool bad;
 	public bool retaliation;
