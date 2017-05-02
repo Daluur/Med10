@@ -331,6 +331,7 @@ namespace CombatWorld {
 
 		public void ClickedNothing() {
 			selectedUnit = null;
+			SummonHandler.instance.UpdateButtonsAndText();
 			DataGathering.Instance.DeselectUnit();
 			ResetAllNodes();
 			SelectTeamNodes();

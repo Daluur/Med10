@@ -29,10 +29,12 @@ namespace CombatWorld.Units {
 		}
 
 		void Clicked() {
+			button.image.color = Color.green;
 			callback(data);
 		}
 
 		public void CheckCost(int summonPoints) {
+			button.image.color = Color.white;
 			if(summonPoints < data.cost) {
 				button.interactable = false;
 			}
