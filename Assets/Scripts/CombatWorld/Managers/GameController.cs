@@ -304,6 +304,7 @@ namespace CombatWorld {
 			ResetAllNodes();
 			SelectTeamNodes();
 			TowerNodes();
+			SummonHandler.instance.UpdateButtonsAndText();
 		}
 
 		void TowerNodes() {

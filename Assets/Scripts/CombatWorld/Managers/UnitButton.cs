@@ -15,10 +15,10 @@ namespace CombatWorld.Units {
 		public Text cost;
 		public Image image;
 
-		CombatData data;
-		Action<CombatData> callback;
+		public CombatData data;
+		Action<CombatData,UnitButton> callback;
 
-		public UnitButton Setup(Item unit, Action<CombatData> action) {
+		public UnitButton Setup(Item unit, Action<CombatData,UnitButton> action) {
 			this.unitName.text = unit.Title;
 			this.cost.text = unit.SummonCost.ToString();
 			this.image.sprite = unit.Sprite;
@@ -29,13 +29,20 @@ namespace CombatWorld.Units {
 		}
 
 		void Clicked() {
+			callback(data,this);
+		}
+
+		public void ResetColor() {
+			button.image.color = Color.white;
+		}
+
+		public void Highlight() {
 			button.image.color = Color.green;
-			callback(data);
 		}
 
 		public void CheckCost(int summonPoints) {
 			button.image.color = Color.white;
-			if(summonPoints < data.cost) {
+			if (summonPoints < data.cost) {
 				button.interactable = false;
 			}
 			else {
