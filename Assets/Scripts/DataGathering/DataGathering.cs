@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CombatWorld.Units;
@@ -15,10 +16,19 @@ public class DataGathering {
 		get {
 			if (instance == null) {
 				instance = new DataGathering();
+				System.Random rand = new System.Random(Time.renderedFrameCount);
+				System.Random rand2 = new System.Random((int)(Time.realtimeSinceStartup*10000000));
+				instance.ID = "T" + DateTime.Now.ToString("dd-HH:mm:ss:fff") + "R" + rand.Next(0,10000) + "R" + rand2.Next(0,10000);
 			}
 			return instance;
 		}
 	}
+
+	#endregion
+
+	#region ID
+
+	public string ID;
 
 	#endregion
 
