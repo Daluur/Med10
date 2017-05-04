@@ -155,28 +155,12 @@ public class PlayerData {
 		return DataGathering.Instance.HasSummonedSpecialLastCombat(false, true);
 	}
 
-	public int GetPlayerUsedShadowToMoveThroughOwnUnitsCount() {
-		return DataGathering.Instance.movedShadowUnitThroughFriendlyUnitCount;
-	}
-
-	public bool GetPlayerHasUsedShadowToMoveThroughOwnUnits() {
-		return DataGathering.Instance.movedShadowUnitThroughFriendlyUnitCount != 0;
-	}
-
-	public int GetPlayerUsedShadowToMoveThroughEnemyUnitsCount() {
-		return DataGathering.Instance.movedShadowUnitThroughEnemyUnitCount;
-	}
-
-	public bool GetPlayerHasUsedShadowToMoveThroughEnemyUnits() {
-		return DataGathering.Instance.movedShadowUnitThroughEnemyUnitCount != 0;
-	}
-
 	public bool GetPlayerHasUsedShadow() {
-		return DataGathering.Instance.movedShadowUnitThroughEnemyUnitCount + DataGathering.Instance.movedShadowUnitThroughFriendlyUnitCount != 0;
+		return DataGathering.Instance.movedShadowUnitThroughUnitCount != 0;
 	}
 
 	public int GetPlayerHasUsedShadowCount() {
-		return DataGathering.Instance.movedShadowUnitThroughEnemyUnitCount + DataGathering.Instance.movedShadowUnitThroughFriendlyUnitCount;
+		return DataGathering.Instance.movedShadowUnitThroughUnitCount;
 	}
 
 	public int GetMovedShadowWithoutMovingThroughUnit() {

@@ -327,16 +327,7 @@ namespace CombatWorld.Units {
 			for (int i = 1; i < target.Count; i++) {
 				if (shadowUnit) {
 					if (target[i].HasOccupant()) {
-						if (target[i].GetOccupant().GetTeam() == Team.AI) {
-							DataGathering.Instance.MovedShadowThroughEnemyUnit();
-							movedThroughUnitThisTurn = true;
-						}
-						else {
-							if (target[i].HasUnit() && target[i].GetUnit() != this) {
-								DataGathering.Instance.MovedShadowThrougFriendlyUnit();
-								movedThroughUnitThisTurn = true;
-							}
-						}
+						movedThroughUnitThisTurn = true;
 					}
 				}
 				transform.LookAt(target[i].transform);
@@ -355,6 +346,9 @@ namespace CombatWorld.Units {
 			}
 			if(shadowUnit && !movedThroughUnitThisTurn) {
 				DataGathering.Instance.MoveShadowNotThroughUnits();
+			}
+			else if(shadowUnit && movedThroughUnitThisTurn) {
+				DataGathering.Instance.MovedShadowThroughUnit();
 			}
 			transform.position = target[target.Count-1].transform.position;
 			animHelp.EndWalk();
