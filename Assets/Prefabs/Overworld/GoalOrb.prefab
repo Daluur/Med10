@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23573627592825424}
   - component: {fileID: 65643669472209866}
   - component: {fileID: 114484445277134710}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GoalOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4147202752373406}
   - component: {fileID: 198329194808065074}
   - component: {fileID: 199526363486802264}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Glow1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,6 +136,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d949a8a2db1d33a4ca1bf834de1b513b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
+  open: 0
+  playerOW: {fileID: 0}
+  isRunning: 0
+  meClicked: 0
+  hasGeneralConfirmationBox: 0
   target: {fileID: 0}
 --- !u!198 &198329194808065074
 ParticleSystem:

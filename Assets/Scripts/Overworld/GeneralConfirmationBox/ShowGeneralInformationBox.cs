@@ -38,6 +38,7 @@ namespace Overworld {
 						break;
 				}
 			}
+			//TODO: Is this needed?
 			if(buttonOne.Length != displayText.Length) {
 				Debug.LogError("button length and display lenght not the same! "+gameObject.name);
 			}
@@ -87,7 +88,7 @@ namespace Overworld {
 			ShowPopUp();
 		}
 
-		private void ShowPopUp() {
+		public void ShowPopUp() {
 			if (hasShown)
 				return;
 			if(typeOfGeneralInformation == TypeOfGeneralInformation.OneButton){

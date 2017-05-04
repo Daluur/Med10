@@ -87,7 +87,7 @@ namespace Overworld {
 					DistributeAction ();
 				if (TutorialHandler.instance.firstInventory) {
 					TutorialHandler.instance.firstInventory = false;
-					GeneralConfirmationBox.instance.ShowPopUp ("You can carry 12 units at a time.\nThe 6 glowing slots are your combat slots, you will bring these units to battle.\nDrag units to different slots to change lineup.", "Okay");
+					TutorialHandler.instance.InventoryAndShop();
 				}
 				break;
 				case KeyCode.Q:
@@ -108,6 +108,7 @@ namespace Overworld {
 				if (!isMouseBlocked) {
 					playerMoveTo = hit.transform.position;
 					distributeTo.Add(playerInteractable);
+					hitNormal = Vector3.zero;
 				}
 				distributeTo.AddRange(hit.collider.gameObject.GetComponents<IInteractable>());
 				return;

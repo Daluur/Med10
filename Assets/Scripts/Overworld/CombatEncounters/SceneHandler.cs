@@ -38,6 +38,7 @@ namespace Overworld {
 			if (hasStartedLoading) {
 				return;
 			}
+			DynamicTut.instance.SetCombat(true);
 			hasStartedLoading = true;
 			inputManager.BlockMouseUI();
 			AudioHandler.instance.PlayEnterCombat();
@@ -69,6 +70,7 @@ namespace Overworld {
 			StartCoroutine(FadeIn());
 			SceneManager.sceneLoaded -= OnSceneLoaded;
 			SceneManager.sceneUnloaded -= EndEncounter;
+			DynamicTut.instance.SetCombat(false);
 			inputManager.UnblockMouseUI();
 		}
 
@@ -117,6 +119,7 @@ namespace Overworld {
 			AwardCurrency();
 			QuestManager.questManager.CompleteQuest (encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			ProcessEncounteredObject();
+			SaveLoadHandler.Instance.GetCurrentIsland()
 			if (true) { // Change this to bool for check learned all on the island.
 				LearnedEverything();
 			}

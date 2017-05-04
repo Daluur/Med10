@@ -42,6 +42,11 @@ namespace Overworld {
 			}
 		}
 
+		void PlayerMoveToInteractableInput(Vector3 hitPoint) {
+			agent.SetDestination(hitPoint);
+		}
+
+
 		private void Update() {
 			animator.SetFloat("Speed", agent.velocity.magnitude);
 		}
@@ -70,7 +75,12 @@ namespace Overworld {
 				Debug.LogError("To move the character give it a Vector3 to move to");
 				return;
 			}
-			PlayerMoveToMouseInput((Vector3)(param as Vector3?) , m);
+			if (m != Vector3.zero) {
+				PlayerMoveToMouseInput((Vector3)(param as Vector3?) , m);
+				return;
+			}
+			PlayerMoveToInteractableInput((Vector3)(param as Vector3?));
+
 		}
 
 
