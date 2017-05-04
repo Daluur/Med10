@@ -72,6 +72,8 @@ namespace CombatWorld.AI {
 				while (GameController.instance.WaitingForAction()) {
 					yield return new WaitForSeconds(0.1f);
 				}
+				if(GameController.instance.gameFinished)
+					yield break;
 				if (unit.Key.GetHealth() < 1)
 					continue;
 				if(!unit.Key.CanMove())
