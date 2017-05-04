@@ -51,6 +51,8 @@ public class DataGathering {
 		TradesFromLastCombat.Clear();
 		SummonedUnitsLastCombat.Clear();
 		SSS.Clear();
+		movedThroughLastCombat = 0;
+		didNotMoveThroughLastCombat = 0;
 	}
 
 	#endregion
@@ -256,6 +258,26 @@ public class DataGathering {
 		return false;
 	}
 
+	public int GetShadowSummonLastCombatCount() {
+		int count = 0;
+		foreach (SummonPlayerData data in SummonedUnitsLastCombat) {
+			if (data.shadow) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int GetShadowSummonAllTimeCount() {
+		int count = 0;
+		foreach (SummonPlayerData data in AllSummonedUnits) {
+			if (data.shadow) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 	#endregion
 
 	#region Specifics
@@ -293,27 +315,35 @@ public class DataGathering {
 	public int movedShadowUnitThroughFriendlyUnitCount = 0;
 	public int movedShadowWithoutMovingThroughUnitsCount = 0;
 
+	public int movedThroughLastCombat = 0;
+	public int didNotMoveThroughLastCombat = 0;
+
 	public void MovedShadowThroughEnemyUnit() {
 		movedShadowUnitThroughEnemyUnitCount++;
 		movedShadowThroughOthersSaveThisValue++;
+		movedThroughLastCombat++;
 	}
 
 	public void MovedShadowThrougFriendlyUnit() {
 		movedShadowUnitThroughFriendlyUnitCount++;
 		movedShadowThroughOthersSaveThisValue++;
+		movedThroughLastCombat++;
 	}
 
 	public void MoveShadowNotThroughUnits() {
 		movedShadowWithoutMovingThroughUnitsCount++;
 		movedShadowWithoutMovingThroughOtherUnitsSaveThisValue++;
+		didNotMoveThroughLastCombat++;
 	}
 
 	public void ResetShadow() {
 		movedShadowUnitThroughEnemyUnitCount = 0;
 		movedShadowUnitThroughFriendlyUnitCount = 0;
 		movedShadowWithoutMovingThroughUnitsCount = 0;
+		movedThroughLastCombat = 0;
+		didNotMoveThroughLastCombat = 0;
 	}
-
+	
 	#endregion
 
 	#region Tower

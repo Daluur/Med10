@@ -89,6 +89,14 @@ public class PlayerData {
 		return DataGathering.Instance.HasSummonedSpecialLastCombat(stone, shadow);
 	}
 
+	public int GetShadowSummonedLastCombat() {
+		return DataGathering.Instance.GetShadowSummonLastCombatCount();
+	}
+
+	public int GetShadowSummmonedAllTime() {
+		return DataGathering.Instance.GetShadowSummonAllTimeCount();
+	}
+
 	#endregion
 
 	#region Specific
@@ -173,6 +181,14 @@ public class PlayerData {
 
 	public int GetMovedShadowWithoutMovingThroughUnit() {
 		return DataGathering.Instance.movedShadowWithoutMovingThroughUnitsCount;
+	}
+
+	public int GetPlayerHasUsedShadowCountLastCombat() {
+		return DataGathering.Instance.movedThroughLastCombat;
+	}
+
+	public int GetMovedShadowWithoutMovingThroughUnitLastCombat() {
+		return DataGathering.Instance.didNotMoveThroughLastCombat;
 	}
 
 	public void ResetShadow() {
