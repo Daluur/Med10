@@ -44,7 +44,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	}
 
 	public void Winning() {
-		GeneralConfirmationBox.instance.ShowPopUp("Winning a battle will grant you gold and new summon recipes", "CLOSE");
+		GeneralConfirmationBox.instance.ShowPopUp("Winning a battle will grant new summon recipes", "CLOSE");
 	}
 
 	public void FirstSummon() {
