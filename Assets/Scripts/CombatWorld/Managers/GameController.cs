@@ -407,6 +407,8 @@ namespace CombatWorld {
 		}
 
 		private void PlayerTurn() {
+			DynamicTut.instance.CheckForDynamicTuts();
+
 			TurnIndicator.text = "Your turn";
 			GiveTurnSummonPoints();
 			StartCoroutine(HideText());

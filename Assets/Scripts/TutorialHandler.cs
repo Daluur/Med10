@@ -80,6 +80,12 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 			("Remember that some types are stronger against other\nMaybe you should consider using a different type of unit"),"CLOSE");
 	}
 
+	public void ShowBothShadowAndTypesDynTUT() {
+		GeneralConfirmationBox.instance.ShowPopUp(
+			"Remember that some types are stronger against other\nMaybe you should consider using a different type of unit",
+			"NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("SHADOW units can move through other units", "CLOSE"));
+	}
+
 
 	public void EndTurn(bool isDynamicCallIn) {
 		if(isDynamic == isDynamicCallIn)
