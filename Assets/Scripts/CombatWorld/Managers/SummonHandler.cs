@@ -63,12 +63,21 @@ namespace CombatWorld
 			SpendPoints(currentlySelectedData.cost);
 			GameObject unit = Instantiate(currentlySelectedData.model, node.transform.position, Quaternion.identity) as GameObject;
 			unit.GetComponent<Unit>().SpawnEntity(node, Team.Player, currentlySelectedData);
+			DataGathering.Instance.NewUnitSummoned(new SpecificSummonStats() { cost = currentlySelectedData.cost, pointsLeftAfter = summonPoints, spotsLeftAfter = GameController.instance.GetAmountOfOccupiedPlayerSummonSpots() });
 			unit.transform.parent = transform;
 		}
 
-		public void SummonButtonPressed(CombatData CD) {
+		public void SummonButtonPressed(CombatData CD, UnitButton but) {
 			currentlySelectedData = CD;
 			GameController.instance.HighlightSummonNodes();
+			foreach (UnitButton item in buttons) {
+				if (item != but) {
+					item.ResetColor();
+				}
+				else {
+					item.Highlight();
+				}
+			}
 		}
 
 		void SpendPoints(int amount) {
@@ -91,7 +100,7 @@ namespace CombatWorld
 			}*/
 		}
 
-		void UpdateButtonsAndText() {
+		public void UpdateButtonsAndText() {
 			foreach (UnitButton item in buttons) {
 				item.CheckCost(summonPoints);
 			}

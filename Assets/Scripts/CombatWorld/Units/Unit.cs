@@ -122,6 +122,7 @@ namespace CombatWorld.Units {
 			if (turnedToStone) {
 				return;
 			}
+			movedThroughUnitThisTurn = false;
 			moved = attacked = false;
 		}
 
@@ -133,6 +134,9 @@ namespace CombatWorld.Units {
 			this.target = target;
 			attacked = moved = true;
 			damagePack = new DamagePackage(damage, this, type);
+			damagePack.info.stone = turnedToStone;
+			damagePack.info.shadow = shadowUnit;
+			damagePack.info.movedThroughUnit = movedThroughUnitThisTurn;
 			DealDamage();
 			if (DamageConstants.ATTACKATSAMETIME) {
 				if (target.GetNode().HasUnit()) {
@@ -144,6 +148,8 @@ namespace CombatWorld.Units {
 		public void RetaliationAttack(IEntity target) {
 			this.target = target;
 			damagePack = new DamagePackage(damage, this, type, true);
+			damagePack.info.stone = turnedToStone;
+			damagePack.info.shadow = shadowUnit;
 			DealDamage();
 		}
 
@@ -308,7 +314,7 @@ namespace CombatWorld.Units {
 			FaceForward();
 		}
 
-		//Vector3 moveDir;
+		bool movedThroughUnitThisTurn = false;
 
 		IEnumerator MoveTo(List<Node> target) {
 			CombatCameraController.instance.SetTarget(transform);
@@ -323,10 +329,12 @@ namespace CombatWorld.Units {
 					if (target[i].HasOccupant()) {
 						if (target[i].GetOccupant().GetTeam() == Team.AI) {
 							DataGathering.Instance.MovedShadowThroughEnemyUnit();
+							movedThroughUnitThisTurn = true;
 						}
 						else {
 							if (target[i].HasUnit() && target[i].GetUnit() != this) {
 								DataGathering.Instance.MovedShadowThrougFriendlyUnit();
+								movedThroughUnitThisTurn = true;
 							}
 						}
 					}

@@ -14,10 +14,14 @@ namespace CombatWorld.Units {
 		private Team team;
 		[SerializeField]
 		private Node currentNode;
+		GameObject model;
+		Renderer towerRend;
 
 		public HealthAttackVisualController healthIndicator;
 
 		void Start() {
+			model = transform.GetChild(0).gameObject;
+			towerRend = transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
 			if (!currentNode.HasOccupant()) {
 				currentNode.SetOccupant(this);
 			}
@@ -43,7 +47,8 @@ namespace CombatWorld.Units {
 			}
 			Instantiate (Resources.Load ("Art/3D/Explosion") as GameObject, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
 			Instantiate (Resources.Load ("Art/3D/DeadTower") as GameObject, new Vector3(this.transform.position.x + 1, this.transform.position.y + 1, this.transform.position.z), Quaternion.identity);
-			Destroy(gameObject);
+			model.SetActive(false);
+			Destroy(gameObject,1);
 		}
 
 		public int GetHealth() {
@@ -64,6 +69,19 @@ namespace CombatWorld.Units {
 
 		public Transform GetTransform() {
 			return transform;
+		}
+
+		public void CanBeAttacked() {
+			if(team == Team.Player) {
+				return;
+			}
+			foreach (Node node in currentNode.neighbours) {
+				if(node.HasUnit() && node.GetUnit().GetTeam() == Team.Player && node.GetUnit().CanAttack()) {
+					towerRend.material.color = Color.red;
+					return;
+				}
+			}
+			towerRend.material.color = Color.white;
 		}
 
 		public void TakeDamage(DamagePackage damage) {

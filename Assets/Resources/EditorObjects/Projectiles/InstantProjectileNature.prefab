@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4230605882190674}
   - component: {fileID: 114722552449062352}
   m_Layer: 0
-  m_Name: InstantProjectile
+  m_Name: InstantProjectileNature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,5 +51,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ddbf00fdce4ca848bffcffe55bb3c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitEffect: {fileID: 1372612114652402, guid: f2eb1808e832c48449a1071a48b31882, type: 2}
   speed: 25
-  HitEffect: {fileID: 1372612114652402, guid: eb6150e2d135b16408a8ddf2258ad7e5, type: 2}

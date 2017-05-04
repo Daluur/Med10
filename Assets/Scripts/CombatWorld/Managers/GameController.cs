@@ -38,6 +38,7 @@ namespace CombatWorld {
 		public Animator summonPointTurnAnim;
 
 		void Start() {
+			//DataToServer.SendData();
 			if (GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER)) {
 				StartCoroutine(FadeIn());
 			}
@@ -173,6 +174,16 @@ namespace CombatWorld {
 			}
 		}
 
+		public int GetAmountOfOccupiedPlayerSummonSpots() {
+			int temp = playerSummonNodes.Count;
+			foreach (SummonNode node in playerSummonNodes) {
+				if (node.HasOccupant()) {
+					temp--;
+				}
+			}
+			return temp;
+		}
+
 		void StartTurn() {
 			foreach (Node node in allNodes) {
 				if (node.HasUnit() && node.GetOccupant().GetTeam() == currentTeam){
@@ -258,6 +269,7 @@ namespace CombatWorld {
 
 		public void HighlightSummonNodes() {
 			selectedUnit = null;
+			DataGathering.Instance.DeselectUnit();
 			ResetAllNodes();
 			if (currentTeam == Team.Player) {
 				foreach (SummonNode node in playerSummonNodes) {
@@ -290,6 +302,16 @@ namespace CombatWorld {
 		public void GotInput() {
 			ResetAllNodes();
 			SelectTeamNodes();
+			TowerNodes();
+			SummonHandler.instance.UpdateButtonsAndText();
+		}
+
+		void TowerNodes() {
+			foreach (Node node in GetTowersForTeam(Team.AI)) {
+				if (node.HasTower()) {
+					node.GetTower().CanBeAttacked();
+				}
+			}
 		}
 
 		bool movingPlayerUnit = false;
@@ -297,6 +319,7 @@ namespace CombatWorld {
 		public void UnitMadeAction() {
 			if (!movingPlayerUnit || (selectedUnit != null && !selectedUnit.GetNode().HasAttackableNeighbour())) {
 				selectedUnit = null;
+				DataGathering.Instance.DeselectUnit();
 			}
 			movingPlayerUnit = false;
 			waitingForAction = false;
@@ -309,6 +332,7 @@ namespace CombatWorld {
 
 		public void SetSelectedUnit(Unit unit) {
 			selectedUnit = unit;
+			DataGathering.Instance.SelectedUnit(unit);
 		}
 
 		public Unit GetSelectedUnit() {
@@ -317,6 +341,8 @@ namespace CombatWorld {
 
 		public void ClickedNothing() {
 			selectedUnit = null;
+			SummonHandler.instance.UpdateButtonsAndText();
+			DataGathering.Instance.DeselectUnit();
 			ResetAllNodes();
 			SelectTeamNodes();
 		}
@@ -540,6 +566,8 @@ namespace CombatWorld {
 		}
 
 		void Won() {
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, killHit = true });
+			DataToServer.SendData();
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {
 					TutorialHandler.instance.firstWin = false;
@@ -553,6 +581,7 @@ namespace CombatWorld {
 		}
 
 		void Lost() {
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, killHit = false });
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstLoss) {
 					TutorialHandler.instance.firstLoss = false;

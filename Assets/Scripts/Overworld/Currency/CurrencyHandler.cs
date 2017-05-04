@@ -31,7 +31,7 @@ namespace Overworld {
 		}
 
 		private static void UpdateCurrencyUI() {
-			amountOfCurrencyUI.text = amountOfCurrency.ToString();
+			//amountOfCurrencyUI.text = amountOfCurrency.ToString();
 		}
 
 		public static int GetCurrentGold() {
