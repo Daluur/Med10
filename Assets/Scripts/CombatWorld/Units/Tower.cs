@@ -15,11 +15,13 @@ namespace CombatWorld.Units {
 		[SerializeField]
 		private Node currentNode;
 		GameObject model;
+		Renderer towerRend;
 
 		public HealthAttackVisualController healthIndicator;
 
 		void Start() {
 			model = transform.GetChild(0).gameObject;
+			towerRend = transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
 			if (!currentNode.HasOccupant()) {
 				currentNode.SetOccupant(this);
 			}
@@ -67,6 +69,19 @@ namespace CombatWorld.Units {
 
 		public Transform GetTransform() {
 			return transform;
+		}
+
+		public void CanBeAttacked() {
+			if(team == Team.Player) {
+				return;
+			}
+			foreach (Node node in currentNode.neighbours) {
+				if(node.HasUnit() && node.GetUnit().GetTeam() == Team.Player && node.GetUnit().CanAttack()) {
+					towerRend.material.color = Color.red;
+					return;
+				}
+			}
+			towerRend.material.color = Color.white;
 		}
 
 		public void TakeDamage(DamagePackage damage) {

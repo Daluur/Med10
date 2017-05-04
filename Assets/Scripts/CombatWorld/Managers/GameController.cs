@@ -303,6 +303,16 @@ namespace CombatWorld {
 		public void GotInput() {
 			ResetAllNodes();
 			SelectTeamNodes();
+			TowerNodes();
+			SummonHandler.instance.UpdateButtonsAndText();
+		}
+
+		void TowerNodes() {
+			foreach (Node node in GetTowersForTeam(Team.AI)) {
+				if (node.HasTower()) {
+					node.GetTower().CanBeAttacked();
+				}
+			}
 		}
 
 		bool movingPlayerUnit = false;

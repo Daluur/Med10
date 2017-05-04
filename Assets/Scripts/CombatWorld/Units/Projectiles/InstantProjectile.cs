@@ -7,7 +7,7 @@ namespace CombatWorld.Units {
 	public class InstantProjectile : BasicProjectile {
 
 		protected override IEnumerator Travel() {
-			Instantiate(HitEffect, target.position, Quaternion.identity);
+			Instantiate(HitEffect, target.position+(Vector3.up*0.5f), Quaternion.identity);
 			Hit();
 			yield break;
 		}
