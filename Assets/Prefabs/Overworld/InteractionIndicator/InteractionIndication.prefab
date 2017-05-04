@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 135529335078879920}
   - component: {fileID: 23171722109572130}
   - component: {fileID: 95313036387448940}
-  - component: {fileID: 114813226831578736}
   m_Layer: 0
   m_Name: InteractionIndication
   m_TagString: Untagged
@@ -100,17 +99,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114813226831578736
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1878810924118092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a65aedc3e31c86c4cab75f197ae67034, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &135529335078879920
 SphereCollider:
   m_ObjectHideFlags: 1
