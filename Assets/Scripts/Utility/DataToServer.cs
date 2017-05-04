@@ -12,7 +12,7 @@ public class DataToServer {
 		WWWForm form = new WWWForm();
 		form.AddField("action", "send");
 		form.AddField("ID", DataGathering.Instance.ID);
-		form.AddField("Control", 0);
+		form.AddField("Control", DynamicTut.instance == null ? -1 : DynamicTut.instance.isDynamic ? 1 : 0);
 		form.AddField("Trades", GetCDData());
 		form.AddField("Summons", GetSummonData());
 		form.AddField("Decks", GetDeckData());
