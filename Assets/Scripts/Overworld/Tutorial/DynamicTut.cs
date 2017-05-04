@@ -15,9 +15,9 @@ public class DynamicTut : Singleton<DynamicTut> {
 
 	private bool showGoalAndSummon, summonSickness, playerMovement, winning, losing, playerAttacking, endTurn;
 
-	private bool inCombat, shownType, shownRetaliation;
+	private bool inCombat, shownType, shownRetaliation, shownShadow;
 	private Coroutine testing;
-	public float cooldownForDynamicTypeTut = 100f, cooldownForDynamicRetaliationTut = 100f;
+	public float cooldownForDynamicTypeTut = 100f, cooldownForDynamicRetaliationTut = 100f, cooldownForShadowSpecialTut = 100f;
 
 
 	//TODO: Add all the different types of tuts we want to be shown in here
@@ -53,6 +53,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 		while(inCombat){
 			yield return new WaitForSeconds(3f);
 			ShowDynamicTypes();
+			ShowDynamicShadowSpecial();
 		}
 		Debug.Log("Stopped testing");
 	}
@@ -64,6 +65,25 @@ public class DynamicTut : Singleton<DynamicTut> {
 	IEnumerator RetaliationCooldown() {
 		yield return new WaitForSeconds(cooldownForDynamicRetaliationTut);
 		shownRetaliation = false;
+	}
+
+	IEnumerator ShadowSpecialCooldown() {
+		yield return new WaitForSeconds(cooldownForShadowSpecialTut);
+		shownShadow = false;
+	}
+
+	public void ShowDynamicShadowSpecial() {
+		if(!PlayerData.Instance.GetHasEverSummonedShadow())
+			return;
+		if(shownShadow)
+			return;
+		shownShadow = true;
+		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnit() > 2) {
+
+		}
+		PlayerData.Instance.ResetTrades();
+		StartCoroutine(ShadowSpecialCooldown());
+		TutorialHandler.instance.ShadowUnitDyn();
 	}
 
 
@@ -89,9 +109,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 		var def = playerTrades.Find(element => element.bad).defender;
 
 		if(score < -2 && aiScore > 1){
-			Debug.Log("SHOW THE ELEMENTALTYPE STUFF HERE! LOOK AT TODO IN THIS FUNCTION");
-			GeneralConfirmationBox.instance.ShowPopUp(
-				String.Format("Type {0} is weak against {1} \n Maybe you should try using a different type of unit", atk, def),"Okay");
+			TutorialHandler.instance.TypeTUTDyn();
 		}
 	}
 
@@ -112,7 +130,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 		var score = (playerTrades.FindAll(element => element.retaliation).Count) - (aiTrades.FindAll(element => element.retaliation).Count);
 
 		if (score < 0) {
-			Debug.Log("THE PLAYER NEEDS TO BE TAUGHT ABOUT RETALIATION");
+			//Debug.Log("THE PLAYER NEEDS TO BE TAUGHT ABOUT RETALIATION");
 			GeneralConfirmationBox.instance.ShowPopUp("If a unit survives an attack\n It will retaliate","Okay");
 		}
 	}
@@ -122,10 +140,10 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	private List<CombatTrades> GetPlayerTrades() {
-		return DataGathering.Instance.GetAllTrades().FindAll(element => element.initiator == Team.Player);
+		return PlayerData.Instance.GetAllTrades().FindAll(element => element.initiator == Team.Player);
 	}
 	private List<CombatTrades> GetAITrades() {
-		return DataGathering.Instance.GetAllTrades().FindAll(element => element.initiator == Team.AI);
+		return PlayerData.Instance.GetAllTrades().FindAll(element => element.initiator == Team.AI);
 	}
 
 	public void SetCombat(bool value) {
@@ -135,7 +153,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 
-	public void ContinueTheDynamicTutCycle() {
+	private void ContinueTheDynamicTutCycle() {
 		if(!isDynamic)
 			return;
 		if(!showGoalAndSummon)
@@ -154,8 +172,8 @@ public class DynamicTut : Singleton<DynamicTut> {
 
 
 	void ShowGoalAndSummon() {
-		summonSickness = true;
-		StartCoroutine(TimerForPlayerMove());
+		//summonSickness = true;
+		//StartCoroutine(TimerForPlayerMove());
 	}
 
 	void ShowSummonSicknessAndTurn() {
@@ -167,7 +185,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	void PlayerSelection() {
-		StartCoroutine(TimeForPlayerSelectingUnit());
+		//StartCoroutine(TimeForPlayerSelectingUnit());
 	}
 
 	void PlayerMovement() {
@@ -181,7 +199,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	void PlayerEndTurn() {
-		StartCoroutine(TimeForPlayerEndTurn());
+		//StartCoroutine(TimeForPlayerEndTurn());
 	}
 
 	void PlayerWinning() {
@@ -190,9 +208,9 @@ public class DynamicTut : Singleton<DynamicTut> {
 	void PlayerLosing() {
 	}
 
-	IEnumerator TimeForPlayerSelectingUnit() {
+/*	IEnumerator TimeForPlayerSelectingUnit() {
 		yield return new WaitForSeconds(playerSelectionDelay);
-		if(DataGathering.Instance.HasEverHadSelectedUnit())
+		if(PlayerData.Instance.HasEverHadSelectedUnit())
 			yield break;
 		Debug.Log("See if player selects a unit");
 	}
@@ -207,9 +225,9 @@ public class DynamicTut : Singleton<DynamicTut> {
 	IEnumerator TimerForPlayerMove() {
 		yield return new WaitForSeconds(moveDelay);
 		Debug.Log("Needs Datagathering Has Moved a unit");
-		/*if (DataGathering.Instance.HasMoved) {
+		if (DataGathering.Instance.HasMoved) {
 			yield break;
-		}*/
+		}
 		TutorialHandler.instance.ShowGoalAndSummon();
-	}
+	}*/
 }

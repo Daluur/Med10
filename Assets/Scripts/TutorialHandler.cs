@@ -71,6 +71,16 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		GeneralConfirmationBox.instance.ShowPopUp("You are able to carry 12 units at a time.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Close the inventory and shop by clicking the X in the top right corner, or by pressing ESC to close all windows.", "CLOSE"));
 	}
 
+	public void ShadowUnitDyn() {
+		GeneralConfirmationBox.instance.ShowPopUp("SHADOW units can move through other units", "CLOSE");
+	}
+
+	public void TypeTUTDyn() {
+		GeneralConfirmationBox.instance.ShowPopUp(
+			("Remember that some types are stronger against other\nMaybe you should consider using a different type of unit"),"CLOSE");
+	}
+
+
 	public void EndTurn(bool isDynamicCallIn) {
 		if(isDynamic == isDynamicCallIn)
 			GeneralConfirmationBox.instance.ShowPopUp("NEED TEXT, END TURN FOR PLAYER DYNAMIC TUT", "Okay");
