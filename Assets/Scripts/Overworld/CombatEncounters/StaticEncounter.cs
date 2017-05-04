@@ -95,9 +95,10 @@ namespace Overworld {
 		}
 
 		public void Beaten(bool saveFix = false) {
-			if (!saveFix) {
-				TutorialHandler.instance.PortalIsOpen();
+			if (saveFix) {
+				return;
 			}
+			TutorialHandler.instance.PortalIsOpen();
 			foreach (int id in unitsToUnlock) {
 				UnlockHandler.Instance.UnlockUnitByID(id);
 			}

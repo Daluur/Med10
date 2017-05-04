@@ -556,6 +556,8 @@ namespace CombatWorld {
 		}
 
 		void Won() {
+			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = true});
+			DataToServer.SendData();
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {
 					TutorialHandler.instance.firstWin = false;
@@ -569,6 +571,8 @@ namespace CombatWorld {
 		}
 
 		void Lost() {
+			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = false});
+			DataToServer.SendData();
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstLoss) {
 					TutorialHandler.instance.firstLoss = false;

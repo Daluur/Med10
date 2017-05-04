@@ -79,11 +79,10 @@ public class DynamicTut : Singleton<DynamicTut> {
 			return;
 		shownShadow = true;
 		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnit() > 2) {
-
+			TutorialHandler.instance.ShadowUnitDyn();
 		}
 		PlayerData.Instance.ResetTrades();
 		StartCoroutine(ShadowSpecialCooldown());
-		TutorialHandler.instance.ShadowUnitDyn();
 	}
 
 
@@ -105,8 +104,6 @@ public class DynamicTut : Singleton<DynamicTut> {
 		var aiScore =  aiTrades.FindAll(element => element.good && !element.retaliation).Count - aiTrades.FindAll(element => element.bad && !element.retaliation && !element.killHit).Count;
 
 		//TODO: Understand which type of bad attack triggered this and use that, or use general knowledge?
-		var atk = playerTrades.Find(element => element.bad).attacker;
-		var def = playerTrades.Find(element => element.bad).defender;
 
 		if(score < -2 && aiScore > 1){
 			TutorialHandler.instance.TypeTUTDyn();

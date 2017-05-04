@@ -119,6 +119,7 @@ namespace Overworld {
 			AwardCurrency();
 			QuestManager.questManager.CompleteQuest (encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			ProcessEncounteredObject();
+			SaveLoadHandler.Instance.GetCurrentIsland()
 			if (true) { // Change this to bool for check learned all on the island.
 				LearnedEverything();
 			}
