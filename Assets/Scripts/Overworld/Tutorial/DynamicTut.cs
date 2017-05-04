@@ -72,30 +72,46 @@ public class DynamicTut : Singleton<DynamicTut> {
 		shownShadow = false;
 	}
 
-	public void ShowDynamicShadowSpecial() {
-		if(!PlayerData.Instance.GetHasEverSummonedShadow())
-			return;
-		if(shownShadow)
-			return;
-		shownShadow = true;
-		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnit() > 2) {
+	public void CheckForDynamicTuts() {
+		var dynamicTut = ShowDynamicShadowSpecial();
+		var shadowSpecial = ShowDynamicShadowSpecial();
+		if(dynamicTut && shadowSpecial){
+			TutorialHandler.instance.ShowBothShadowAndTypesDynTUT();
+		}
+		else if (shadowSpecial) {
 			TutorialHandler.instance.ShadowUnitDyn();
 		}
-		PlayerData.Instance.ResetTrades();
-		StartCoroutine(ShadowSpecialCooldown());
+		else if (dynamicTut) {
+			TutorialHandler.instance.TypeTUTDyn();
+		}
+
 	}
 
 
-	public void ShowDynamicTypes() {
+	private bool ShowDynamicShadowSpecial() {
+		if(!PlayerData.Instance.GetHasEverSummonedShadow())
+			return false;
+		if(shownShadow)
+			return false;
+
+		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnit() > 2) {
+			shownShadow = true;
+			PlayerData.Instance.ResetShadow();
+			StartCoroutine(ShadowSpecialCooldown());
+			return true;
+		}
+		return false;
+	}
+
+
+	private bool ShowDynamicTypes() {
 		if(shownType)
-			return;
+			return false;
 
 		var playerTrades = GetPlayerTrades();
 		var aiTrades = GetAITrades();
 		if(playerTrades.Count == 0 || aiTrades.Count == 0)
-			return;
-
-		StartCoroutine(TypesCooldown());
+			return false;
 
 		FilterTowerAttacks(ref playerTrades);
 		FilterTowerAttacks(ref aiTrades);
@@ -105,9 +121,13 @@ public class DynamicTut : Singleton<DynamicTut> {
 
 		//TODO: Understand which type of bad attack triggered this and use that, or use general knowledge?
 
-		if(score < -2 && aiScore > 1){
-			TutorialHandler.instance.TypeTUTDyn();
+		if(score < -2 && aiScore > 1) {
+			shownType = true;
+			PlayerData.Instance.ResetTrades();
+			StartCoroutine(TypesCooldown());
+			return true;
 		}
+		return false;
 	}
 
 	public void ShowRetaliationDynamic() {
