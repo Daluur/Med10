@@ -886,7 +886,7 @@ Prefab:
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -24849.777
+      value: -24932.623
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -911,7 +911,7 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -19.646585
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -921,12 +921,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 15.293171
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 39.29317
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -2284,6 +2284,11 @@ MonoBehaviour:
   cooldownForDynamicTypeTut: 100
   cooldownForDynamicRetaliationTut: 100
   cooldownForShadowSpecialTut: 100
+  island1: 0
+  island2: 2
+  island3: 1
+  island4: 3
+  island5: 3
 --- !u!4 &2008217872 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4204852736266414, guid: 956195cb696a2af4ca5d616bd2635ef0,

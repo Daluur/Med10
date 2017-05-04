@@ -7,6 +7,14 @@ using NUnit.Framework.Internal;
 using Overworld;
 using UnityEngine;
 
+
+public enum LearningObjectives {
+	None,
+	ShadowUnit,
+	TypeInteraction,
+	Both
+}
+
 public class DynamicTut : Singleton<DynamicTut> {
 
 	public bool isDynamic;
@@ -18,6 +26,9 @@ public class DynamicTut : Singleton<DynamicTut> {
 	private bool inCombat, shownType, shownRetaliation, shownShadow;
 	private Coroutine testing;
 	public float cooldownForDynamicTypeTut = 100f, cooldownForDynamicRetaliationTut = 100f, cooldownForShadowSpecialTut = 100f;
+
+
+	public LearningObjectives island1, island2, island3, island4, island5;
 
 
 	//TODO: Add all the different types of tuts we want to be shown in here
@@ -52,8 +63,8 @@ public class DynamicTut : Singleton<DynamicTut> {
 		Debug.Log("Startedtesting");
 		while(inCombat){
 			yield return new WaitForSeconds(3f);
-			ShowDynamicTypes();
-			ShowDynamicShadowSpecial();
+			CheckDynamicShadowSpecial();
+			CheckDynamicTypes();
 		}
 		Debug.Log("Stopped testing");
 	}
@@ -73,8 +84,8 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	public void CheckForDynamicTuts() {
-		var dynamicTut = ShowDynamicShadowSpecial();
-		var shadowSpecial = ShowDynamicShadowSpecial();
+		var dynamicTut = CheckDynamicTypes();
+		var shadowSpecial = CheckDynamicShadowSpecial();
 		if(dynamicTut && shadowSpecial){
 			TutorialHandler.instance.ShowBothShadowAndTypesDynTUT();
 		}
@@ -84,11 +95,68 @@ public class DynamicTut : Singleton<DynamicTut> {
 		else if (dynamicTut) {
 			TutorialHandler.instance.TypeTUTDyn();
 		}
+	}
 
+	public bool HasLearnedEverything(int island) {
+		switch (island) {
+			case 0:
+				return CheckLearningGoals(island1);
+			case 1:
+				return CheckLearningGoals(island2);
+			case 2:
+				return CheckLearningGoals(island3);
+			case 3:
+				return CheckLearningGoals(island4);
+			case 4:
+				return CheckLearningGoals(island5);
+		}
+		return true;
+	}
+
+	private bool CheckLearningGoals(LearningObjectives island) {
+		if (island == LearningObjectives.Both) {
+			return CheckLearningObjectiveDynamicTutShadow() && CheckLearningObjectiveDynamicTutType();
+		}
+		if (island == LearningObjectives.ShadowUnit) {
+			return CheckLearningObjectiveDynamicTutShadow();
+		}
+		if (island == LearningObjectives.TypeInteraction) {
+			return CheckLearningObjectiveDynamicTutType();
+		}
+		return true;
 	}
 
 
-	private bool ShowDynamicShadowSpecial() {
+	private bool CheckLearningObjectiveDynamicTutType() {
+		var playerTrades = PlayerData.Instance.GetTradesFromLastCombat().FindAll(element => element.initiator == Team.Player);
+		var aiTrades = PlayerData.Instance.GetTradesFromLastCombat().FindAll(element => element.initiator == Team.AI);
+		if(playerTrades.Count == 0 || aiTrades.Count == 0)
+			return true;
+
+		FilterTowerAttacks(ref playerTrades);
+		FilterTowerAttacks(ref aiTrades);
+
+		var score = playerTrades.FindAll(element => element.good && !element.retaliation).Count - playerTrades.FindAll(element => element.bad && !element.retaliation && !element.killHit).Count;
+		var aiScore =  aiTrades.FindAll(element => element.good && !element.retaliation).Count - aiTrades.FindAll(element => element.bad && !element.retaliation && !element.killHit).Count;
+
+		//TODO: Understand which type of bad attack triggered this and use that, or use general knowledge?
+
+		if(score < -2) {
+			return false;
+		}
+		return true;
+	}
+
+	private bool CheckLearningObjectiveDynamicTutShadow() {
+		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetShadowSummonedLastCombat() > 2) {
+			StartCoroutine(ShadowSpecialCooldown());
+			return false;
+		}
+		return true;
+	}
+
+
+	private bool CheckDynamicShadowSpecial() {
 		if(!PlayerData.Instance.GetHasEverSummonedShadow())
 			return false;
 		if(shownShadow)
@@ -104,7 +172,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 
-	private bool ShowDynamicTypes() {
+	private bool CheckDynamicTypes() {
 		if(shownType)
 			return false;
 

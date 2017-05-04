@@ -118,7 +118,7 @@ namespace Overworld {
 			QuestManager.questManager.CompleteQuest (encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			ProcessEncounteredObject();
 			//SaveLoadHandler.Instance.GetCurrentIsland()
-			if (true) { // Change this to bool for check learned all on the island.
+			if (DynamicTut.instance.HasLearnedEverything(SaveLoadHandler.Instance.GetCurrentIsland())) { // Change this to bool for check learned all on the island.
 				LearnedEverything();
 			}
 			else {
