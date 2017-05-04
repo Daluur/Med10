@@ -71,17 +71,22 @@ namespace CombatWorld.Units {
 			return transform;
 		}
 
-		public void CanBeAttacked() {
+		public void CanBeAttacked(bool isPlayer) {
 			if(team == Team.Player) {
 				return;
 			}
 			foreach (Node node in currentNode.neighbours) {
-				if(node.HasUnit() && node.GetUnit().GetTeam() == Team.Player && node.GetUnit().CanAttack()) {
-					towerRend.material.color = Color.red;
+				if(isPlayer && node.HasUnit() && node.GetUnit().GetTeam() == Team.Player && node.GetUnit().CanAttack()) {
+					StartCoroutine(TurnRed());
 					return;
 				}
 			}
 			towerRend.material.color = Color.white;
+		}
+
+		IEnumerator TurnRed() {
+			yield return new WaitWhile(GameController.instance.WaitingForAction);
+			towerRend.material.color = Color.red;
 		}
 
 		public void TakeDamage(DamagePackage damage) {

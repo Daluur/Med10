@@ -141,6 +141,7 @@ namespace CombatWorld {
 					AICalculateScore.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
 					StartTurn();
+					TowerNodes();
 					AICalculateScore.instance.DoAITurn();
 					break;
 				case Team.AI:
@@ -153,6 +154,7 @@ namespace CombatWorld {
 					StartTurn();
 					SelectTeamNodes();
 					endTurnButton.interactable = true;
+					TowerNodes();
 					break;
 				default:
 					break;
@@ -303,6 +305,16 @@ namespace CombatWorld {
 		public void GotInput() {
 			ResetAllNodes();
 			SelectTeamNodes();
+			TowerNodes();
+			SummonHandler.instance.UpdateButtonsAndText();
+		}
+ 
+		void TowerNodes() {
+			foreach (Node node in GetTowersForTeam(Team.AI)) {
+				if (node.HasTower()) {
+					node.GetTower().CanBeAttacked(currentTeam == Team.Player);
+				}
+			}
 		}
 
 		bool movingPlayerUnit = false;
@@ -333,6 +345,7 @@ namespace CombatWorld {
 		public void ClickedNothing() {
 			selectedUnit = null;
 			DataGathering.Instance.DeselectUnit();
+			SummonHandler.instance.UpdateButtonsAndText();
 			ResetAllNodes();
 			SelectTeamNodes();
 		}

@@ -100,7 +100,7 @@ namespace CombatWorld
 			}*/
 		}
 
-		void UpdateButtonsAndText() {
+		public void UpdateButtonsAndText() {
 			foreach (UnitButton item in buttons) {
 				item.CheckCost(summonPoints);
 			}
