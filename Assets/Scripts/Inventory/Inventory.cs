@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour {
 			slots.Add (Instantiate (inventorySlot,slotPanel.transform));
 			slots [i].GetComponent<Slot> ().id = i;
 			//slots [i].transform.SetParent (slotPanel.transform);
-			if (i < 6) {
+			if (i < Values.NUMOFUNITSTOBRINGTOCOMBAT) {
 				slots[i].transform.FindChild ("Glow").gameObject.SetActive(true);
 			} 
 		}
