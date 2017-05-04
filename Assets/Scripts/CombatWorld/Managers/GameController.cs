@@ -117,7 +117,7 @@ namespace CombatWorld {
 		#endregion
 
 		public void TryEndTurn() {
-			if (waitingForAction) {
+			if (waitingForAction || gameFinished) {
 				return;
 			}
 			if(currentTeam != Team.Player) {
@@ -205,7 +205,7 @@ namespace CombatWorld {
 		}
 
 		void SelectTeamNodes() {
-			if (waitingForAction) {
+			if (waitingForAction || gameFinished) {
 				return;
 			}
 			if (selectedUnit == null) {
@@ -573,6 +573,7 @@ namespace CombatWorld {
 
 		void Won() {
 			gameFinished = true;
+			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = true});
 			DataToServer.SendData();
 			if (TutorialHandler.instance != null) {
@@ -589,6 +590,7 @@ namespace CombatWorld {
 
 		void Lost() {
 			gameFinished = true;
+			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = false});
 			DataToServer.SendData();
 			if (TutorialHandler.instance != null) {
