@@ -916,7 +916,7 @@ Prefab:
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -23238.312
+      value: -23608.117
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -941,12 +941,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -14.682743
+      value: -19.682743
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 156
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -956,7 +956,7 @@ Prefab:
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 29.365486
+      value: 39.365486
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1993,9 +1993,13 @@ MonoBehaviour:
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
   displayText:
-  - 
+  - Some units have special abilities, which they can use in combat.
+  - SHADOW units can move through other units
+  - STONE units can hunker down in place, after which they will receive less damage.
   buttonOne:
-  - 
+  - NEXT
+  - NEXT
+  - CLOSE
   buttonTwo: CANCEL
 --- !u!65 &1840116223
 BoxCollider:
