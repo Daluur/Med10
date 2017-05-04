@@ -603,7 +603,7 @@ GameObject:
   - component: {fileID: 33889010422104180}
   - component: {fileID: 23543526080177528}
   - component: {fileID: 65315308041592388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_1_E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9731,6 +9731,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d949a8a2db1d33a4ca1bf834de1b513b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
+  open: 0
+  playerOW: {fileID: 0}
+  isRunning: 0
+  meClicked: 0
+  hasGeneralConfirmationBox: 0
   target: {fileID: 0}
 --- !u!114 &114133424449013770
 MonoBehaviour:
@@ -9788,7 +9794,7 @@ MonoBehaviour:
   - {fileID: 4067648379125118}
   - {fileID: 4144561758235536}
   teleporterPad: {fileID: 114128922195852576}
-  unitsToUnlock: 
+  unitsToUnlock: 0c0000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
 --- !u!136 &136103911499052770
 CapsuleCollider:
   m_ObjectHideFlags: 1

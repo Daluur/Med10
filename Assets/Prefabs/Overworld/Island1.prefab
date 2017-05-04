@@ -2245,7 +2245,7 @@ GameObject:
   - component: {fileID: 4014072834104138}
   - component: {fileID: 33998029570434270}
   - component: {fileID: 23487967867095398}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_Grass1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3675,7 +3675,7 @@ GameObject:
   - component: {fileID: 33967177633051548}
   - component: {fileID: 23144812691602190}
   - component: {fileID: 65584847104987804}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile_1_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23640,6 +23640,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d949a8a2db1d33a4ca1bf834de1b513b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
+  open: 0
+  playerOW: {fileID: 0}
+  isRunning: 0
+  meClicked: 0
+  hasGeneralConfirmationBox: 0
   target: {fileID: 0}
 --- !u!114 &114730863716468276
 MonoBehaviour:
@@ -23681,7 +23687,7 @@ MonoBehaviour:
   - {fileID: 4028479171684374}
   - {fileID: 4901381067995754}
   teleporterPad: {fileID: 114689854367544030}
-  unitsToUnlock: 
+  unitsToUnlock: 0000000002000000
 --- !u!136 &136193516418894826
 CapsuleCollider:
   m_ObjectHideFlags: 1
