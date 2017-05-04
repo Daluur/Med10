@@ -20,7 +20,7 @@ namespace Overworld.Shops {
 			Register(this, KeyCode.Q);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 			database = inventory.GetDatabase();
-			float num = (database.GetAllItems().Count * 50); // 50 is the height of the buttons. Is hardcoded for now.
+			float num = (database.GetAllItems().Count * 70); // 50 is the height of the buttons. Is hardcoded for now.
 			parent.sizeDelta = new Vector2(parent.sizeDelta.x, num);
 			parent.anchoredPosition = new Vector2(parent.anchoredPosition.x, -(num / 2));
 			CreateButtons();
