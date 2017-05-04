@@ -103,6 +103,7 @@ namespace Overworld {
 			}
 
 			teleporterPad.Activate();
+			
 			Destroy(gameObject);
 		}
 	}

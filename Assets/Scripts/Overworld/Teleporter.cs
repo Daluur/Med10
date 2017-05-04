@@ -6,6 +6,7 @@ using Overworld;
 public class Teleporter : ContextInteraction, IInteractable {
 
 	public Transform target;
+	public bool isFinal = false;
 
 	void Start() {
 		Register(this, KeyCode.Mouse0);
@@ -17,6 +18,10 @@ public class Teleporter : ContextInteraction, IInteractable {
 
 	private void OnTriggerEnter(Collider other) {
 		if (other.transform.parent.tag != TagConstants.OVERWORLDPLAYER) {
+			return;
+		}
+		if (isFinal) {
+			UnityEngine.SceneManagement.SceneManager.LoadScene(3);
 			return;
 		}
 		other.transform.parent.GetComponent<PlayerMovementOW>().TeleportPlayer(target.position);
