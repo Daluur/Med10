@@ -48,7 +48,11 @@ public class PlayerData {
 	}
 
 	public List<CombatTrades> GetAllTrades() {
-		return DataGathering.Instance.GetAllTrades();
+		return DataGathering.Instance.GetTradesSinceReset();
+	}
+
+	public void ResetTrades() {
+		DataGathering.Instance.ResetTrades();
 	}
 
 	public List<CombatTrades> GetTradesFromLastCombat() {
@@ -165,6 +169,14 @@ public class PlayerData {
 
 	public int GetPlayerHasUsedShadowCount() {
 		return DataGathering.Instance.movedShadowUnitThroughEnemyUnitCount + DataGathering.Instance.movedShadowUnitThroughFriendlyUnitCount;
+	}
+
+	public int GetMovedShadowWithoutMovingThroughUnit() {
+		return DataGathering.Instance.movedShadowWithoutMovingThroughUnitsCount;
+	}
+
+	public void ResetShadow() {
+		DataGathering.Instance.ResetShadow();
 	}
 
 	#endregion

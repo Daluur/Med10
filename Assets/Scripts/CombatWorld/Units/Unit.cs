@@ -353,6 +353,9 @@ namespace CombatWorld.Units {
 					yield return new WaitForEndOfFrame();
 				}
 			}
+			if(shadowUnit && !movedThroughUnitThisTurn) {
+				DataGathering.Instance.MoveShadowNotThroughUnits();
+			}
 			transform.position = target[target.Count-1].transform.position;
 			animHelp.EndWalk();
 			/*if (AIAttackAfter) {
