@@ -18,7 +18,7 @@ namespace Overworld {
 		private void OpenMenu() {
 			if (TutorialHandler.instance.firstShop) {
 				TutorialHandler.instance.firstShop = false;
-				GeneralConfirmationBox.instance.ShowPopUp ("Spending your crystals here summons a unit to your inventory. Only units that you have the recipe for can be summoned.", "Okay");
+				TutorialHandler.instance.FirstShop();
 			}
 
 			shop.OpenMenu();

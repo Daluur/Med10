@@ -38,7 +38,6 @@ namespace CombatWorld {
 		public Animator summonPointTurnAnim;
 
 		void Start() {
-			//DataToServer.SendData();
 			if (GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER)) {
 				StartCoroutine(FadeIn());
 			}
@@ -70,12 +69,13 @@ namespace CombatWorld {
 			GameObject go = Instantiate(maps[Random.Range(0, maps.Count)], transform.position, Quaternion.identity, transform) as GameObject;
 			go.transform.position = go.transform.position - new Vector3(go.GetComponent<MapInfo>().mapLength, 0, 0);
 			CombatCameraController.instance.setBoundary(new Vector2(-go.GetComponent<MapInfo>().mapLength, go.GetComponent<MapInfo>().mapLength));
+
 			//			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatFirstTurn) {
-					GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers.\n" +
-						"Click a unit and then a square summon pad to summon. This costs 'summon points', displayed next to the units name", "Okay");
+					TutorialHandler.instance.ShowGoalAndSummon();
+
 				}
 			}
 		}
@@ -303,16 +303,6 @@ namespace CombatWorld {
 		public void GotInput() {
 			ResetAllNodes();
 			SelectTeamNodes();
-			TowerNodes();
-			SummonHandler.instance.UpdateButtonsAndText();
-		}
-
-		void TowerNodes() {
-			foreach (Node node in GetTowersForTeam(Team.AI)) {
-				if (node.HasTower()) {
-					node.GetTower().CanBeAttacked();
-				}
-			}
 		}
 
 		bool movingPlayerUnit = false;
@@ -342,7 +332,6 @@ namespace CombatWorld {
 
 		public void ClickedNothing() {
 			selectedUnit = null;
-			SummonHandler.instance.UpdateButtonsAndText();
 			DataGathering.Instance.DeselectUnit();
 			ResetAllNodes();
 			SelectTeamNodes();
@@ -408,14 +397,13 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatSecondTurn) {
-					GeneralConfirmationBox.instance.ShowPopUp("You will gain 2 summon points at the start of your turn each round.\nClick on a summoned unit to move it.", "Okay");
+					TutorialHandler.instance.StartingTurnSecondTurn();
 				}
 			}
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatThirdTurn) {
 					TutorialHandler.instance.combatThirdTurn = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Attacking ends the units turn.\n" +
-						"The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "Okay");
+					TutorialHandler.instance.StartingThirdTurn();
 				}
 			}
 		}
@@ -568,12 +556,10 @@ namespace CombatWorld {
 		}
 
 		void Won() {
-			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, killHit = true });
-			DataToServer.SendData();
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {
 					TutorialHandler.instance.firstWin = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Winning a battle will grant you gold and new summon recipes", "Okay");
+					TutorialHandler.instance.Winning();
 				}
 			}
 			won = true;
@@ -583,11 +569,10 @@ namespace CombatWorld {
 		}
 
 		void Lost() {
-			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, killHit = false });
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstLoss) {
 					TutorialHandler.instance.firstLoss = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Losing a battle will send you back to your last checkpoint.", "Okay");
+					TutorialHandler.instance.LosingCombat();
 				}
 			}
 			won = false;

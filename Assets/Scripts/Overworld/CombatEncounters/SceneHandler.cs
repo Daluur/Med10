@@ -38,6 +38,7 @@ namespace Overworld {
 			if (hasStartedLoading) {
 				return;
 			}
+			DynamicTut.instance.SetCombat(true);
 			hasStartedLoading = true;
 			inputManager.BlockMouseUI();
 			AudioHandler.instance.PlayEnterCombat();
@@ -69,6 +70,7 @@ namespace Overworld {
 			StartCoroutine(FadeIn());
 			SceneManager.sceneLoaded -= OnSceneLoaded;
 			SceneManager.sceneUnloaded -= EndEncounter;
+			DynamicTut.instance.SetCombat(false);
 			inputManager.UnblockMouseUI();
 		}
 
