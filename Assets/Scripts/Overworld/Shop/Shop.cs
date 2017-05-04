@@ -71,7 +71,8 @@ namespace Overworld.Shops {
 			inventory.AddItem(unitID);
 			if (TutorialHandler.instance.firstBuy) {
 				TutorialHandler.instance.firstBuy = false;
-				GeneralConfirmationBox.instance.ShowPopUp("You are able to carry 12 units at a time.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Close the inventory and shop by clicking the X in the top right corner, or by pressing ESC to close all windows.", "CLOSE"));
+				//GeneralConfirmationBox.instance.ShowPopUp ("You are able to carry 12 units at a time.\nClose the shop by pressing the X icon - or close all windows by pressing ESC.", "Okay");
+				TutorialHandler.instance.FirstBuy();
 			}
 		}
 

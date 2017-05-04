@@ -67,17 +67,9 @@ namespace CombatWorld
 			unit.transform.parent = transform;
 		}
 
-		public void SummonButtonPressed(CombatData CD, UnitButton but) {
+		public void SummonButtonPressed(CombatData CD) {
 			currentlySelectedData = CD;
 			GameController.instance.HighlightSummonNodes();
-			foreach (UnitButton item in buttons) {
-				if (item != but) {
-					item.ResetColor();
-				}
-				else {
-					item.Highlight();
-				}
-			}
 		}
 
 		void SpendPoints(int amount) {
@@ -87,7 +79,7 @@ namespace CombatWorld
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.summonFirst) {
 					TutorialHandler.instance.summonFirst = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Units cannot make other moves the round they are summoned.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("When you have performed all your moves, end your turn by pressing 'SPACE' or clicking the end turn button, after which the opponent will take theirs.", "CLOSE"));
+					TutorialHandler.instance.FirstSummon();
 				}
 			}
 		}
@@ -100,7 +92,7 @@ namespace CombatWorld
 			}*/
 		}
 
-		public void UpdateButtonsAndText() {
+		void UpdateButtonsAndText() {
 			foreach (UnitButton item in buttons) {
 				item.CheckCost(summonPoints);
 			}

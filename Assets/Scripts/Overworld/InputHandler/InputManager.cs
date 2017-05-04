@@ -87,7 +87,7 @@ namespace Overworld {
 					DistributeAction ();
 				if (TutorialHandler.instance.firstInventory) {
 					TutorialHandler.instance.firstInventory = false;
-					GeneralConfirmationBox.instance.ShowPopUp ("The 6 glowing slots are your combat slots, you will bring these units to battle.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can drag units to different slots to change your lineup.", "CLOSE"));
+					TutorialHandler.instance.InventoryAndShop();
 				}
 				break;
 				case KeyCode.Q:
