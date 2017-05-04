@@ -87,7 +87,7 @@ namespace Overworld {
 					DistributeAction ();
 				if (TutorialHandler.instance.firstInventory) {
 					TutorialHandler.instance.firstInventory = false;
-					GeneralConfirmationBox.instance.ShowPopUp ("You can carry 12 units at a time.\nThe 6 glowing slots are your combat slots, you will bring these units to battle.\nDrag units to different slots to change lineup.", "Okay");
+					GeneralConfirmationBox.instance.ShowPopUp ("The 6 glowing slots are your combat slots, you will bring these units to battle.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can drag units to different slots to change your lineup.", "CLOSE"));
 				}
 				break;
 				case KeyCode.Q:

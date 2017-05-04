@@ -325,7 +325,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 186600558}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -75.8, y: 1.9, z: 4.17}
+  m_LocalPosition: {x: -88.8, y: 1.9, z: 4.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2003001516}
@@ -350,8 +350,15 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: []
-  buttonOne: []
+  displayText:
+  - Units have different types, which are either strong or weak to another type.
+  - Units with a type strong against another unit will give double damage to that
+    unit.
+  - Units with a type weak against another unit will give half damage to that unit.
+  buttonOne:
+  - NEXT
+  - NEXT
+  - CLOSE
   buttonTwo: CANCEL
 --- !u!65 &186600561
 BoxCollider:
@@ -904,12 +911,12 @@ Prefab:
     - target: {fileID: 224807318188038394, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.98947364
+      value: 0.98947376
       objectReference: {fileID: 0}
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -21749.209
+      value: -23238.312
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -934,7 +941,7 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -14.646237
+      value: -14.682743
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -944,12 +951,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 15.292475
+      value: 15.365486
       objectReference: {fileID: 0}
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 29.292475
+      value: 29.365486
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1045,13 +1052,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 810570879}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -78.666, y: 2.9, z: -1.361}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -82.67, y: 2.9, z: 5.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2003001516}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &810570881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1071,8 +1078,16 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: []
-  buttonOne: []
+  displayText:
+  - WATER is strong against FIRE.
+  - FIRE is strong against NATURE.
+  - NATURE is strong against LIGHTNING.
+  - LIGHTNING is strong against WATER.
+  buttonOne:
+  - NEXT
+  - NEXT
+  - NEXT
+  - CLOSE
   buttonTwo: CANCEL
 --- !u!65 &810570882
 BoxCollider:
@@ -1838,11 +1853,11 @@ MonoBehaviour:
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
   displayText:
-  - 
-  - 
+  - Click on an enemy to start a battle.
+  - You can hover the mouse over an enemy to see its stats.
   buttonOne:
-  - 
-  - 
+  - NEXT
+  - CLOSE
   buttonTwo: CANCEL
 --- !u!65 &1748524227
 BoxCollider:
@@ -1912,11 +1927,9 @@ MonoBehaviour:
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
   displayText:
-  - 
-  - 
+  - Press the 'I' key to open your inventory.
   buttonOne:
-  - 
-  - 
+  - CLOSE
   buttonTwo: CANCEL
 --- !u!65 &1786393523
 BoxCollider:
@@ -1979,8 +1992,10 @@ MonoBehaviour:
   hasGeneralConfirmationBox: 0
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
-  displayText: []
-  buttonOne: []
+  displayText:
+  - 
+  buttonOne:
+  - 
   buttonTwo: CANCEL
 --- !u!65 &1840116223
 BoxCollider:

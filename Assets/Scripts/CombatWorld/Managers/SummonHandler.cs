@@ -78,7 +78,7 @@ namespace CombatWorld
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.summonFirst) {
 					TutorialHandler.instance.summonFirst = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Units cannot make other moves the round they are summoned.\nWhen you have performed all your moves, end your turn, after which the opponent will take theirs.", "Okay");
+					GeneralConfirmationBox.instance.ShowPopUp("Units cannot make other moves the round they are summoned.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("When you have performed all your moves, end your turn by pressing 'SPACE' or clicking the end turn button, after which the opponent will take theirs.", "CLOSE"));
 				}
 			}
 		}

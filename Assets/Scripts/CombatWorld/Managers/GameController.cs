@@ -73,8 +73,7 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatFirstTurn) {
-					GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers.\n" +
-						"Click a unit and then a square summon pad to summon. This costs 'summon points', displayed next to the units name", "Okay");
+					GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers before they destroy yours.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Click a unit and then a square summon pad to summon.\nThis costs 'summon points', which are displayed next to the units name.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Your available summon points are displayed at the top of the summon menu.", "CLOSE")));
 				}
 			}
 		}
@@ -382,14 +381,13 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatSecondTurn) {
-					GeneralConfirmationBox.instance.ShowPopUp("You will gain 2 summon points at the start of your turn each round.\nClick on a summoned unit to move it.", "Okay");
+					GeneralConfirmationBox.instance.ShowPopUp("You will gain 2 summon points at the start of your turn each round, or 1 point for killing an enemy unit.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can hover over both your own and enemy units to see their stats.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can drag with the left mouse button on screen to move the camera around the field.\nClick on a summoned unit to move it.", "CLOSE")));
 				}
 			}
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatThirdTurn) {
 					TutorialHandler.instance.combatThirdTurn = false;
-					GeneralConfirmationBox.instance.ShowPopUp("Attacking ends the units turn.\n" +
-						"The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "Okay");
+					GeneralConfirmationBox.instance.ShowPopUp("Units can attack each other when they are on connected spots.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("If a unit is still alive after it has been attacked it will retaliate.\nAttacking ends the units turn.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "CLOSE")));
 				}
 			}
 		}
