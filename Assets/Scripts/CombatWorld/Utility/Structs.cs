@@ -124,4 +124,5 @@ public struct DeckData {
 	public int[] unitIDs;
 	public string type1;
 	public string type2;
+	public string type3;
 }

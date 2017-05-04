@@ -22,7 +22,6 @@ static class DeckHandler {
 			difficulty = "Easy",
 			id = 0,
 			type1 = "Normal",
-			type2 = "",
 			unitIDs = new int[] { 12 },
 		},
 		new DeckData {
@@ -45,8 +44,9 @@ static class DeckHandler {
 			deckName = "Hill Spectre",
 			difficulty = "Easy",
 			id = 3,
-			type1 = "Nature/Lightning",
-			type2 = "Shadow",
+			type1 = "Nature",
+			type2 = "Lightning",
+			type3 = "Shadow",
 			unitIDs = new int[] { 6, 4, 8 },
 		},
 		new DeckData {

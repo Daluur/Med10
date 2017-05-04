@@ -80,8 +80,11 @@ public class Tooltip : Singleton<Tooltip> {
 		//var tmp = "<b>" + deckData.deckName + "</b>" + "\nTypes: <color=" + GetColor(deckData.type1) + ">" + deckData.type1 +
 			//"</color>" + ", <color="+ GetColor(deckData.type2) + ">" + deckData.type2 + "</color>" + "\nDifficulty: " + deckData.difficulty;
 		var tmp = "<b>" + deckData.deckName + "</b>" + "\nTypes: <color=" + GetColor(deckData.type1) + ">" + deckData.type1 +"</color>";
-		if(deckData.type2 != "") {
+		if (deckData.type2 != null && deckData.type2 != "") {
 			tmp += ", <color=" + GetColor(deckData.type2) + ">" + deckData.type2 + "</color>";
+		}
+		if (deckData.type3 != null && deckData.type3 != "") {
+			tmp += ", <color=" + GetColor(deckData.type3) + ">" + deckData.type3 + "</color>";
 		}
 		tmp += "\nDifficulty: " + deckData.difficulty;
 		return tmp;
