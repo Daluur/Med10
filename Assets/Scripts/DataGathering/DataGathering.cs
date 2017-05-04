@@ -86,10 +86,17 @@ public class DataGathering {
 	#region Trades
 
 	List<CombatTrades> AllTrades = new List<CombatTrades>();
+	List<CombatTrades> TradesSinceLastReset = new List<CombatTrades>();
 	List<CombatTrades> TradesFromLastCombat = new List<CombatTrades>();
+
+	public void ResetTrades() {
+		TradesSinceLastReset.Clear();
+		AllTrades.Add(new CombatTrades() { initiator = Team.NONE, movedThroughUnit = true });
+	}
 
 	public void AddCombatTrade(CombatTrades newTrade) {
 		TradesFromLastCombat.Add(newTrade);
+		TradesSinceLastReset.Add(newTrade);
 		AllTrades.Add(newTrade);
 	}
 
@@ -101,9 +108,13 @@ public class DataGathering {
 		return AllTrades;
 	}
 
+	public List<CombatTrades> GetTradesSinceReset() {
+		return TradesSinceLastReset;
+	}
+
 	public int GetNumberOfPlayerGoodTradesTotal() {
 		int count = 0;
-		foreach (CombatTrades trade in AllTrades) {
+		foreach (CombatTrades trade in TradesSinceLastReset) {
 			if (trade.initiator == Team.Player && trade.good) {
 				count++;
 			}
@@ -113,7 +124,7 @@ public class DataGathering {
 
 	public int GetNumberOfPlayerBadTradesTotal() {
 		int count = 0;
-		foreach (CombatTrades trade in AllTrades) {
+		foreach (CombatTrades trade in TradesSinceLastReset) {
 			if (trade.initiator == Team.Player && trade.bad) {
 				count++;
 			}
@@ -123,7 +134,7 @@ public class DataGathering {
 
 	public int GetNumberOfAIGoodTradesTotal() {
 		int count = 0;
-		foreach (CombatTrades trade in AllTrades) {
+		foreach (CombatTrades trade in TradesSinceLastReset) {
 			if (trade.initiator == Team.AI && trade.good) {
 				count++;
 			}
@@ -133,7 +144,7 @@ public class DataGathering {
 
 	public int GetNumberOfAIBadTradesTotal() {
 		int count = 0;
-		foreach (CombatTrades trade in AllTrades) {
+		foreach (CombatTrades trade in TradesSinceLastReset) {
 			if (trade.initiator == Team.AI && trade.bad) {
 				count++;
 			}
@@ -275,15 +286,32 @@ public class DataGathering {
 
 	#region Shadow
 
+	public int movedShadowThroughOthersSaveThisValue = 0;
+	public int movedShadowWithoutMovingThroughOtherUnitsSaveThisValue = 0;
+
 	public int movedShadowUnitThroughEnemyUnitCount = 0;
 	public int movedShadowUnitThroughFriendlyUnitCount = 0;
+	public int movedShadowWithoutMovingThroughUnitsCount = 0;
 
 	public void MovedShadowThroughEnemyUnit() {
 		movedShadowUnitThroughEnemyUnitCount++;
+		movedShadowThroughOthersSaveThisValue++;
 	}
 
 	public void MovedShadowThrougFriendlyUnit() {
 		movedShadowUnitThroughFriendlyUnitCount++;
+		movedShadowThroughOthersSaveThisValue++;
+	}
+
+	public void MoveShadowNotThroughUnits() {
+		movedShadowWithoutMovingThroughUnitsCount++;
+		movedShadowWithoutMovingThroughOtherUnitsSaveThisValue++;
+	}
+
+	public void ResetShadow() {
+		movedShadowUnitThroughEnemyUnitCount = 0;
+		movedShadowUnitThroughFriendlyUnitCount = 0;
+		movedShadowWithoutMovingThroughUnitsCount = 0;
 	}
 
 	#endregion

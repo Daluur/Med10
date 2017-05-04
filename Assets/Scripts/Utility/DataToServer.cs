@@ -16,10 +16,20 @@ public class DataToServer {
 		form.AddField("Trades", GetCDData());
 		form.AddField("Summons", GetSummonData());
 		form.AddField("Decks", GetDeckData());
+		form.AddField("Shadow1", Shadow1());
+		form.AddField("Shadow2", Shadow2());
 		string url = "http://daluur.dk/MED10.php";
 		WWW www = new WWW(url, form);
 		Debug.Log("send");
 		GameController.instance.StartCoroutine(WaitForRequest(www));
+	}
+
+	static int Shadow1() {
+		return DataGathering.Instance.movedShadowThroughOthersSaveThisValue;
+	}
+
+	static int Shadow2() {
+		return DataGathering.Instance.movedShadowWithoutMovingThroughOtherUnitsSaveThisValue;
 	}
 
 	static string GetCDData() {
