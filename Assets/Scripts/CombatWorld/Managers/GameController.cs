@@ -23,6 +23,8 @@ namespace CombatWorld {
 		List<SummonNode> AISummonNodes = new List<SummonNode>();
 		Team currentTeam;
 
+		public bool gameFinished;
+
 		Pathfinding pathfinding;
 
 		Unit selectedUnit;
@@ -81,6 +83,7 @@ namespace CombatWorld {
 		}
 
 		void StartGame() {
+			gameFinished = false;
 			DataGathering.Instance.StartNewCombat();
 			currentTeam = Team.Player;
 			ResetAllNodes();
@@ -569,6 +572,7 @@ namespace CombatWorld {
 		}
 
 		void Won() {
+			gameFinished = true;
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = true});
 			DataToServer.SendData();
 			if (TutorialHandler.instance != null) {
@@ -584,6 +588,7 @@ namespace CombatWorld {
 		}
 
 		void Lost() {
+			gameFinished = true;
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = false});
 			DataToServer.SendData();
 			if (TutorialHandler.instance != null) {
