@@ -67,9 +67,17 @@ namespace CombatWorld
 			unit.transform.parent = transform;
 		}
 
-		public void SummonButtonPressed(CombatData CD) {
+		public void SummonButtonPressed(CombatData CD, UnitButton but) {
 			currentlySelectedData = CD;
 			GameController.instance.HighlightSummonNodes();
+			foreach (UnitButton item in buttons) {
+				if (item != but) {
+					item.ResetColor();
+				}
+				else {
+					item.Highlight();
+				}
+			}
 		}
 
 		void SpendPoints(int amount) {
@@ -92,7 +100,7 @@ namespace CombatWorld
 			}*/
 		}
 
-		void UpdateButtonsAndText() {
+		public void UpdateButtonsAndText() {
 			foreach (UnitButton item in buttons) {
 				item.CheckCost(summonPoints);
 			}

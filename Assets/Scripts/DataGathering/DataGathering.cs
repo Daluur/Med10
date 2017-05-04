@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CombatWorld.Units;
 using CombatWorld.Utility;
+using Overworld;
 
 public class DataGathering {
 
@@ -14,6 +16,9 @@ public class DataGathering {
 		get {
 			if (instance == null) {
 				instance = new DataGathering();
+				System.Random rand = new System.Random(Time.renderedFrameCount);
+				System.Random rand2 = new System.Random((int)(Time.realtimeSinceStartup*10000000));
+				instance.ID = "T" + DateTime.Now.ToString("dd-HH:mm:ss:fff") + "R" + rand.Next(0,10000) + "R" + rand2.Next(0,10000);
 			}
 			return instance;
 		}
@@ -21,11 +26,17 @@ public class DataGathering {
 
 	#endregion
 
+	#region ID
+
+	public string ID;
+
+	#endregion
+
 	#region OW things
 
 	//Movement
 	private bool hasMoved;
-	public bool HasMoved { get { return hasMoved; } set { hasMoved = value; Debug.Log("moved"); } }
+	public bool HasMoved { get { return hasMoved; } set { hasMoved = value; } }
 
 	#endregion
 
@@ -257,7 +268,6 @@ public class DataGathering {
 	public int turnedToStoneCount = 0;
 
 	public void TurnedUnitToStone() {
-		Debug.Log("turned to stone");
 		turnedToStoneCount++;
 	}
 
@@ -269,12 +279,10 @@ public class DataGathering {
 	public int movedShadowUnitThroughFriendlyUnitCount = 0;
 
 	public void MovedShadowThroughEnemyUnit() {
-		Debug.Log("Moved through enemy");
 		movedShadowUnitThroughEnemyUnitCount++;
 	}
 
 	public void MovedShadowThrougFriendlyUnit() {
-		Debug.Log("Moved through friendly");
 		movedShadowUnitThroughFriendlyUnitCount++;
 	}
 
@@ -287,17 +295,14 @@ public class DataGathering {
 	public int stoodBesideTowerNotAttackingcount = 0;
 
 	public void AttackedTower() {
-		Debug.Log("Attacked tower");
 		hasAttackedTower = true;
 	}
 
 	public void KilledTower() {
-		Debug.Log("Killed a tower");
 		hasKilledATower = true;
 	}
 
 	public void StoodBesideTowerAndDidNotAttack() {
-		Debug.Log("did not attack tower");
 		stoodBesideTowerNotAttackingcount++;
 	}
 
@@ -305,18 +310,20 @@ public class DataGathering {
 
 	#region Decks
 
+	List<DeckDataClass> ALLDeckData = new List<DeckDataClass>();
 	List<int> UnitsBroughtToLastCombat = new List<int>();
 	List<int> AIUnitsBroughtToLastCombat = new List<int>();
 
 	public void UnitsBroughtToCombat(List<int> units) {
 		UnitsBroughtToLastCombat = units;
+		ALLDeckData.Add(new DeckDataClass() { playerUnits = units, encounterID = SceneHandler.instance.GetDeck().id, });
 	}
 
 	public void AILastDeck(List<int> units) {
 		AIUnitsBroughtToLastCombat = units;
 	}
 
-	public List<SimpleUnit> GetPlayerDeckAsSimpleUnits() {
+	public List<SimpleUnit> GetPlayerDeckAsSimpleUnitsLastCombat() {
 		List<SimpleUnit> units = new List<SimpleUnit>();
 		SimpleUnit unit;
 		foreach (int i in UnitsBroughtToLastCombat) {
@@ -330,7 +337,7 @@ public class DataGathering {
 		return units;
 	}
 
-	public List<SimpleUnit> GetAIDeckAsSimpleUnits() {
+	public List<SimpleUnit> GetAIDeckAsSimpleUnitsLastCombat() {
 		List<SimpleUnit> units = new List<SimpleUnit>();
 		SimpleUnit unit;
 		foreach (int i in AIUnitsBroughtToLastCombat) {
@@ -342,6 +349,39 @@ public class DataGathering {
 			units.Add(unit);
 		}
 		return units;
+	}
+
+	public List<DeckDataClass> GetAllDeckData() {
+		return ALLDeckData;
+	}
+
+	public List<SimpleUnit> GetSimpleUnitsFromDeckData(DeckDataClass DDC,bool AI = false) {
+		if (AI) {
+			List<SimpleUnit> units = new List<SimpleUnit>();
+			SimpleUnit unit;
+			foreach (int i in DeckHandler.GetDeckFromID(DDC.encounterID).unitIDs) {
+				unit = new SimpleUnit();
+				unit.ID = i;
+				unit.type = Utility.GetElementalTypeFromID(i);
+				unit.shadow = Utility.GetIsShadowFromID(i);
+				unit.stone = Utility.GetIsStoneFromID(i);
+				units.Add(unit);
+			}
+			return units;
+		}
+		else {
+			List<SimpleUnit> units = new List<SimpleUnit>();
+			SimpleUnit unit;
+			foreach (int i in DDC.playerUnits) {
+				unit = new SimpleUnit();
+				unit.ID = i;
+				unit.type = Utility.GetElementalTypeFromID(i);
+				unit.shadow = Utility.GetIsShadowFromID(i);
+				unit.stone = Utility.GetIsStoneFromID(i);
+				units.Add(unit);
+			}
+			return units;
+		}
 	}
 
 	public bool PlayerHasSpecialInDeck(bool stone, bool shadow) {
@@ -375,6 +415,9 @@ public class DataGathering {
 public class CombatTrades {
 	public ElementalTypes attacker;
 	public ElementalTypes defender;
+	public bool shadow;
+	public bool movedThroughUnit;
+	public bool stone;
 	public bool good;
 	public bool bad;
 	public bool retaliation;
@@ -400,6 +443,11 @@ public class SimpleUnit {
 	public ElementalTypes type;
 	public bool shadow = false;
 	public bool stone = false;
+}
+
+public class DeckDataClass {
+	public List<int> playerUnits;
+	public int encounterID;
 }
 
 #endregion

@@ -28,7 +28,7 @@ namespace Overworld.Shops {
 			CB = cb;
 			ID = item.ID;
 			this.item = item;
-			cost = item.GoldCost;
+			cost = 0;
 			unitName.text = item.Title;
 			unitCost.text = "" + item.GoldCost;
 			img.sprite = item.Sprite;

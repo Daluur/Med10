@@ -10,19 +10,47 @@ public class Tooltip : Singleton<Tooltip> {
 	private Item item;
 	private string data;
 	private GameObject tooltip;
+	private RectTransform tooltipRect;
 	private string color;
 	private string special = "";
 	private Text text;
+	//BR, TR, TL, BL
+	Vector2[] pivots = new Vector2[] { new Vector2(-0.05f, 1.05f), new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1.1f) };
+	Vector2 screenSize;
 
 	void Start() {
 		tooltip = GameObject.Find ("Tooltip");
 		text = tooltip.transform.GetChild(0).GetComponent<Text>();
 		tooltip.SetActive (false);
+		tooltipRect = tooltip.GetComponent<RectTransform>();
+		screenSize = new Vector2(Screen.width / 2, Screen.height / 2);
 	}
 
-	void Update() {
+	void LateUpdate() {
 		if (tooltip.activeSelf) {
 			tooltip.transform.position = Input.mousePosition;
+			if(Input.mousePosition.x > screenSize.x) {
+				//in right side
+				if(Input.mousePosition.y > screenSize.y) {
+					//in top
+					tooltipRect.pivot = pivots[3];
+				}
+				else {
+					//in bottom
+					tooltipRect.pivot = pivots[2];
+				}
+			}
+			else {
+				//in left side
+				if (Input.mousePosition.y > screenSize.y) {
+					//in top
+					tooltipRect.pivot = pivots[0];
+				}
+				else {
+					//in bottom
+					tooltipRect.pivot = pivots[1];
+				}
+			}
 		}
 	}
 

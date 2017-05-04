@@ -84,6 +84,10 @@ namespace CombatWorld.Map {
 			return false;
 		}
 
+		public Tower GetTower() {
+			return (Tower)occupant;
+		}
+
 		#endregion
 
 		#region States
