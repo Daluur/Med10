@@ -874,10 +874,11 @@ MonoBehaviour:
   typeOfGeneralInformationTrigger: 0
   typeOfGeneralInformation: 0
   displayText:
-  - Units have different types, which are either strong or weak to another type.
-  - Units with a type strong against another unit will give double damage to that
-    unit.
-  - Units with a type weak against another unit will give half damage to that unit.
+  - Units have different types, these can be strong or weak to another type.
+  - "Attacking with a unit, whose type is strong against the opponent\u2019s type
+    will deal double damage."
+  - "Attacking with a unit, whose type is weak against the opponent\u2019s type will
+    deal half damage."
   buttonOne:
   - NEXT
   - NEXT
@@ -1351,7 +1352,7 @@ Prefab:
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -24332.398
+      value: -24379.795
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
