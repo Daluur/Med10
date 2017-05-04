@@ -43,7 +43,7 @@ public static class DamageConstants {
 	public const int SUMMONPOINTSPERTURN = 2;
 	public const int SUMMONPOINTSPERKILL = 1;
 	public const int SUMMONPOINTSPERTOWERKILL = 3;
-	public const int STARTSUMMONPOINTS = 8;
+	public const int STARTSUMMONPOINTS = 4;
 	public const bool EFFECTIVEMULT = true;
 	public const int EFFECTIVEBONUS = 10;
 	public const int INEFFECTIVEPENALTY = 5;
