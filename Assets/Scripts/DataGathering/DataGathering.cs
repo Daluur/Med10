@@ -311,21 +311,14 @@ public class DataGathering {
 	public int movedShadowThroughOthersSaveThisValue = 0;
 	public int movedShadowWithoutMovingThroughOtherUnitsSaveThisValue = 0;
 
-	public int movedShadowUnitThroughEnemyUnitCount = 0;
-	public int movedShadowUnitThroughFriendlyUnitCount = 0;
+	public int movedShadowUnitThroughUnitCount = 0;
 	public int movedShadowWithoutMovingThroughUnitsCount = 0;
 
 	public int movedThroughLastCombat = 0;
 	public int didNotMoveThroughLastCombat = 0;
 
-	public void MovedShadowThroughEnemyUnit() {
-		movedShadowUnitThroughEnemyUnitCount++;
-		movedShadowThroughOthersSaveThisValue++;
-		movedThroughLastCombat++;
-	}
-
-	public void MovedShadowThrougFriendlyUnit() {
-		movedShadowUnitThroughFriendlyUnitCount++;
+	public void MovedShadowThroughUnit() {
+		movedShadowUnitThroughUnitCount++;
 		movedShadowThroughOthersSaveThisValue++;
 		movedThroughLastCombat++;
 	}
@@ -337,8 +330,7 @@ public class DataGathering {
 	}
 
 	public void ResetShadow() {
-		movedShadowUnitThroughEnemyUnitCount = 0;
-		movedShadowUnitThroughFriendlyUnitCount = 0;
+		movedShadowUnitThroughUnitCount = 0;
 		movedShadowWithoutMovingThroughUnitsCount = 0;
 		movedThroughLastCombat = 0;
 		didNotMoveThroughLastCombat = 0;
