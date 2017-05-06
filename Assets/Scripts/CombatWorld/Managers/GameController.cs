@@ -577,7 +577,7 @@ namespace CombatWorld {
 			gameFinished = true;
 			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = true});
-			DataToServer.SendData();
+			DataToServer.SendData(this);
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {
 					TutorialHandler.instance.firstWin = false;
@@ -594,7 +594,7 @@ namespace CombatWorld {
 			gameFinished = true;
 			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = false});
-			DataToServer.SendData();
+			DataToServer.SendData(this);
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstLoss) {
 					TutorialHandler.instance.firstLoss = false;

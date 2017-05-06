@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class EndScene : MonoBehaviour {
 
-	public void SurveyButton() {
+	void Start() {
+		DataToServer.SendData(this);
+	}
 
+	public void SurveyButton() {
+		Application.OpenURL("http://unity3d.com/");
 	}
 }

@@ -8,7 +8,7 @@ using LitJson;
 
 public class DataToServer {
 
-	public static void SendData() {
+	public static void SendData(MonoBehaviour initiator) {
 		WWWForm form = new WWWForm();
 		form.AddField("action", "send");
 		form.AddField("ID", DataGathering.Instance.ID);
@@ -21,7 +21,7 @@ public class DataToServer {
 		string url = "http://daluur.dk/MED10.php";
 		WWW www = new WWW(url, form);
 		Debug.Log("send");
-		GameController.instance.StartCoroutine(WaitForRequest(www));
+		initiator.StartCoroutine(WaitForRequest(www));
 	}
 
 	static int Shadow1() {

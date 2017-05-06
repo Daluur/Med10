@@ -17,7 +17,13 @@ public enum LearningObjectives {
 
 public class DynamicTut : Singleton<DynamicTut> {
 
+	[Header("If both is true, it will be dynamic. Make sure BOTH is false, when building!")]
+	public bool dynamicTestOverride;
+	public bool staticTestOverride;
+
+	[HideInInspector]
 	public bool isDynamic;
+	
 	private string textToShow = "", buttonOne = "Okay";
 	public float moveDelay = 3f, endTurnDelay = 4f, playerSelectionDelay = 4f;
 
@@ -34,6 +40,17 @@ public class DynamicTut : Singleton<DynamicTut> {
 	//TODO: Add all the different types of tuts we want to be shown in here
 
 	void Start () {
+		if (staticTestOverride || dynamicTestOverride) {
+			if (staticTestOverride) {
+				isDynamic = false;
+			}
+			if (dynamicTestOverride) {
+				isDynamic = true;
+			}
+		}
+		else {
+			isDynamic = !DataGathering.Instance.Static;
+		}
 		if(isDynamic){
 			Debug.LogWarning("Tutorial is dynamic!");
 			TutorialHandler.instance.isDynamic = isDynamic;

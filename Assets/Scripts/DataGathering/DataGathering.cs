@@ -18,7 +18,10 @@ public class DataGathering {
 				instance = new DataGathering();
 				System.Random rand = new System.Random(Time.renderedFrameCount);
 				System.Random rand2 = new System.Random((int)(Time.realtimeSinceStartup*10000000));
-				instance.ID = "T" + DateTime.Now.ToString("dd-HH:mm:ss:fff") + "R" + rand.Next(0,10000) + "R" + rand2.Next(0,10000);
+				instance.Static = new System.Random(DateTime.Now.Millisecond).Next(0, 2) == 0 ? true : false;
+				instance.ID = instance.Static ? "S" : "D";
+				instance.ID += DateTime.Now.ToString("dd-HH:mm:ss:fff") + "R" + rand.Next(0,10000) + "R" + rand2.Next(0,10000);
+				Debug.Log(instance.ID);
 			}
 			return instance;
 		}
@@ -29,6 +32,7 @@ public class DataGathering {
 	#region ID
 
 	public string ID;
+	public bool Static;
 
 	#endregion
 
