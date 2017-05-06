@@ -89,6 +89,7 @@ namespace Overworld {
 			OWCam.gameObject.SetActive(false);
 			OWCanvas.SetActive(false);
 			inputManager.gameObject.SetActive(false);
+			ConcedeButton.instance.Activate();
 		}
 
 		private void EnabeleObjectsCombatLoad() {
@@ -96,6 +97,7 @@ namespace Overworld {
 			eventSystem.SetActive(true);
 			OWCanvas.SetActive(true);
 			inputManager.gameObject.SetActive(true);
+			ConcedeButton.instance.DeActivate();
 		}
 
 		private IEnumerator LoadingScene() {

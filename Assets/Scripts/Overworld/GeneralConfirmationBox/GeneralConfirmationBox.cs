@@ -9,6 +9,7 @@ namespace Overworld {
 	public class GeneralConfirmationBox : ControlUIElement, IInteractable {
 		public static GeneralConfirmationBox instance;
 		private bool isOpen;
+		public bool IsOpen {  get { return isOpen; } }
 		protected override void Awake() {
 			if (instance == null) {
 				instance = this;
