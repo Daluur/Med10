@@ -53,6 +53,7 @@ namespace CombatWorld.AI {
 			summonPoints = DamageConstants.STARTSUMMONPOINTS - DamageConstants.SUMMONPOINTSPERTURN;
 			if (SceneHandler.instance != null) {
 				unitsToSummon = SceneHandler.instance.GetDeck().unitIDs;
+				AITaskImplementations.IsStoneEncounter(SceneHandler.instance.GetDeck());
 				DataGathering.Instance.AILastDeck(new List<int>(unitsToSummon));
 			}
 			AIUtilityMethods.FillSubscriptionTowers();
@@ -142,8 +143,9 @@ namespace CombatWorld.AI {
 				switch (task.task) {
 					case PossibleTasks.MoveOffensive:
 						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
-						if (distance > unit.GetMoveDistance())
-							continue;
+						if (distance > unit.GetMoveDistance() || task.endNode == unit.GetNode()) {
+						continue;
+						}
 						var subscribedTower = AIUtilityMethods.FindSubscribedTower(task.towerToMoveTo);
 						task.score = ( distance + ( offensiveFactor * 2 - defensiveFactor ) -
 									   ( ( subscribedTower != null ) ? subscribedTower.amountFocusingThisTower : 0 ) * 3 ) *
@@ -214,7 +216,7 @@ namespace CombatWorld.AI {
 						}
 						break;
 					case PossibleTasks.MoveFromSpawn:
-						task.score = 2;
+						task.score = 2 + task.endNode.gameObject.transform.position.z;
 						break;
 					default:
 						//Debug.Log("This task has not been implemented yet");
