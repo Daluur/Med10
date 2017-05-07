@@ -28,9 +28,9 @@ static class DeckHandler {
 			deckName = "Gatekeeper",
 			difficulty = "Easy",
 			id = 1,
-			type1 = "Lightning",
+			type1 = "Water",
 			type2 = "Nature",
-			unitIDs = new int[] { 4, 6 },
+			unitIDs = new int[] { 2, 6 },
 		},
 		new DeckData {
 			deckName = "Bridge Guardian",

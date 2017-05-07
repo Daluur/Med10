@@ -39,7 +39,10 @@ namespace CombatWorld {
 		public Text summonPointTurnNumber;
 		public Animator summonPointTurnAnim;
 
+		InGameMenu menu;
+
 		void Start() {
+			menu = FindObjectOfType<InGameMenu>();
 			if (GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER)) {
 				StartCoroutine(FadeIn());
 			}
@@ -636,5 +639,9 @@ namespace CombatWorld {
 		}
 
 		#endregion
+
+		public bool AcceptsInput() {
+			return !(GeneralConfirmationBox.instance != null && GeneralConfirmationBox.instance.IsOpen) && !(menu != null && menu.isShowing);
+		}
 	}
 }

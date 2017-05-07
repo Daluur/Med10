@@ -21,6 +21,8 @@ namespace Overworld {
 			base.Awake();
 		}
 
+		public GameObject blockingPanel;
+
 		private Text displayText;
 		private Button buttonOne, buttonTwo;
 		private Vector2 bOnePos, bTwoPos;
@@ -51,6 +53,7 @@ namespace Overworld {
 
 		public void ShowPopUp(string text, string buttonTextOne, UnityAction buttonAction = null, string buttonTextTwo = null) {
 			inputManager.StopPlayer();
+			blockingPanel.SetActive(true);
 			if (buttonTextOne == null) {
 				buttonTextOne = "OK";
 			}
@@ -69,6 +72,7 @@ namespace Overworld {
 		}
 
 		private void DoPopUp(string text, string buttonText, UnityAction buttonAction) {
+			blockingPanel.SetActive(true);
 			displayText.text = text;
 			buttonTwo.gameObject.SetActive(false);
 			var buttonOneRect = buttonOne.GetComponent<RectTransform>();
@@ -84,6 +88,7 @@ namespace Overworld {
 		}
 
 		private void DoPopUp(string text, string buttonOneText, string buttonTwoText, UnityAction buttonAction = null) {
+			blockingPanel.SetActive(true);
 			displayText.text = text;
 			buttonOne.GetComponent<RectTransform>().anchoredPosition = bOnePos;
 			buttonTwo.GetComponent<RectTransform>().anchoredPosition = bTwoPos;
@@ -107,6 +112,7 @@ namespace Overworld {
 			isOpen = false;
 			RemoveListeners();
 			inputManager.ResumePlayer();
+			blockingPanel.SetActive(false);
 			base.CloseElement();
 		}
 

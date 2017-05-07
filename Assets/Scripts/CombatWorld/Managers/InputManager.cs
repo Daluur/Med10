@@ -19,7 +19,7 @@ namespace CombatWorld {
 				GameController.instance.ClickedNothing();
 			}
 
-			if (Input.GetKeyDown(KeyCode.Space)) {
+			if (Input.GetKeyDown(KeyCode.Space) && !(GeneralConfirmationBox.instance != null && GeneralConfirmationBox.instance.IsOpen) && !(menu != null && menu.isShowing)) {
 				GameController.instance.TryEndTurn();
 			}
 

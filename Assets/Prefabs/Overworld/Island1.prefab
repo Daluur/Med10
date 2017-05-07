@@ -23647,6 +23647,7 @@ MonoBehaviour:
   meClicked: 0
   hasGeneralConfirmationBox: 0
   target: {fileID: 0}
+  isFinal: 0
 --- !u!114 &114730863716468276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23687,7 +23688,7 @@ MonoBehaviour:
   - {fileID: 4028479171684374}
   - {fileID: 4901381067995754}
   teleporterPad: {fileID: 114689854367544030}
-  unitsToUnlock: 0000000002000000
+  unitsToUnlock: 0000000004000000
 --- !u!136 &136193516418894826
 CapsuleCollider:
   m_ObjectHideFlags: 1

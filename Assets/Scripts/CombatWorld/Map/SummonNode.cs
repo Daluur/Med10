@@ -17,6 +17,9 @@ namespace CombatWorld.Map {
 		#region input
 
 		public override void HandleInput() {
+			if (!GameController.instance.AcceptsInput()) {
+				return;
+			}
 			if (HasUnit() && GetUnit().CanMove()) {
 				if (TutorialHandler.instance != null) {
 					if (TutorialHandler.instance.unitFirst) {

@@ -11,4 +11,8 @@ public class EndScene : MonoBehaviour {
 	public void SurveyButton() {
 		Application.OpenURL("http://unity3d.com/");
 	}
+
+	public void Quit() {
+		Application.Quit();
+	}
 }

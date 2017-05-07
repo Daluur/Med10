@@ -326,7 +326,7 @@ namespace CombatWorld.Units {
 			target.Reverse();
 			for (int i = 1; i < target.Count; i++) {
 				if (shadowUnit) {
-					if (target[i].HasOccupant()) {
+					if (target[i].HasUnit() && target[i].GetUnit() != this) {
 						movedThroughUnitThisTurn = true;
 					}
 				}
