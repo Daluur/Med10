@@ -576,7 +576,7 @@ namespace CombatWorld {
 			}
 		}
 
-		void Won() {
+		public void Won() {
 			gameFinished = true;
 			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = true});

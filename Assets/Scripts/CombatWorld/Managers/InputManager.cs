@@ -15,6 +15,9 @@ namespace CombatWorld {
 		}
 
 		void Update() {
+			if (Input.GetKeyDown(KeyCode.End)) {
+				GameController.instance.Won();
+			}
 			if (Input.GetMouseButtonDown(1)) {
 				GameController.instance.ClickedNothing();
 			}
