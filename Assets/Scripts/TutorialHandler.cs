@@ -28,7 +28,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	public bool isDynamic;
 
 	public void ShowGoalAndSummon() {
-		GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers before they destroy yours.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Click a unit and then a square summon pad to summon.\nThis costs 'summon points', which are displayed next to the units name.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Your available summon points are displayed at the top of the summon menu.", "CLOSE")));
+		GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers before they destroy yours.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Click a unit and then a square summon pad to summon.\nThis costs 'summon points', which are displayed next to the units name.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Your available summon points are displayed at the top left of your screen.", "CLOSE")));
 	}
 
 	public void LosingCombat() {
@@ -60,11 +60,11 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	}
 
 	public void InventoryAndShop() {
-		GeneralConfirmationBox.instance.ShowPopUp ("The 6 glowing slots are your combat slots, you will bring these units to battle.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can drag units to different slots to change your lineup.", "CLOSE"));
+		GeneralConfirmationBox.instance.ShowPopUp ("The 4 glowing slots are your combat slots, you will bring these units to battle.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can drag units to different slots to change your lineup.", "CLOSE"));
 	}
 
 	public void FirstShop() {
-		GeneralConfirmationBox.instance.ShowPopUp ("This is the summon shop.\n\nClick on a unit icon to summon it to your inventory. Only units that you have the recipe for can be summoned.", "CLOSE");
+		GeneralConfirmationBox.instance.ShowPopUp ("This is the summon shop.\n\nClick on a unit icon to add it to your inventory. Only units that you have the recipe for can be added.", "CLOSE");
 	}
 
 	public void FirstBuy() {
