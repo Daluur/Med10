@@ -7,12 +7,15 @@ public class Teleporter : ContextInteraction, IInteractable {
 
 	public Transform target;
 	public bool isFinal = false;
+	bool shouldBeActive = false;
 
 	void Start() {
 		Register(this, KeyCode.Mouse0);
+		gameObject.SetActive(shouldBeActive);
 	}
 
 	public void Activate() {
+		shouldBeActive = true;
 		gameObject.SetActive(true);
 	}
 

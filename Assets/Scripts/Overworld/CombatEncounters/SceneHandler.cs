@@ -119,7 +119,6 @@ namespace Overworld {
 			AwardCurrency();
 			QuestManager.questManager.CompleteQuest (encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			ProcessEncounteredObject();
-			//SaveLoadHandler.Instance.GetCurrentIsland()
 			if (DynamicTut.instance.HasLearnedEverything(SaveLoadHandler.Instance.GetCurrentIsland())) { // Change this to bool for check learned all on the island.
 				LearnedEverything();
 			}
@@ -129,14 +128,29 @@ namespace Overworld {
 		}
 
 		void LearnedEverything() {
+			GhostTalking.instance.ShowPopUp("I don't want to play with you anymore! Here have some new unit recipes!\nI have also opened a portal to a new island!");
+			/*if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.firstWin) {
+					TutorialHandler.instance.firstWin = false;
+					TutorialHandler.instance.Winning();
+				}
+			}*/
 			encounterObject.GetComponent<StaticEncounter>().Beaten();
 		}
 
 		void MoreToLearn() {
+			GhostTalking.instance.ShowPopUp("You might have beaten me! But I'm not done playing with you!\nCome find me again!");
+			//Tell the player what he did wrong.
 			encounterObject.GetComponent<StaticEncounter>().MoveToNewSpawnPos();
 		}
 
 		public void Lost() {
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.firstLoss) {
+					TutorialHandler.instance.firstLoss = false;
+					TutorialHandler.instance.LosingCombat();
+				}
+			}
 			CheckpointManager.instance.TeleportPlayerToLatestCheckpoint();
 			//GhostTalking.instance.ShowPopUp("You lost");
 		}

@@ -114,6 +114,9 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	public bool HasLearnedEverything(int island) {
+		if (!isDynamic) {
+			return true;
+		}
 		switch (island) {
 			case 0:
 				return CheckLearningGoals(island1);
@@ -164,6 +167,9 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	private bool CheckLearningObjectiveDynamicTutShadow() {
+		if(PlayerData.Instance.GetHasEverSummonedShadow() == false) {
+			return false;
+		}
 		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetShadowSummonedLastCombat() > 2) {
 			StartCoroutine(ShadowSpecialCooldown());
 			return false;

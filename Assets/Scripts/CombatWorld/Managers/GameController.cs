@@ -581,12 +581,6 @@ namespace CombatWorld {
 			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = true});
 			DataToServer.SendData(this);
-			if (TutorialHandler.instance != null) {
-				if (TutorialHandler.instance.firstWin) {
-					TutorialHandler.instance.firstWin = false;
-					TutorialHandler.instance.Winning();
-				}
-			}
 			won = true;
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
@@ -598,12 +592,6 @@ namespace CombatWorld {
 			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = false});
 			DataToServer.SendData(this);
-			if (TutorialHandler.instance != null) {
-				if (TutorialHandler.instance.firstLoss) {
-					TutorialHandler.instance.firstLoss = false;
-					TutorialHandler.instance.LosingCombat();
-				}
-			}
 			won = false;
 			winLoseText.text = "YOU LOST!";
 			winLosePanel.SetActive(true);

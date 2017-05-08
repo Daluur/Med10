@@ -95,6 +95,13 @@ public class DataGathering {
 	List<CombatTrades> TradesSinceLastReset = new List<CombatTrades>();
 	List<CombatTrades> TradesFromLastCombat = new List<CombatTrades>();
 
+	public void LoadTrades(List<CombatTrades> tr) {
+		if(tr == null) {
+			return;
+		}
+		AllTrades = tr;
+	}
+
 	public void ResetTrades() {
 		TradesSinceLastReset.Clear();
 		AllTrades.Add(new CombatTrades() { initiator = Team.NONE, movedThroughUnit = true });
@@ -206,6 +213,13 @@ public class DataGathering {
 
 	List<SummonPlayerData> AllSummonedUnits = new List<SummonPlayerData>();
 	List<SummonPlayerData> SummonedUnitsLastCombat = new List<SummonPlayerData>();
+
+	public void LoadSummons(List<SummonPlayerData> su) {
+		if (su == null) {
+			return;
+		}
+		AllSummonedUnits = su;
+	}
 
 	public void SummonedNewUnit(SummonPlayerData type) {
 		AllSummonedUnits.Add(type);
@@ -321,6 +335,11 @@ public class DataGathering {
 	public int movedThroughLastCombat = 0;
 	public int didNotMoveThroughLastCombat = 0;
 
+	public void LoadShadow(int s1, int s2) {
+		movedShadowThroughOthersSaveThisValue = s1;
+		movedShadowWithoutMovingThroughOtherUnitsSaveThisValue = s2;
+	}
+
 	public void MovedShadowThroughUnit() {
 		movedShadowUnitThroughUnitCount++;
 		movedShadowThroughOthersSaveThisValue++;
@@ -367,6 +386,13 @@ public class DataGathering {
 	List<DeckDataClass> ALLDeckData = new List<DeckDataClass>();
 	List<int> UnitsBroughtToLastCombat = new List<int>();
 	List<int> AIUnitsBroughtToLastCombat = new List<int>();
+
+	public void LoadDecks(List<DeckDataClass> dd) {
+		if (dd == null) {
+			return;
+		}
+		ALLDeckData = dd;
+	}
 
 	public void UnitsBroughtToCombat(List<int> units) {
 		UnitsBroughtToLastCombat = units;

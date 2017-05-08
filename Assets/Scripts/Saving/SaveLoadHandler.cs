@@ -79,7 +79,7 @@ public class SaveLoadHandler {
 	}
 
 	void WriteToJSON() {
-		SaveData data = new SaveData(StaticEncounters.ToArray(), InventoryUnits.ToArray(), UnlockedUnits.ToArray(), gold, checkpoint);
+		SaveData data = new SaveData(StaticEncounters.ToArray(), InventoryUnits.ToArray(), UnlockedUnits.ToArray(), gold, checkpoint, DataGathering.Instance.GetAllTrades(), DataGathering.Instance.GetAllSummonedUnits(), DataGathering.Instance.GetAllDeckData(), DataGathering.Instance.movedShadowThroughOthersSaveThisValue, DataGathering.Instance.movedShadowWithoutMovingThroughOtherUnitsSaveThisValue);
 
 		StringBuilder sb = new StringBuilder();
 		JsonWriter writer = new JsonWriter(sb);
@@ -93,6 +93,11 @@ public class SaveLoadHandler {
 		public int[] encounters;
 		public int[] inventory;
 		public int[] unlocks;
+		public List<CombatTrades> trades;
+		public List<SummonPlayerData> summons;
+		public List<DeckDataClass> decks;
+		public int shadow1;
+		public int shadow2;
 		public int gold;
 		public int checkpoint;
 
@@ -100,12 +105,17 @@ public class SaveLoadHandler {
 
 		}
 
-		public SaveData(int[] enc, int[] inv, int[] unl, int g, int c) {
+		public SaveData(int[] enc, int[] inv, int[] unl, int g, int c, List<CombatTrades> tr, List<SummonPlayerData> su, List<DeckDataClass> dd, int s1, int s2) {
 			encounters = enc;
 			inventory = inv;
 			unlocks = unl;
 			gold = g;
 			checkpoint = c;
+			trades = tr;
+			summons = su;
+			decks = dd;
+			shadow1 = s1;
+			shadow2 = s2;
 		}
 		
 	}
@@ -122,6 +132,10 @@ public class SaveLoadHandler {
 			UnlockedUnits.AddRange(loadedData.unlocks);
 			gold = loadedData.gold;
 			checkpoint = loadedData.checkpoint;
+			DataGathering.Instance.LoadTrades(loadedData.trades);
+			DataGathering.Instance.LoadSummons(loadedData.summons);
+			DataGathering.Instance.LoadDecks(loadedData.decks);
+			DataGathering.Instance.LoadShadow(loadedData.shadow1, loadedData.shadow2);
 		}
 		loaded = true;
 	}
