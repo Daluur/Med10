@@ -52,11 +52,11 @@ namespace CombatWorld.AI {
 
 		public static float AttackCalculation(Unit unit, Node enemy) {
 			var enemyUnit = enemy.GetUnit();
-			var killingFactor = 20;
+			var killingFactor = 40;
 			var dyingFactor = 2;
 			var unitATKEnemyTypeModifier = AIUtilityMethods.TypeModifier(unit.GetElementalType(), enemyUnit.GetElementalType());
 			var enemyUnitATKunitTypeModifier = AIUtilityMethods.TypeModifier(enemyUnit.GetElementalType(), unit.GetElementalType());
-			Debug.Log("Unit: " + unitATKEnemyTypeModifier + "Enemy: " + enemyUnitATKunitTypeModifier);
+			//Debug.Log("Unit: " + unitATKEnemyTypeModifier + "Enemy: " + enemyUnitATKunitTypeModifier);
 			return ( ( ( unit.GetAttackValue() * unitATKEnemyTypeModifier ) / enemyUnit.GetHealth() ) * killingFactor -
 			         ( (enemyUnit.GetAttackValue() * enemyUnitATKunitTypeModifier ) / unit.GetHealth() ) * dyingFactor ) *
 			       IsAttackeeCloseToTower(unit, enemy);

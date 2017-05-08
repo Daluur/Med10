@@ -15,6 +15,8 @@ namespace CombatWorld.AI {
 
 		private static bool isRunning;
 
+		public static bool isStoneEncounter;
+
 		public static void DoAIAction(AIUnit unit, AITask task) {
 			unit.SetTaskToDo(task);
 			tasksToComplete.Enqueue(unit);
@@ -58,8 +60,29 @@ namespace CombatWorld.AI {
 					break;
 
 			}
+			if (unit.myUnit.IsStoneUnit() && isStoneEncounter && (task.task != PossibleTasks.MoveAttack || task.task != PossibleTasks.Attack)) {
+				var shouldTurn = true;
+				foreach (var neighbor in task.endNode.neighbours) {
+					if (neighbor.HasTower() || task.endNode.GetType() == typeof(SummonNode)) {
+						shouldTurn = false;
+						break;
+					}
+				}
+				if(shouldTurn)
+					unit.myUnit.StartCoroutine(TurnToStone(unit.myUnit));
+			}
 			unit.ClearTasks();
 
+		}
+
+		public static void IsStoneEncounter(DeckData deck) {
+			if (deck.type1 == "Stone" && deck.type2 == "") {
+				Debug.Log("Stone encounter engaged");
+				isStoneEncounter = true;
+			}
+			else {
+				isStoneEncounter = false;
+			}
 		}
 
 		private static IEnumerator WaitForAction(AIUnit unit) {
