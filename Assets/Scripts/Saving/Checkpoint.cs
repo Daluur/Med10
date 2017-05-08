@@ -27,6 +27,10 @@ public class Checkpoint : MonoBehaviour {
 		GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.GAMEWASSAVED);
 	}
 
+	public void Save() {
+		SaveLoadHandler.Instance.Save(id);
+	}
+
 	/// <summary>
 	/// DO ONLY USE THIS IF YOU ARE GOING TO TELEPORT THE PLAYER!
 	/// </summary>

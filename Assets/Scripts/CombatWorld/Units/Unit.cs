@@ -325,7 +325,7 @@ namespace CombatWorld.Units {
 			animHelp.StartWalk();
 			target.Reverse();
 			for (int i = 1; i < target.Count; i++) {
-				if (shadowUnit) {
+				if (team == Team.Player && shadowUnit) {
 					if (target[i].HasUnit() && target[i].GetUnit() != this) {
 						movedThroughUnitThisTurn = true;
 					}

@@ -42,7 +42,7 @@ namespace CombatWorld.Units {
 			currentNode.neighbours.Clear();
 			currentNode.RemoveOccupant();
 			if (team == Team.AI) {
-				healthIndicator.SummonPoint(false);
+				healthIndicator.SummonPoint(false, DamageConstants.SUMMONPOINTSPERTOWERKILL);
 				DataGathering.Instance.KilledTower();
 			}
 			Instantiate (Resources.Load ("Art/3D/Explosion") as GameObject, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);

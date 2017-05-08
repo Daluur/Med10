@@ -32,5 +32,6 @@ public class CheckpointManager : Singleton<CheckpointManager> {
 			return;
 		}
 		player.TeleportPlayer(checkpoints[latestCheckpoint].GetTPPos());
+		checkpoints[latestCheckpoint].Save();
 	}
 }
