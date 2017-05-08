@@ -157,6 +157,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 
 		var score = playerTrades.FindAll(element => element.good && !element.retaliation).Count - playerTrades.FindAll(element => element.bad && !element.retaliation && !element.killHit).Count;
 		var aiScore =  aiTrades.FindAll(element => element.good && !element.retaliation).Count - aiTrades.FindAll(element => element.bad && !element.retaliation && !element.killHit).Count;
+		//Debug.Log(score);
 
 		//TODO: Understand which type of bad attack triggered this and use that, or use general knowledge?
 
@@ -210,8 +211,8 @@ public class DynamicTut : Singleton<DynamicTut> {
 		var aiScore =  aiTrades.FindAll(element => element.good && !element.retaliation).Count - aiTrades.FindAll(element => element.bad && !element.retaliation && !element.killHit).Count;
 
 		//TODO: Understand which type of bad attack triggered this and use that, or use general knowledge?
-
-		if(score < -2 && aiScore > 1) {
+		//Debug.Log(score);
+		if(score < -2) {
 			shownType = true;
 			PlayerData.Instance.ResetTrades();
 			StartCoroutine(TypesCooldown());

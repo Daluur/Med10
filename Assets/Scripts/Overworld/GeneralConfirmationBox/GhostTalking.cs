@@ -31,7 +31,7 @@ namespace Overworld {
 			
 			displayText.text = text;
 			ghostPic.sprite = ghostPictures[SaveLoadHandler.Instance.GetCurrentIsland()];
-
+			gameObject.SetActive(true);
 			StartCoroutine(WaitWithPopUp());
 		}
 
