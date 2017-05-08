@@ -79,7 +79,7 @@ public class SaveLoadHandler {
 	}
 
 	void WriteToJSON() {
-		SaveData data = new SaveData(StaticEncounters.ToArray(), InventoryUnits.ToArray(), UnlockedUnits.ToArray(), gold, checkpoint, DataGathering.Instance.GetAllTrades(), DataGathering.Instance.GetAllSummonedUnits(), DataGathering.Instance.GetAllDeckData(), DataGathering.Instance.movedShadowThroughOthersSaveThisValue, DataGathering.Instance.movedShadowWithoutMovingThroughOtherUnitsSaveThisValue);
+		SaveData data = new SaveData(StaticEncounters.ToArray(), InventoryUnits.ToArray(), UnlockedUnits.ToArray(), gold, checkpoint, DataGathering.Instance.GetAllTrades(), DataGathering.Instance.GetAllSummonedUnits(), DataGathering.Instance.GetAllDeckData(), DataGathering.Instance.movedShadowThroughOthersSaveThisValue, DataGathering.Instance.movedShadowWithoutMovingThroughOtherUnitsSaveThisValue, DataGathering.Instance.ID, DataGathering.Instance.Static);
 
 		StringBuilder sb = new StringBuilder();
 		JsonWriter writer = new JsonWriter(sb);
@@ -98,6 +98,8 @@ public class SaveLoadHandler {
 		public List<DeckDataClass> decks;
 		public int shadow1;
 		public int shadow2;
+		public string ID;
+		public bool Static;
 		public int gold;
 		public int checkpoint;
 
@@ -105,7 +107,7 @@ public class SaveLoadHandler {
 
 		}
 
-		public SaveData(int[] enc, int[] inv, int[] unl, int g, int c, List<CombatTrades> tr, List<SummonPlayerData> su, List<DeckDataClass> dd, int s1, int s2) {
+		public SaveData(int[] enc, int[] inv, int[] unl, int g, int c, List<CombatTrades> tr, List<SummonPlayerData> su, List<DeckDataClass> dd, int s1, int s2, string id, bool st) {
 			encounters = enc;
 			inventory = inv;
 			unlocks = unl;
@@ -116,6 +118,8 @@ public class SaveLoadHandler {
 			decks = dd;
 			shadow1 = s1;
 			shadow2 = s2;
+			ID = id;
+			Static = st;
 		}
 		
 	}
@@ -136,6 +140,8 @@ public class SaveLoadHandler {
 			DataGathering.Instance.LoadSummons(loadedData.summons);
 			DataGathering.Instance.LoadDecks(loadedData.decks);
 			DataGathering.Instance.LoadShadow(loadedData.shadow1, loadedData.shadow2);
+			DataGathering.Instance.OverrideID(loadedData.ID, loadedData.Static);
+
 		}
 		loaded = true;
 	}
