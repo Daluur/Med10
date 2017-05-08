@@ -97,5 +97,47 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 			GeneralConfirmationBox.instance.ShowPopUp("NEED TEXT FOR SELECTING UNIT TUT","Okay");
 	}
 
+	public void WorldTrigger(int id) {
+		if(id == 1) { //move
+			GeneralConfirmationBox.instance.ShowPopUp("Click on the ground to move your character", "CLOSE");
+		}
+		if(id == 2) { //shop
+			GeneralConfirmationBox.instance.ShowPopUp("Click on the summon tower to open the unit shop", "CLOSE");
+		}
+		if(id == 3) { //encounter
+			GeneralConfirmationBox.instance.ShowPopUp("Click on an enemy to start a battle", "NEXT", 
+				() => GeneralConfirmationBox.instance.ShowPopUp("You can hover the mouse over an enemy to see its stats.", "CLOSE"));
+		}
+		if(id == 4) { //inventory
+			GeneralConfirmationBox.instance.ShowPopUp("Press the 'I' key to open your inventory", "CLOSE");
+		}
+		if (id == 5) { //types
+			if (!isDynamic) {
+				GeneralConfirmationBox.instance.ShowPopUp("Units have different types, these can be strong or weak to another type.", "NEXT",
+					() => GeneralConfirmationBox.instance.ShowPopUp("Attacking with a unit, whose type is strong against the opponent’s type will deal double damage.", "NEXT",
+					() => GeneralConfirmationBox.instance.ShowPopUp("Attacking with a unit, whose type is weak against the opponent’s type will deal half damage.", "CLOSE")));
+			}
+		}
+		if (id == 6) { //types2
+			if (!isDynamic) {
+				GeneralConfirmationBox.instance.ShowPopUp("WATER is strong against FIRE.", "NEXT",
+					() => GeneralConfirmationBox.instance.ShowPopUp("FIRE is strong against NATURE.", "NEXT",
+					() => GeneralConfirmationBox.instance.ShowPopUp("NATURE is strong against LIGHTNING.", "NEXT",
+					() => GeneralConfirmationBox.instance.ShowPopUp("LIGHTNING is strong against WATER.", "CLOSE"))));
+			}
+		}
+		if (id == 7) { //shadow
+			if (isDynamic) {
+				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "NEXT",
+				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will receive less damage.", "CLOSE"));
+			}
+			else {
+				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "NEXT",
+				() => GeneralConfirmationBox.instance.ShowPopUp("SHADOW units can move through other units", "NEXT",
+				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will receive less damage.", "CLOSE")));
+			}
+		}
+	}
+
 
 }

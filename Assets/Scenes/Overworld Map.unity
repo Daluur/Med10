@@ -173,78 +173,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 120.153, y: -0.000015258789, z: -0.000015258789}
---- !u!1 &186600558
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 186600559}
-  - component: {fileID: 186600561}
-  - component: {fileID: 186600560}
-  m_Layer: 0
-  m_Name: TutorialTypes
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &186600559
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 186600558}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -88.8, y: 1.9, z: 4.17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2003001516}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &186600560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 186600558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
-  open: 0
-  playerOW: {fileID: 0}
-  isRunning: 0
-  meClicked: 0
-  hasGeneralConfirmationBox: 0
-  typeOfGeneralInformationTrigger: 0
-  typeOfGeneralInformation: 0
-  displayText:
-  - Units have different types, these can be strong or weak to another type.
-  - "Attacking with a unit, whose type is strong against the opponent\u2019s type
-    will deal double damage."
-  - "Attacking with a unit, whose type is weak against the opponent\u2019s type will
-    deal half damage."
-  buttonOne:
-  - NEXT
-  - NEXT
-  - CLOSE
-  buttonTwo: CANCEL
---- !u!65 &186600561
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 186600558}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &260494631 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1099759584246228, guid: bd7b17105770b244c9807ad7623c75c9,
@@ -886,7 +814,7 @@ Prefab:
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -25218.21
+      value: -25790.824
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -911,7 +839,7 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -19.813953
+      value: -19.435684
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -921,12 +849,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 15.627907
+      value: 14.871368
       objectReference: {fileID: 0}
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 39.627907
+      value: 38.87137
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -1004,78 +932,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd7b17105770b244c9807ad7623c75c9, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &810570879
-GameObject:
+--- !u!1001 &796261210
+Prefab:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 810570880}
-  - component: {fileID: 810570882}
-  - component: {fileID: 810570881}
-  m_Layer: 0
-  m_Name: TutorialTypes2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &810570880
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 810570879}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -82.67, y: 2.9, z: 5.64}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2003001516}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &810570881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 810570879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
-  open: 0
-  playerOW: {fileID: 0}
-  isRunning: 0
-  meClicked: 0
-  hasGeneralConfirmationBox: 0
-  typeOfGeneralInformationTrigger: 0
-  typeOfGeneralInformation: 0
-  displayText:
-  - WATER is strong against FIRE.
-  - FIRE is strong against NATURE.
-  - NATURE is strong against LIGHTNING.
-  - LIGHTNING is strong against WATER.
-  buttonOne:
-  - NEXT
-  - NEXT
-  - NEXT
-  - CLOSE
-  buttonTwo: CANCEL
---- !u!65 &810570882
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 810570879}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4469050631984892, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 2.6858017
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469050631984892, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.6974542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469050631984892, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 72.8372
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469050631984892, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469050631984892, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469050631984892, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469050631984892, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469050631984892, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ff261f3050ae3284fb88d619aa34a935, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1007134097
 Prefab:
   m_ObjectHideFlags: 0
@@ -1198,72 +1096,6 @@ MonoBehaviour:
   firstShop: 1
   firstBuy: 1
   isDynamic: 0
---- !u!1 &1050781586
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1050781587}
-  - component: {fileID: 1050781589}
-  - component: {fileID: 1050781588}
-  m_Layer: 0
-  m_Name: TutorialShop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1050781587
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1050781586}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.3, y: -1.0974542, z: 0.17280579}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2003001516}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1050781588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1050781586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
-  open: 0
-  playerOW: {fileID: 0}
-  isRunning: 0
-  meClicked: 0
-  hasGeneralConfirmationBox: 0
-  typeOfGeneralInformationTrigger: 0
-  typeOfGeneralInformation: 0
-  displayText:
-  - Click on the summon tower to open the unit shop
-  buttonOne:
-  - CLOSE
-  buttonTwo: CANCEL
---- !u!65 &1050781589
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1050781586}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1082847728 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1242809551423298, guid: f90e4e03ccde4564ea82a2a19cd98aea,
@@ -1840,72 +1672,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1344563707806080, guid: bd7b17105770b244c9807ad7623c75c9,
     type: 2}
   m_PrefabInternal: {fileID: 787837418}
---- !u!1 &1641945956
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1641945960}
-  - component: {fileID: 1641945959}
-  - component: {fileID: 1641945957}
-  m_Layer: 0
-  m_Name: TutorialMove
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1641945957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1641945956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
-  open: 0
-  playerOW: {fileID: 0}
-  isRunning: 0
-  meClicked: 0
-  hasGeneralConfirmationBox: 0
-  typeOfGeneralInformationTrigger: 0
-  typeOfGeneralInformation: 0
-  displayText:
-  - Click on the ground to move your character
-  buttonOne:
-  - CLOSE
-  buttonTwo: CANCEL
---- !u!65 &1641945959
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1641945956}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1641945960
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1641945956}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.66, y: -1.0974542, z: 0.17280579}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2003001516}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1688948099 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4734985574552238, guid: 66d383c36f6a3d04e94d38be028d583b,
@@ -2021,276 +1787,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4735391295050218, guid: 71b2a515008142a4abb21ec76fd7db49,
     type: 2}
   m_PrefabInternal: {fileID: 1158921396}
---- !u!1 &1748524224
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1748524225}
-  - component: {fileID: 1748524227}
-  - component: {fileID: 1748524226}
-  m_Layer: 0
-  m_Name: TutorialEncounter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1748524225
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1748524224}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.01, y: -1.0974542, z: 8.17}
-  m_LocalScale: {x: 1, y: 1, z: 2}
-  m_Children: []
-  m_Father: {fileID: 2003001516}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1748524226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1748524224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
-  open: 0
-  playerOW: {fileID: 0}
-  isRunning: 0
-  meClicked: 0
-  hasGeneralConfirmationBox: 0
-  typeOfGeneralInformationTrigger: 0
-  typeOfGeneralInformation: 0
-  displayText:
-  - Click on an enemy to start a battle.
-  - You can hover the mouse over an enemy to see its stats.
-  buttonOne:
-  - NEXT
-  - CLOSE
-  buttonTwo: CANCEL
---- !u!65 &1748524227
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1748524224}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1786393520
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1786393521}
-  - component: {fileID: 1786393523}
-  - component: {fileID: 1786393522}
-  m_Layer: 0
-  m_Name: TutorialInventory
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1786393521
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1786393520}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.28, y: -1.0974542, z: 3.17}
-  m_LocalScale: {x: 2, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2003001516}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1786393522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1786393520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
-  open: 0
-  playerOW: {fileID: 0}
-  isRunning: 0
-  meClicked: 0
-  hasGeneralConfirmationBox: 0
-  typeOfGeneralInformationTrigger: 0
-  typeOfGeneralInformation: 0
-  displayText:
-  - Press the 'I' key to open your inventory.
-  buttonOne:
-  - CLOSE
-  buttonTwo: CANCEL
---- !u!65 &1786393523
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1786393520}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1840116220
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1840116221}
-  - component: {fileID: 1840116223}
-  - component: {fileID: 1840116222}
-  m_Layer: 0
-  m_Name: TutorialShadow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1840116221
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1840116220}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -198.8, y: 1.9, z: -7.81}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2003001516}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1840116222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1840116220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a2b459ffdc4634bb7fe1fc98df4748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputManager: {fileID: 0}
-  open: 0
-  playerOW: {fileID: 0}
-  isRunning: 0
-  meClicked: 0
-  hasGeneralConfirmationBox: 0
-  typeOfGeneralInformationTrigger: 0
-  typeOfGeneralInformation: 0
-  displayText:
-  - Some units have special abilities, which they can use in combat.
-  - SHADOW units can move through other units
-  - STONE units can hunker down in place, after which they will receive less damage.
-  buttonOne:
-  - NEXT
-  - NEXT
-  - CLOSE
-  buttonTwo: CANCEL
---- !u!65 &1840116223
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1840116220}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1903267510 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4208754838212374, guid: fda0ba6a9c601fb40b0a1bcb2cc5fc3d,
     type: 2}
   m_PrefabInternal: {fileID: 641636305}
---- !u!1 &2003001515
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2003001516}
-  - component: {fileID: 2003001517}
-  m_Layer: 0
-  m_Name: Tutorials
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2003001516
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2003001515}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6858017, y: 1.6974542, z: 72.8372}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1641945960}
-  - {fileID: 1050781587}
-  - {fileID: 1748524225}
-  - {fileID: 1786393521}
-  - {fileID: 186600559}
-  - {fileID: 810570880}
-  - {fileID: 1840116221}
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2003001517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2003001515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3a15f15461cac45922725515cda30d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dynamicTestOverride: 0
-  staticTestOverride: 0
-  isDynamic: 1
-  moveDelay: 3
-  endTurnDelay: 4
-  playerSelectionDelay: 4
-  cooldownForDynamicTypeTut: 100
-  cooldownForDynamicRetaliationTut: 100
-  cooldownForShadowSpecialTut: 100
-  island1: 0
-  island2: 2
-  island3: 1
-  island4: 3
-  island5: 3
 --- !u!4 &2008217872 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4204852736266414, guid: 956195cb696a2af4ca5d616bd2635ef0,
