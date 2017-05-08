@@ -28,6 +28,7 @@ public class Teleporter : ContextInteraction, IInteractable {
 			return;
 		}
 		other.transform.parent.GetComponent<PlayerMovementOW>().TeleportPlayer(target.position);
+		target.parent.GetComponent<Checkpoint>().Save();
 		AudioHandler.instance.PlayCollectGold();
 	}
 
