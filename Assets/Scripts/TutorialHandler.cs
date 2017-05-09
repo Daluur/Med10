@@ -40,7 +40,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	}
 
 	public void StartingThirdTurn() {
-		GeneralConfirmationBox.instance.ShowPopUp("Units can attack each other when they are on connected spots.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("If a unit is still alive after it has been attacked it will retaliate.\nAttacking ends the units turn.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "CLOSE")));
+		GeneralConfirmationBox.instance.ShowPopUp("Units can attack enemy units when they are on spots connected by a path.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("If a unit is still alive after it has been attacked it will retaliate.\nAttacking ends the units turn.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "CLOSE")));
 	}
 
 	public void Winning() {

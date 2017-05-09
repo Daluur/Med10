@@ -37,6 +37,7 @@ public class SaveLoadHandler {
 	int checkpoint = 0;
 
 	bool loaded = false;
+	Inventory inv = null;
 
 	#region saving
 
@@ -61,7 +62,9 @@ public class SaveLoadHandler {
 	}
 
 	void SaveInventory() {
-		var inv = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
+		if (inv == null) {
+			inv = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
+		}
 		if(inv.loadedData == false) {
 			return;
 		}
