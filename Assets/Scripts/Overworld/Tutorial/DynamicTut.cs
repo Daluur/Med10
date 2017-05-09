@@ -191,7 +191,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 
 		//TODO: Understand which type of bad attack triggered this and use that, or use general knowledge?
 
-		if(score < -2) {
+		if(score < -2 || score - aiScore < -2) {
 			return false;
 		}
 		return true;
@@ -214,8 +214,9 @@ public class DynamicTut : Singleton<DynamicTut> {
 			return false;
 		if(shownShadow)
 			return false;
-
-		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnit() > 2) {
+		var score = PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnit() - PlayerData.Instance.GetPlayerHasUsedShadowCount() -
+		            PlayerData.Instance.GetShadowSummonedLastCombat();
+		if (score > 2) {
 			shownShadow = true;
 			PlayerData.Instance.ResetShadow();
 			StartCoroutine(ShadowSpecialCooldown());
@@ -242,7 +243,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 
 		//TODO: Understand which type of bad attack triggered this and use that, or use general knowledge?
 		//Debug.Log(score);
-		if(score < -2) {
+		if(score < -2 || score - aiScore < -2) {
 			shownType = true;
 			PlayerData.Instance.ResetTrades();
 			StartCoroutine(TypesCooldown());
