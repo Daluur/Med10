@@ -44,8 +44,8 @@ namespace CombatWorld.AI {
 					break;
 				case PossibleTasks.MoveBlock:
 					MoveTo(task.endNode, unit.myUnit);
-					if (unit.myUnit.IsStoneUnit())
-						unit.myUnit.StartCoroutine(TurnToStone(unit.myUnit));
+					//if (unit.myUnit.IsStoneUnit())
+					//	unit.myUnit.StartCoroutine(TurnToStone(unit.myUnit));
 					break;
 				case PossibleTasks.MoveOffensive:
 					MoveTo(task.endNode, unit.myUnit);
@@ -60,7 +60,7 @@ namespace CombatWorld.AI {
 					break;
 
 			}
-			if (unit.myUnit.IsStoneUnit() && isStoneEncounter && (task.task != PossibleTasks.MoveAttack || task.task != PossibleTasks.Attack)) {
+			if (unit.myUnit.IsStoneUnit() && isStoneEncounter && (task.task != PossibleTasks.MoveAttack && task.task != PossibleTasks.Attack && task.task != PossibleTasks.MoveAttackDefensive)) {
 				var shouldTurn = true;
 				foreach (var neighbor in task.endNode.neighbours) {
 					if (neighbor.HasTower() || task.endNode.GetType() == typeof(SummonNode)) {
