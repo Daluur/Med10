@@ -121,9 +121,9 @@ namespace CombatWorld.AI {
 			}
 
 			if (toChoose == null) {
-				Debug.Log(tasks.Count);
+				//Debug.Log(tasks.Count);
 				foreach (var task in tasks) {
-					Debug.Log(task.task);
+					//Debug.Log(task.task);
 				}
 			}
 
@@ -132,8 +132,8 @@ namespace CombatWorld.AI {
 				subscribedTower.AddFocus();
 			}
 
-			if(toChoose != null)
-				Debug.Log("Chose: " + toChoose.task + " with end: "+toChoose.endNode+" with score: "+toChoose.score);
+			//if(toChoose != null)
+				//Debug.Log("Chose: " + toChoose.task + " with end: "+toChoose.endNode+" with score: "+toChoose.score);
 				return toChoose;
 		}
 

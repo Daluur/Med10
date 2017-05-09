@@ -228,7 +228,7 @@ namespace CombatWorld.AI {
 			var most = 0;
 			var typeWithMost = 0;
 			for (int i = 0; i < amountOfTypes.Length; i++) {
-				Debug.Log(i + " " + amountOfTypes[i]);
+				//Debug.Log(i + " " + amountOfTypes[i]);
 				if (amountOfTypes[i] > most) {
 					most = amountOfTypes[i];
 					typeWithMost = i;

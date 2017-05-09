@@ -52,7 +52,7 @@ namespace CombatWorld.AI {
 		public static bool IsUnitNextToAITower(Unit unit) {
 			foreach (var neighbor in unit.GetNode().neighbours) {
 				if (neighbor.HasOccupant() && neighbor.HasTower() && neighbor.GetOccupant().GetTeam() == unit.GetTeam()) {
-					Debug.Log(unit.name + " is next to ai tower");
+					//Debug.Log(unit.name + " is next to ai tower");
 					return true;
 				}
 			}

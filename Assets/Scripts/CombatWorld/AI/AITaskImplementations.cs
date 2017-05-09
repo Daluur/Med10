@@ -77,7 +77,7 @@ namespace CombatWorld.AI {
 
 		public static void IsStoneEncounter(DeckData deck) {
 			if (deck.type1 == "Stone" && deck.type2 == "") {
-				Debug.Log("Stone encounter engaged");
+				//Debug.Log("Stone encounter engaged");
 				isStoneEncounter = true;
 			}
 			else {
