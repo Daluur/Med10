@@ -36,6 +36,7 @@ namespace CombatWorld.Units {
 
 		public void Die() {
 			GameController.instance.DestroyTower(team);
+			AudioHandler.instance.PlayDie();
 			foreach (Node node in currentNode.GetNeighbours()) {
 				node.neighbours.Remove(currentNode);
 			}
@@ -93,6 +94,7 @@ namespace CombatWorld.Units {
 			if(team == Team.AI) {
 				DataGathering.Instance.AttackedTower();
 			}
+			AudioHandler.instance.PlayTakeDamage();
 			damage.info.towerHit = true;
 			health -= damage.CalculateDamageAgainst();
 			healthIndicator.TookDamage(damage, (float)health/maxHealth);

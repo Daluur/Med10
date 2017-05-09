@@ -132,12 +132,12 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		if (id == 7) { //shadow
 			if (isDynamic) {
 				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "NEXT",
-				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will receive less damage.", "CLOSE"));
+				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will be unable to move, or initiate attacks, but will receive less damage and deal less damage.", "CLOSE"));
 			}
 			else {
 				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "NEXT",
 				() => GeneralConfirmationBox.instance.ShowPopUp("SHADOW units can move through other units", "NEXT",
-				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will receive less damage.", "CLOSE")));
+				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will be unable to move, or initiate attacks, but will receive less damage and deal less damage.", "CLOSE")));
 			}
 		}
 	}
