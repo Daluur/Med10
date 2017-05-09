@@ -13,7 +13,7 @@ namespace Overworld {
 		}
 
 		public void Button() {
-			inputManager.FakeInput(KeyCode.B);
+			inputManager.FakeInput(KeyCode.I);
 		}
 
 		public void DoAction() {
