@@ -94,12 +94,12 @@ namespace CombatWorld.AI {
 
 			foreach (var unit in units) {
 				switch (unit.GetElementalType()) {
-					case ElementalTypes.NONE:
+					/*case ElementalTypes.NONE:
 						if (unit.GetTeam() != Team.AI) {
 							mostOfType[0] = ElementalTypes.NONE;
 							amountOfTypes[0]++;
 						}
-						break;
+						break;*/
 					case ElementalTypes.Nature:
 						if(unit.GetTeam()!=Team.AI){
 							mostOfType[1] = ElementalTypes.Nature;
@@ -145,16 +145,16 @@ namespace CombatWorld.AI {
 
 			switch (spawned) {
 				case ElementalTypes.Nature:
-					amountOfTypes[1]--;
-					break;
-				case ElementalTypes.Fire:
-					amountOfTypes[2]--;
-					break;
-				case ElementalTypes.Lightning:
 					amountOfTypes[3]--;
 					break;
-				case ElementalTypes.Water:
+				case ElementalTypes.Fire:
+					amountOfTypes[1]--;
+					break;
+				case ElementalTypes.Lightning:
 					amountOfTypes[4]--;
+					break;
+				case ElementalTypes.Water:
+					amountOfTypes[2]--;
 					break;
 			}
 
@@ -177,12 +177,12 @@ namespace CombatWorld.AI {
 
 			foreach (var unit in units) {
 				switch (unit.GetElementalType()) {
-					case ElementalTypes.NONE:
+					/*case ElementalTypes.NONE:
 						if (unit.GetTeam() != Team.AI) {
 							mostOfType[0] = ElementalTypes.NONE;
 							amountOfTypes[0]++;
 						}
-						break;
+						break;*/
 					case ElementalTypes.Nature:
 						if(unit.GetTeam()!=Team.AI){
 							mostOfType[1] = ElementalTypes.Nature;
@@ -228,11 +228,13 @@ namespace CombatWorld.AI {
 			var most = 0;
 			var typeWithMost = 0;
 			for (int i = 0; i < amountOfTypes.Length; i++) {
+				Debug.Log(i + " " + amountOfTypes[i]);
 				if (amountOfTypes[i] > most) {
 					most = amountOfTypes[i];
 					typeWithMost = i;
 				}
 			}
+			Debug.Log(mostOfType[typeWithMost]);
 			return mostOfType[typeWithMost];
 		}
 
