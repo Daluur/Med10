@@ -38,9 +38,6 @@ namespace Overworld.Shops {
 				UnlockedUnits.Add(12);
 //				UnlockedUnits.Add(1);
 			}
-			UnlockedUnits.Add(2);
-			UnlockedUnits.Add(4);
-			UnlockedUnits.Add(6);
 		}
 
 		public void UnlockUnitByID(int id) {
