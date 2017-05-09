@@ -28,7 +28,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	public bool isDynamic;
 
 	public void ShowGoalAndSummon() {
-		GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers before they destroy yours.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Click a unit and then a square summon pad to summon.\nThis costs 'summon points', which are displayed next to the units name.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Your available summon points are displayed at the top left of your screen.", "CLOSE")));
+		GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers before they destroy yours.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Click a unit and then one of your square tiles to summon it.\nThis costs 'summon points', which are displayed next to the units name.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Your available summon points are displayed at the top left of your screen.", "CLOSE")));
 	}
 
 	public void LosingCombat() {
@@ -36,7 +36,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	}
 
 	public void StartingTurnSecondTurn() {
-		GeneralConfirmationBox.instance.ShowPopUp("You will gain 2 summon points at the start of your turn each round, or 1 point for killing an enemy unit.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can hover over both your own and enemy units to see their stats.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can drag with the left mouse button on screen to move the camera around the field.\nClick on a summoned unit to move it.", "CLOSE")));
+		GeneralConfirmationBox.instance.ShowPopUp("You will gain 2 summon points at the start of your turn, 1 point for killing an enemy unit, and 3 points for killing an enemy tower!", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can hover over both your own and enemy units to see their stats.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("You can drag with the left mouse button on screen to move the camera around the field.\nClick on a summoned unit to move it.", "CLOSE")));
 	}
 
 	public void StartingThirdTurn() {
