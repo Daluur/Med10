@@ -15,7 +15,7 @@ namespace Overworld {
 				instance = this;
 			}
 			else {
-				Debug.LogWarning("Duplicate singeton, destroys the new object");
+				//Debug.LogWarning("Duplicate singeton, destroys the new object");
 				Destroy(gameObject);
 			}
 			base.Awake();

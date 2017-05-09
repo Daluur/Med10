@@ -201,7 +201,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 		if(PlayerData.Instance.GetHasEverSummonedShadow() == false) {
 			return false;
 		}
-		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetShadowSummonedLastCombat() > 2) {
+		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetShadowSummonedLastCombat() > 2 || PlayerData.Instance.GetTradesFromLastCombat().FindAll(element => element.shadow && element.movedThroughUnit && element.towerHit).Count > 0) {
 			StartCoroutine(ShadowSpecialCooldown());
 			return false;
 		}
