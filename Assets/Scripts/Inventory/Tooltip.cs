@@ -27,6 +27,9 @@ public class Tooltip : Singleton<Tooltip> {
 	}
 
 	void LateUpdate() {
+		if(tooltip == null) {
+			return;
+		}
 		if (tooltip.activeSelf) {
 			tooltip.transform.position = Input.mousePosition;
 			if(Input.mousePosition.x > screenSize.x) {
