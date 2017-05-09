@@ -226,7 +226,11 @@ namespace CombatWorld.AI {
 						}
 						break;
 					case PossibleTasks.MoveFromSpawn:
-						task.score = 2 + task.endNode.gameObject.transform.position.z;
+						if(unit.GetNode().transform.position.z > 1)
+							task.score = 2 + task.endNode.gameObject.transform.position.z;
+						else {
+							task.score = 2;
+						}
 						break;
 					default:
 						//Debug.Log("This task has not been implemented yet");
