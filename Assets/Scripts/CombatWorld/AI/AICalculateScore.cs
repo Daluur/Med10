@@ -119,6 +119,16 @@ namespace CombatWorld.AI {
 					score = task.score;
 				}
 			}
+			var randomChoice = new List<AITask>();
+			foreach (var task in tasks) {
+				if (task.score == toChoose.score) {
+					randomChoice.Add(task);
+				}
+			}
+
+			if (randomChoice.Count > 1) {
+				toChoose = randomChoice[Random.Range(0, randomChoice.Count)];
+			}
 
 			if (toChoose == null) {
 				//Debug.Log(tasks.Count);

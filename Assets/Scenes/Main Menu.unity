@@ -217,6 +217,26 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114976581021211708, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: combatMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: bea4cde4181449647919fda7831deed1, type: 3}
+    - target: {fileID: 82753461852414274, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82258027287724712, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114976581021211708, guid: d7e0ffe91db578f4d802e784282919b7,
+        type: 2}
+      propertyPath: overWorldMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: a98086430300a284c93f406c2daf635b, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7e0ffe91db578f4d802e784282919b7, type: 2}
   m_IsPrefabParent: 0

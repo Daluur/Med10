@@ -51,11 +51,11 @@ public class DynamicTut : Singleton<DynamicTut> {
 			isDynamic = !DataGathering.Instance.Static;
 		}
 		if(isDynamic){
-			Debug.LogWarning("Tutorial is dynamic!");
+//			Debug.LogWarning("Tutorial is dynamic!");
 			TutorialHandler.instance.isDynamic = isDynamic;
 		}
 		else{
-			Debug.LogWarning("Tutorial is NOT dynamic!");
+			//Debug.LogWarning("Tutorial is NOT dynamic!");
 			TutorialHandler.instance.isDynamic = isDynamic;
 		}
 
@@ -201,7 +201,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 		if(PlayerData.Instance.GetHasEverSummonedShadow() == false) {
 			return false;
 		}
-		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetShadowSummonedLastCombat() > 2 || PlayerData.Instance.GetTradesFromLastCombat().FindAll(element => element.shadow && element.movedThroughUnit && element.towerHit).Count > 0) {
+		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetPlayerHasUsedShadowCountLastCombat() - PlayerData.Instance.GetShadowSummonedLastCombat() > 2 || PlayerData.Instance.GetTradesFromLastCombat().FindAll(element => element.shadow && element.movedThroughUnit && element.towerHit).Count == 0) {
 			StartCoroutine(ShadowSpecialCooldown());
 			return false;
 		}
