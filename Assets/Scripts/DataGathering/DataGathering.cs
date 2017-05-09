@@ -59,6 +59,7 @@ public class DataGathering {
 
 	public void StartNewCombat() {
 		amountOfCombats++;
+		TradesSinceLastReset.Clear();
 		TradesFromLastCombat.Clear();
 		SummonedUnitsLastCombat.Clear();
 		SSS.Clear();
