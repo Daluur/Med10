@@ -76,13 +76,16 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	}
 
 	public void TypeTUTDyn() {
-		GeneralConfirmationBox.instance.ShowPopUp(
-			("Remember that some types are stronger against other\nMaybe you should consider using a different type of unit"),"CLOSE");
+		GeneralConfirmationBox.instance.ShowPopUp("Units have different types, these can be strong or weak to another type.", "NEXT",
+			() => GeneralConfirmationBox.instance.ShowPopUp("Attacking with a unit, whose type is strong against the opponent’s type will deal double damage.", "NEXT",
+			() => GeneralConfirmationBox.instance.ShowPopUp("Attacking with a unit, whose type is weak against the opponent’s type will deal half damage.", "NEXT",
+			() => GeneralConfirmationBox.instance.ShowPopUp("WATER is strong against FIRE.\n\nFIRE is strong against NATURE.", "NEXT",
+			() => GeneralConfirmationBox.instance.ShowPopUp("NATURE is strong against LIGHTNING.\n\nLIGHTNING is strong against WATER.", "CLOSE")))));
 	}
 
 	public void ShowBothShadowAndTypesDynTUT() {
 		GeneralConfirmationBox.instance.ShowPopUp(
-			"Remember that some types are stronger against other\nMaybe you should consider using a different type of unit",
+			"Some types are stronger against others\nMaybe you should consider using a different type of unit",
 			"NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("SHADOW units can move through other units", "CLOSE"));
 	}
 
