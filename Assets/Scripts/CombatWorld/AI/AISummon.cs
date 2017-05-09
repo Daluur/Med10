@@ -4,6 +4,7 @@ using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 using UnityEngine;
+using System.Linq;
 
 namespace CombatWorld.AI {
 	public class AISummon {
@@ -29,6 +30,7 @@ namespace CombatWorld.AI {
 					toSummonTo.Add(node);
 				}
 			}
+			toSummonTo = toSummonTo.OrderBy(i => Random.value).ToList();
 			foreach (var node in toSummonTo) {
 				if (node.HasOccupant()) {
 					continue;
