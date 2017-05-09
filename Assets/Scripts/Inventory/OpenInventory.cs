@@ -8,7 +8,7 @@ namespace Overworld {
 	public class OpenInventory : ControlUIElement, IInteractable {
 
 		void Start () {
-			Register (this, KeyCode.B);
+			//Register (this, KeyCode.B);
 			Register (this, KeyCode.I);
 		}
 

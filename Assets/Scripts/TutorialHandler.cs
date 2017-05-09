@@ -106,7 +106,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		}
 		if(id == 3) { //encounter
 			GeneralConfirmationBox.instance.ShowPopUp("Click on an enemy to start a battle", "NEXT", 
-				() => GeneralConfirmationBox.instance.ShowPopUp("You can hover the mouse over an enemy to see its stats.", "CLOSE"));
+				() => GeneralConfirmationBox.instance.ShowPopUp("You can hover the mouse over an enemy to see information about the enemy.", "CLOSE"));
 		}
 		if(id == 4) { //inventory
 			GeneralConfirmationBox.instance.ShowPopUp("Press the 'I' key to open your inventory", "CLOSE");
