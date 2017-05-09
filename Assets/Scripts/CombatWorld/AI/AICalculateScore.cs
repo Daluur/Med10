@@ -132,10 +132,9 @@ namespace CombatWorld.AI {
 				subscribedTower.AddFocus();
 			}
 
-			if (toChoose != null) {
+			//if(toChoose != null)
 				//Debug.Log("Chose: " + toChoose.task + " with end: "+toChoose.endNode+" with score: "+toChoose.score);
-			}
-			return toChoose;
+				return toChoose;
 		}
 
 		private void CalculateScore(Unit unit, List<AITask> tasks) {

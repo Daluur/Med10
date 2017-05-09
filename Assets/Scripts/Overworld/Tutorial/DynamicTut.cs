@@ -76,13 +76,13 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	IEnumerator Testing() {
-		Debug.Log("Startedtesting");
+		//Debug.Log("Startedtesting");
 		while(inCombat){
 			yield return new WaitForSeconds(3f);
 			CheckDynamicShadowSpecial();
 			CheckDynamicTypes();
 		}
-		Debug.Log("Stopped testing");
+		//Debug.Log("Stopped testing");
 	}
 
 	IEnumerator TypesCooldown() {
@@ -214,7 +214,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 			return false;
 		if(shownShadow)
 			return false;
-		var score = PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnit() - PlayerData.Instance.GetPlayerHasUsedShadowCount() -
+		var score = PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetPlayerHasUsedShadowCountLastCombat() -
 		            PlayerData.Instance.GetShadowSummonedLastCombat();
 		if (score > 2) {
 			shownShadow = true;
