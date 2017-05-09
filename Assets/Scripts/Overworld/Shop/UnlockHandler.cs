@@ -42,7 +42,7 @@ namespace Overworld.Shops {
 
 		public void UnlockUnitByID(int id) {
 			if (UnlockedUnits.Contains(id)) {
-				Debug.LogError("ID: "+id+" Was already unlocked!");
+				//Debug.LogError("ID: "+id+" Was already unlocked!");
 			}
 			else {
 				UnlockedUnits.Add(id);
