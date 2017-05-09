@@ -9,7 +9,7 @@ public class EndScene : MonoBehaviour {
 	}
 
 	public void SurveyButton() {
-		Application.OpenURL("http://unity3d.com/");
+		Application.OpenURL("https://goo.gl/forms/v6S7lP5J54OuJTpJ2");
 	}
 
 	public void Quit() {
