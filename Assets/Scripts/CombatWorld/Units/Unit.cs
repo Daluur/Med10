@@ -304,7 +304,7 @@ namespace CombatWorld.Units {
 			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
 				var ma = particles.main;
-				ma.startColor = new Color(1, 1, 1, 0.3f);
+				ma.startColor = new Color(1, 1, 1, 0.5f);
 			}
 			else {
 				defaultFaceDirection = Vector3.left;
@@ -394,6 +394,7 @@ namespace CombatWorld.Units {
 			//healthIndicator.GotMoreHealth(health, healthBonus);
 			moved = attacked = true;
 			turnedToStone = true;
+			transform.GetChild(3).gameObject.SetActive(true);
 		}
 #pragma warning restore 0162
 

@@ -82,7 +82,12 @@ namespace CombatWorld.Utility {
 				}
 
 			transform.position = new Vector3(pos.x, pos.y, pos.z);
-			data = "<color="+color+"><b>" + unit.data.name + "</b></color>\n\n<b>Health: </b>" + unit.GetHealth() + " / " + unit.data.healthValue + "\n<b>Type: </b>" + unit.data.GetStringFromType(unit.data.type) + " " + special + "\n<b>Moves: </b>" + unit.GetMoveDistance() + "\n<b>Summon Cost: </b>" + unit.data.cost;
+			if (unit.turnedToStone) {
+				data = "<color=" + color + "><b>" + unit.data.name + "</b></color>\n\n<b>Health: </b>" + unit.GetHealth() + " / " + unit.data.healthValue + "\n<b>Type: </b>" + unit.data.GetStringFromType(unit.data.type) + " " + special + "\n<b>Moves: </b>" + 0 + "\n<b>Summon Cost: </b>" + unit.data.cost+ "\n<b><color=#ff0000>Cannot initialize attacks!\nRecieves only 5 damage per attack!</color></b>";
+			}
+			else {
+				data = "<color=" + color + "><b>" + unit.data.name + "</b></color>\n\n<b>Health: </b>" + unit.GetHealth() + " / " + unit.data.healthValue + "\n<b>Type: </b>" + unit.data.GetStringFromType(unit.data.type) + " " + special + "\n<b>Moves: </b>" + unit.GetMoveDistance() + "\n<b>Summon Cost: </b>" + unit.data.cost;
+			}
 			tooltip.text = data;
 			gameObject.SetActive(true);
 		}
