@@ -103,20 +103,33 @@ public class DynamicTut : Singleton<DynamicTut> {
 		var dynamicTut = CheckDynamicTypes();
 		var shadowSpecial = CheckDynamicShadowSpecial();
 		if(dynamicTut && shadowSpecial){
-			TutorialHandler.instance.ShowBothShadowAndTypesDynTUT();
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, attacker = ElementalTypes.Fire });
+			DataGathering.Instance.WasToldAboutShadow();
+			DataGathering.Instance.WasToldAboutTypes();
+			if (isDynamic) {
+				TutorialHandler.instance.ShowBothShadowAndTypesDynTUT();
+			}
 		}
 		else if (shadowSpecial) {
-			TutorialHandler.instance.ShadowUnitDyn();
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, attacker = ElementalTypes.Water });
+			DataGathering.Instance.WasToldAboutShadow();
+			if (isDynamic) {
+				TutorialHandler.instance.ShadowUnitDyn();
+			}
 		}
 		else if (dynamicTut) {
-			TutorialHandler.instance.TypeTUTDyn();
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, attacker = ElementalTypes.Nature });
+			DataGathering.Instance.WasToldAboutTypes();
+			if (isDynamic) {
+				TutorialHandler.instance.TypeTUTDyn();
+			}
 		}
 	}
 
 	public bool HasLearnedEverything(int island) {
-		if (!isDynamic) {
+		/*if (!isDynamic) {
 			return true;
-		}
+		}*/
 		switch (island) {
 			case 0:
 				return CheckLearningGoals(island1);
@@ -133,14 +146,31 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	private bool CheckLearningGoals(LearningObjectives island) {
+		bool haslearned = false;
 		if (island == LearningObjectives.Both) {
-			return CheckLearningObjectiveDynamicTutShadow() && CheckLearningObjectiveDynamicTutType();
+			haslearned = CheckLearningObjectiveDynamicTutShadow() && CheckLearningObjectiveDynamicTutType();
+			if(haslearned == false) {
+				DataGathering.Instance.HadNotLearnedShadow();
+				DataGathering.Instance.HadNotLearnedTypes();
+			}
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, defender = (ElementalTypes)island, good = haslearned, bad = true });
+			return haslearned;
 		}
 		if (island == LearningObjectives.ShadowUnit) {
-			return CheckLearningObjectiveDynamicTutShadow();
+			haslearned = CheckLearningObjectiveDynamicTutShadow();
+			if (haslearned == false) {
+				DataGathering.Instance.HadNotLearnedShadow();
+			}
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, defender = (ElementalTypes)island, good = haslearned, bad = true });
+			return haslearned;
 		}
 		if (island == LearningObjectives.TypeInteraction) {
-			return CheckLearningObjectiveDynamicTutType();
+			haslearned = CheckLearningObjectiveDynamicTutType();
+			if (haslearned == false) {
+				DataGathering.Instance.HadNotLearnedTypes();
+			}
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, defender = (ElementalTypes)island, good = haslearned, bad = true });
+			return haslearned;
 		}
 		return true;
 	}

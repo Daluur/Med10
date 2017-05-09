@@ -119,7 +119,7 @@ namespace Overworld {
 			AwardCurrency();
 			QuestManager.questManager.CompleteQuest (encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
 			ProcessEncounteredObject();
-			if (DynamicTut.instance.HasLearnedEverything(SaveLoadHandler.Instance.GetCurrentIsland())) { // Change this to bool for check learned all on the island.
+			if (DynamicTut.instance.HasLearnedEverything(SaveLoadHandler.Instance.GetCurrentIsland()) || !DynamicTut.instance.isDynamic) { // Change this to bool for check learned all on the island.
 				LearnedEverything();
 			}
 			else {

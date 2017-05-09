@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviour {
 	public List<Item> items = new List<Item> ();
 	public List<GameObject> slots = new List<GameObject> ();
 
+	public bool loadedData = false;
+
 	void Awake() {
 		database = new ItemDatabase();
 	}
@@ -39,6 +41,7 @@ public class Inventory : MonoBehaviour {
 				AddItemAtSlot(savedInventory[i], i);
 			}
 		}
+		loadedData = true;
 	}
 
 	public void AddItem(int id) {

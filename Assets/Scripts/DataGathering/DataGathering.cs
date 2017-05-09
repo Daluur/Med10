@@ -494,6 +494,29 @@ public class DataGathering {
 
 	#endregion
 
+	#region tutthings
+
+	public int typesToldCount = 1;
+	public int shadowToldCount = 2;
+
+	public int notLearnedShadowCount = 3;
+	public int notLearnedTypesCount = 4;
+
+	public void WasToldAboutShadow() {
+		shadowToldCount++;
+	}
+	public void WasToldAboutTypes() {
+		typesToldCount++;
+	}
+	public void HadNotLearnedShadow() {
+		notLearnedShadowCount++;
+	}
+	public void HadNotLearnedTypes() {
+		notLearnedTypesCount++;
+	}
+
+	#endregion
+
 	#endregion
 }
 

@@ -18,6 +18,10 @@ public class DataToServer {
 		form.AddField("Decks", GetDeckData());
 		form.AddField("Shadow1", Shadow1());
 		form.AddField("Shadow2", Shadow2());
+		form.AddField("ToldShadow", ToldShadow());
+		form.AddField("ToldType", ToldType());
+		form.AddField("NLShadow", NLShadow());
+		form.AddField("NLType", NLType());
 		string url = "http://daluur.dk/MED10.php";
 		WWW www = new WWW(url, form);
 		Debug.Log("send");
@@ -30,6 +34,19 @@ public class DataToServer {
 
 	static int Shadow2() {
 		return DataGathering.Instance.movedShadowWithoutMovingThroughOtherUnitsSaveThisValue;
+	}
+
+	static int ToldShadow() {
+		return DataGathering.Instance.shadowToldCount;
+	}
+	static int ToldType() {
+		return DataGathering.Instance.typesToldCount;
+	}
+	static int NLShadow() {
+		return DataGathering.Instance.notLearnedShadowCount;
+	}
+	static int NLType() {
+		return DataGathering.Instance.notLearnedTypesCount;
 	}
 
 	static string GetCDData() {

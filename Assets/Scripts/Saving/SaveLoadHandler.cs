@@ -50,6 +50,9 @@ public class SaveLoadHandler {
 	}
 
 	public void Save(int id) {
+		if (!loaded) {
+			return;
+		}
 		checkpoint = id;
 		SaveInventory();
 		SaveShop();
@@ -58,8 +61,11 @@ public class SaveLoadHandler {
 	}
 
 	void SaveInventory() {
-		InventoryUnits.Clear();
 		var inv = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
+		if(inv.loadedData == false) {
+			return;
+		}
+		InventoryUnits.Clear();
 		List<Item> items = inv.GetEntireInventory();
 		for (int i = 0; i < items.Count; i++) {
 			InventoryUnits.Add(items[i].ID);
