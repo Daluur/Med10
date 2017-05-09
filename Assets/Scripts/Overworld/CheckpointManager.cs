@@ -17,6 +17,10 @@ public class CheckpointManager : Singleton<CheckpointManager> {
 		}
 	}
 
+	public void SetLatestCheckpoint(int id) {
+		latestCheckpoint = id;
+	}
+
 	public void AssignCheckpoint(int id, Checkpoint checkpoint) {
 		if (checkpoints.ContainsKey(id)) {
 			Debug.Log("There are is already a checkpoint with this ID!" + id + " - " + checkpoint.gameObject.name);
