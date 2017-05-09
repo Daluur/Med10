@@ -391,7 +391,7 @@ namespace CombatWorld.Units {
 			
 			moveDistance = 0;
 			healthIndicator.ChangedAttackValue(damage);
-			healthIndicator.GotMoreHealth(health, healthBonus);
+			//healthIndicator.GotMoreHealth(health, healthBonus);
 			moved = attacked = true;
 			turnedToStone = true;
 		}
