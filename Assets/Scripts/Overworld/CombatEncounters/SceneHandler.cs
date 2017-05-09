@@ -138,7 +138,7 @@ namespace Overworld {
 		}
 
 		void MoreToLearn() {
-			GhostTalking.instance.ShowPopUp("You might have beaten me! But I'm not done playing with you!\nCome find me again!");
+			GhostTalking.instance.ShowPopUp("You might have beaten me! But I'm not done playing with you!\nCome find me again for my rematch!");
 			//Tell the player what he did wrong.
 			encounterObject.GetComponent<StaticEncounter>().MoveToNewSpawnPos();
 		}

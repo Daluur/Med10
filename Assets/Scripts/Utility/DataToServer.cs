@@ -24,7 +24,6 @@ public class DataToServer {
 		form.AddField("NLType", NLType());
 		string url = "http://daluur.dk/MED10.php";
 		WWW www = new WWW(url, form);
-		Debug.Log("send");
 		initiator.StartCoroutine(WaitForRequest(www));
 	}
 
@@ -71,10 +70,10 @@ public class DataToServer {
 		yield return www;
 		// Check for errors.
 		if (www.error == null) {
-			Debug.Log("WWW Ok!: " + www.text);
+			//Debug.Log("WWW Ok!: " + www.text);
 		}
 		else {
-			Debug.Log("WWW Error: " + www.error);
+			//Debug.Log("WWW Error: " + www.error);
 		}
 	}
 }
