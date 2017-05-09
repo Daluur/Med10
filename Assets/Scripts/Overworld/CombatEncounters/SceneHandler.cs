@@ -127,7 +127,7 @@ namespace Overworld {
 		}
 
 		void LearnedEverything() {
-			GhostTalking.instance.ShowPopUp("I don't want to play with you anymore! Here have some new unit recipes!\nI have also opened a portal to a new island!");
+			GhostTalking.instance.ShowPopUp("I don't want to play with you anymore!\nHere have some new unit recipes!\nI have also opened a portal to a new island!");
 			/*if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {
 					TutorialHandler.instance.firstWin = false;

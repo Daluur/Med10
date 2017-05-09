@@ -18,14 +18,14 @@ static class DeckHandler {
 			unitIDs = new int[]  { 0, 1, 2, 3, 4, 5 },
 		},
 		new DeckData {
-			deckName = "Gatekeeper",
+			deckName = "Friendly Ghost",
 			difficulty = "Easy",
 			id = 0,
 			type1 = "Normal",
 			unitIDs = new int[] { 12 },
 		},
 		new DeckData {
-			deckName = "Gatekeeper",
+			deckName = "Weird Apparition",
 			difficulty = "Easy",
 			id = 1,
 			type1 = "Water",
@@ -33,7 +33,7 @@ static class DeckHandler {
 			unitIDs = new int[] { 2, 6 },
 		},
 		new DeckData {
-			deckName = "Bridge Guardian",
+			deckName = "Scary Ghost",
 			difficulty = "Medium",
 			id = 2,
 			type1 = "Stone",
@@ -41,7 +41,7 @@ static class DeckHandler {
 			unitIDs = new int[] { 10, 11 },
 		},
 		new DeckData {
-			deckName = "Hill Spectre",
+			deckName = "Shy Spectre",
 			difficulty = "Easy",
 			id = 3,
 			type1 = "Nature",
@@ -50,7 +50,7 @@ static class DeckHandler {
 			unitIDs = new int[] { 6, 4, 8 },
 		},
 		new DeckData {
-			deckName = "Hill/Valley Random",
+			deckName = "Spooky Spirit",
 			difficulty = "Medium",
 			id = 4,
 			type1 = "ALL",

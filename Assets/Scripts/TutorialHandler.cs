@@ -140,6 +140,9 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will be unable to move, or initiate attacks, but will receive less damage and deal less damage.", "CLOSE")));
 			}
 		}
+		if(id == 8) { //Concede
+			GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, there is a concede option in the escape menu.", "CLOSE");
+		}
 	}
 
 
