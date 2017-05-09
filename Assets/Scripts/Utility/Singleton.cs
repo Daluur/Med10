@@ -12,7 +12,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
 			instance = this as T;
 		}
 		else {
-			Debug.LogWarning("Duplicate singeton, destroys the new object");
+			//Debug.LogWarning("Duplicate singeton, destroys the new object");
 			Destroy(gameObject);
 		}
 	}
