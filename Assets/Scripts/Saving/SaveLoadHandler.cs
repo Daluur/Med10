@@ -163,6 +163,9 @@ public class SaveLoadHandler {
 			DataGathering.Instance.notLearnedShadowCount = loadedData.NotLearnedShadow;
 			DataGathering.Instance.notLearnedTypesCount = loadedData.NotLearnedTypes;
 		}
+		else {
+			InventoryUnits.Add(12);
+		}
 		loaded = true;
 	}
 

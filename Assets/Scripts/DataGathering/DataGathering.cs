@@ -497,11 +497,11 @@ public class DataGathering {
 
 	#region tutthings
 
-	public int typesToldCount = 1;
-	public int shadowToldCount = 2;
+	public int typesToldCount = 0;
+	public int shadowToldCount = 0;
 
-	public int notLearnedShadowCount = 3;
-	public int notLearnedTypesCount = 4;
+	public int notLearnedShadowCount = 0;
+	public int notLearnedTypesCount = 0;
 
 	public void WasToldAboutShadow() {
 		shadowToldCount++;
