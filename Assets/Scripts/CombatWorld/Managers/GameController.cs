@@ -580,7 +580,7 @@ namespace CombatWorld {
 			gameFinished = true;
 			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = true});
-			DataToServer.SendData(this);
+			//DataToServer.SendData(this);
 			won = true;
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
@@ -591,7 +591,7 @@ namespace CombatWorld {
 			gameFinished = true;
 			ResetAllNodes();
 			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = false});
-			DataToServer.SendData(this);
+			//DataToServer.SendData(this);
 			won = false;
 			winLoseText.text = "YOU LOST!";
 			winLosePanel.SetActive(true);
