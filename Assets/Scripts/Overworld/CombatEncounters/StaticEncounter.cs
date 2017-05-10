@@ -95,11 +95,9 @@ namespace Overworld {
 		}
 
 		public void Beaten(bool saveFix = false) {
-			if (!saveFix) {
-				//TutorialHandler.instance.PortalIsOpen();
-				foreach (int id in unitsToUnlock) {
-					UnlockHandler.Instance.UnlockUnitByID(id);
-				}
+			//TutorialHandler.instance.PortalIsOpen();
+			foreach (int id in unitsToUnlock) {
+				UnlockHandler.Instance.UnlockUnitByID(id);
 			}
 
 			teleporterPad.Activate();
