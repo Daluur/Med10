@@ -344,10 +344,10 @@ namespace CombatWorld.Units {
 					yield return new WaitForEndOfFrame();
 				}
 			}
-			if(shadowUnit && !movedThroughUnitThisTurn) {
+			if(shadowUnit && !movedThroughUnitThisTurn && team == Team.Player) {
 				DataGathering.Instance.MoveShadowNotThroughUnits();
 			}
-			else if(shadowUnit && movedThroughUnitThisTurn) {
+			else if(shadowUnit && movedThroughUnitThisTurn && team == Team.Player) {
 				DataGathering.Instance.MovedShadowThroughUnit();
 			}
 			transform.position = target[target.Count-1].transform.position;

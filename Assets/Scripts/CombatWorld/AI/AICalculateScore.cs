@@ -103,7 +103,7 @@ namespace CombatWorld.AI {
 			}
 			//Debug.Log("AI turn ended, summon points left: " + summonPoints);
 			AIUtilityMethods.ResetTowerFocus();
-			GameController.instance.EndTurn();
+			GameController.instance.TryEndAITurn();
 			RemoveDeadUnits();
 			yield return null;
 		}
@@ -226,7 +226,10 @@ namespace CombatWorld.AI {
 						}
 						break;
 					case PossibleTasks.MoveFromSpawn:
-						if(unit.GetNode().transform.position.z > 1)
+						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if (distance > unit.GetMoveDistance())
+							continue;
+						if (unit.GetNode().transform.position.z > 1)
 							task.score = 2 + task.endNode.gameObject.transform.position.z;
 						else {
 							task.score = 2;

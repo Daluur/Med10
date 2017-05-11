@@ -148,12 +148,17 @@ public class DynamicTut : Singleton<DynamicTut> {
 	private bool CheckLearningGoals(LearningObjectives island) {
 		bool haslearned = false;
 		if (island == LearningObjectives.Both) {
-			haslearned = CheckLearningObjectiveDynamicTutShadow() && CheckLearningObjectiveDynamicTutType();
-			if(haslearned == false) {
+
+			var haslearnedShadow = CheckLearningObjectiveDynamicTutShadow();
+			if (haslearnedShadow == false) {
 				DataGathering.Instance.HadNotLearnedShadow();
-				DataGathering.Instance.HadNotLearnedTypes();
 			}
-			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, defender = (ElementalTypes)island, good = haslearned, bad = true });
+
+			var hasLearnedType = CheckLearningObjectiveDynamicTutType();
+			if (!hasLearnedType)
+				DataGathering.Instance.HadNotLearnedTypes();
+
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, defender = (ElementalTypes)island, good = hasLearnedType, bad = true, movedThroughUnit = haslearnedShadow });
 			return haslearned;
 		}
 		if (island == LearningObjectives.ShadowUnit) {
@@ -161,7 +166,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 			if (haslearned == false) {
 				DataGathering.Instance.HadNotLearnedShadow();
 			}
-			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, defender = (ElementalTypes)island, good = haslearned, bad = true });
+			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, defender = (ElementalTypes)island, movedThroughUnit = haslearned, bad = true });
 			return haslearned;
 		}
 		if (island == LearningObjectives.TypeInteraction) {
@@ -198,10 +203,16 @@ public class DynamicTut : Singleton<DynamicTut> {
 	}
 
 	private bool CheckLearningObjectiveDynamicTutShadow() {
-		if(PlayerData.Instance.GetHasEverSummonedShadow() == false) {
+		if (PlayerData.Instance.GetHasEverSummonedShadow() == false) {
 			return false;
 		}
-		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetPlayerHasUsedShadowCountLastCombat() - PlayerData.Instance.GetShadowSummonedLastCombat() > 2 || PlayerData.Instance.GetTradesFromLastCombat().FindAll(element => element.shadow && element.movedThroughUnit && element.towerHit).Count == 0) {
+		if (PlayerData.Instance.GetTradesFromLastCombat()
+				.FindAll(element => element.shadow && element.movedThroughUnit && element.towerHit)
+				.Count > 0) {
+			return true;
+		}
+
+		if (PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetPlayerHasUsedShadowCountLastCombat() - PlayerData.Instance.GetShadowSummonedLastCombat() > 2) {
 			StartCoroutine(ShadowSpecialCooldown());
 			return false;
 		}
@@ -210,12 +221,19 @@ public class DynamicTut : Singleton<DynamicTut> {
 
 
 	private bool CheckDynamicShadowSpecial() {
-		if(!PlayerData.Instance.GetHasEverSummonedShadow())
+		if (!PlayerData.Instance.GetHasEverSummonedShadow())
 			return false;
-		if(shownShadow)
+		if (shownShadow)
 			return false;
+
+		if (PlayerData.Instance.GetTradesFromLastCombat()
+				.FindAll(element => element.shadow && element.movedThroughUnit && element.towerHit)
+				.Count > 0) {
+			return false;
+		}
+
 		var score = PlayerData.Instance.GetMovedShadowWithoutMovingThroughUnitLastCombat() - PlayerData.Instance.GetPlayerHasUsedShadowCountLastCombat() -
-		            PlayerData.Instance.GetShadowSummonedLastCombat();
+					PlayerData.Instance.GetShadowSummonedLastCombat();
 		if (score > 2) {
 			shownShadow = true;
 			PlayerData.Instance.ResetShadow();

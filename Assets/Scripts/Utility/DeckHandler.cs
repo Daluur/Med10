@@ -53,9 +53,10 @@ static class DeckHandler {
 			deckName = "Ghastly Ghost",
 			difficulty = "Hard",
 			id = 4,
-			type1 = "ALL",
-			type2 = "",
-			unitIDs = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 },
+			type1 = "Fire",
+			type2 = "Water",
+			type3 = "Shadow/Stone",
+			unitIDs = new int[] { 0, 2, 8, 10 },
 		},
 		new DeckData {
 			deckName = "UNUSED",
