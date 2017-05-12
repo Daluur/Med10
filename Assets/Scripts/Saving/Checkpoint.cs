@@ -23,8 +23,13 @@ public class Checkpoint : MonoBehaviour {
 			teleported = false;
 			return;
 		}
+		CheckpointManager.instance.SetLatestCheckpoint(id);
 		SaveLoadHandler.Instance.Save(id);
 		GameNotificationsSystem.instance.DisplayMessage(GameNotificationConstants.GAMEWASSAVED);
+	}
+
+	public void Save() {
+		SaveLoadHandler.Instance.Save(id);
 	}
 
 	/// <summary>

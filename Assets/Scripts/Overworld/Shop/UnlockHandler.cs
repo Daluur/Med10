@@ -34,16 +34,15 @@ namespace Overworld.Shops {
 				/*for (int i = 0; i < 14; i++) {
 					UnlockedUnits.Add (i);
 				}*/
-//				UnlockedUnits.Add(0);
+				UnlockedUnits.Add(0);
 				UnlockedUnits.Add(12);
-				UnlockedUnits.Add(13);
 //				UnlockedUnits.Add(1);
 			}
 		}
 
 		public void UnlockUnitByID(int id) {
 			if (UnlockedUnits.Contains(id)) {
-				Debug.LogError("ID: "+id+" Was already unlocked!");
+				//Debug.LogError("ID: "+id+" Was already unlocked!");
 			}
 			else {
 				UnlockedUnits.Add(id);

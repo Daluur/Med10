@@ -134,7 +134,7 @@ namespace CombatWorld.AI {
 			List<AITask> tasks = new List<AITask>();
 			var moveTo = pathfinding.GetAllNodesWithinDistanceWithhoutOccupants(unit.GetNode(), unit.GetMoveDistance());
 			foreach (var node in moveTo) {
-				if(node.GetType() == typeof(SummonNode))
+				if(node.GetType() != typeof(SummonNode) && unit.GetNode().GetType() == typeof(SummonNode))
 					tasks.Add(new AITask(0, PossibleTasks.MoveFromSpawn, node));
 			}
 			return tasks;

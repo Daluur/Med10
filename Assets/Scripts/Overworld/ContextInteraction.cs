@@ -30,8 +30,8 @@ namespace Overworld {
 
 		public void CheckDistance() {
 			if (!isRunning){
-				StartCoroutine(IsCloseEnough());
 				inputManager.TakeInteractionIndicatorFocus(gameObject);
+				StartCoroutine(IsCloseEnough());
 			}
 
 		}
@@ -40,8 +40,8 @@ namespace Overworld {
 			isRunning = true;
 			while (meClicked) {
 				if (DistanceBetweenObjAndPlayer()) {
-					PerformClosenessAction();
 					inputManager.ResetInteractionIndicatorFocus();
+					PerformClosenessAction();
 					isRunning = false;
 					yield break;
 				}

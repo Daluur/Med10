@@ -11,7 +11,7 @@ namespace CombatWorld {
 		Vector2 minMaxXPos = new Vector2(-40, 40);
 		public Vector3[] CamPositions;
 		public Vector3[] CamPosRotations;
-		int currentZoom = 0;
+		int currentZoom = 1;
 
 		bool AICam = false;
 		bool following = false;

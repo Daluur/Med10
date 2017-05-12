@@ -83,7 +83,7 @@ namespace CombatWorld.AI {
 					}
 				}
 			}
-			GameController.instance.EndTurn();
+			//GameController.instance.EndTurn();
 		}
 
 		void CheckForDeadUnits() {

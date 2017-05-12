@@ -89,6 +89,7 @@ namespace Overworld {
 			OWCam.gameObject.SetActive(false);
 			OWCanvas.SetActive(false);
 			inputManager.gameObject.SetActive(false);
+			ConcedeButton.instance.Activate();
 		}
 
 		private void EnabeleObjectsCombatLoad() {
@@ -96,6 +97,7 @@ namespace Overworld {
 			eventSystem.SetActive(true);
 			OWCanvas.SetActive(true);
 			inputManager.gameObject.SetActive(true);
+			ConcedeButton.instance.DeActivate();
 		}
 
 		private IEnumerator LoadingScene() {
@@ -115,11 +117,41 @@ namespace Overworld {
 		//Add things here if they need to happen when a player wins a battle
 		public void Won() {
 			AwardCurrency();
+			if (DynamicTut.instance.HasLearnedEverything(SaveLoadHandler.Instance.GetCurrentIsland()) || DataGathering.Instance.Static) { // Change this to bool for check learned all on the island.
+				LearnedEverything();
+			}
+			else {
+				MoreToLearn();
+			}
+		}
+
+		void LearnedEverything() {
 			ProcessEncounteredObject();
+			GhostTalking.instance.ShowPopUp("I don't want to play with you anymore!\nHere have some new unit recipes!\nI have also opened a portal to a new island!");
+			/*if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.firstWin) {
+					TutorialHandler.instance.firstWin = false;
+					TutorialHandler.instance.Winning();
+				}
+			}*/
+			encounterObject.GetComponent<StaticEncounter>().Beaten();
+		}
+
+		void MoreToLearn() {
+			GhostTalking.instance.ShowPopUp("You might have beaten me! But I'm not done playing with you!\nCome find me again for my rematch!");
+			//Tell the player what he did wrong.
+			encounterObject.GetComponent<StaticEncounter>().MoveToNewSpawnPos();
 		}
 
 		public void Lost() {
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.firstLoss) {
+					TutorialHandler.instance.firstLoss = false;
+					TutorialHandler.instance.LosingCombat();
+				}
+			}
 			CheckpointManager.instance.TeleportPlayerToLatestCheckpoint();
+			//GhostTalking.instance.ShowPopUp("You lost");
 		}
 
 		private void AwardCurrency() {
@@ -128,7 +160,6 @@ namespace Overworld {
 
 		private void ProcessEncounteredObject() {
 			SaveLoadHandler.Instance.BeatAStaticEncounter(encounterObject.GetComponent<StaticEncounter>().StaticEncounterID);
-			Destroy(encounterObject);
 		}
 
 	}

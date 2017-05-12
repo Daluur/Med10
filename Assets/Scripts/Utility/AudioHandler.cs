@@ -47,7 +47,7 @@ public class AudioHandler : Singleton<AudioHandler> {
 				return;
 			}
 		}
-		Debug.LogWarning("Tried to play an effect sound, but no sources were avaible. We might need to add more.");
+		//Debug.LogWarning("Tried to play an effect sound, but no sources were avaible. We might need to add more.");
 	}
 
 	public void PlayAttack() {
@@ -84,35 +84,35 @@ public class AudioHandler : Singleton<AudioHandler> {
 	}
 
 	public void PlayInteraction() {
-		Debug.Log("Interaction needs a sound");
+		//Debug.Log("Interaction needs a sound");
 	}
 
 	public void PlayEnterCombat() {
-		Debug.Log("Enter combat needs a sound");
+		//Debug.Log("Enter combat needs a sound");
 	}
 
 	public void PlayWinSound() {
-		Debug.Log("needs a sound");
+		//Debug.Log("needs a sound");
 	}
 
 	public void PlayLoseSound() {
-		Debug.Log("needs a sound");
+		//Debug.Log("needs a sound");
 	}
 
 	public void PlayQuestComplete() {
-		Debug.Log("needs a sound");
+		//Debug.Log("needs a sound");
 	}
 
 	public void PlayCollectGold() {
-		Debug.Log("needs a sound");
+		//Debug.Log("needs a sound");
 	}
 
 	public void PlayCollectKeyItem() {
-		Debug.Log("needs a sound");
+		//Debug.Log("needs a sound");
 	}
 
 	public void PlayOpenShop() {
-		Debug.Log("needs a sound");
+		//Debug.Log("needs a sound");
 	}
 
 	/// <summary>
@@ -127,7 +127,7 @@ public class AudioHandler : Singleton<AudioHandler> {
 	}
 
 	public void PlayQuestUpdate() {
-		Debug.Log("needs a sound");
+		//Debug.Log("needs a sound");
 	}
 
 	public void MoveInventorySound() {
@@ -143,6 +143,9 @@ public class AudioHandler : Singleton<AudioHandler> {
 	}
 
 	public void StartOWBGMusic() {
+		if(BGSource.clip == overWorldMusic) {
+			return;
+		}
 		BGSource.clip = overWorldMusic;
 		BGSource.Play();
 	}

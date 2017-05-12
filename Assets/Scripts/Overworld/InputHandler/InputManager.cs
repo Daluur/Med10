@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 
 namespace Overworld {
 	public class InputManager : MonoBehaviour {
-
 		private List<bool> uiMouseLock = new List<bool>();
 		private bool isMouseBlocked = false;
 		private LayerMask layerMaskPlayer, layerMaskInteractable;
@@ -84,9 +83,13 @@ namespace Overworld {
 					DistributeAction();
 					break;
 				case KeyCode.I:
-					FillDistributer(keyCode);
-					DistributeAction();
-					break;
+					FillDistributer (keyCode);
+					DistributeAction ();
+				if (TutorialHandler.instance.firstInventory) {
+					TutorialHandler.instance.firstInventory = false;
+					TutorialHandler.instance.InventoryAndShop();
+				}
+				break;
 				case KeyCode.Q:
 					FillDistributer(keyCode);
 					DistributeAction();
@@ -105,6 +108,7 @@ namespace Overworld {
 				if (!isMouseBlocked) {
 					playerMoveTo = hit.transform.position;
 					distributeTo.Add(playerInteractable);
+					hitNormal = Vector3.zero;
 				}
 				distributeTo.AddRange(hit.collider.gameObject.GetComponents<IInteractable>());
 				return;
@@ -231,7 +235,7 @@ namespace Overworld {
 		}
 
 		public void TakeInteractionIndicatorFocus(GameObject go) {
-			Debug.Log(go.name);
+//			Debug.Log(go.name);
 			interactionIndicator.transform.position = go.transform.position;
 			interactionIndicator.transform.position += new Vector3(0,0.075f,0);
 			RaycastHit hit;

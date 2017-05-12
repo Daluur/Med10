@@ -23,6 +23,8 @@ namespace CombatWorld {
 		List<SummonNode> AISummonNodes = new List<SummonNode>();
 		public Team currentTeam;
 
+		public bool gameFinished;
+
 		Pathfinding pathfinding;
 
 		Unit selectedUnit;
@@ -39,7 +41,10 @@ namespace CombatWorld {
 		public Text summonPointTurnNumber;
 		public Animator summonPointTurnAnim;
 
+		InGameMenu menu;
+
 		void Start() {
+			menu = FindObjectOfType<InGameMenu>();
 			if (GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER)) {
 				StartCoroutine(FadeIn());
 			}
@@ -71,10 +76,20 @@ namespace CombatWorld {
 			GameObject go = Instantiate(maps[Random.Range(0, maps.Count)], transform.position, Quaternion.identity, transform) as GameObject;
 			go.transform.position = go.transform.position - new Vector3(go.GetComponent<MapInfo>().mapLength, 0, 0);
 			CombatCameraController.instance.setBoundary(new Vector2(-go.GetComponent<MapInfo>().mapLength, go.GetComponent<MapInfo>().mapLength));
-			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
+
+			//			Debug.Log("Loaded map: " + go.GetComponent<MapInfo>().Name);
+
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatFirstTurn) {
+					TutorialHandler.instance.ShowGoalAndSummon();
+
+				}
+			}
 		}
 
 		void StartGame() {
+			gameFinished = false;
+			DataGathering.Instance.StartNewCombat();
 			currentTeam = Team.Player;
 			ResetAllNodes();
 			SelectTeamNodes();
@@ -107,7 +122,7 @@ namespace CombatWorld {
 		#endregion
 
 		public void TryEndTurn() {
-			if (waitingForAction) {
+			if (waitingForAction || gameFinished) {
 				return;
 			}
 			if (playerVSPlayer) {
@@ -115,6 +130,13 @@ namespace CombatWorld {
 				return;
 			}
 			if(currentTeam != Team.Player) {
+				return;
+			}
+			EndTurn();
+		}
+
+		public void TryEndAITurn() {
+			if (currentTeam != Team.AI) {
 				return;
 			}
 			EndTurn();
@@ -128,15 +150,18 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
-					//CombatCameraController.instance.StartAICAM();
-					endButtonAnim.SetTrigger("MoreMoves");
+					endButtonAnim.SetBool("MoreMoves",true);
 					AITurn();
+					DoBaordCalculations();
+					//CombatCameraController.instance.StartAICAM();
+					CombatCameraController.instance.PlayerTurnsCam(GettAllUnitsOfTeam(Team.AI));
 					endTurnButton.interactable = false;
 					ResetAllNodes();
 					currentTeam = Team.AI;
 					AICalculateScore.instance.GiveSummonPoints(DamageConstants.SUMMONPOINTSPERTURN);
 					CheckWinLose();
 					StartTurn();
+					TowerNodes();
 					AICalculateScore.instance.DoAITurn();
 					if (playerVSPlayer) {
 						SummonHandler.instance.SetPlayerTurn(Team.AI);
@@ -160,10 +185,37 @@ namespace CombatWorld {
 					ResetAllNodes();
 					SelectTeamNodes();
 					endTurnButton.interactable = true;
+					TowerNodes();
 					break;
 				default:
 					break;
 			}
+		}
+
+		void DoBaordCalculations() {
+			//Check if player has stood beside tower and did not attack it.
+			//TODO: make a check, that it should not do this, if the player has killed a tower already.
+			foreach (Node node in allNodes) {
+				if(node.HasUnit() && node.GetUnit().GetTeam() == Team.Player) {
+					if (node.GetUnit().CanAttack()) {
+						foreach (Node nodeNeighbour in node.GetUnit().GetNode().GetNeighbours()) {
+							if (nodeNeighbour.HasTower() && nodeNeighbour.GetOccupant().GetTeam() == Team.AI) {
+								DataGathering.Instance.StoodBesideTowerAndDidNotAttack();
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public int GetAmountOfOccupiedPlayerSummonSpots() {
+			int temp = playerSummonNodes.Count;
+			foreach (SummonNode node in playerSummonNodes) {
+				if (node.HasOccupant()) {
+					temp--;
+				}
+			}
+			return temp;
 		}
 
 		void StartTurn() {
@@ -181,7 +233,7 @@ namespace CombatWorld {
 		}
 
 		void SelectTeamNodes() {
-			if (waitingForAction) {
+			if (waitingForAction || gameFinished) {
 				return;
 			}
 			if (selectedUnit == null) {
@@ -262,6 +314,7 @@ namespace CombatWorld {
 
 		public void HighlightSummonNodes() {
 			selectedUnit = null;
+			DataGathering.Instance.DeselectUnit();
 			ResetAllNodes();
 			if (currentTeam == Team.Player) {
 				foreach (SummonNode node in playerSummonNodes) {
@@ -291,7 +344,7 @@ namespace CombatWorld {
 		}
 
 		public void MoveUnit(Node node) {
-			if(selectedUnit.GetTeam() == Team.Player) {
+			if(selectedUnit.GetTeam() == Team.Player || playerVSPlayer) {
 				movingPlayerUnit = true;
 			}
 			selectedUnit.Move(pathfinding.GetPathTo(node));
@@ -304,6 +357,16 @@ namespace CombatWorld {
 		public void GotInput() {
 			ResetAllNodes();
 			SelectTeamNodes();
+			TowerNodes();
+			SummonHandler.instance.UpdateButtonsAndText();
+		}
+ 
+		void TowerNodes() {
+			foreach (Node node in GetTowersForTeam(Team.AI)) {
+				if (node.HasTower()) {
+					node.GetTower().CanBeAttacked(currentTeam == Team.Player);
+				}
+			}
 		}
 
 		bool movingPlayerUnit = false;
@@ -311,6 +374,7 @@ namespace CombatWorld {
 		public void UnitMadeAction() {
 			if (!movingPlayerUnit || (selectedUnit != null && !selectedUnit.GetNode().HasAttackableNeighbour())) {
 				selectedUnit = null;
+				DataGathering.Instance.DeselectUnit();
 			}
 			movingPlayerUnit = false;
 			waitingForAction = false;
@@ -323,6 +387,7 @@ namespace CombatWorld {
 
 		public void SetSelectedUnit(Unit unit) {
 			selectedUnit = unit;
+			DataGathering.Instance.SelectedUnit(unit);
 		}
 
 		public Unit GetSelectedUnit() {
@@ -331,13 +396,12 @@ namespace CombatWorld {
 
 		public void ClickedNothing() {
 			selectedUnit = null;
+			DataGathering.Instance.DeselectUnit();
+			SummonHandler.instance.UpdateButtonsAndText();
 			ResetAllNodes();
 			SelectTeamNodes();
 		}
 
-		public void Forfeit() {
-			StartCoroutine(Unload());
-		}
 
 		private IEnumerator Unload() {
 			FadingLoadingScreen.instance.StartFadeOut();
@@ -392,12 +456,41 @@ namespace CombatWorld {
 		}
 
 		private void PlayerTurn() {
+			//DynamicTut.instance.CheckForDynamicTuts();
+
 			TurnIndicator.text = "Your turn";
 			GiveTurnSummonPoints();
-			StartCoroutine(HideText());	
+			StartCoroutine(HideText());
+
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatSecondTurn) {
+					TutorialHandler.instance.StartingTurnSecondTurn();
+				}
+			}
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatThirdTurn) {
+					TutorialHandler.instance.combatThirdTurn = false;
+					TutorialHandler.instance.StartingThirdTurn();
+				}
+			}
 		}
 
 		private void AITurn() {
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatSecondTurn) {
+					TutorialHandler.instance.combatSecondTurn = false;
+					TutorialHandler.instance.combatThirdTurn = true;
+				}
+			}
+
+			if (TutorialHandler.instance != null) {
+				if (TutorialHandler.instance.combatFirstTurn) {
+					TutorialHandler.instance.combatFirstTurn = false;
+					TutorialHandler.instance.combatSecondTurn = true;
+					TutorialHandler.instance.combatThirdTurn = false;
+				}
+			}
+
 			TurnIndicator.text = "Enemy turn";
 			StartCoroutine(HideText());
 		}
@@ -414,7 +507,8 @@ namespace CombatWorld {
 		}
 
 		private void CheckPlayerHasMoves() {
-			if(SummonHandler.instance.HasPointsToSummon()){
+			return;
+			/*if(SummonHandler.instance.HasPointsToSummon()){
 				foreach (Node node in playerSummonNodes) {
 					if (!node.HasOccupant()) {
 						return;
@@ -426,7 +520,7 @@ namespace CombatWorld {
 					return;
 				}
 			}
-			endButtonAnim.SetTrigger("NoMoreMoves");
+			endButtonAnim.SetBool("MoreMoves",false);*/
 		}
 
 		#region SummonPoints
@@ -531,23 +625,45 @@ namespace CombatWorld {
 			}
 		}
 
-		void Won() {
+		public void Won() {
+			gameFinished = true;
+			ResetAllNodes();
+			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = true});
+			//DataToServer.SendData(this);
+			won = true;
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
 			AudioHandler.instance.PlayWinSound();
-			SceneHandler.instance.Won();
+			SaveLoadHandler.Instance.Save(SaveLoadHandler.Instance.GetCheckpoint());
 		}
 
 		void Lost() {
+			gameFinished = true;
+			ResetAllNodes();
+			DataGathering.Instance.AddCombatTrade(new CombatTrades(){ initiator = Team.NONE, killHit = false});
+			//DataToServer.SendData(this);
+			won = false;
 			winLoseText.text = "YOU LOST!";
 			winLosePanel.SetActive(true);
 			AudioHandler.instance.PlayLoseSound();
-			SceneHandler.instance.Lost();
+			SaveLoadHandler.Instance.Save(SaveLoadHandler.Instance.GetCheckpoint());
 		}
 
 		public void GiveUp() {
 			Lost();
 		}
+
+		public void Forfeit() {
+			StartCoroutine(Unload());
+			if (won) {
+				SceneHandler.instance.Won();
+			}
+			else {
+				SceneHandler.instance.Lost();
+			}
+		}
+
+		bool won;
 
 		#endregion
 
@@ -562,5 +678,9 @@ namespace CombatWorld {
 		}
 
 		#endregion
+
+		public bool AcceptsInput() {
+			return !(GeneralConfirmationBox.instance != null && GeneralConfirmationBox.instance.IsOpen) && !(menu != null && menu.isShowing);
+		}
 	}
 }

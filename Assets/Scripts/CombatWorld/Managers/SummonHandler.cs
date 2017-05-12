@@ -6,6 +6,7 @@ using CombatWorld.Map;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 using CombatWorld.AI;
+using Overworld;
 
 namespace CombatWorld
 {
@@ -45,7 +46,12 @@ namespace CombatWorld
 			database = new ItemDatabase();
 			GameObject inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT);
 			if (inventory != null) {
-				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(6));
+				SetupButtonsAndData(inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT));
+				List<int> unitIDs = new List<int>();
+				foreach (var item in inventory.GetComponent<Inventory>().GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT)) {
+					unitIDs.Add(item.ID);
+				}
+				DataGathering.Instance.UnitsBroughtToCombat(unitIDs);
 			}
 			else {
 				List<Item> p1Units;
@@ -114,8 +120,8 @@ namespace CombatWorld
 			toReturn.Add(database.FetchItemByID(3));
 			toReturn.Add(database.FetchItemByID(4));
 			toReturn.Add(database.FetchItemByID(7));
+			toReturn.Add(database.FetchItemByID(8));
 			toReturn.Add(database.FetchItemByID(12));
-			toReturn.Add(database.FetchItemByID(13));
 			return toReturn;
 		}
 
@@ -150,11 +156,20 @@ namespace CombatWorld
 			else {
 				unit.GetComponent<Unit>().SpawnEntity(node, Team.Player, currentlySelectedData);
 			}
+			unit.transform.parent = transform;
 		}
 
-		public void SummonButtonPressed(CombatData CD) {
+		public void SummonButtonPressed(CombatData CD, UnitButton but) {
 			currentlySelectedData = CD;
 			GameController.instance.HighlightSummonNodes();
+			foreach (UnitButton item in buttons) {
+				if (item != but) {
+					item.ResetColor();
+				}
+				else {
+					item.Highlight();
+				}
+			}
 		}
 
 		void SpendPoints(int amount) {
@@ -176,7 +191,7 @@ namespace CombatWorld
 			}*/
 		}
 
-		void UpdateButtonsAndText() {
+		public void UpdateButtonsAndText() {
 			if (GameController.playerVSPlayer && GameController.instance.currentTeam == Team.AI) {
 				foreach (UnitButton item in buttons) {
 					item.CheckCost(AICalculateScore.instance.summonPoints);

@@ -5,10 +5,10 @@ using UnityEngine;
 using CombatWorld.Map;
 using CombatWorld.Utility;
 using UnityEngine.EventSystems;
+using Overworld;
 
 namespace CombatWorld.Units {
 	public class Unit : MonoBehaviour, IEntity {
-
 		[Tooltip("Name of the trigger. Useable: \nMelee Right Attack 01 \nMelee Right Attack 02 \nMelee Right Attack 03 \nMelee Left Attack 01 \nLeft Punch Attack \nRight Punch Attack \nProjectile Right Attack 01 \nCrossbow Attack \nCast Spell 01 \nCast Spell 02")]
 		public string attackName = "Melee Right Attack 01";
 		public GameObject projectile;
@@ -122,6 +122,7 @@ namespace CombatWorld.Units {
 			if (turnedToStone) {
 				return;
 			}
+			movedThroughUnitThisTurn = false;
 			moved = attacked = false;
 		}
 
@@ -133,6 +134,9 @@ namespace CombatWorld.Units {
 			this.target = target;
 			attacked = moved = true;
 			damagePack = new DamagePackage(damage, this, type);
+			damagePack.info.stone = turnedToStone;
+			damagePack.info.shadow = shadowUnit;
+			damagePack.info.movedThroughUnit = movedThroughUnitThisTurn;
 			DealDamage();
 			if (DamageConstants.ATTACKATSAMETIME) {
 				if (target.GetNode().HasUnit()) {
@@ -144,6 +148,8 @@ namespace CombatWorld.Units {
 		public void RetaliationAttack(IEntity target) {
 			this.target = target;
 			damagePack = new DamagePackage(damage, this, type, true);
+			damagePack.info.stone = turnedToStone;
+			damagePack.info.shadow = shadowUnit;
 			DealDamage();
 		}
 
@@ -188,6 +194,7 @@ namespace CombatWorld.Units {
 		void TookDamage() {
 			if (DamageConstants.ATTACKATSAMETIME) {
 				if (health <= 0) {
+					damageIntake.info.killHit = true;
 					Die();
 					return;
 				}
@@ -200,9 +207,11 @@ namespace CombatWorld.Units {
 						return;
 					}
 					else {
+						damageIntake.info.killHit = true;
 						Die();
 						return;
 					}
+					damageIntake.info.killHit = true;
 					Die();
 					return;
 				}
@@ -276,6 +285,9 @@ namespace CombatWorld.Units {
 		}
 
 		public void SpawnEntity(Node node, Team team, CombatData data) {
+			if(team == Team.Player) {
+				DataGathering.Instance.SummonedNewUnit(new SummonPlayerData() {type = data.type, shadow = data.shadow, stone = data.stone });
+			}
 			moveDistance = data.moveDistance;
 			damage = data.attackValue;
 			type = data.type;
@@ -292,7 +304,7 @@ namespace CombatWorld.Units {
 			if (team == Team.Player) {
 				defaultFaceDirection = Vector3.right;
 				var ma = particles.main;
-				ma.startColor = new Color(1, 1, 1, 0.3f);
+				ma.startColor = new Color(1, 1, 1, 0.5f);
 			}
 			else {
 				defaultFaceDirection = Vector3.left;
@@ -302,7 +314,7 @@ namespace CombatWorld.Units {
 			FaceForward();
 		}
 
-		//Vector3 moveDir;
+		bool movedThroughUnitThisTurn = false;
 
 		IEnumerator MoveTo(List<Node> target) {
 			CombatCameraController.instance.SetTarget(transform);
@@ -313,6 +325,11 @@ namespace CombatWorld.Units {
 			animHelp.StartWalk();
 			target.Reverse();
 			for (int i = 1; i < target.Count; i++) {
+				if (team == Team.Player && shadowUnit) {
+					if (target[i].HasUnit() && target[i].GetUnit() != this) {
+						movedThroughUnitThisTurn = true;
+					}
+				}
 				transform.LookAt(target[i].transform);
 				//moveDir = (target[i].transform.position - transform.position).normalized;
 				bool moving = true;
@@ -326,6 +343,12 @@ namespace CombatWorld.Units {
 					}*/
 					yield return new WaitForEndOfFrame();
 				}
+			}
+			if(shadowUnit && !movedThroughUnitThisTurn && team == Team.Player) {
+				DataGathering.Instance.MoveShadowNotThroughUnits();
+			}
+			else if(shadowUnit && movedThroughUnitThisTurn && team == Team.Player) {
+				DataGathering.Instance.MovedShadowThroughUnit();
 			}
 			transform.position = target[target.Count-1].transform.position;
 			animHelp.EndWalk();
@@ -342,6 +365,9 @@ namespace CombatWorld.Units {
 			if (!stoneUnit) {
 				Debug.Log("You cannot turn this unit to stone!");
 				return;
+			}
+			if(team == Team.Player) {
+				DataGathering.Instance.TurnedUnitToStone();
 			}
 			int healthBonus = 0;
 			if (StoneUnitOptions.STONEUNITSGETSATTACKASHEALTH) {
@@ -365,9 +391,10 @@ namespace CombatWorld.Units {
 			
 			moveDistance = 0;
 			healthIndicator.ChangedAttackValue(damage);
-			healthIndicator.GotMoreHealth(health, healthBonus);
+			//healthIndicator.GotMoreHealth(health, healthBonus);
 			moved = attacked = true;
 			turnedToStone = true;
+			transform.GetChild(3).gameObject.SetActive(true);
 		}
 #pragma warning restore 0162
 

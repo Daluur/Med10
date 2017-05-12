@@ -11,11 +11,18 @@ public class QuestManager : MonoBehaviour {
 
 	private JsonData questData;
 
+	[HideInInspector]
 	public List<Quest> questList = new List<Quest>();
+
 	private int currentQuest = 0;
 
 	public GameObject questTitle;
 	public GameObject questDescription;
+	public GameObject questSum;
+	public GameObject sumTitle;
+	public GameObject gate1;
+	public GameObject gate2;
+	public GameObject fog;
 
 	void Awake () {
 		if (questManager == null) {
@@ -24,28 +31,30 @@ public class QuestManager : MonoBehaviour {
 		else if (questManager != this) {
 			Destroy (gameObject);
 		}
-
 		DontDestroyOnLoad (gameObject);
 		questData = JsonMapper.ToObject (File.ReadAllText(Application.dataPath + "/StreamingAssets/Quests.json"));
 		ConstructQuestDatabase ();
 	}
 
 	void Start () {
-
 		questList [0].Progress = Quest.QuestProgress.AVAILABLE;
 		AcceptQuest (0);
+	}
+
+	void Update(){
 	}
 		
 
 	//ACCEPT QUEST
 	public void AcceptQuest(int id) {
-	
 		for (int i = 0; i < questList.Count; i++) {
 
 			if (questList[i].ID == id && questList[i].Progress == Quest.QuestProgress.AVAILABLE) {
 				questList [i].Progress = Quest.QuestProgress.ACCEPTED;
 				questTitle.GetComponent<Text> ().text = questList [i].Title;
 				questDescription.GetComponent<Text> ().text = questList [i].Description;
+				questSum.GetComponent<Text> ().text = questList [i].Summary;
+				sumTitle.GetComponent<Text> ().text = questList [i].Title;
 			}
 		}
 	}
@@ -53,17 +62,24 @@ public class QuestManager : MonoBehaviour {
 	//COMPLETE QUEST
 	public void CompleteQuest(int id) {
 
-		for (int i = 0; i < questList.Count; i++) {
+		currentQuest++;
+		AudioHandler.instance.PlayQuestComplete();
+		questList [currentQuest].Progress = Quest.QuestProgress.DONE;
 
-			if (questList[i].ID == id && questList[i].Progress == Quest.QuestProgress.COMPLETED) {
-				AudioHandler.instance.PlayQuestComplete();
-				questList [i].Progress = Quest.QuestProgress.DONE;
-				currentQuest++;
-
-				//reward
-			}
+		if (id == 0) {
+			gate1.gameObject.transform.localEulerAngles = new Vector3(0,-135,0);
+			gate2.gameObject.transform.localEulerAngles = new Vector3(0,-45,0);
+		} 
+		else if (id == 2) {
+			//fog.SetActive (false);
 		}
-	}
+				
+		questTitle.GetComponent<Text> ().text = questList [currentQuest].Title;
+		questDescription.GetComponent<Text> ().text = questList [currentQuest].Description;
+		questSum.GetComponent<Text> ().text = questList [currentQuest].Summary;
+		sumTitle.GetComponent<Text> ().text = questList [currentQuest].Title;
+				//reward
+		}
 		
 	//ADD ITEMS
 

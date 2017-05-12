@@ -52,7 +52,7 @@ namespace CombatWorld.AI {
 		public static bool IsUnitNextToAITower(Unit unit) {
 			foreach (var neighbor in unit.GetNode().neighbours) {
 				if (neighbor.HasOccupant() && neighbor.HasTower() && neighbor.GetOccupant().GetTeam() == unit.GetTeam()) {
-					Debug.Log(unit.name + " is next to ai tower");
+					//Debug.Log(unit.name + " is next to ai tower");
 					return true;
 				}
 			}
@@ -96,13 +96,15 @@ namespace CombatWorld.AI {
 		public static List<Node> GetPathThisTurn(List<Node> nodes, int moveDistance, Unit unit) {
 			List<Node> endNode = new List<Node>();
 			endNode.Add(unit.GetNode());
-			//Debug.Log(endNode);
 			foreach (var node in nodes) {
+				//Debug.Log(node);
 				var distance = pathfinding.GetDistanceToNode(unit.GetNode(), node);
 				if (distance <= moveDistance) {
+
 					endNode.Add(node);
 				}
 			}
+
 			return endNode;
 		}
 		public static SubscriptionToTower FindSubscribedTower(Node towerNode) {
@@ -141,10 +143,11 @@ namespace CombatWorld.AI {
 				endNode = GetPathThisTurn(path, unit.GetMoveDistance(), unit);
 				turnsToTower = Mathf.RoundToInt(path.Count / unit.GetMoveDistance());
 			}
-			else if(pathfinding.GetPathFromTo(unit.GetNode(), neighbor)!=null && pathfinding.GetPathFromTo(unit.GetNode(), neighbor).Count <= unit.GetMoveDistance()){
+			else if(pathfinding.GetPathFromTo(unit.GetNode(), neighbor)!=null && pathfinding.GetPathFromTo(unit.GetNode(), neighbor).Count <= unit.GetMoveDistance()) {
 				endNode.Add(neighbor);
 				turnsToTower = 1;
 			}
+
 			return endNode;
 		}
 

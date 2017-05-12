@@ -50,9 +50,11 @@ namespace CombatWorld.AI {
 		public int triggerForDefensiveSpawns = 3, triggerForOffensiveSpawns = 3;
 
 		private void Start() {
-			summonPoints = DamageConstants.AISTARTSUMMONPOINTS - DamageConstants.SUMMONPOINTSPERTURN;
+			summonPoints = DamageConstants.STARTSUMMONPOINTS - DamageConstants.SUMMONPOINTSPERTURN;
 			if (SceneHandler.instance != null) {
 				unitsToSummon = SceneHandler.instance.GetDeck().unitIDs;
+				AITaskImplementations.IsStoneEncounter(SceneHandler.instance.GetDeck());
+				DataGathering.Instance.AILastDeck(new List<int>(unitsToSummon));
 			}
 			AIUtilityMethods.FillSubscriptionTowers();
 		}
@@ -68,12 +70,14 @@ namespace CombatWorld.AI {
 		private IEnumerator WaitForActions() {
 			offensiveFactor = OffensiveFactorCalculation();
 			defensiveFactor = DefensiveFactorCalculation();
-			Debug.Log("Turn started with offensive: " + offensiveFactor + " and defensive: " + defensiveFactor + " and: " + summonPoints);
+//			Debug.Log("Turn started with offensive: " + offensiveFactor + " and defensive: " + defensiveFactor + " and: " + summonPoints);
 			foreach (var unit in aiUnits) {
-				Debug.Log("we are now at offensive: " + offensiveFactor + " and defensive: " + defensiveFactor);
+//				Debug.Log("we are now at offensive: " + offensiveFactor + " and defensive: " + defensiveFactor);
 				while (GameController.instance.WaitingForAction()) {
 					yield return new WaitForSeconds(0.1f);
 				}
+				if(GameController.instance.gameFinished)
+					yield break;
 				if (unit.Key.GetHealth() < 1)
 					continue;
 				if(!unit.Key.CanMove())
@@ -100,9 +104,9 @@ namespace CombatWorld.AI {
 			while (AISummon.summoning) {
 				yield return new WaitForSeconds(0.2f);
 			}
-			Debug.Log("AI turn ended, summon points left: " + summonPoints);
+			//Debug.Log("AI turn ended, summon points left: " + summonPoints);
 			AIUtilityMethods.ResetTowerFocus();
-			GameController.instance.EndTurn();
+			GameController.instance.TryEndAITurn();
 			RemoveDeadUnits();
 			yield return null;
 		}
@@ -118,11 +122,21 @@ namespace CombatWorld.AI {
 					score = task.score;
 				}
 			}
+			var randomChoice = new List<AITask>();
+			foreach (var task in tasks) {
+				if (task.score == toChoose.score) {
+					randomChoice.Add(task);
+				}
+			}
+
+			if (randomChoice.Count > 1) {
+				toChoose = randomChoice[Random.Range(0, randomChoice.Count)];
+			}
 
 			if (toChoose == null) {
-				Debug.Log(tasks.Count);
+				//Debug.Log(tasks.Count);
 				foreach (var task in tasks) {
-					Debug.Log(task.task);
+					//Debug.Log(task.task);
 				}
 			}
 
@@ -131,9 +145,9 @@ namespace CombatWorld.AI {
 				subscribedTower.AddFocus();
 			}
 
-			if(toChoose != null)
-				Debug.Log("Chose: " + toChoose.task + " with end: "+toChoose.endNode+" with score: "+toChoose.score);
-			return toChoose;
+			//if(toChoose != null)
+				//Debug.Log("Chose: " + toChoose.task + " with end: "+toChoose.endNode+" with score: "+toChoose.score);
+				return toChoose;
 		}
 
 		private void CalculateScore(Unit unit, List<AITask> tasks) {
@@ -142,6 +156,9 @@ namespace CombatWorld.AI {
 				switch (task.task) {
 					case PossibleTasks.MoveOffensive:
 						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if (distance > unit.GetMoveDistance() || task.endNode == unit.GetNode()) {
+						continue;
+						}
 						var subscribedTower = AIUtilityMethods.FindSubscribedTower(task.towerToMoveTo);
 						task.score = ( distance + ( offensiveFactor * 2 - defensiveFactor ) -
 									   ( ( subscribedTower != null ) ? subscribedTower.amountFocusingThisTower : 0 ) * 3 ) *
@@ -158,10 +175,12 @@ namespace CombatWorld.AI {
 						}
 						break;
 					case PossibleTasks.MoveAttack:
+						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if(distance > unit.GetMoveDistance())
+							continue;
 						if (task.toAttack.HasTower())
 							task.score = 11 + ( offensiveFactor * 2 - defensiveFactor ) * 1000000;
 						else if (task.toAttack.HasUnit()) {
-							distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
 							task.score = AIScoringMethods.AttackCalculation(unit, task.toAttack) + distance;
 						}
 						break;
@@ -170,6 +189,9 @@ namespace CombatWorld.AI {
 									 AIUtilityMethods.FindSubscribedTower(task.towerToMoveTo).amountFocusingThisTower * 4;
 						break;
 					case PossibleTasks.MoveDefensive:
+						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if(distance > unit.GetMoveDistance())
+							continue;
 						var myTowers = GameController.instance.GetTowersForTeam(Team.AI);
 						task.score = 2;
 						foreach (var tower in myTowers) {
@@ -183,7 +205,10 @@ namespace CombatWorld.AI {
 						}
 						break;
 					case PossibleTasks.MoveBlock:
-						task.score = 5 + pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode) +
+						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if(distance > unit.GetMoveDistance())
+							continue;
+						task.score = 5 + distance +
 									 ( defensiveFactor * 2 - offensiveFactor ) *
 									 ( 4 / ( task.turnsToTower > 0 ? task.turnsToTower : 4 ) ) * AIUtilityMethods.FindSubscribedTower(task.towerToMoveTo)
 										 .amountFocusingThisTower;
@@ -204,10 +229,17 @@ namespace CombatWorld.AI {
 						}
 						break;
 					case PossibleTasks.MoveFromSpawn:
-						task.score = 2;
+						distance = pathfinding.GetDistanceToNode(unit.GetNode(), task.endNode);
+						if (distance > unit.GetMoveDistance())
+							continue;
+						if (unit.GetNode().transform.position.z > 1)
+							task.score = 2 + task.endNode.gameObject.transform.position.z;
+						else {
+							task.score = 2;
+						}
 						break;
 					default:
-						Debug.Log("This task has not been implemented yet");
+						//Debug.Log("This task has not been implemented yet");
 						break;
 				}
 			}
@@ -253,7 +285,7 @@ namespace CombatWorld.AI {
 				}
 			}
 			if (atkNextToTowers != 0) {
-				Debug.Log(atkNextToTowers + " attackvalue next to towers");
+				//Debug.Log(atkNextToTowers + " attackvalue next to towers");
 				turnsToKillTowers = hpOfTowers / atkNextToTowers;
 			}
 			//Debug.Log("turns to kill towers" + turnsToKillTowers);

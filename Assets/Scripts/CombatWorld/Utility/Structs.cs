@@ -68,6 +68,54 @@ namespace CombatWorld.Utility {
 		public CombatData data;
 	}
 
+	public static class Utility {
+		public static ElementalTypes GetElementalTypeFromID(int id) {
+			switch (id) {
+				case 0:
+				case 1:
+					return ElementalTypes.Fire;
+				case 2:
+				case 3:
+					return ElementalTypes.Water;
+				case 4:
+				case 5:
+					return ElementalTypes.Lightning;
+				case 6:
+				case 7:
+					return ElementalTypes.Nature;
+				default:
+					return ElementalTypes.NONE;
+			}
+		}
+
+		public static bool GetIsShadowFromID(int id) {
+			return id == 8 || id == 9;
+		}
+
+		public static bool GetIsStoneFromID(int id) {
+			return id == 10 || id == 11;
+		}
+
+		public static bool TypeCounters(ElementalTypes type1, ElementalTypes type2) {
+			if(type1 == ElementalTypes.NONE || type2 == ElementalTypes.NONE) {
+				return false;
+			}
+			if (type1 == ElementalTypes.Fire && type2 == ElementalTypes.Nature) {
+				return true;
+			}
+			if(type1 == ElementalTypes.Water && type2 == ElementalTypes.Fire) {
+				return true;
+			}
+			if(type1 == ElementalTypes.Lightning && type2 == ElementalTypes.Water) {
+				return true;
+			}
+			if(type1 == ElementalTypes.Nature && type2 == ElementalTypes.Lightning) {
+				return true;
+			}
+			return false;
+		}
+	}
+
 }
 [Serializable]
 public struct DeckData {
@@ -76,4 +124,5 @@ public struct DeckData {
 	public int[] unitIDs;
 	public string type1;
 	public string type2;
+	public string type3;
 }

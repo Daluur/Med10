@@ -8,12 +8,12 @@ namespace Overworld {
 	public class OpenInventory : ControlUIElement, IInteractable {
 
 		void Start () {
-			Register (this, KeyCode.B);
+			//Register (this, KeyCode.B);
 			Register (this, KeyCode.I);
 		}
 
 		public void Button() {
-			inputManager.FakeInput(KeyCode.B);
+			inputManager.FakeInput(KeyCode.I);
 		}
 
 		public void DoAction() {

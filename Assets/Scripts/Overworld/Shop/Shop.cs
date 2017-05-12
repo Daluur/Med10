@@ -20,7 +20,7 @@ namespace Overworld.Shops {
 			Register(this, KeyCode.Q);
 			inventory = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 			database = inventory.GetDatabase();
-			float num = (database.GetAllItems().Count * 50); // 50 is the height of the buttons. Is hardcoded for now.
+			float num = (database.GetAllItems().Count * 70); // 50 is the height of the buttons. Is hardcoded for now.
 			parent.sizeDelta = new Vector2(parent.sizeDelta.x, num);
 			parent.anchoredPosition = new Vector2(parent.anchoredPosition.x, -(num / 2));
 			CreateButtons();
@@ -29,13 +29,15 @@ namespace Overworld.Shops {
 		void CreateShop() {
 			GetUnits();
 			EnableUnlockedUnits();
-			//DestroyOldButtons();
-			//CreateNewButtons();
 		}
 
+		int currentSiblingIndex = 0;
+
 		void EnableUnlockedUnits() {
+			currentSiblingIndex = 0;
 			foreach (ShopButton button in createdButtons) {
 				if (unitsToShow.Contains(button.ID)) {
+					button.GetComponent<RectTransform>().SetSiblingIndex(currentSiblingIndex++);
 					button.IsUnlocked();
 					button.CheckCanAfford(CurrencyHandler.GetCurrentGold());
 				}
@@ -44,21 +46,6 @@ namespace Overworld.Shops {
 				}
 			}
 		}
-		
-		/*void DestroyOldButtons() {
-			foreach (GameObject go in createdButtons) {
-				Destroy(go);
-			}
-			createdButtons.Clear();
-		}
-
-		void CreateNewButtons() {
-			foreach (int i in unitsToShow) {
-				GameObject go = Instantiate(buttonObj, transform) as GameObject;
-				go.GetComponent<ShopButton>().Setup(AddItem, database.FetchItemByID(i));
-				createdButtons.Add(go);
-			}
-		}*/
 
 		void CreateButtons() {
 			foreach (Item item in database.GetAllItems()) {
@@ -82,6 +69,11 @@ namespace Overworld.Shops {
 			AudioHandler.instance.PurchaseSound();
 			EnableUnlockedUnits();
 			inventory.AddItem(unitID);
+			if (TutorialHandler.instance.firstBuy) {
+				TutorialHandler.instance.firstBuy = false;
+				//GeneralConfirmationBox.instance.ShowPopUp ("You are able to carry 12 units at a time.\nClose the shop by pressing the X icon - or close all windows by pressing ESC.", "Okay");
+				TutorialHandler.instance.FirstBuy();
+			}
 		}
 
 		public void OpenMenu() {

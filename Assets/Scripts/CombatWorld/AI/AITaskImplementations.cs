@@ -15,6 +15,8 @@ namespace CombatWorld.AI {
 
 		private static bool isRunning;
 
+		public static bool isStoneEncounter;
+
 		public static void DoAIAction(AIUnit unit, AITask task) {
 			unit.SetTaskToDo(task);
 			tasksToComplete.Enqueue(unit);
@@ -42,8 +44,8 @@ namespace CombatWorld.AI {
 					break;
 				case PossibleTasks.MoveBlock:
 					MoveTo(task.endNode, unit.myUnit);
-					if (unit.myUnit.IsStoneUnit())
-						unit.myUnit.StartCoroutine(TurnToStone(unit.myUnit));
+					//if (unit.myUnit.IsStoneUnit())
+					//	unit.myUnit.StartCoroutine(TurnToStone(unit.myUnit));
 					break;
 				case PossibleTasks.MoveOffensive:
 					MoveTo(task.endNode, unit.myUnit);
@@ -58,8 +60,29 @@ namespace CombatWorld.AI {
 					break;
 
 			}
+			if (unit.myUnit.IsStoneUnit() && isStoneEncounter && (task.task != PossibleTasks.MoveAttack && task.task != PossibleTasks.Attack && task.task != PossibleTasks.MoveAttackDefensive)) {
+				var shouldTurn = true;
+				foreach (var neighbor in task.endNode.neighbours) {
+					if (neighbor.HasTower() || task.endNode.GetType() == typeof(SummonNode)) {
+						shouldTurn = false;
+						break;
+					}
+				}
+				if(shouldTurn)
+					unit.myUnit.StartCoroutine(TurnToStone(unit.myUnit));
+			}
 			unit.ClearTasks();
 
+		}
+
+		public static void IsStoneEncounter(DeckData deck) {
+			if (deck.type1 == "Stone" && deck.type2 == "") {
+				//Debug.Log("Stone encounter engaged");
+				isStoneEncounter = true;
+			}
+			else {
+				isStoneEncounter = false;
+			}
 		}
 
 		private static IEnumerator WaitForAction(AIUnit unit) {
@@ -83,7 +106,7 @@ namespace CombatWorld.AI {
 
 
 		private static void MoveTo(Node moveTo, Unit unit) {
-			Debug.Log("moving to: " + moveTo);
+//			Debug.Log("moving to: " + moveTo);
 			var path = unit.GetShadow() ? pathFinding.GetPathFromToWithoutOccupants(unit.GetNode(), moveTo) : pathFinding.GetPathFromTo(unit.GetNode(), moveTo);
 			if (path!=null) {
 				unit.Move(path);
@@ -92,14 +115,14 @@ namespace CombatWorld.AI {
 
 		private static void MoveToAndAttack(Node moveTo, Node toAttack, Unit unit) {
 			performingAction = true;
-			Debug.Log("Move and attack");
+//			Debug.Log("Move and attack");
 			var path = unit.GetShadow() ? pathFinding.GetPathFromToWithoutOccupants(unit.GetNode(), moveTo) : pathFinding.GetPathFromTo(unit.GetNode(), moveTo);
 			unit.Move(path, false);
 			unit.StartCoroutine(MoveAndAttackWait(unit, toAttack));
 		}
 
 		private static void Attack(Node toAttack, Unit unit) {
-			Debug.Log("Attack");
+		//	Debug.Log("Attack");
 			unit.Attack(toAttack.GetOccupant());
 		}
 

@@ -37,6 +37,7 @@ public class SaveLoadHandler {
 	int checkpoint = 0;
 
 	bool loaded = false;
+	Inventory inv = null;
 
 	#region saving
 
@@ -50,6 +51,9 @@ public class SaveLoadHandler {
 	}
 
 	public void Save(int id) {
+		if (!loaded) {
+			return;
+		}
 		checkpoint = id;
 		SaveInventory();
 		SaveShop();
@@ -58,8 +62,13 @@ public class SaveLoadHandler {
 	}
 
 	void SaveInventory() {
+		if (inv == null) {
+			inv = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
+		}
+		if(inv.loadedData == false) {
+			return;
+		}
 		InventoryUnits.Clear();
-		var inv = GameObject.FindGameObjectWithTag(TagConstants.VERYIMPORTANTOBJECT).GetComponent<Inventory>();
 		List<Item> items = inv.GetEntireInventory();
 		for (int i = 0; i < items.Count; i++) {
 			InventoryUnits.Add(items[i].ID);
@@ -79,7 +88,7 @@ public class SaveLoadHandler {
 	}
 
 	void WriteToJSON() {
-		SaveData data = new SaveData(StaticEncounters.ToArray(), InventoryUnits.ToArray(), UnlockedUnits.ToArray(), gold, checkpoint);
+		SaveData data = new SaveData(StaticEncounters.ToArray(), InventoryUnits.ToArray(), UnlockedUnits.ToArray(), gold, checkpoint, DataGathering.Instance.GetAllTrades(), DataGathering.Instance.GetAllSummonedUnits(), DataGathering.Instance.GetAllDeckData(), DataGathering.Instance.movedShadowThroughOthersSaveThisValue, DataGathering.Instance.movedShadowWithoutMovingThroughOtherUnitsSaveThisValue, DataGathering.Instance.ID, DataGathering.Instance.Static, DataGathering.Instance.shadowToldCount, DataGathering.Instance.typesToldCount, DataGathering.Instance.notLearnedShadowCount, DataGathering.Instance.notLearnedTypesCount);
 
 		StringBuilder sb = new StringBuilder();
 		JsonWriter writer = new JsonWriter(sb);
@@ -93,6 +102,17 @@ public class SaveLoadHandler {
 		public int[] encounters;
 		public int[] inventory;
 		public int[] unlocks;
+		public List<CombatTrades> trades;
+		public List<SummonPlayerData> summons;
+		public List<DeckDataClass> decks;
+		public int shadow1;
+		public int shadow2;
+		public int ToldShadow;
+		public int ToldTypes;
+		public int NotLearnedShadow;
+		public int NotLearnedTypes;
+		public string ID;
+		public bool Static;
 		public int gold;
 		public int checkpoint;
 
@@ -100,12 +120,23 @@ public class SaveLoadHandler {
 
 		}
 
-		public SaveData(int[] enc, int[] inv, int[] unl, int g, int c) {
+		public SaveData(int[] enc, int[] inv, int[] unl, int g, int c, List<CombatTrades> tr, List<SummonPlayerData> su, List<DeckDataClass> dd, int s1, int s2, string id, bool st, int TS, int TT, int NLS, int NLT) {
 			encounters = enc;
 			inventory = inv;
 			unlocks = unl;
 			gold = g;
 			checkpoint = c;
+			trades = tr;
+			summons = su;
+			decks = dd;
+			shadow1 = s1;
+			shadow2 = s2;
+			ID = id;
+			Static = st;
+			ToldShadow = TS;
+			ToldTypes = TT;
+			NotLearnedShadow = NLS;
+			NotLearnedTypes = NLT;
 		}
 		
 	}
@@ -122,6 +153,18 @@ public class SaveLoadHandler {
 			UnlockedUnits.AddRange(loadedData.unlocks);
 			gold = loadedData.gold;
 			checkpoint = loadedData.checkpoint;
+			DataGathering.Instance.LoadTrades(loadedData.trades);
+			DataGathering.Instance.LoadSummons(loadedData.summons);
+			DataGathering.Instance.LoadDecks(loadedData.decks);
+			DataGathering.Instance.LoadShadow(loadedData.shadow1, loadedData.shadow2);
+			DataGathering.Instance.OverrideID(loadedData.ID, loadedData.Static);
+			DataGathering.Instance.shadowToldCount = loadedData.ToldShadow;
+			DataGathering.Instance.typesToldCount = loadedData.ToldTypes;
+			DataGathering.Instance.notLearnedShadowCount = loadedData.NotLearnedShadow;
+			DataGathering.Instance.notLearnedTypesCount = loadedData.NotLearnedTypes;
+		}
+		else {
+			InventoryUnits.Add(12);
 		}
 		loaded = true;
 	}
@@ -148,6 +191,10 @@ public class SaveLoadHandler {
 
 	#endregion
 
+	public int GetCurrentIsland() {
+		return checkpoint;
+	}
+
 	public void Reset() {
 		StartingValues();
 		WriteToJSON();
@@ -158,10 +205,9 @@ public class SaveLoadHandler {
 		InventoryUnits = new List<int>();
 		UnlockedUnits = new List<int>();
 
-		InventoryUnits.Add(12);
-		InventoryUnits.Add(13);
+		InventoryUnits.Add (12);
 
-		gold = 0;
+		gold = 50;
 		checkpoint = 0;
 	}
 }

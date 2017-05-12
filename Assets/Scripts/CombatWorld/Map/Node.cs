@@ -4,6 +4,7 @@ using UnityEngine;
 using CombatWorld;
 using CombatWorld.Units;
 using CombatWorld.Utility;
+using Overworld;
 
 namespace CombatWorld.Map {
 	public class Node : MonoBehaviour {
@@ -83,6 +84,10 @@ namespace CombatWorld.Map {
 			return false;
 		}
 
+		public Tower GetTower() {
+			return (Tower)occupant;
+		}
+
 		#endregion
 
 		#region States
@@ -153,6 +158,17 @@ namespace CombatWorld.Map {
 		}
 
 		public virtual void HandleInput() {
+			if (!GameController.instance.AcceptsInput()) {
+				return;
+			}
+			if (HasUnit() && GetUnit().CanMove()) {
+				if (TutorialHandler.instance != null) {
+					if (TutorialHandler.instance.unitFirst) {
+						TutorialHandler.instance.unitFirst = false;
+						TutorialHandler.instance.FirstSelection();
+					}
+				}
+			}
 			switch (state) {
 				case HighlightState.Selectable:
 					GameController.instance.SetSelectedUnit(GetUnit());

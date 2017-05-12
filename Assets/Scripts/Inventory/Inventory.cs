@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviour {
 	public List<Item> items = new List<Item> ();
 	public List<GameObject> slots = new List<GameObject> ();
 
+	public bool loadedData = false;
+
 	void Awake() {
 		database = new ItemDatabase();
 	}
@@ -28,7 +30,7 @@ public class Inventory : MonoBehaviour {
 			slots.Add (Instantiate (inventorySlot,slotPanel.transform));
 			slots [i].GetComponent<Slot> ().id = i;
 			//slots [i].transform.SetParent (slotPanel.transform);
-			if (i < 6) {
+			if (i < Values.NUMOFUNITSTOBRINGTOCOMBAT) {
 				slots[i].transform.FindChild ("Glow").gameObject.SetActive(true);
 			} 
 		}
@@ -39,6 +41,7 @@ public class Inventory : MonoBehaviour {
 				AddItemAtSlot(savedInventory[i], i);
 			}
 		}
+		loadedData = true;
 	}
 
 	public void AddItem(int id) {

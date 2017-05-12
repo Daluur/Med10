@@ -8,17 +8,20 @@ using UnityEngine.UI;
 namespace Overworld {
 	public class GeneralConfirmationBox : ControlUIElement, IInteractable {
 		public static GeneralConfirmationBox instance;
-
+		private bool isOpen;
+		public bool IsOpen {  get { return isOpen; } }
 		protected override void Awake() {
 			if (instance == null) {
 				instance = this;
 			}
 			else {
-				Debug.LogWarning("Duplicate singeton, destroys the new object");
+				//Debug.LogWarning("Duplicate singeton, destroys the new object");
 				Destroy(gameObject);
 			}
 			base.Awake();
 		}
+
+		public GameObject blockingPanel;
 
 		private Text displayText;
 		private Button buttonOne, buttonTwo;
@@ -50,20 +53,26 @@ namespace Overworld {
 
 		public void ShowPopUp(string text, string buttonTextOne, UnityAction buttonAction = null, string buttonTextTwo = null) {
 			inputManager.StopPlayer();
+			blockingPanel.SetActive(true);
 			if (buttonTextOne == null) {
 				buttonTextOne = "OK";
 			}
 
 			if (buttonTextTwo == null) {
 				DoPopUp(text, buttonTextOne, buttonAction);
-				OpenElement();
+				if(!isOpen)
+					OpenElement();
+				isOpen = true;
 				return;
 			}
 			DoPopUp(text, buttonTextOne, buttonTextTwo, buttonAction);
-			OpenElement();
+			if(!isOpen)
+				OpenElement();
+			isOpen = true;
 		}
 
 		private void DoPopUp(string text, string buttonText, UnityAction buttonAction) {
+			blockingPanel.SetActive(true);
 			displayText.text = text;
 			buttonTwo.gameObject.SetActive(false);
 			var buttonOneRect = buttonOne.GetComponent<RectTransform>();
@@ -73,17 +82,20 @@ namespace Overworld {
 			if (buttonAction != null) {
 				buttonOne.onClick.AddListener(buttonAction);
 			}
-			buttonOne.onClick.AddListener(ClosePopUp);
+			else {
+				buttonOne.onClick.AddListener(RealClose);
+			}
 		}
 
 		private void DoPopUp(string text, string buttonOneText, string buttonTwoText, UnityAction buttonAction = null) {
+			blockingPanel.SetActive(true);
 			displayText.text = text;
 			buttonOne.GetComponent<RectTransform>().anchoredPosition = bOnePos;
 			buttonTwo.GetComponent<RectTransform>().anchoredPosition = bTwoPos;
 			buttonOne.GetComponentInChildren<Text>().text = buttonOneText;
 			buttonTwo.GetComponentInChildren<Text>().text = buttonTwoText;
-			buttonOne.onClick.AddListener(ClosePopUp);
-			buttonTwo.onClick.AddListener(ClosePopUp);
+			buttonOne.onClick.AddListener(RealClose);
+			buttonTwo.onClick.AddListener(RealClose);
 			if(buttonAction!=null){
 				buttonTwo.onClick.AddListener(buttonAction);
 			}
@@ -92,10 +104,16 @@ namespace Overworld {
 			}
 		}
 
-		private void ClosePopUp() {
+		public override void CloseElement() {
+			buttonOne.onClick.Invoke();
+		}
+
+		void RealClose() {
+			isOpen = false;
 			RemoveListeners();
 			inputManager.ResumePlayer();
-			CloseElement();
+			blockingPanel.SetActive(false);
+			base.CloseElement();
 		}
 
 		private void OnDisable() {

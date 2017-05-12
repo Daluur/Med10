@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using Overworld;
+using Overworld.Shops;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,11 +8,16 @@ namespace Overworld {
 	public class StaticEncounter : Encounter, IInteractable {
 
 		public int StaticEncounterID = -1;
+		public Transform[] spawnPoints;
+		private int currentPos;
+		public Teleporter teleporterPad;
+		public int[] unitsToUnlock;
 
 		// Use this for initialization
 		void Start () {
+			currentPos = 0;
 			if (SaveLoadHandler.Instance.AmIDefeated(StaticEncounterID)) {
-				Destroy(gameObject);
+				Beaten(true);
 				return;
 			}
 			if (deckIDs == null || deckIDs.Length == 0) {
@@ -77,5 +81,28 @@ namespace Overworld {
 			Tooltip.instance.Deactivate();
 		}
 
+		public void MoveToNewSpawnPos() {
+			if(spawnPoints.Length == 0) {
+				Debug.LogError("This encounter has no spawnpoints!" + gameObject.name);
+				return;
+			}
+			int newPos;
+			do {
+				newPos = Random.Range(0, spawnPoints.Length);
+			} while (newPos == currentPos);
+			currentPos = newPos;
+			transform.position = spawnPoints[currentPos].position;
+		}
+
+		public void Beaten(bool saveFix = false) {
+			//TutorialHandler.instance.PortalIsOpen();
+			foreach (int id in unitsToUnlock) {
+				UnlockHandler.Instance.UnlockUnitByID(id);
+			}
+
+			teleporterPad.Activate();
+			
+			Destroy(gameObject);
+		}
 	}
 }

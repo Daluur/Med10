@@ -7,15 +7,20 @@ using Overworld.Shops;
 namespace Overworld {
 
 	public class TowerBehavior : ContextInteraction, IInteractable {
-
 		Shop shop;
 
 		void Start () {
 			shop = GameObject.FindGameObjectWithTag("OWShop").GetComponent<Shop>();
 			Register(this, KeyCode.Mouse0);
+			//UnityAction call = () => contextInteraction.PerformClosenessAction();
 		}
 
 		private void OpenMenu() {
+			if (TutorialHandler.instance.firstShop) {
+				TutorialHandler.instance.firstShop = false;
+				TutorialHandler.instance.FirstShop();
+			}
+
 			shop.OpenMenu();
 		}
 

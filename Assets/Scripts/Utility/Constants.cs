@@ -32,19 +32,19 @@ public static class TagConstants {
 public static class Values {
 	public const float InteractDistance = 1.9f;
 	public const int SUMMONPOINTSONKILL = 1;
+	public const int NUMOFUNITSTOBRINGTOCOMBAT = 4;
 }
 
 public static class DamageConstants {
 	public const int EFFECTIVEMULTIPLIER = 2;
 	public const float INEFFECTIVEMULTIPLIER = 0.5f;
-	public const bool ALLOWRETALIATIONAFTERDEATH = true;
+	public const bool ALLOWRETALIATIONAFTERDEATH = false;
 	public const int TOWERHP = 50;
 	public const int SUMMONPOINTSPERTURN = 2;
 	public const int SUMMONPOINTSPERKILL = 1;
 	public const int SUMMONPOINTSPERTOWERKILL = 3;
-	public const int STARTSUMMONPOINTS = 8;
-	public const int AISTARTSUMMONPOINTS = 9;
-	public const bool EFFECTIVEMULT = false;
+	public const int STARTSUMMONPOINTS = 4;
+	public const bool EFFECTIVEMULT = true;
 	public const int EFFECTIVEBONUS = 10;
 	public const int INEFFECTIVEPENALTY = 5;
 

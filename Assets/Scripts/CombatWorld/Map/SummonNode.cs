@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CombatWorld.Units;
 using CombatWorld.Utility;
+using Overworld;
 
 namespace CombatWorld.Map {
 	public class SummonNode : Node {
@@ -16,6 +17,17 @@ namespace CombatWorld.Map {
 		#region input
 
 		public override void HandleInput() {
+			if (!GameController.instance.AcceptsInput()) {
+				return;
+			}
+			if (HasUnit() && GetUnit().CanMove()) {
+				if (TutorialHandler.instance != null) {
+					if (TutorialHandler.instance.unitFirst) {
+						TutorialHandler.instance.unitFirst = false;
+						TutorialHandler.instance.FirstSelection();
+					}
+				}
+			}
 			switch (state) {
 				case HighlightState.Selectable:
 					GameController.instance.SetSelectedUnit(GetUnit());
