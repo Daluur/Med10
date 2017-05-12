@@ -12,13 +12,24 @@ public class DataGathering {
 
 	private static DataGathering instance;
 
+	static bool isStatic = false;
+	static bool isDynamic = true;
+
 	public static DataGathering Instance {
 		get {
 			if (instance == null) {
 				instance = new DataGathering();
 				System.Random rand = new System.Random(Time.renderedFrameCount);
 				System.Random rand2 = new System.Random((int)(Time.realtimeSinceStartup*10000000));
-				instance.Static = new System.Random(DateTime.Now.Millisecond).Next(0, 2) == 0 ? true : false;
+				if (isStatic) {
+					instance.Static = true;
+				}
+				else if (isDynamic) {
+					instance.Static = false;
+				}
+				else {
+					instance.Static = new System.Random(DateTime.Now.Millisecond).Next(0, 2) == 0 ? true : false;
+				}
 				instance.ID = instance.Static ? "S" : "D";
 				instance.ID += DateTime.Now.ToString("dd-HH:mm:ss:fff") + "R" + rand.Next(0,10000) + "R" + rand2.Next(0,10000);
 			}
@@ -39,6 +50,7 @@ public class DataGathering {
 		}
 		ID = id;
 		Static = st;
+		DynamicTut.instance.FixVersion(st);
 	}
 
 	#endregion
