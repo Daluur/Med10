@@ -634,7 +634,7 @@ namespace CombatWorld {
 			winLoseText.text = "YOU WON!";
 			winLosePanel.SetActive(true);
 			AudioHandler.instance.PlayWinSound();
-			SaveLoadHandler.Instance.Save(SaveLoadHandler.Instance.GetCheckpoint());
+			//SaveLoadHandler.Instance.Save(SaveLoadHandler.Instance.GetCheckpoint());
 		}
 
 		void Lost() {
@@ -646,7 +646,7 @@ namespace CombatWorld {
 			winLoseText.text = "YOU LOST!";
 			winLosePanel.SetActive(true);
 			AudioHandler.instance.PlayLoseSound();
-			SaveLoadHandler.Instance.Save(SaveLoadHandler.Instance.GetCheckpoint());
+			//SaveLoadHandler.Instance.Save(SaveLoadHandler.Instance.GetCheckpoint());
 		}
 
 		public void GiveUp() {

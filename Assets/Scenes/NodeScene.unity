@@ -518,7 +518,7 @@ Prefab:
     - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -44
       objectReference: {fileID: 0}
     - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
         type: 2}
@@ -528,7 +528,7 @@ Prefab:
     - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 224604509964959264, guid: 373e077801daf26449bb08e8c1498e4f,
         type: 2}
@@ -538,7 +538,7 @@ Prefab:
     - target: {fileID: 224604509964959264, guid: 373e077801daf26449bb08e8c1498e4f,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 91
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 373e077801daf26449bb08e8c1498e4f, type: 2}
@@ -840,9 +840,9 @@ MonoBehaviour:
   buttonPanel: {fileID: 1348837244}
   buttonPanelP2: {fileID: 102910654}
   UseDeck: 0
-  unitsPerTeam: 6
-  idsP1: 
-  idsP2: 
+  unitsPerTeam: 4
+  idsP1: 09000000090000000900000009000000
+  idsP2: 0a00000001000000080000000c000000
   p1DeckID: 0
   p2DeckID: 0
 --- !u!114 &1248978509
