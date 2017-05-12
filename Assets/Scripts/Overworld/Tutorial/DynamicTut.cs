@@ -61,6 +61,11 @@ public class DynamicTut : Singleton<DynamicTut> {
 
 	}
 
+	public void FixVersion(bool s) {
+		isDynamic = !s;
+		TutorialHandler.instance.isDynamic = !s;
+	}
+
 
 	void Update () {
 	}
@@ -159,7 +164,7 @@ public class DynamicTut : Singleton<DynamicTut> {
 				DataGathering.Instance.HadNotLearnedTypes();
 
 			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, defender = (ElementalTypes)island, good = hasLearnedType, bad = true, movedThroughUnit = haslearnedShadow });
-			return haslearned;
+			return haslearnedShadow && hasLearnedType;
 		}
 		if (island == LearningObjectives.ShadowUnit) {
 			haslearned = CheckLearningObjectiveDynamicTutShadow();

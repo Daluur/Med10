@@ -117,8 +117,7 @@ namespace Overworld {
 		//Add things here if they need to happen when a player wins a battle
 		public void Won() {
 			AwardCurrency();
-			ProcessEncounteredObject();
-			if (DynamicTut.instance.HasLearnedEverything(SaveLoadHandler.Instance.GetCurrentIsland()) || !DynamicTut.instance.isDynamic) { // Change this to bool for check learned all on the island.
+			if (DynamicTut.instance.HasLearnedEverything(SaveLoadHandler.Instance.GetCurrentIsland()) || DataGathering.Instance.Static) { // Change this to bool for check learned all on the island.
 				LearnedEverything();
 			}
 			else {
@@ -127,6 +126,7 @@ namespace Overworld {
 		}
 
 		void LearnedEverything() {
+			ProcessEncounteredObject();
 			GhostTalking.instance.ShowPopUp("I don't want to play with you anymore!\nHere have some new unit recipes!\nI have also opened a portal to a new island!");
 			/*if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {

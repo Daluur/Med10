@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CheckIfSaveGameExists : MonoBehaviour {
 
 	public Text text;
-	bool OnlineTest = false;
+	bool OnlineTest = true;
 
 	// Use this for initialization
 	void Start () {
