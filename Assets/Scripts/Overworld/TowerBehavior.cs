@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using UnityEngine;
 using Overworld.Shops;
+using SimplDynTut;
 
 namespace Overworld {
 
@@ -16,16 +17,17 @@ namespace Overworld {
 		}
 
 		private void OpenMenu() {
-			if (TutorialHandler.instance.firstShop) {
+			/*if (TutorialHandler.instance.firstShop) {
 				TutorialHandler.instance.firstShop = false;
 				TutorialHandler.instance.FirstShop();
-			}
+			}*/
 
 			shop.OpenMenu();
 		}
 
 		public override void PerformClosenessAction() {
 			hasGeneralConfirmationBox = false;
+			OverworldTriggers.HasBeenToShop();
 			OpenMenu();
 		}
 

@@ -374,6 +374,46 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 63
+      objectReference: {fileID: 0}
+    - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 96
+      objectReference: {fileID: 0}
+    - target: {fileID: 224765483194701494, guid: 373e077801daf26449bb08e8c1498e4f,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224604509964959264, guid: 373e077801daf26449bb08e8c1498e4f,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 224604509964959264, guid: 373e077801daf26449bb08e8c1498e4f,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 373e077801daf26449bb08e8c1498e4f, type: 2}
   m_IsPrefabParent: 0
@@ -609,6 +649,7 @@ GameObject:
   - component: {fileID: 1248978509}
   - component: {fileID: 1248978511}
   - component: {fileID: 1248978510}
+  - component: {fileID: 1248978512}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -631,9 +672,13 @@ MonoBehaviour:
   winLoseText: {fileID: 354958375}
   endTurnButton: {fileID: 1268836028}
   endButtonAnim: {fileID: 1331929848}
+  gameFinished: 0
+  selectedAUnit: 0
+  isLookingForUnitSelection: 0
   TurnIndicator: {fileID: 294979930}
   summonPointTurnNumber: {fileID: 1840911188}
   summonPointTurnAnim: {fileID: 902118227}
+  cwTriggers: {fileID: 0}
 --- !u!4 &1248978507
 Transform:
   m_ObjectHideFlags: 0
@@ -701,6 +746,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 1409255028}
+--- !u!114 &1248978512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1248978505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bfde280ae9da7a4d8fcb8e877c43db1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  summonDisplayTimer: 8
+  unitSelectionTimer: 10
+  tryingToAttackTime: 40
+  selectingSummonedUnitTime: 180
+  selectingUnitNoMovesLeftTime: 180
+  limitTimesTryingToAttack: 3
+  limitTimesTryingToSelectSummon: 5
+  limitTimesTryingToSelectUnitWithoutMovesLeft: 5
 --- !u!114 &1268836028 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114486575243508106, guid: dde5fab992ca27f4c831f4ba883853a9,

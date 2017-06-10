@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using SimplDynTut;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -24,6 +25,7 @@ namespace Overworld {
 		public GameObject interactionIndicator;
 		public Vector3 fakePosForInteractionIndicator = new Vector3(1000, 1000, 1000);
 		private Vector3 hitNormal = Vector3.zero;
+
 
 		// Use this for initialization
 		void Start () {
@@ -85,6 +87,7 @@ namespace Overworld {
 				case KeyCode.I:
 					FillDistributer (keyCode);
 					DistributeAction ();
+					OverworldTriggers.InventoryOpened();
 				if (TutorialHandler.instance.firstInventory) {
 					TutorialHandler.instance.firstInventory = false;
 					TutorialHandler.instance.InventoryAndShop();
