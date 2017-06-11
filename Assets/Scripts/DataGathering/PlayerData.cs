@@ -30,7 +30,7 @@ public class PlayerData {
 		hasRunUnitSelection,
 		hasShownEndTurn;
 
-	public int timesTryingToAttack, timesTryingToSelectSummon, timesTryingToSelectUnitWithoutMovesLeft;
+	public int timesTryingToAttack, timesTryingToSelectSummon, timesTryingToSelectUnitWithoutMovesLeft, currentTurn = 0;
 	
 	#endregion
 	

@@ -152,6 +152,7 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
+					cwTriggers.CheckUnitsPositions();
 					endButtonAnim.SetBool("MoreMoves",true);
 					AITurn();
 					DoBaordCalculations();
@@ -166,6 +167,7 @@ namespace CombatWorld {
 					AICalculateScore.instance.DoAITurn();
 					stillPlayerTurn = false;
 					cwTriggers.turnEndTurnhasRun++;
+					PlayerData.Instance.currentTurn++;
 					break;
 				case Team.AI:
 					PlayerTurn();
@@ -181,6 +183,7 @@ namespace CombatWorld {
 					cwTriggers.StartUnitSelectionTimer();
 					cwTriggers.StopEndTurnTimer();
 					stillPlayerTurn = true;
+					cwTriggers.CheckForTurnInfo();
 					break;
 				default:
 					break;

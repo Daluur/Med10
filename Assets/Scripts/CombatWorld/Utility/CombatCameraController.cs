@@ -18,6 +18,11 @@ namespace CombatWorld {
 		Transform target;
 		Vector3 targetPos;
 
+		[HideInInspector]
+		public float playerMovementAmount = 0;
+		[HideInInspector]
+		public bool hasZoomed;
+
 		public bool moveToUnitClosestToEnemies = true;
 
 		void Start() {
@@ -33,6 +38,7 @@ namespace CombatWorld {
 				PlayerControlledCam();
 			}
 			if (Input.mouseScrollDelta.y > 0) {
+				hasZoomed = true;
 				//in
 				currentZoom--;
 				if (currentZoom < 0) {
@@ -43,6 +49,7 @@ namespace CombatWorld {
 				transform.eulerAngles = CamPosRotations[currentZoom];
 			}
 			else if (Input.mouseScrollDelta.y < 0) {
+				hasZoomed = true;
 				//out
 				currentZoom++;
 				if (currentZoom == CamPositions.Length) {
@@ -63,6 +70,8 @@ namespace CombatWorld {
 				if (Input.GetAxis("Mouse X") != 0) {
 					newPos = transform.position - new Vector3(Input.GetAxisRaw("Mouse X") * Time.deltaTime * speed, 0, 0);
 					newPos.x = Mathf.Clamp(newPos.x, minMaxXPos.x, minMaxXPos.y);
+					playerMovementAmount += Mathf.Abs(transform.position.x - newPos.x);
+					//Debug.Log(playerMovementAmount);
 					transform.position = newPos;
 					following = false;
 				}

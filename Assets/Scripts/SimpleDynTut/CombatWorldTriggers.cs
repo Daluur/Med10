@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using System.Linq;
 using CombatWorld;
+using CombatWorld.Units;
 using CombatWorld.Utility;
 using UnityEngine;
 
@@ -8,9 +10,32 @@ namespace SimplDynTut {
 		public float summonDisplayTimer = 8f, unitSelectionTimer = 10f, endTurnTimer = 12f, tryingToAttackTime = 40f, selectingSummonedUnitTime = 180f, selectingUnitNoMovesLeftTime = 180f;
 		private bool hasTimedUnitSelection;
 		public int turnsTheEndTurnRuns = 3;
+		public int turnBeforeCameraTut = 2;
+		public int turnBeforeZoomTut = 4;
 		[HideInInspector]
 		public int turnEndTurnhasRun = 0;
 		private Coroutine endTurnRoutine;
+		public int offsetUnitAmount = 10;
+		[HideInInspector]
+		public int unitStandingNextToTowerBeingAbleToAttackButNotAttacking{
+			get { return toBeUsedWithWin; }
+			set {
+				if (value == 1) {
+					toBeUsedWithWin++;
+					CheckForWinCondition();
+				}
+				else {
+					toBeUsedWithWin = value;
+				}
+			}
+		}
+		private int toBeUsedWithWin = 0;
+
+		public int amountOfTimesUnitStandingNextToTowerDoesNotAttackTriggerWin = 5;
+		
+		private bool hasShownWin;
+
+		public float limitForHowMuchPlayerHasMovedCamera = 30f;
 
 		private int timesTryingToAttack {
 			get { return PlayerData.Instance.timesTryingToAttack;  }
@@ -21,15 +46,55 @@ namespace SimplDynTut {
 		private int timesTryingToSelectUnitWithoutMovesLeft {
 			get { return PlayerData.Instance.timesTryingToSelectUnitWithoutMovesLeft; }
 		}
+		private int currentTurn {
+			get { return PlayerData.Instance.currentTurn; }
+		}
 		
 		public int limitTimesTryingToAttack = 3, limitTimesTryingToSelectSummon = 5, limitTimesTryingToSelectUnitWithoutMovesLeft = 5;
 		
 		void Start () {
-			
+			unitStandingNextToTowerBeingAbleToAttackButNotAttacking++;
 			GameController.instance.StartedAWaitingForUnit += CheckForMovesLeftForEndTurn;
 				
 			if(!PlayerData.Instance.hasRunSummonDisplayTimer)
 				StartCoroutine(SummonTimer());
+		}
+
+		public void CheckUnitsPositions() {
+			foreach (var unit in GameController.instance.GettAllUnitsOfTeam(Team.Player)) {
+				foreach (var neighbour in unit.GetNode().neighbours) {
+					if (neighbour.GetOccupant()!=null && neighbour.GetOccupant().GetType() == typeof(Tower) && neighbour.GetOccupant().GetTeam() == Team.AI && unit.CanAttack()) {
+						unitStandingNextToTowerBeingAbleToAttackButNotAttacking++;
+					}
+				}
+			}
+		}
+
+		public void CheckForWinCondition() {
+			if(hasShownWin)
+				return;
+			if (( GameController.instance.GettAllUnitsOfTeam(Team.Player).Count -
+			      GameController.instance.GettAllUnitsOfTeam(Team.AI).Count ) >= offsetUnitAmount && !GameController.instance.GetTowersForTeam((Team.AI)).Any(e => e.GetTower().GetHealth() < 50)) {
+				Debug.Log("Win condition trigger one has been triggered, should show win condition");
+				hasShownWin = true;
+				return;
+			}
+			if (unitStandingNextToTowerBeingAbleToAttackButNotAttacking >=
+			    amountOfTimesUnitStandingNextToTowerDoesNotAttackTriggerWin) {
+				Debug.Log("Win condition triggered based on the amount of times a player unit stood next to a tower without hitting it");
+			}
+
+		}
+
+
+
+		public void CheckForTurnInfo() {
+			if (currentTurn == turnBeforeCameraTut - 1 && CombatCameraController.instance.playerMovementAmount < limitForHowMuchPlayerHasMovedCamera) {
+				Debug.Log("Show the how to control the camera tut!!!");
+			}
+			if (currentTurn == turnBeforeZoomTut - 1 && !CombatCameraController.instance.hasZoomed) {
+				Debug.Log("Show the how to control the zoom tut!!!");
+			}
 		}
 
 		public void StartEndTurn() {
@@ -37,14 +102,13 @@ namespace SimplDynTut {
 		}
 
 		private void CheckForMovesLeftForEndTurn() {
-			if(turnEndTurnhasRun >= turnsTheEndTurnRuns){
+			if(turnEndTurnhasRun >= turnsTheEndTurnRuns || currentTurn >= 3){
 				GameController.instance.StartedAWaitingForUnit -= CheckForMovesLeftForEndTurn;
 				return;
 			}
 			
 			foreach (var unit in GameController.instance.GettAllUnitsOfTeam(Team.Player)) {
 				if (unit.CanMove() || unit.GetNode().HasAttackableNeighbour()){
-					Debug.Log("Not done");
 					return;
 				}
 			}
