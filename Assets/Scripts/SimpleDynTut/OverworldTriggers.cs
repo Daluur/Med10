@@ -5,11 +5,14 @@ using UnityEngine;
 
 namespace SimplDynTut{
     public class OverworldTriggers : MonoBehaviour {
-        public float notMovedTime = 5f;
-        private static bool openedInventory, beenToShop, movedTopFourUnitsAround;
+        public float notMovedTime = 5f, dancedAroundTheEnemy = 15f;
+        private static bool openedInventory, beenToShop, movedTopFourUnitsAround, enteredCombat, hasRunUnitsToBringToBattle;
+        private Inventory inv;
+        private List<Item> initOrder = new List<Item>();
         
         void Start() {
-            
+            inv = GetComponent<Inventory>();
+            initOrder = inv.GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT);
             CheckMovementRequirements();
         }
 
@@ -57,6 +60,40 @@ namespace SimplDynTut{
             }
             yield return new WaitForSeconds(notMovedTime);
             TutorialHandler.instance.WorldTrigger(1);
+        }
+
+        public void StartEnterCombatTimer() {
+            if(!enteredCombat)
+                StartCoroutine(EnterCombatTimer());
+        }
+
+        private IEnumerator EnterCombatTimer() {
+            enteredCombat = true;
+            yield return new WaitForSeconds(dancedAroundTheEnemy);
+            if (PlayerData.Instance.hasEnteredCombat) {
+                Debug.Log("Danced around the enemy for a long period of time, show the enter combat thing");
+            }
+        }
+
+        public void ChangedDeckBeforeEnteringCombat() {
+            if(hasRunUnitsToBringToBattle)
+                return;
+            var newOrder = inv.GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT);
+            bool isSameSetup = false;
+            foreach (var item in newOrder) {
+                foreach (var iItem in initOrder) {
+                    if (iItem == item) {
+                        isSameSetup = true;
+                        break;
+                    }
+                }
+                if(isSameSetup)
+                    break;
+            }
+            if (isSameSetup) {
+                Debug.Log("Did not change the setup of his battle units before entering combat, show him stuff");
+            }
+            hasRunUnitsToBringToBattle = true;
         }
     }
 }
