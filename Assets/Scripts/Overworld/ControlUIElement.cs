@@ -27,7 +27,6 @@ namespace Overworld {
 		}
 
 		private IEnumerator OpenAUIElement(GameObject go, Vector2 endScale, bool blockMouseUI) {
-
 			isRunning = true;
 			if (blockMouseUI && endScale != Vector2.zero) {
 				inputManager.BlockMouseUI();
