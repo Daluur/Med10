@@ -113,7 +113,7 @@ public class Inventory : MonoBehaviour {
 	public List<Item> GetFirstXItemsFromInventory(int x) {
 		List<Item> toReturn = new List<Item>();
 		for (int i = 0; i < x; i++) {
-			if(items[i].ID != -1) {
+				if(items[i].ID != -1) {
 				toReturn.Add(items[i]);
 			}
 		}
