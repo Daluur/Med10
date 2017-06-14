@@ -89,8 +89,8 @@ namespace Overworld {
 					DistributeAction ();
 					OverworldTriggers.instance.InventoryOpened();
 				if (TutorialHandler.instance.firstInventory) {
-					TutorialHandler.instance.firstInventory = false;
-					TutorialHandler.instance.InventoryAndShop();
+					//TutorialHandler.instance.firstInventory = false;
+					//TutorialHandler.instance.InventoryAndShop();
 				}
 				break;
 				case KeyCode.Q:

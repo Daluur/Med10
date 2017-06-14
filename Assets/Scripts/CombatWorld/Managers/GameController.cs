@@ -87,7 +87,7 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatFirstTurn) {
-					TutorialHandler.instance.ShowGoalAndSummon();
+					//TutorialHandler.instance.ShowGoalAndSummon();
 
 				}
 			}
@@ -452,13 +452,13 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatSecondTurn) {
-					TutorialHandler.instance.StartingTurnSecondTurn();
+					//TutorialHandler.instance.StartingTurnSecondTurn();
 				}
 			}
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatThirdTurn) {
-					TutorialHandler.instance.combatThirdTurn = false;
-					TutorialHandler.instance.StartingThirdTurn();
+					//TutorialHandler.instance.combatThirdTurn = false;
+					//TutorialHandler.instance.StartingThirdTurn();
 				}
 			}
 		}
@@ -466,16 +466,16 @@ namespace CombatWorld {
 		private void AITurn() {
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatSecondTurn) {
-					TutorialHandler.instance.combatSecondTurn = false;
-					TutorialHandler.instance.combatThirdTurn = true;
+					//TutorialHandler.instance.combatSecondTurn = false;
+					//TutorialHandler.instance.combatThirdTurn = true;
 				}
 			}
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatFirstTurn) {
-					TutorialHandler.instance.combatFirstTurn = false;
-					TutorialHandler.instance.combatSecondTurn = true;
-					TutorialHandler.instance.combatThirdTurn = false;
+					//TutorialHandler.instance.combatFirstTurn = false;
+					//TutorialHandler.instance.combatSecondTurn = true;
+					//TutorialHandler.instance.combatThirdTurn = false;
 				}
 			}
 

@@ -11,7 +11,7 @@ namespace Overworld {
 		public int StaticEncounterID = -1;
 		public Transform[] spawnPoints;
 		private int currentPos;
-		public Teleporter teleporterPad;
+		public GameObject teleporterPad;
 		public int[] unitsToUnlock;
 
 		// Use this for initialization
@@ -105,7 +105,7 @@ namespace Overworld {
 				UnlockHandler.Instance.UnlockUnitByID(id);
 			}
 
-			teleporterPad.Activate();
+			teleporterPad.SetActive(false);
 			
 			Destroy(gameObject);
 		}

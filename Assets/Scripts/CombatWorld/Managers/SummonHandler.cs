@@ -88,8 +88,8 @@ namespace CombatWorld
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.summonFirst) {
-					TutorialHandler.instance.summonFirst = false;
-					TutorialHandler.instance.FirstSummon();
+					//TutorialHandler.instance.summonFirst = false;
+					//TutorialHandler.instance.FirstSummon();
 				}
 			}
 		}

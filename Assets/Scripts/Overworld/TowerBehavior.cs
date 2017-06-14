@@ -22,6 +22,7 @@ namespace Overworld {
 				TutorialHandler.instance.FirstShop();
 			}*/
 
+
 			shop.OpenMenu();
 		}
 
