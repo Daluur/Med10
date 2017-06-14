@@ -7,11 +7,18 @@ using UnityEngine;
 
 namespace SimplDynTut {
 	public class CombatWorldTriggers : MonoBehaviour {
-		public float summonDisplayTimer = 8f, unitSelectionTimer = 10f, endTurnTimer = 12f, tryingToAttackTime = 40f, selectingSummonedUnitTime = 180f, selectingUnitNoMovesLeftTime = 180f;
+		public float summonDisplayTimer = 8f, unitSelectionTimer = 10f, endTurnTimer = 12f, tryingToAttackTime = 40f, selectingSummonedUnitTime = 180f, selectingUnitNoMovesLeftTime = 180f, hasNotMovedIn = 5f;
 		private bool hasTimedUnitSelection;
 		public int turnsTheEndTurnRuns = 3;
 		public int turnBeforeCameraTut = 2;
 		public int turnBeforeZoomTut = 4;
+		public int turnToAttackLimit = 5;
+		public int limitAmountOfTimesTryingToSelectEnemyUnit = 5;
+		private int timesTryingToSelectEnemy {
+			get { return PlayerData.Instance.timesTriedToSelectEnemyUnits; }
+			set { PlayerData.Instance.timesTriedToSelectEnemyUnits = value; }
+		}
+
 		[HideInInspector]
 		public int turnEndTurnhasRun = 0;
 		private Coroutine endTurnRoutine;
@@ -22,7 +29,6 @@ namespace SimplDynTut {
 			set {
 				if (value == 1) {
 					toBeUsedWithWin++;
-					CheckForWinCondition();
 				}
 				else {
 					toBeUsedWithWin = value;
@@ -53,11 +59,31 @@ namespace SimplDynTut {
 		public int limitTimesTryingToAttack = 3, limitTimesTryingToSelectSummon = 5, limitTimesTryingToSelectUnitWithoutMovesLeft = 5;
 		
 		void Start () {
-			unitStandingNextToTowerBeingAbleToAttackButNotAttacking++;
 			GameController.instance.StartedAWaitingForUnit += CheckForMovesLeftForEndTurn;
 				
 			if(!PlayerData.Instance.hasRunSummonDisplayTimer)
 				StartCoroutine(SummonTimer());
+		}
+
+
+		public void CheckForEverAttacked() {
+			if (currentTurn == turnToAttackLimit - 1 && !PlayerData.Instance.hasEverAttacked) {
+				Debug.Log("Player has not attacked yet show attack information");
+			}
+		}
+
+		public void CheckForMovement() {
+			if (PlayerData.Instance.hasShownMovementCW || PlayerData.Instance.hasMovedInCW)
+				return;
+			PlayerData.Instance.hasShownMovementCW = true;
+			StartCoroutine(MovementTimer());
+		}
+
+		private IEnumerator MovementTimer() {
+			yield return new WaitForSeconds(hasNotMovedIn);
+			if (!PlayerData.Instance.hasMovedInCW) {
+				Debug.Log("Player has not moved in a time after selecting unit");
+			}
 		}
 
 		public void CheckUnitsPositions() {
@@ -76,17 +102,14 @@ namespace SimplDynTut {
 			if (( GameController.instance.GettAllUnitsOfTeam(Team.Player).Count -
 			      GameController.instance.GettAllUnitsOfTeam(Team.AI).Count ) >= offsetUnitAmount && !GameController.instance.GetTowersForTeam((Team.AI)).Any(e => e.GetTower().GetHealth() < 50)) {
 				Debug.Log("Win condition trigger one has been triggered, should show win condition");
-				hasShownWin = true;
 				return;
 			}
 			if (unitStandingNextToTowerBeingAbleToAttackButNotAttacking >=
 			    amountOfTimesUnitStandingNextToTowerDoesNotAttackTriggerWin) {
+				hasShownWin = true;
 				Debug.Log("Win condition triggered based on the amount of times a player unit stood next to a tower without hitting it");
 			}
-
 		}
-
-
 
 		public void CheckForTurnInfo() {
 			if (currentTurn == turnBeforeCameraTut - 1 && CombatCameraController.instance.playerMovementAmount < limitForHowMuchPlayerHasMovedCamera) {
@@ -118,7 +141,8 @@ namespace SimplDynTut {
 		}
 
 		public void StopEndTurnTimer() {
-			StopCoroutine(endTurnRoutine);
+			if(endTurnRoutine!=null)
+				StopCoroutine(endTurnRoutine);
 		}
 
 		private IEnumerator EndTurnTimer() {
@@ -137,7 +161,7 @@ namespace SimplDynTut {
 		}
 
 		public void StartUnitSelectionTimer() {
-			if (!hasTimedUnitSelection && PlayerData.Instance.GetHasEverSelectedAUnit()) {
+			if (!hasTimedUnitSelection && !PlayerData.Instance.GetHasEverSelectedAUnit()) {
 				hasTimedUnitSelection = true;
 				StartCoroutine(UnitSelection());
 			}
@@ -148,7 +172,7 @@ namespace SimplDynTut {
 		private IEnumerator UnitSelection() {
 			GameController.instance.isLookingForUnitSelection = true;
 			yield return new WaitForSeconds(unitSelectionTimer);
-			if(!GameController.instance.selectedAUnit)
+			if(!PlayerData.Instance.GetHasEverSelectedAUnit())
 				Debug.Log("Show the unit selection tutorial tut");
 			GameController.instance.isLookingForUnitSelection = false;
 		}
@@ -235,6 +259,12 @@ namespace SimplDynTut {
 			Debug.Log("Show the attacking, the player tried to attack units multiple times without being in proximity");
 		}
 
+		public void TryingToSelectEnemyUnits() {
+			if (timesTryingToSelectEnemy >= limitAmountOfTimesTryingToSelectEnemyUnit) {
+				Debug.Log("The player has continously tried to select an enemy unit display information");
+				timesTryingToSelectEnemy = 0;
+			}
+		}
 
 	}
 }

@@ -192,7 +192,7 @@ namespace CombatWorld.Map {
 						PlayerData.Instance.timesTryingToSelectSummon++;
 						GameController.instance.cwTriggers.SelectingRecentlySummonedUnit();
 					}
-					else if(GameController.instance.GetSelectedUnit().GetTeam()==Team.Player && GetUnit().GetTeam() != Team.AI && !GetUnit().CanMove()) {
+					else if(GetUnit().GetTeam() != Team.AI && !GetUnit().CanMove()) {
 						PlayerData.Instance.timesTryingToSelectUnitWithoutMovesLeft++;
 						GameController.instance.cwTriggers.SelectingUnitWithNoMovesLeft();
 					}
@@ -206,6 +206,9 @@ namespace CombatWorld.Map {
 					if (GameController.instance.GetSelectedUnit() != null && GameController.instance.GetSelectedUnit().GetTeam() == Team.Player && GetOccupant()!=null && GetOccupant().GetTeam() == Team.AI){
 						PlayerData.Instance.timesTryingToAttack++;
 						GameController.instance.cwTriggers.TryingToAttackFromRangeTut();
+					}
+					if (GetOccupant() != null && GetOccupant().GetTeam() == Team.AI) {
+						PlayerData.Instance.timesTriedToSelectEnemyUnits++;
 					}
 					break;
 				default:

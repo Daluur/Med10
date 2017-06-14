@@ -137,6 +137,9 @@ namespace CombatWorld.Units {
 			damagePack.info.stone = turnedToStone;
 			damagePack.info.shadow = shadowUnit;
 			damagePack.info.movedThroughUnit = movedThroughUnitThisTurn;
+			if (GetTeam() == Team.Player) {
+				PlayerData.Instance.hasEverAttacked = true;
+			}
 			DealDamage();
 			if (DamageConstants.ATTACKATSAMETIME) {
 				if (target.GetNode().HasUnit()) {

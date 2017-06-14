@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CombatWorld;
 using UnityEngine;
 using CombatWorld.Utility;
 using CombatWorld.Units;
+using SimplDynTut;
 
 public class PlayerData {
 
@@ -29,10 +31,28 @@ public class PlayerData {
 		hasRunSummonDisplayTimer,
 		hasRunUnitSelection,
 		hasShownEndTurn,
-		hasEnteredCombat;
+		hasEnteredCombat,
+		hasEverAttacked,
+		hasShownMovementCW,
+		hasMovedInCW;
 
 	public int timesTryingToAttack, timesTryingToSelectSummon, timesTryingToSelectUnitWithoutMovesLeft, currentTurn = 0;
-	
+	public int timesTriedToSelectEnemyUnits {
+		get { return m_TimesTriedToSelectEnemyUnits; }
+		set {
+			if (value >= 5) {
+				m_TimesTriedToSelectEnemyUnits++;
+				GameController.instance.cwTriggers.TryingToSelectEnemyUnits();
+				
+			}
+			else {
+				m_TimesTriedToSelectEnemyUnits = value;
+			}
+		}
+	}
+
+	private int m_TimesTriedToSelectEnemyUnits = 0;
+
 	#endregion
 	
 	#region OW

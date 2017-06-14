@@ -62,7 +62,7 @@ namespace Overworld {
 		}
 
 		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
-			if(!OverworldTriggers.instance.ChangedDeckBeforeEnteringCombat()) {
+			if(StaticEncounterID == 1 && !OverworldTriggers.instance.ChangedDeckBeforeEnteringCombat()) {
 				inputManager.StopPlayer();
 				return;
 			}
