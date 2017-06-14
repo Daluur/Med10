@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.4430583, g: 0.4922613, b: 0.57197666, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -15383,7 +15383,7 @@ Prefab:
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -27511.34
+      value: -27548.857
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -15408,7 +15408,7 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -19.246433
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -15418,12 +15418,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 14.4928665
       objectReference: {fileID: 0}
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 38.492867
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -21204,7 +21204,8 @@ Prefab:
       propertyPath: fog
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114768592034843672, guid: df60608a9a0a147419f932bdea10b31f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: df60608a9a0a147419f932bdea10b31f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1007134098 stripped
@@ -21225,43 +21226,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   volumeNum: {fileID: 271073039}
   volumeSlider: {fileID: 271073040}
---- !u!114 &1007134100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1007134098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f843382eb0c09134d80d3675f0ba7f2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitFirst: 1
-  combatFirstTurn: 1
-  combatSecondTurn: 1
-  combatThirdTurn: 1
-  summonFirst: 1
-  firstWin: 1
-  firstLoss: 1
-  firstInventory: 1
-  firstShop: 1
-  firstBuy: 1
-  isDynamic: 0
---- !u!114 &1007134101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1007134098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75747ed138a4eeb4a95179c1dc3b3db6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  notMovedTime: 5
-  dancedAroundTheEnemy: 15
-  toCheckAgainstOne: 3
-  toCheckAgainstTwo: 2
 --- !u!1 &1026791164
 GameObject:
   m_ObjectHideFlags: 0
