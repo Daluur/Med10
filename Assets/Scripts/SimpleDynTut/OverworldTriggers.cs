@@ -17,13 +17,12 @@ namespace SimplDynTut{
             inv = GetComponent<Inventory>();
             CheckMovementRequirements();
         }
-
+        
         void Update() {
             if (initOrder.Count == 0) {
                 initOrder = inv.GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT);
             }
         }
-
 
         public void MovedAroundUnitsToBringToBatlle() {
             movedTopFourUnitsAround = true;
