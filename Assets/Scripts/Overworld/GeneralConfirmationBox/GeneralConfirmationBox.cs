@@ -52,6 +52,19 @@ namespace Overworld {
 		}
 
 		public void ShowPopUp(string text, string buttonTextOne, UnityAction buttonAction = null, string buttonTextTwo = null) {
+			if (isOpen || isRunning && isShowing) {
+				Queue(text, buttonTextOne, buttonAction, buttonTextTwo);
+			}
+			else {
+				ShowNew(text, buttonTextOne, buttonAction, buttonTextTwo);
+			}
+		}
+
+		public void PartOfMultiPage(string text, string buttonText = "Continue", UnityAction buttonAction = null) {
+			ShowNew(text, buttonText, buttonAction);
+		}
+
+		void ShowNew(string text, string buttonTextOne, UnityAction buttonAction = null, string buttonTextTwo = null) {
 			inputManager.StopPlayer();
 			blockingPanel.SetActive(true);
 			if (buttonTextOne == null) {
@@ -60,17 +73,23 @@ namespace Overworld {
 
 			if (buttonTextTwo == null) {
 				DoPopUp(text, buttonTextOne, buttonAction);
-				if(!isOpen)
+				if (!isOpen)
 					OpenElement();
 				isOpen = true;
 				return;
 			}
 			DoPopUp(text, buttonTextOne, buttonTextTwo, buttonAction);
-			if(!isOpen)
+			if (!isOpen)
 				OpenElement();
 			isOpen = true;
 		}
 
+		Queue<ConfBoxQData> Q = new Queue<ConfBoxQData>();
+
+		void Queue(string text, string buttonTextOne, UnityAction buttonAction = null, string buttonTextTwo = null) {
+			Q.Enqueue(new ConfBoxQData(text, buttonTextOne, buttonAction));
+		}
+		
 		private void DoPopUp(string text, string buttonText, UnityAction buttonAction) {
 			blockingPanel.SetActive(true);
 			displayText.text = text;
@@ -105,10 +124,18 @@ namespace Overworld {
 		}
 
 		public override void CloseElement() {
+			if (isRunning)
+				return;
 			buttonOne.onClick.Invoke();
 		}
 
 		void RealClose() {
+			if(Q.Count > 0) {
+				var data = Q.Dequeue();
+				RemoveListeners();
+				PartOfMultiPage(data.showText, data.butText, data.butAction);
+				return;
+			}
 			isOpen = false;
 			RemoveListeners();
 			inputManager.ResumePlayer();
@@ -143,4 +170,15 @@ namespace Overworld {
 			return this;
 		}
 	}
+}
+
+struct ConfBoxQData {
+	public ConfBoxQData(string t, string b, UnityAction ba) {
+		showText = t;
+		butText = b;
+		butAction = ba;
+	}
+	public string showText;
+	public string butText;
+	public UnityAction butAction;
 }

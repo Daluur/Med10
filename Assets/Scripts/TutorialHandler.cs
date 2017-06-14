@@ -68,7 +68,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	}
 
 	public void FirstBuy() {
-		GeneralConfirmationBox.instance.ShowPopUp("You are able to carry 12 units at a time.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Close the inventory and shop by clicking the X in the top right corner, or by pressing ESC to close all windows.", "CLOSE"));
+		GeneralConfirmationBox.instance.ShowPopUp("You are able to carry 12 units at a time.", "NEXT", () => GeneralConfirmationBox.instance.PartOfMultiPage("Close the inventory and shop by clicking the X in the top right corner, or by pressing ESC to close all windows.", "CLOSE"));
 	}
 
 	public void ShadowUnitDyn() {
@@ -145,5 +145,31 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		}
 	}
 
+	public void NewWorldTrigger(OWTUTTRIGGERS trigger) {
+		switch (trigger) {
+			case OWTUTTRIGGERS.UnitsToBring:
+				//Display message.
+				break;
+			case OWTUTTRIGGERS.OpenInventory:
+				//Display message.
+				break;
+			case OWTUTTRIGGERS.EnterShop:
+				//Display message.
+				break;
+			case OWTUTTRIGGERS.BuyUnits:
+				//Display message.
+				break;
+			case OWTUTTRIGGERS.EnterCombat:
+				//Display message.
+				break;
+			default:
+				break;
+		}
+	}
 
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.E)) {
+			GeneralConfirmationBox.instance.ShowPopUp("NEED TEXT FOR SELECTING UNIT TUT", "Okay");
+		}
+	}
 }
