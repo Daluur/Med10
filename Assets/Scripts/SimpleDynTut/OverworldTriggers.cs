@@ -15,10 +15,14 @@ namespace SimplDynTut{
         
         void Start() {
             inv = GetComponent<Inventory>();
-            initOrder = inv.GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT);
             CheckMovementRequirements();
         }
-
+        
+        void Update() {
+            if (initOrder.Count == 0) {
+                initOrder = inv.GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT);
+            }
+        }
 
         public void MovedAroundUnitsToBringToBatlle() {
             movedTopFourUnitsAround = true;
@@ -62,6 +66,9 @@ namespace SimplDynTut{
                 yield break;
             }
             yield return new WaitForSeconds(notMovedTime);
+            if (PlayerData.Instance.GetHasPlayerMoved()) {
+                yield break;
+            }
             TutorialHandler.instance.WorldTrigger(1);
         }
 
