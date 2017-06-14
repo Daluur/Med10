@@ -30,7 +30,9 @@ public class PlayerData {
 		hasRunUnitSelection,
 		hasShownEndTurn,
 		hasEnteredCombat,
-		hasEverAttacked;
+		hasEverAttacked,
+		hasShownMovementCW,
+		hasMovedInCW;
 
 	public int timesTryingToAttack, timesTryingToSelectSummon, timesTryingToSelectUnitWithoutMovesLeft, currentTurn = 0;
 	

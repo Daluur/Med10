@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SimplDynTut {
 	public class CombatWorldTriggers : MonoBehaviour {
-		public float summonDisplayTimer = 8f, unitSelectionTimer = 10f, endTurnTimer = 12f, tryingToAttackTime = 40f, selectingSummonedUnitTime = 180f, selectingUnitNoMovesLeftTime = 180f;
+		public float summonDisplayTimer = 8f, unitSelectionTimer = 10f, endTurnTimer = 12f, tryingToAttackTime = 40f, selectingSummonedUnitTime = 180f, selectingUnitNoMovesLeftTime = 180f, hasNotMovedIn = 5f;
 		private bool hasTimedUnitSelection;
 		public int turnsTheEndTurnRuns = 3;
 		public int turnBeforeCameraTut = 2;
@@ -65,8 +65,20 @@ namespace SimplDynTut {
 				Debug.Log("Player has not attacked yet show attack information");
 			}
 		}
-		
-		
+
+		public void CheckForMovement() {
+			if (PlayerData.Instance.hasShownMovementCW || PlayerData.Instance.hasMovedInCW)
+				return;
+			PlayerData.Instance.hasShownMovementCW = true;
+			StartCoroutine(MovementTimer());
+		}
+
+		private IEnumerator MovementTimer() {
+			yield return new WaitForSeconds(hasNotMovedIn);
+			if (!PlayerData.Instance.hasMovedInCW) {
+				Debug.Log("Player has not moved in a time after selecting unit");
+			}
+		}
 
 		public void CheckUnitsPositions() {
 			foreach (var unit in GameController.instance.GettAllUnitsOfTeam(Team.Player)) {

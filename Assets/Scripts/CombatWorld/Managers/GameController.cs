@@ -367,6 +367,7 @@ namespace CombatWorld {
 		}
 
 		public void SetSelectedUnit(Unit unit) {
+			cwTriggers.CheckForMovement();
 			selectedUnit = unit;
 			DataGathering.Instance.SelectedUnit(unit);
 			if(isLookingForUnitSelection)
