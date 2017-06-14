@@ -12,6 +12,7 @@ namespace SimplDynTut {
 		public int turnsTheEndTurnRuns = 3;
 		public int turnBeforeCameraTut = 2;
 		public int turnBeforeZoomTut = 4;
+		public int turnToAttackLimit = 5;
 		[HideInInspector]
 		public int turnEndTurnhasRun = 0;
 		private Coroutine endTurnRoutine;
@@ -22,7 +23,6 @@ namespace SimplDynTut {
 			set {
 				if (value == 1) {
 					toBeUsedWithWin++;
-					CheckForWinCondition();
 				}
 				else {
 					toBeUsedWithWin = value;
@@ -53,12 +53,20 @@ namespace SimplDynTut {
 		public int limitTimesTryingToAttack = 3, limitTimesTryingToSelectSummon = 5, limitTimesTryingToSelectUnitWithoutMovesLeft = 5;
 		
 		void Start () {
-			unitStandingNextToTowerBeingAbleToAttackButNotAttacking++;
 			GameController.instance.StartedAWaitingForUnit += CheckForMovesLeftForEndTurn;
 				
 			if(!PlayerData.Instance.hasRunSummonDisplayTimer)
 				StartCoroutine(SummonTimer());
 		}
+
+
+		public void CheckForEverAttacked() {
+			if (currentTurn == turnToAttackLimit - 1 && !PlayerData.Instance.hasEverAttacked) {
+				Debug.Log("Player has not attacked yet show attack information");
+			}
+		}
+		
+		
 
 		public void CheckUnitsPositions() {
 			foreach (var unit in GameController.instance.GettAllUnitsOfTeam(Team.Player)) {
@@ -76,17 +84,14 @@ namespace SimplDynTut {
 			if (( GameController.instance.GettAllUnitsOfTeam(Team.Player).Count -
 			      GameController.instance.GettAllUnitsOfTeam(Team.AI).Count ) >= offsetUnitAmount && !GameController.instance.GetTowersForTeam((Team.AI)).Any(e => e.GetTower().GetHealth() < 50)) {
 				Debug.Log("Win condition trigger one has been triggered, should show win condition");
-				hasShownWin = true;
 				return;
 			}
 			if (unitStandingNextToTowerBeingAbleToAttackButNotAttacking >=
 			    amountOfTimesUnitStandingNextToTowerDoesNotAttackTriggerWin) {
+				hasShownWin = true;
 				Debug.Log("Win condition triggered based on the amount of times a player unit stood next to a tower without hitting it");
 			}
-
 		}
-
-
 
 		public void CheckForTurnInfo() {
 			if (currentTurn == turnBeforeCameraTut - 1 && CombatCameraController.instance.playerMovementAmount < limitForHowMuchPlayerHasMovedCamera) {
@@ -118,7 +123,8 @@ namespace SimplDynTut {
 		}
 
 		public void StopEndTurnTimer() {
-			StopCoroutine(endTurnRoutine);
+			if(endTurnRoutine!=null)
+				StopCoroutine(endTurnRoutine);
 		}
 
 		private IEnumerator EndTurnTimer() {
@@ -137,7 +143,7 @@ namespace SimplDynTut {
 		}
 
 		public void StartUnitSelectionTimer() {
-			if (!hasTimedUnitSelection && PlayerData.Instance.GetHasEverSelectedAUnit()) {
+			if (!hasTimedUnitSelection && !PlayerData.Instance.GetHasEverSelectedAUnit()) {
 				hasTimedUnitSelection = true;
 				StartCoroutine(UnitSelection());
 			}
@@ -148,7 +154,7 @@ namespace SimplDynTut {
 		private IEnumerator UnitSelection() {
 			GameController.instance.isLookingForUnitSelection = true;
 			yield return new WaitForSeconds(unitSelectionTimer);
-			if(!GameController.instance.selectedAUnit)
+			if(!PlayerData.Instance.GetHasEverSelectedAUnit())
 				Debug.Log("Show the unit selection tutorial tut");
 			GameController.instance.isLookingForUnitSelection = false;
 		}

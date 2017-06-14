@@ -180,6 +180,8 @@ namespace CombatWorld {
 					SelectTeamNodes();
 					endTurnButton.interactable = true;
 					TowerNodes();
+					cwTriggers.CheckForEverAttacked();
+					cwTriggers.CheckForWinCondition();
 					cwTriggers.StartUnitSelectionTimer();
 					cwTriggers.StopEndTurnTimer();
 					stillPlayerTurn = true;

@@ -88,6 +88,7 @@ namespace SimplDynTut{
         public bool ChangedDeckBeforeEnteringCombat() {
             if(hasRunUnitsToBringToBattle)
                 return true;
+            hasRunUnitsToBringToBattle = true;
             var newOrder = inv.GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT);
             bool containsBothTypes = false;
             containsBothTypes = newOrder.Exists(e => e.Type.ToLower().Equals("water")) &&
@@ -96,8 +97,9 @@ namespace SimplDynTut{
                 Debug.Log("Did not change the setup of his battle units before entering combat, show him stuff");
                 return false;
             }
+            
             return true;
-            hasRunUnitsToBringToBattle = true;
+            
         }
     }
 }

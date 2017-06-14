@@ -29,7 +29,8 @@ public class PlayerData {
 		hasRunSummonDisplayTimer,
 		hasRunUnitSelection,
 		hasShownEndTurn,
-		hasEnteredCombat;
+		hasEnteredCombat,
+		hasEverAttacked;
 
 	public int timesTryingToAttack, timesTryingToSelectSummon, timesTryingToSelectUnitWithoutMovesLeft, currentTurn = 0;
 	

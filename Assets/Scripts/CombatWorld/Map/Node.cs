@@ -192,7 +192,7 @@ namespace CombatWorld.Map {
 						PlayerData.Instance.timesTryingToSelectSummon++;
 						GameController.instance.cwTriggers.SelectingRecentlySummonedUnit();
 					}
-					else if(GameController.instance.GetSelectedUnit().GetTeam()==Team.Player && GetUnit().GetTeam() != Team.AI && !GetUnit().CanMove()) {
+					else if(GetUnit().GetTeam() != Team.AI && !GetUnit().CanMove()) {
 						PlayerData.Instance.timesTryingToSelectUnitWithoutMovesLeft++;
 						GameController.instance.cwTriggers.SelectingUnitWithNoMovesLeft();
 					}

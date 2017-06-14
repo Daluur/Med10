@@ -165,6 +165,9 @@ public class SaveLoadHandler {
 		}
 		else {
 			InventoryUnits.Add(12);
+			InventoryUnits.Add(12);
+			InventoryUnits.Add(4);
+			InventoryUnits.Add(0);
 		}
 		loaded = true;
 	}
