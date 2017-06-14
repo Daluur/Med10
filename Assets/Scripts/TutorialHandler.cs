@@ -148,9 +148,6 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 
 	public void NewWorldTrigger(OWTUTTRIGGERS trigger) {
 		switch (trigger) {
-			case OWTUTTRIGGERS.UnitsToBring:
-				OverworldTriggers.instance.ChangedDeckBeforeEnteringCombat();
-				break;
 			case OWTUTTRIGGERS.OpenInventory:
 				OverworldTriggers.instance.ShowInventoryOpenInformation();
 				break;
@@ -159,6 +156,19 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 				break;
 			case OWTUTTRIGGERS.EnterCombat:
 				OverworldTriggers.instance.StartEnterCombatTimer();
+				break;
+			case OWTUTTRIGGERS.types:
+				GeneralConfirmationBox.instance.ShowPopUp("Units have different types, these can be strong or weak to another type.", "NEXT",
+					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a unit, whose type is strong against the opponent’s type will deal double damage.", "NEXT",
+					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a unit, whose type is weak against the opponent’s type will deal half damage.", "CLOSE")));
+				break;
+			case OWTUTTRIGGERS.concede:
+				GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, there is a concede option in the escape menu.", "CLOSE");
+				break;
+			case OWTUTTRIGGERS.shadow:
+				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "NEXT",
+				() => GeneralConfirmationBox.instance.PartOfMultiPage("SHADOW units can move through other units", "NEXT",
+				() => GeneralConfirmationBox.instance.PartOfMultiPage("STONE units can hunker down in place, after which they will be unable to move, or initiate attacks, but will receive less damage and deal less damage.", "CLOSE")));
 				break;
 			default:
 				break;

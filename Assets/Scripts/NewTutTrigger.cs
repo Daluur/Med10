@@ -19,8 +19,10 @@ public class NewTutTrigger : MonoBehaviour {
 }
 
 public enum OWTUTTRIGGERS {
-	UnitsToBring,
 	OpenInventory,
 	EnterShop,
 	EnterCombat,
+	types,
+	concede,
+	shadow,
 }
