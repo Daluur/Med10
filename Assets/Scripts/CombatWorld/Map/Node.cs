@@ -207,6 +207,9 @@ namespace CombatWorld.Map {
 						PlayerData.Instance.timesTryingToAttack++;
 						GameController.instance.cwTriggers.TryingToAttackFromRangeTut();
 					}
+					if (GetOccupant() != null && GetOccupant().GetTeam() == Team.AI) {
+						PlayerData.Instance.timesTriedToSelectEnemyUnits++;
+					}
 					break;
 				default:
 					break;

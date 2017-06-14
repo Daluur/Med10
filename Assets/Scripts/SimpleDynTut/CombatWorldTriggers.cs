@@ -13,6 +13,12 @@ namespace SimplDynTut {
 		public int turnBeforeCameraTut = 2;
 		public int turnBeforeZoomTut = 4;
 		public int turnToAttackLimit = 5;
+		public int limitAmountOfTimesTryingToSelectEnemyUnit = 5;
+		private int timesTryingToSelectEnemy {
+			get { return PlayerData.Instance.timesTriedToSelectEnemyUnits; }
+			set { PlayerData.Instance.timesTriedToSelectEnemyUnits = value; }
+		}
+
 		[HideInInspector]
 		public int turnEndTurnhasRun = 0;
 		private Coroutine endTurnRoutine;
@@ -253,6 +259,12 @@ namespace SimplDynTut {
 			Debug.Log("Show the attacking, the player tried to attack units multiple times without being in proximity");
 		}
 
+		public void TryingToSelectEnemyUnits() {
+			if (timesTryingToSelectEnemy >= limitAmountOfTimesTryingToSelectEnemyUnit) {
+				Debug.Log("The player has continously tried to select an enemy unit display information");
+				timesTryingToSelectEnemy = 0;
+			}
+		}
 
 	}
 }
