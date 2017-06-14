@@ -146,8 +146,8 @@ namespace Overworld {
 		public void Lost() {
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstLoss) {
-					TutorialHandler.instance.firstLoss = false;
-					TutorialHandler.instance.LosingCombat();
+					//TutorialHandler.instance.firstLoss = false;
+					//TutorialHandler.instance.LosingCombat();
 				}
 			}
 			CheckpointManager.instance.TeleportPlayerToLatestCheckpoint();

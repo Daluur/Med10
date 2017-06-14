@@ -17,8 +17,8 @@ namespace Overworld {
 
 		private void OpenMenu() {
 			if (TutorialHandler.instance.firstShop) {
-				TutorialHandler.instance.firstShop = false;
-				TutorialHandler.instance.FirstShop();
+				//TutorialHandler.instance.firstShop = false;
+				//TutorialHandler.instance.FirstShop();
 			}
 
 			shop.OpenMenu();
