@@ -22,7 +22,7 @@ static class DeckHandler {
 			difficulty = "Easy",
 			id = 0,
 			type1 = "Water",
-			type1 = "Nature",
+			type2 = "Nature",
 			unitIDs = new int[] { 2, 6 },
 		},
 		new DeckData {
@@ -39,7 +39,7 @@ static class DeckHandler {
 			id = 2,
 			type1 = "Water",
 			type2 = "Fire",
-			type2 = "Shadow",
+			type3 = "Shadow",
 			unitIDs = new int[] { 0, 2, 8 },
 		},
 		new DeckData {
