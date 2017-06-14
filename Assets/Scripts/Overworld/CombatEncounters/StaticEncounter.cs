@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Overworld.Shops;
+using SimplDynTut;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,7 @@ namespace Overworld {
 		public int StaticEncounterID = -1;
 		public Transform[] spawnPoints;
 		private int currentPos;
-		public Teleporter teleporterPad;
+		public GameObject teleporterPad;
 		public int[] unitsToUnlock;
 
 		// Use this for initialization
@@ -61,6 +62,10 @@ namespace Overworld {
 		}
 
 		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
+			if(!OverworldTriggers.instance.ChangedDeckBeforeEnteringCombat()) {
+				inputManager.StopPlayer();
+				return;
+			}
 			if(hasGeneralConfirmationBox)
 				return;
 			meClicked = true;
@@ -100,7 +105,7 @@ namespace Overworld {
 				UnlockHandler.Instance.UnlockUnitByID(id);
 			}
 
-			teleporterPad.Activate();
+			teleporterPad.SetActive(false);
 			
 			Destroy(gameObject);
 		}

@@ -60,6 +60,8 @@ namespace CombatWorld
 
 		public void SummonUnit(SummonNode node)
 		{
+			if(GameController.instance.stillPlayerTurn)
+				GameController.instance.cwTriggers.StartEndTurn();
 			SpendPoints(currentlySelectedData.cost);
 			GameObject unit = Instantiate(currentlySelectedData.model, node.transform.position, Quaternion.identity) as GameObject;
 			unit.GetComponent<Unit>().SpawnEntity(node, Team.Player, currentlySelectedData);
@@ -86,8 +88,8 @@ namespace CombatWorld
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.summonFirst) {
-					TutorialHandler.instance.summonFirst = false;
-					TutorialHandler.instance.FirstSummon();
+					//TutorialHandler.instance.summonFirst = false;
+					//TutorialHandler.instance.FirstSummon();
 				}
 			}
 		}

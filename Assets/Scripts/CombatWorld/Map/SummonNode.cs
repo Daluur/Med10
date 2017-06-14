@@ -24,7 +24,7 @@ namespace CombatWorld.Map {
 				if (TutorialHandler.instance != null) {
 					if (TutorialHandler.instance.unitFirst) {
 						TutorialHandler.instance.unitFirst = false;
-						TutorialHandler.instance.FirstSelection();
+						//TutorialHandler.instance.FirstSelection();
 					}
 				}
 			}

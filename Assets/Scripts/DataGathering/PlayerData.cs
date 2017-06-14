@@ -21,6 +21,20 @@ public class PlayerData {
 
 	#endregion
 
+	#region CombatWorldTriggers
+	
+	public bool hasRunTryingToAttack,
+		hasRunSelectingSummonedUnit,
+		hasRunSelectingUnitWithNoMovesLeft,
+		hasRunSummonDisplayTimer,
+		hasRunUnitSelection,
+		hasShownEndTurn,
+		hasEnteredCombat;
+
+	public int timesTryingToAttack, timesTryingToSelectSummon, timesTryingToSelectUnitWithoutMovesLeft, currentTurn = 0;
+	
+	#endregion
+	
 	#region OW
 
 	public bool GetHasPlayerMoved() {

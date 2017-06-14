@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Overworld;
+using SimplDynTut;
 using UnityEngine;
 
 public class TutorialHandler : Singleton<TutorialHandler> {
@@ -68,7 +69,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	}
 
 	public void FirstBuy() {
-		GeneralConfirmationBox.instance.ShowPopUp("You are able to carry 12 units at a time.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("Close the inventory and shop by clicking the X in the top right corner, or by pressing ESC to close all windows.", "CLOSE"));
+		GeneralConfirmationBox.instance.ShowPopUp("You are able to carry 12 units at a time.", "NEXT", () => GeneralConfirmationBox.instance.PartOfMultiPage("Close the inventory and shop by clicking the X in the top right corner, or by pressing ESC to close all windows.", "CLOSE"));
 	}
 
 	public void ShadowUnitDyn() {
@@ -145,5 +146,22 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		}
 	}
 
-
+	public void NewWorldTrigger(OWTUTTRIGGERS trigger) {
+		switch (trigger) {
+			case OWTUTTRIGGERS.UnitsToBring:
+				OverworldTriggers.instance.ChangedDeckBeforeEnteringCombat();
+				break;
+			case OWTUTTRIGGERS.OpenInventory:
+				OverworldTriggers.instance.ShowInventoryOpenInformation();
+				break;
+			case OWTUTTRIGGERS.EnterShop:
+				OverworldTriggers.instance.ShowGoToShopTutInfo();
+				break;
+			case OWTUTTRIGGERS.EnterCombat:
+				OverworldTriggers.instance.StartEnterCombatTimer();
+				break;
+			default:
+				break;
+		}
+	}
 }

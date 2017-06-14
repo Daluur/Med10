@@ -27,6 +27,9 @@ GameObject:
   - component: {fileID: 114706111643280340}
   - component: {fileID: 114951314929935636}
   - component: {fileID: 114192891658804162}
+  - component: {fileID: 114768592034843672}
+  - component: {fileID: 114639708669120822}
+  - component: {fileID: 114834500690341014}
   m_Layer: 0
   m_Name: VeryImportantObject
   m_TagString: VeryImportantObject
@@ -40,7 +43,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1820582562428308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 437.15674, y: 275.26715, z: -10.881607}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -85,6 +88,7 @@ MonoBehaviour:
   inventoryItem: {fileID: 1297539712334914, guid: 29fa6ab235250dd4696db88f4679ba64,
     type: 2}
   slots: []
+  loadedData: 0
 --- !u!114 &114601646615364422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,6 +104,28 @@ MonoBehaviour:
   interactionIndicator: {fileID: 1878810924118092, guid: 67382be6e8a77cb4dbbbaf91565521ad,
     type: 2}
   fakePosForInteractionIndicator: {x: 1000, y: 1000, z: 1000}
+--- !u!114 &114639708669120822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820582562428308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f843382eb0c09134d80d3675f0ba7f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitFirst: 1
+  combatFirstTurn: 1
+  combatSecondTurn: 1
+  combatThirdTurn: 1
+  summonFirst: 1
+  firstWin: 1
+  firstLoss: 1
+  firstInventory: 1
+  firstShop: 1
+  firstBuy: 1
+  isDynamic: 0
 --- !u!114 &114706111643280340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,6 +140,39 @@ MonoBehaviour:
   questList: []
   questTitle: {fileID: 0}
   questDescription: {fileID: 0}
+  questSum: {fileID: 0}
+  sumTitle: {fileID: 0}
+  gate1: {fileID: 0}
+  gate2: {fileID: 0}
+  fog: {fileID: 0}
+--- !u!114 &114768592034843672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820582562428308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded33fa0be8412e49a953e36fd4245f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeNum: {fileID: 0}
+  volumeSlider: {fileID: 0}
+--- !u!114 &114834500690341014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820582562428308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75747ed138a4eeb4a95179c1dc3b3db6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notMovedTime: 5
+  dancedAroundTheEnemy: 15
+  toCheckAgainstOne: 3
+  toCheckAgainstTwo: 2
 --- !u!114 &114917023096490568
 MonoBehaviour:
   m_ObjectHideFlags: 1

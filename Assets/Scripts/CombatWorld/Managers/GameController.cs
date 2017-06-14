@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,9 @@ using CombatWorld.Units;
 using CombatWorld.Utility;
 using CombatWorld.AI;
 using Overworld;
+using SimplDynTut;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace CombatWorld {
 	public class GameController : Singleton<GameController> {
@@ -33,6 +36,7 @@ namespace CombatWorld {
 		int PlayerTowersRemaining = 0;
 
 		bool waitingForAction = false;
+		public bool selectedAUnit, isLookingForUnitSelection;
 		List<Unit> performingAction = new List<Unit>();
 
 		public Text TurnIndicator;
@@ -41,11 +45,15 @@ namespace CombatWorld {
 
 		InGameMenu menu;
 
+		public CombatWorldTriggers cwTriggers;
+		public bool stillPlayerTurn = true;
+
 		void Start() {
 			menu = FindObjectOfType<InGameMenu>();
 			if (GameObject.FindGameObjectWithTag(TagConstants.OVERWORLDPLAYER)) {
 				StartCoroutine(FadeIn());
 			}
+			cwTriggers = GetComponent<CombatWorldTriggers>();
 			AudioHandler.instance.StartCWBGMusic();
 			maps.AddRange(Resources.LoadAll<GameObject>("Art/3D/Maps"));
 			pathfinding = new Pathfinding();
@@ -79,7 +87,7 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatFirstTurn) {
-					TutorialHandler.instance.ShowGoalAndSummon();
+					//TutorialHandler.instance.ShowGoalAndSummon();
 
 				}
 			}
@@ -144,6 +152,7 @@ namespace CombatWorld {
 			yield return new WaitUntil(() => !waitingForAction);
 			switch (currentTeam) {
 				case Team.Player:
+					cwTriggers.CheckUnitsPositions();
 					endButtonAnim.SetBool("MoreMoves",true);
 					AITurn();
 					DoBaordCalculations();
@@ -156,6 +165,9 @@ namespace CombatWorld {
 					StartTurn();
 					TowerNodes();
 					AICalculateScore.instance.DoAITurn();
+					stillPlayerTurn = false;
+					cwTriggers.turnEndTurnhasRun++;
+					PlayerData.Instance.currentTurn++;
 					break;
 				case Team.AI:
 					PlayerTurn();
@@ -168,6 +180,10 @@ namespace CombatWorld {
 					SelectTeamNodes();
 					endTurnButton.interactable = true;
 					TowerNodes();
+					cwTriggers.StartUnitSelectionTimer();
+					cwTriggers.StopEndTurnTimer();
+					stillPlayerTurn = true;
+					cwTriggers.CheckForTurnInfo();
 					break;
 				default:
 					break;
@@ -339,6 +355,8 @@ namespace CombatWorld {
 			}
 			movingPlayerUnit = false;
 			waitingForAction = false;
+			if(stillPlayerTurn && StartedAWaitingForUnit!=null)
+				StartedAWaitingForUnit();
 			if (currentTeam == Team.Player) {
 				SelectTeamNodes();
 				endTurnButton.interactable = true;
@@ -349,6 +367,12 @@ namespace CombatWorld {
 		public void SetSelectedUnit(Unit unit) {
 			selectedUnit = unit;
 			DataGathering.Instance.SelectedUnit(unit);
+			if(isLookingForUnitSelection)
+				SelectedUnitForDynTut();
+		}
+
+		private void SelectedUnitForDynTut() {
+			selectedAUnit = true;
 		}
 
 		public Unit GetSelectedUnit() {
@@ -376,7 +400,10 @@ namespace CombatWorld {
 			return performingAction.Count > 0;
 		}
 
+		public Action StartedAWaitingForUnit;
+		
 		public void AddWaitForUnit(Unit unit) {
+			//StartedAWaitingForUnit();
 			endTurnButton.interactable = false;
 			if (performingAction.Contains(unit)) {
 				Debug.LogWarning("Was already performing an action " + unit);
@@ -425,13 +452,13 @@ namespace CombatWorld {
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatSecondTurn) {
-					TutorialHandler.instance.StartingTurnSecondTurn();
+					//TutorialHandler.instance.StartingTurnSecondTurn();
 				}
 			}
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatThirdTurn) {
-					TutorialHandler.instance.combatThirdTurn = false;
-					TutorialHandler.instance.StartingThirdTurn();
+					//TutorialHandler.instance.combatThirdTurn = false;
+					//TutorialHandler.instance.StartingThirdTurn();
 				}
 			}
 		}
@@ -439,16 +466,16 @@ namespace CombatWorld {
 		private void AITurn() {
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatSecondTurn) {
-					TutorialHandler.instance.combatSecondTurn = false;
-					TutorialHandler.instance.combatThirdTurn = true;
+					//TutorialHandler.instance.combatSecondTurn = false;
+					//TutorialHandler.instance.combatThirdTurn = true;
 				}
 			}
 
 			if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.combatFirstTurn) {
-					TutorialHandler.instance.combatFirstTurn = false;
-					TutorialHandler.instance.combatSecondTurn = true;
-					TutorialHandler.instance.combatThirdTurn = false;
+					//TutorialHandler.instance.combatFirstTurn = false;
+					//TutorialHandler.instance.combatSecondTurn = true;
+					//TutorialHandler.instance.combatThirdTurn = false;
 				}
 			}
 

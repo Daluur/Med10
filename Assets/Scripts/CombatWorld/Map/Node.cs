@@ -165,7 +165,7 @@ namespace CombatWorld.Map {
 				if (TutorialHandler.instance != null) {
 					if (TutorialHandler.instance.unitFirst) {
 						TutorialHandler.instance.unitFirst = false;
-						TutorialHandler.instance.FirstSelection();
+						//TutorialHandler.instance.FirstSelection();
 					}
 				}
 			}
@@ -177,6 +177,8 @@ namespace CombatWorld.Map {
 					GameController.instance.MoveUnit(this);
 					break;
 				case HighlightState.NoMoreMoves:
+					PlayerData.Instance.timesTryingToSelectUnitWithoutMovesLeft++;
+					GameController.instance.cwTriggers.SelectingUnitWithNoMovesLeft();
 					GameController.instance.SetSelectedUnit(GetUnit());
 					break;
 				case HighlightState.Attackable:
@@ -184,6 +186,27 @@ namespace CombatWorld.Map {
 					break;
 				case HighlightState.SelfClick:
 					GameController.instance.NodeGotSelfClick();
+					break;
+				case HighlightState.NotMoveable:
+					if(GetType() == typeof(SummonNode) && !GetUnit().CanMove()){
+						PlayerData.Instance.timesTryingToSelectSummon++;
+						GameController.instance.cwTriggers.SelectingRecentlySummonedUnit();
+					}
+					else if(GameController.instance.GetSelectedUnit().GetTeam()==Team.Player && GetUnit().GetTeam() != Team.AI && !GetUnit().CanMove()) {
+						PlayerData.Instance.timesTryingToSelectUnitWithoutMovesLeft++;
+						GameController.instance.cwTriggers.SelectingUnitWithNoMovesLeft();
+					}
+					else if (GameController.instance.GetSelectedUnit().GetTeam() == Team.Player && GetOccupant().GetTeam() == Team.AI){
+						PlayerData.Instance.timesTryingToAttack++;
+						GameController.instance.cwTriggers.TryingToAttackFromRangeTut();
+					}
+					
+					break;
+				case HighlightState.None:
+					if (GameController.instance.GetSelectedUnit() != null && GameController.instance.GetSelectedUnit().GetTeam() == Team.Player && GetOccupant()!=null && GetOccupant().GetTeam() == Team.AI){
+						PlayerData.Instance.timesTryingToAttack++;
+						GameController.instance.cwTriggers.TryingToAttackFromRangeTut();
+					}
 					break;
 				default:
 					break;
