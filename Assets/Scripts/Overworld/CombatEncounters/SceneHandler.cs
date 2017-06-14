@@ -127,7 +127,7 @@ namespace Overworld {
 
 		void LearnedEverything() {
 			ProcessEncounteredObject();
-			GhostTalking.instance.ShowPopUp("I don't want to play with you anymore!\nHere have some new unit recipes!\nI have also opened a portal to a new island!");
+			//GhostTalking.instance.ShowPopUp("I don't want to play with you anymore!\nHere have some new unit recipes!\nI have also opened a portal to a new island!");
 			/*if (TutorialHandler.instance != null) {
 				if (TutorialHandler.instance.firstWin) {
 					TutorialHandler.instance.firstWin = false;
@@ -138,7 +138,7 @@ namespace Overworld {
 		}
 
 		void MoreToLearn() {
-			GhostTalking.instance.ShowPopUp("You might have beaten me! But I'm not done playing with you!\nCome find me again for my rematch!");
+			//GhostTalking.instance.ShowPopUp("You might have beaten me! But I'm not done playing with you!\nCome find me again for my rematch!");
 			//Tell the player what he did wrong.
 			encounterObject.GetComponent<StaticEncounter>().MoveToNewSpawnPos();
 		}
