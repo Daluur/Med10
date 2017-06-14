@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Overworld.Shops;
+using SimplDynTut;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -61,6 +62,10 @@ namespace Overworld {
 		}
 
 		public void DoAction<T>(T param, Vector3 m = default(Vector3)) {
+			if(!OverworldTriggers.instance.ChangedDeckBeforeEnteringCombat()) {
+				inputManager.StopPlayer();
+				return;
+			}
 			if(hasGeneralConfirmationBox)
 				return;
 			meClicked = true;

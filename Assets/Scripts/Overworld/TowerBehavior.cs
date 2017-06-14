@@ -27,7 +27,7 @@ namespace Overworld {
 
 		public override void PerformClosenessAction() {
 			hasGeneralConfirmationBox = false;
-			OverworldTriggers.HasBeenToShop();
+			OverworldTriggers.instance.HasBeenToShop();
 			OpenMenu();
 		}
 

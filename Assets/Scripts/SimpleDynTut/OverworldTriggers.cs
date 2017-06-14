@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using CombatWorld.Utility;
 using Overworld;
 using UnityEngine;
 
 namespace SimplDynTut{
-    public class OverworldTriggers : MonoBehaviour {
+    public class OverworldTriggers : Singleton<OverworldTriggers> {
         public float notMovedTime = 5f, dancedAroundTheEnemy = 15f;
         private static bool openedInventory, beenToShop, movedTopFourUnitsAround, enteredCombat, hasRunUnitsToBringToBattle;
         private Inventory inv;
         private List<Item> initOrder = new List<Item>();
+        public ElementalTypes toCheckAgainstOne = ElementalTypes.Nature, toCheckAgainstTwo = ElementalTypes.Water;
         
         void Start() {
             inv = GetComponent<Inventory>();
@@ -17,7 +20,7 @@ namespace SimplDynTut{
         }
 
 
-        public static void MovedAroundUnitsToBringToBatlle() {
+        public void MovedAroundUnitsToBringToBatlle() {
             movedTopFourUnitsAround = true;
         }
         
@@ -28,7 +31,7 @@ namespace SimplDynTut{
             }
         }
 
-        public static void HasBeenToShop() {
+        public void HasBeenToShop() {
             beenToShop = true;
         }
         
@@ -39,7 +42,7 @@ namespace SimplDynTut{
             }
         }
 
-        public static void InventoryOpened() {
+        public void InventoryOpened() {
             openedInventory = true;
         }
 
@@ -75,24 +78,18 @@ namespace SimplDynTut{
             }
         }
 
-        public void ChangedDeckBeforeEnteringCombat() {
+        public bool ChangedDeckBeforeEnteringCombat() {
             if(hasRunUnitsToBringToBattle)
-                return;
+                return true;
             var newOrder = inv.GetFirstXItemsFromInventory(Values.NUMOFUNITSTOBRINGTOCOMBAT);
-            bool isSameSetup = false;
-            foreach (var item in newOrder) {
-                foreach (var iItem in initOrder) {
-                    if (iItem == item) {
-                        isSameSetup = true;
-                        break;
-                    }
-                }
-                if(isSameSetup)
-                    break;
-            }
-            if (isSameSetup) {
+            bool containsBothTypes = false;
+            containsBothTypes = newOrder.Exists(e => e.Type.ToLower().Equals("water")) &&
+                                newOrder.Exists(e => e.Type.ToLower().Equals("nature")); 
+            if (!containsBothTypes) {
                 Debug.Log("Did not change the setup of his battle units before entering combat, show him stuff");
+                return false;
             }
+            return true;
             hasRunUnitsToBringToBattle = true;
         }
     }

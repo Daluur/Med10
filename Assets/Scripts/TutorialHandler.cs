@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Overworld;
+using SimplDynTut;
 using UnityEngine;
 
 public class TutorialHandler : Singleton<TutorialHandler> {
@@ -148,28 +149,19 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 	public void NewWorldTrigger(OWTUTTRIGGERS trigger) {
 		switch (trigger) {
 			case OWTUTTRIGGERS.UnitsToBring:
-				//Display message.
+				OverworldTriggers.instance.ChangedDeckBeforeEnteringCombat();
 				break;
 			case OWTUTTRIGGERS.OpenInventory:
-				//Display message.
+				OverworldTriggers.instance.ShowInventoryOpenInformation();
 				break;
 			case OWTUTTRIGGERS.EnterShop:
-				//Display message.
-				break;
-			case OWTUTTRIGGERS.BuyUnits:
-				//Display message.
+				OverworldTriggers.instance.ShowGoToShopTutInfo();
 				break;
 			case OWTUTTRIGGERS.EnterCombat:
-				//Display message.
+				OverworldTriggers.instance.StartEnterCombatTimer();
 				break;
 			default:
 				break;
-		}
-	}
-
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.E)) {
-			GeneralConfirmationBox.instance.ShowPopUp("NEED TEXT FOR SELECTING UNIT TUT", "Okay");
 		}
 	}
 }
