@@ -44,12 +44,8 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		GeneralConfirmationBox.instance.ShowPopUp("Units can attack enemy units when they are on spots connected by a path.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("If a unit is still alive after it has been attacked it will retaliate.\nAttacking ends the units turn.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("The yellow number above your unit is the damage it deals. The red line is the health bar, which indicates how much damage the unit can take.", "CLOSE")));
 	}
 
-	public void Winning() {
-		GeneralConfirmationBox.instance.ShowPopUp("Winning a battle will grant new summon recipes", "CLOSE");
-	}
-
-	public void FirstSummon() {
-		GeneralConfirmationBox.instance.ShowPopUp("Units cannot make other moves the round they are summoned.", "NEXT", () => GeneralConfirmationBox.instance.ShowPopUp("When you have performed all your moves, end your turn by pressing 'SPACE' or clicking the end turn button, after which the opponent will take theirs.", "CLOSE"));
+	public void SummonSickness() {
+		GeneralConfirmationBox.instance.ShowPopUp("Units cannot make other moves the round they are summoned.", "CONTINUE");
 	}
 
 	public void FirstSelection() {
@@ -72,17 +68,17 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		GeneralConfirmationBox.instance.ShowPopUp("You are able to carry 12 units at a time.", "NEXT", () => GeneralConfirmationBox.instance.PartOfMultiPage("Close the inventory and shop by clicking the X in the top right corner, or by pressing ESC to close all windows.", "CLOSE"));
 	}
 
-	public void ShadowUnitDyn() {
+	/*public void ShadowUnitDyn() {
 		GeneralConfirmationBox.instance.ShowPopUp("SHADOW units can move through other units", "CLOSE");
 	}
 
-	public void TypeTUTDyn() {
+	/*public void TypeTUTDyn() {
 		GeneralConfirmationBox.instance.ShowPopUp("Units have different types, these can be strong or weak to another type.", "NEXT",
 			() => GeneralConfirmationBox.instance.ShowPopUp("Attacking with a unit, whose type is strong against the opponent’s type will deal double damage.", "NEXT",
 			() => GeneralConfirmationBox.instance.ShowPopUp("Attacking with a unit, whose type is weak against the opponent’s type will deal half damage.", "NEXT",
 			() => GeneralConfirmationBox.instance.ShowPopUp("WATER is strong against FIRE.\n\nFIRE is strong against NATURE.", "NEXT",
 			() => GeneralConfirmationBox.instance.ShowPopUp("NATURE is strong against LIGHTNING.\n\nLIGHTNING is strong against WATER.", "CLOSE")))));
-	}
+	}*/
 
 	public void ShowBothShadowAndTypesDynTUT() {
 		GeneralConfirmationBox.instance.ShowPopUp(
@@ -93,7 +89,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 
 	public void EndTurn(bool isDynamicCallIn) {
 		if(isDynamic == isDynamicCallIn)
-			GeneralConfirmationBox.instance.ShowPopUp("NEED TEXT, END TURN FOR PLAYER DYNAMIC TUT", "Okay");
+			GeneralConfirmationBox.instance.ShowPopUp("When you have performed all your moves, end your turn by pressing 'SPACE' or clicking the end turn button, after which the opponent will take theirs.", "CONTINUE");
 	}
 
 	public void SelectUnits(bool isDynamicCallIn) {
@@ -103,23 +99,22 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 
 	public void WorldTrigger(int id) {
 		if(id == 1) { //move
-			GeneralConfirmationBox.instance.ShowPopUp("Click on the ground to move your character", "CLOSE");
+			GeneralConfirmationBox.instance.ShowPopUp("Click on the ground to move your character.", "CONTINUE");
 		}
 		if(id == 2) { //shop
-			GeneralConfirmationBox.instance.ShowPopUp("Click on the summon tower to open the unit shop", "CLOSE");
+			GeneralConfirmationBox.instance.ShowPopUp("Click on the summon tower to open the unit shop.", "CONTINUE");
 		}
 		if(id == 3) { //encounter
-			GeneralConfirmationBox.instance.ShowPopUp("Click on an enemy to start a battle", "NEXT", 
-				() => GeneralConfirmationBox.instance.ShowPopUp("You can hover the mouse over an enemy to see information about the enemy.", "CLOSE"));
+			GeneralConfirmationBox.instance.ShowPopUp("Click on an enemy to start a battle.", "CONTINUE");
 		}
 		if(id == 4) { //inventory
-			GeneralConfirmationBox.instance.ShowPopUp("Press the 'I' key to open your inventory", "CLOSE");
+			GeneralConfirmationBox.instance.ShowPopUp("Press the 'I' key to open your inventory.", "CONTINUE");
 		}
 		if (id == 5) { //types
 			if (!isDynamic) {
-				GeneralConfirmationBox.instance.ShowPopUp("Units have different types, these can be strong or weak to another type.", "NEXT",
-					() => GeneralConfirmationBox.instance.ShowPopUp("Attacking with a unit, whose type is strong against the opponent’s type will deal double damage.", "NEXT",
-					() => GeneralConfirmationBox.instance.ShowPopUp("Attacking with a unit, whose type is weak against the opponent’s type will deal half damage.", "CLOSE")));
+				GeneralConfirmationBox.instance.ShowPopUp("Units have different types, these can be strong or weak to another type.", "CONTINUE",
+					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a unit, whose type is strong against the enemy deals double damage.\nAttacking against a strong type deals half damage.", "CONTINUE",
+					() => GeneralConfirmationBox.instance.PartOfMultiPage("FIRE is strong against NATURE - NATURE is strong against LIGHTNING\nLIGHTNING is strong against WATER - WATER is strong against FIRE.", "CONTINUE")));
 			}
 		}
 		if (id == 6) { //types2
@@ -158,17 +153,16 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 				OverworldTriggers.instance.StartEnterCombatTimer();
 				break;
 			case OWTUTTRIGGERS.types:
-				GeneralConfirmationBox.instance.ShowPopUp("Units have different types, these can be strong or weak to another type.", "NEXT",
-					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a unit, whose type is strong against the opponent’s type will deal double damage.", "NEXT",
-					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a unit, whose type is weak against the opponent’s type will deal half damage.", "CLOSE")));
+					GeneralConfirmationBox.instance.ShowPopUp("The units you will use in combat have different types, these can be strong or weak to another type.", "CONTINUE",
+					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a type that is strong against another deals double damage.\nAttacking with a type that is weak deals half damage.", "CONTINUE",
+					() => GeneralConfirmationBox.instance.PartOfMultiPage("FIRE is strong against NATURE - NATURE is strong against LIGHTNING\nLIGHTNING is strong against WATER - WATER is strong against FIRE.", "CONTINUE")));
 				break;
 			case OWTUTTRIGGERS.concede:
-				GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, there is a concede option in the escape menu.", "CLOSE");
+				GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, press the 'ESC' key and use the concede option in the menu.", "CONTINUE");
 				break;
 			case OWTUTTRIGGERS.shadow:
-				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "NEXT",
-				() => GeneralConfirmationBox.instance.PartOfMultiPage("SHADOW units can move through other units", "NEXT",
-				() => GeneralConfirmationBox.instance.PartOfMultiPage("STONE units can hunker down in place, after which they will be unable to move, or initiate attacks, but will receive less damage and deal less damage.", "CLOSE")));
+				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "CONTINUE",
+				() => GeneralConfirmationBox.instance.PartOfMultiPage("SHADOW units can move through other units.\nThese are now available for you in the shop.", "CONTINUE"));
 				break;
 			default:
 				break;
