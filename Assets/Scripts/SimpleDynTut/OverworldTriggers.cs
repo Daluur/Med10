@@ -92,7 +92,7 @@ namespace SimplDynTut{
 				}
 				yield return new WaitForEndOfFrame();
 			}
-			if (PlayerData.Instance.hasEnteredCombat) {
+			if (!PlayerData.Instance.hasEnteredCombat) {
                 Debug.Log("Danced around the enemy for a long period of time, show the enter combat thing");
             }
         }

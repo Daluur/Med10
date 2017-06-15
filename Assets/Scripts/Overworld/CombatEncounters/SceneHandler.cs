@@ -111,6 +111,7 @@ namespace Overworld {
 			DisableObjectsCombatLoad();
 			isLoading = false;
 			yield return new WaitForSeconds(0.4f);
+			PlayerData.Instance.hasEnteredCombat = true;
 			inputManager.gameObject.SetActive(true);
 		}
 
