@@ -32,12 +32,15 @@ public class DataGathering {
 				}
 				instance.ID = instance.Static ? "S" : "D";
 				instance.ID += DateTime.Now.ToString("dd-HH:mm:ss:fff") + "R" + rand.Next(0,10000) + "R" + rand2.Next(0,10000);
+				instance.StartTime = DateTime.Now;
 			}
 			return instance;
 		}
 	}
 
 	#endregion
+
+	public DateTime StartTime;
 
 	#region ID
 

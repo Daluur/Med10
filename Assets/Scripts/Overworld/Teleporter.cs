@@ -11,6 +11,9 @@ public class Teleporter : ContextInteraction, IInteractable {
 
 	void Start() {
 		Register(this, KeyCode.Mouse0);
+		if (isFinal) {
+			shouldBeActive = true;
+		}
 		gameObject.SetActive(shouldBeActive);
 	}
 
