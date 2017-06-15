@@ -4,6 +4,7 @@ using CombatWorld;
 using CombatWorld.Units;
 using CombatWorld.Utility;
 using UnityEngine;
+using Overworld;
 
 namespace SimplDynTut {
 	public class CombatWorldTriggers : MonoBehaviour {
@@ -80,7 +81,13 @@ namespace SimplDynTut {
 		}
 
 		private IEnumerator MovementTimer() {
-			yield return new WaitForSeconds(hasNotMovedIn);
+			float timer = 0;
+			while (timer < hasNotMovedIn) {
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timer += Time.deltaTime;
+				}
+				yield return new WaitForEndOfFrame();
+			}
 			if (!PlayerData.Instance.hasMovedInCW) {
 				Debug.Log("Player has not moved in a time after selecting unit");
 			}
@@ -146,8 +153,14 @@ namespace SimplDynTut {
 		}
 
 		private IEnumerator EndTurnTimer() {
-			yield return new WaitForSeconds(endTurnTimer);
-			if(GameController.instance.stillPlayerTurn){
+			float timer = 0;
+			while (timer < endTurnTimer) {
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timer += Time.deltaTime;
+				}
+				yield return new WaitForEndOfFrame();
+			}
+			if (GameController.instance.stillPlayerTurn){
 				PlayerData.Instance.hasShownEndTurn = true;
 				Debug.Log("End turn trigger, triggered show the end turn tut information");
 			}
@@ -155,8 +168,14 @@ namespace SimplDynTut {
 
 		private IEnumerator SummonTimer() {
 			PlayerData.Instance.hasRunSummonDisplayTimer = true;
-			yield return new WaitForSeconds(summonDisplayTimer);
-			if(!PlayerData.Instance.GetHasEverSummonedAUnit())
+			float timer = 0;
+			while (timer < summonDisplayTimer) {
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timer += Time.deltaTime;
+				}
+				yield return new WaitForEndOfFrame();
+			}
+			if (!PlayerData.Instance.GetHasEverSummonedAUnit())
 				Debug.Log("Summon display triggered Put in tutorial to show");
 		}
 
@@ -171,8 +190,14 @@ namespace SimplDynTut {
 		
 		private IEnumerator UnitSelection() {
 			GameController.instance.isLookingForUnitSelection = true;
-			yield return new WaitForSeconds(unitSelectionTimer);
-			if(!PlayerData.Instance.GetHasEverSelectedAUnit())
+			float timer = 0;
+			while (timer < unitSelectionTimer) {
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timer += Time.deltaTime;
+				}
+				yield return new WaitForEndOfFrame();
+			}
+			if (!PlayerData.Instance.GetHasEverSelectedAUnit())
 				Debug.Log("Show the unit selection tutorial tut");
 			GameController.instance.isLookingForUnitSelection = false;
 		}
@@ -189,7 +214,9 @@ namespace SimplDynTut {
 			PlayerData.Instance.hasRunSelectingUnitWithNoMovesLeft = true;
 			int timeVar = 0;
 			while (selectingUnitNoMovesLeftTime > timeVar) {
-				timeVar++;
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timeVar++;
+				}
 				yield return new WaitForSeconds(1f);
 				if(timesTryingToSelectUnitWithoutMovesLeft >= limitTimesTryingToSelectUnitWithoutMovesLeft){
 					DisplayBasicUnitUnderstanding();
@@ -217,7 +244,9 @@ namespace SimplDynTut {
 			PlayerData.Instance.hasRunSelectingSummonedUnit = true;
 			int timeVar = 0;
 			while (selectingSummonedUnitTime > timeVar) {
-				timeVar++;
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timeVar++;
+				}
 				yield return new WaitForSeconds(1f);
 				if(timesTryingToSelectSummon >= limitTimesTryingToSelectSummon){
 					DisplaySummonSicknessTut();
@@ -244,7 +273,9 @@ namespace SimplDynTut {
 			PlayerData.Instance.hasRunTryingToAttack = true;
 			int timeVar = 0;
 			while (tryingToAttackTime > timeVar) {
-				timeVar++;
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timeVar++;
+				}
 				yield return new WaitForSeconds(1f);
 				if(timesTryingToAttack >= limitTimesTryingToAttack){
 					DisplayAttackingTut();

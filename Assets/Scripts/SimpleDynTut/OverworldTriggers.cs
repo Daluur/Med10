@@ -65,7 +65,13 @@ namespace SimplDynTut{
             if (PlayerData.Instance.GetHasPlayerMoved()) {
                 yield break;
             }
-            yield return new WaitForSeconds(notMovedTime);
+			float timer = 0;
+			while(timer < notMovedTime) {
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timer += Time.deltaTime;
+				}
+				yield return new WaitForEndOfFrame();
+			}
             if (PlayerData.Instance.GetHasPlayerMoved()) {
                 yield break;
             }
@@ -79,8 +85,14 @@ namespace SimplDynTut{
 
         private IEnumerator EnterCombatTimer() {
             enteredCombat = true;
-            yield return new WaitForSeconds(dancedAroundTheEnemy);
-            if (PlayerData.Instance.hasEnteredCombat) {
+			float timer = 0;
+			while (timer < dancedAroundTheEnemy) {
+				if (!GeneralConfirmationBox.instance.IsOpen) {
+					timer += Time.deltaTime;
+				}
+				yield return new WaitForEndOfFrame();
+			}
+			if (PlayerData.Instance.hasEnteredCombat) {
                 Debug.Log("Danced around the enemy for a long period of time, show the enter combat thing");
             }
         }
