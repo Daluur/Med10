@@ -54,6 +54,7 @@ namespace CombatWorld.Units {
 
 		public void Move(List<Node> node) {
 			GameController.instance.AddWaitForUnit(this);
+			PlayerData.Instance.hasMovedInCW = true;
 			currentNode.RemoveOccupant();
 			currentNode = node[0];
 			currentNode.SetOccupant(this);
