@@ -12,8 +12,8 @@ public class DataGathering {
 
 	private static DataGathering instance;
 
-	static bool isStatic = false;
-	static bool isDynamic = true;
+	static bool isStatic = true;
+	static bool isDynamic = false;
 
 	public static DataGathering Instance {
 		get {
