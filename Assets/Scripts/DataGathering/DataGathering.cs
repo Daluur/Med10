@@ -20,7 +20,7 @@ public class DataGathering {
 			if (instance == null) {
 				instance = new DataGathering();
 				System.Random rand = new System.Random(Time.renderedFrameCount);
-				System.Random rand2 = new System.Random((int)(Time.realtimeSinceStartup*10000000));
+				System.Random rand2 = new System.Random((int)(Time.realtimeSinceStartup*1000));
 				if (isStatic) {
 					instance.Static = true;
 				}
