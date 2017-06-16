@@ -69,7 +69,7 @@ namespace SimplDynTut {
 
 		public void CheckForEverAttacked() {
 			if (currentTurn == turnToAttackLimit - 1 && !PlayerData.Instance.hasEverAttacked) {
-				Debug.Log("Player has not attacked yet show attack information");
+				TutorialHandler.instance.WorldTrigger(17);
 			}
 		}
 
@@ -108,7 +108,7 @@ namespace SimplDynTut {
 				return;
 			if (( GameController.instance.GettAllUnitsOfTeam(Team.Player).Count -
 			      GameController.instance.GettAllUnitsOfTeam(Team.AI).Count ) >= offsetUnitAmount && !GameController.instance.GetTowersForTeam((Team.AI)).Any(e => e.GetTower().GetHealth() < 50)) {
-				Debug.Log("Win condition trigger one has been triggered, should show win condition");
+				TutorialHandler.instance.WorldTrigger(15);
 				return;
 			}
 			if (unitStandingNextToTowerBeingAbleToAttackButNotAttacking >=
@@ -228,7 +228,7 @@ namespace SimplDynTut {
 
 		private void DisplayBasicUnitUnderstanding() {
 			PlayerData.Instance.timesTryingToSelectUnitWithoutMovesLeft = 0;
-			Debug.Log("Show the basic turn understanding, the player tried to select units multiple times that has no moves left");
+			TutorialHandler.instance.WorldTrigger(16);
 		}
 
 		public void SelectingRecentlySummonedUnit() {
@@ -292,7 +292,7 @@ namespace SimplDynTut {
 
 		public void TryingToSelectEnemyUnits() {
 			if (timesTryingToSelectEnemy >= limitAmountOfTimesTryingToSelectEnemyUnit) {
-				Debug.Log("The player has continously tried to select an enemy unit display information");
+				TutorialHandler.instance.WorldTrigger(18);
 				timesTryingToSelectEnemy = 0;
 			}
 		}

@@ -635,6 +635,8 @@ MonoBehaviour:
   - {x: 40, y: 0, z: 0}
   - {x: 60, y: 0, z: 0}
   - {x: 70, y: 0, z: 0}
+  playerMovementAmount: 0
+  hasZoomed: 0
   moveToUnitClosestToEnemies: 1
 --- !u!1 &1248978505
 GameObject:
@@ -679,6 +681,7 @@ MonoBehaviour:
   summonPointTurnNumber: {fileID: 1840911188}
   summonPointTurnAnim: {fileID: 902118227}
   cwTriggers: {fileID: 0}
+  stillPlayerTurn: 1
 --- !u!4 &1248978507
 Transform:
   m_ObjectHideFlags: 0
@@ -757,14 +760,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bfde280ae9da7a4d8fcb8e877c43db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  summonDisplayTimer: 8
-  unitSelectionTimer: 10
+  summonDisplayTimer: 6
+  unitSelectionTimer: 6
+  endTurnTimer: 6
   tryingToAttackTime: 40
   selectingSummonedUnitTime: 180
   selectingUnitNoMovesLeftTime: 180
+  hasNotMovedIn: 5
+  turnsTheEndTurnRuns: 3
+  turnBeforeCameraTut: 2
+  turnBeforeZoomTut: 3
+  turnToAttackLimit: 5
+  limitAmountOfTimesTryingToSelectEnemyUnit: 5
+  turnEndTurnhasRun: 0
+  offsetUnitAmount: 10
+  amountOfTimesUnitStandingNextToTowerDoesNotAttackTriggerWin: 2
+  limitForHowMuchPlayerHasMovedCamera: 15
   limitTimesTryingToAttack: 3
-  limitTimesTryingToSelectSummon: 5
-  limitTimesTryingToSelectUnitWithoutMovesLeft: 5
+  limitTimesTryingToSelectSummon: 3
+  limitTimesTryingToSelectUnitWithoutMovesLeft: 3
 --- !u!114 &1268836028 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114486575243508106, guid: dde5fab992ca27f4c831f4ba883853a9,

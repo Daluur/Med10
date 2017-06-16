@@ -42,7 +42,7 @@ namespace SimplDynTut{
         public void ShowGoToShopTutInfo() {
             if (!beenToShop) {
                 //TODO: Create correct tutorial information to be displayed
-                Debug.LogWarning("The Go to shop trigger was hit, but there is currently no implementation for its tutorial information");
+				TutorialHandler.instance.WorldTrigger(2);
             }
         }
 
@@ -53,7 +53,7 @@ namespace SimplDynTut{
         public void ShowInventoryOpenInformation() {
             if (!openedInventory) {
                 //TODO: Create correct tutorial information to be displayed
-                Debug.LogWarning("The inventory trigger was hit, but there is currently no implementation for its tutorial information");
+				TutorialHandler.instance.WorldTrigger(4);
             }
         }
 

@@ -101,40 +101,41 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		if(id == 1) { //move
 			GeneralConfirmationBox.instance.ShowPopUp("Click on the ground to move your character.", "CONTINUE");
 		}
+
 		if(id == 2) { //shop
 			GeneralConfirmationBox.instance.ShowPopUp("Click on the summon tower to open the unit shop.", "CONTINUE");
 		}
+
 		if(id == 3) { //encounter
 			GeneralConfirmationBox.instance.ShowPopUp("Click on an enemy to start a battle.", "CONTINUE");
 		}
+
 		if(id == 4) { //inventory
 			GeneralConfirmationBox.instance.ShowPopUp("Press the 'I' key to open your inventory.", "CONTINUE");
 		}
+
 		if (id == 5) { //summon
-			if (!isDynamic) {
 				GeneralConfirmationBox.instance.ShowPopUp("Click a unit icon and then one of your square tiles to summon it.\nThis costs 'summon points', which are displayed next to the units name.", "CONTINUE");
-			}
 		}
+
 		if (id == 6) { //end turn
-			if (!isDynamic) {
 				GeneralConfirmationBox.instance.ShowPopUp("When you have performed all your moves, end your turn by pressing 'SPACE' or clicking the end turn button, after which the opponent will take theirs.", "CONTINUE");
-			}
 		}
+
 		if (id == 7) { //sickness
-			if (isDynamic) {
 				GeneralConfirmationBox.instance.ShowPopUp("Units cannot perform other actions the round they are summoned.", "CONTINUE");
-			}
 		}
+
 		if(id == 8) { //Concede
-			GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, there is a concede option in the escape menu.", "CLOSE");
+			GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, there is a concede option in the escape menu.", "CONTINUE");
 		}
 
 		if(id == 9) { //Change deck
-			GeneralConfirmationBox.instance.ShowPopUp ("The 4 glowing slots are your combat slots, you will bring these units to battle.", "CONTINUE", () => GeneralConfirmationBox.instance.PartOfMultiPage("You can drag units to different slots to change your lineup.", "CONTINUE"));
+			GeneralConfirmationBox.instance.ShowPopUp ("In your inventory, the 4 glowing slots are your combat slots, you will bring these units to battle.", "CONTINUE", () => GeneralConfirmationBox.instance.PartOfMultiPage("You can drag units to different slots to change your lineup.", "CONTINUE"));
 		}
 
 		if(id == 10) { //camera
-			GeneralConfirmationBox.instance.ShowPopUp("Drag on the screen with mouse to move the camera.", "CONTINUE");
+			GeneralConfirmationBox.instance.ShowPopUp("Click and drag on the screen with the mouse to move the camera.", "CONTINUE");
 		}
 
 		if(id == 11) { //selection
@@ -156,6 +157,18 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		if(id == 15) { //win
 			GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers before they destroy yours.", "CONTINUE");
 		}
+
+		if(id == 16) { //no moves
+			GeneralConfirmationBox.instance.ShowPopUp("You can only move or attack once with a unit per turn.", "CONTINUE");
+		}
+
+		if(id == 17) { //attack
+			GeneralConfirmationBox.instance.ShowPopUp("You can only attack units that are on a spot next to your unit.", "CONTINUE");
+		}
+
+		if(id == 18) { //enemy unit
+			GeneralConfirmationBox.instance.ShowPopUp("You can only move or attack once with a unit per turn.", "CONTINUE");
+		}
 	}
 
 	public void NewWorldTrigger(OWTUTTRIGGERS trigger) {
@@ -172,7 +185,8 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 			case OWTUTTRIGGERS.types:
 					GeneralConfirmationBox.instance.ShowPopUp("The units you will use in combat have different types, these can be strong or weak to another type.", "CONTINUE",
 					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a type that is strong against another deals double damage.\nAttacking with a type that is weak deals half damage.", "CONTINUE",
-					() => GeneralConfirmationBox.instance.PartOfMultiPage("FIRE is strong against NATURE - NATURE is strong against LIGHTNING\nLIGHTNING is strong against WATER - WATER is strong against FIRE.", "CONTINUE")));
+					() => GeneralConfirmationBox.instance.PartOfMultiPage("FIRE is strong against NATURE\nNATURE is strong against LIGHTNING", "CONTINUE",
+						() => GeneralConfirmationBox.instance.PartOfMultiPage("LIGHTNING is strong against WATER\nWATER is strong against FIRE", "CONTINUE"))));
 				break;
 			case OWTUTTRIGGERS.concede:
 				GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, press the 'ESC' key and use the concede option in the menu.", "CONTINUE");
