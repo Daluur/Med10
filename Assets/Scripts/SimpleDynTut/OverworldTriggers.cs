@@ -93,7 +93,7 @@ namespace SimplDynTut{
 				yield return new WaitForEndOfFrame();
 			}
 			if (!PlayerData.Instance.hasEnteredCombat) {
-                Debug.Log("Danced around the enemy for a long period of time, show the enter combat thing");
+				TutorialHandler.instance.WorldTrigger(3);
             }
         }
 
@@ -106,7 +106,7 @@ namespace SimplDynTut{
             containsBothTypes = newOrder.Exists(e => e.Type.ToLower().Equals("water")) &&
                                 newOrder.Exists(e => e.Type.ToLower().Equals("nature")); 
             if (!containsBothTypes) {
-                Debug.Log("Did not change the setup of his battle units before entering combat, show him stuff");
+				TutorialHandler.instance.WorldTrigger(9);
                 return false;
             }
             

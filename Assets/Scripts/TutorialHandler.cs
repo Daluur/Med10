@@ -110,34 +110,51 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		if(id == 4) { //inventory
 			GeneralConfirmationBox.instance.ShowPopUp("Press the 'I' key to open your inventory.", "CONTINUE");
 		}
-		if (id == 5) { //types
+		if (id == 5) { //summon
 			if (!isDynamic) {
-				GeneralConfirmationBox.instance.ShowPopUp("Units have different types, these can be strong or weak to another type.", "CONTINUE",
-					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a unit, whose type is strong against the enemy deals double damage.\nAttacking against a strong type deals half damage.", "CONTINUE",
-					() => GeneralConfirmationBox.instance.PartOfMultiPage("FIRE is strong against NATURE - NATURE is strong against LIGHTNING\nLIGHTNING is strong against WATER - WATER is strong against FIRE.", "CONTINUE")));
+				GeneralConfirmationBox.instance.ShowPopUp("Click a unit icon and then one of your square tiles to summon it.\nThis costs 'summon points', which are displayed next to the units name.", "CONTINUE");
 			}
 		}
-		if (id == 6) { //types2
+		if (id == 6) { //end turn
 			if (!isDynamic) {
-				GeneralConfirmationBox.instance.ShowPopUp("WATER is strong against FIRE.", "NEXT",
-					() => GeneralConfirmationBox.instance.ShowPopUp("FIRE is strong against NATURE.", "NEXT",
-					() => GeneralConfirmationBox.instance.ShowPopUp("NATURE is strong against LIGHTNING.", "NEXT",
-					() => GeneralConfirmationBox.instance.ShowPopUp("LIGHTNING is strong against WATER.", "CLOSE"))));
+				GeneralConfirmationBox.instance.ShowPopUp("When you have performed all your moves, end your turn by pressing 'SPACE' or clicking the end turn button, after which the opponent will take theirs.", "CONTINUE");
 			}
 		}
-		if (id == 7) { //shadow
+		if (id == 7) { //sickness
 			if (isDynamic) {
-				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "NEXT",
-				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will be unable to move, or initiate attacks, but will receive less damage and deal less damage.", "CLOSE"));
-			}
-			else {
-				GeneralConfirmationBox.instance.ShowPopUp("Some units have special abilities, which they can use in combat.", "NEXT",
-				() => GeneralConfirmationBox.instance.ShowPopUp("SHADOW units can move through other units", "NEXT",
-				() => GeneralConfirmationBox.instance.ShowPopUp("STONE units can hunker down in place, after which they will be unable to move, or initiate attacks, but will receive less damage and deal less damage.", "CLOSE")));
+				GeneralConfirmationBox.instance.ShowPopUp("Units cannot perform other actions the round they are summoned.", "CONTINUE");
 			}
 		}
 		if(id == 8) { //Concede
 			GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, there is a concede option in the escape menu.", "CLOSE");
+		}
+
+		if(id == 9) { //Change deck
+			GeneralConfirmationBox.instance.ShowPopUp ("The 4 glowing slots are your combat slots, you will bring these units to battle.", "CONTINUE", () => GeneralConfirmationBox.instance.PartOfMultiPage("You can drag units to different slots to change your lineup.", "CONTINUE"));
+		}
+
+		if(id == 10) { //camera
+			GeneralConfirmationBox.instance.ShowPopUp("Drag on the screen with mouse to move the camera.", "CONTINUE");
+		}
+
+		if(id == 11) { //selection
+			GeneralConfirmationBox.instance.ShowPopUp("Click on a summoned unit to select it.", "CONTINUE");
+		}
+
+		if(id == 12) { //ranged
+			GeneralConfirmationBox.instance.ShowPopUp("Units can attack enemy units when they are on spots connected by a path.", "CONTINUE");
+		}
+
+		if(id == 13) { //movement
+			GeneralConfirmationBox.instance.ShowPopUp("Click on a green spot to move to it.\nYou can only move once with a unit per turn, it can however attack if it moves to a spot with an enemy unit next to it.", "CONTINUE");
+		}
+
+		if(id == 14) { //zoom
+			GeneralConfirmationBox.instance.ShowPopUp("Scroll on the mouse wheel to zoom in and out of the battlefield.", "CONTINUE");
+		}
+
+		if(id == 15) { //win
+			GeneralConfirmationBox.instance.ShowPopUp("Your goal is to destroy the enemy towers before they destroy yours.", "CONTINUE");
 		}
 	}
 

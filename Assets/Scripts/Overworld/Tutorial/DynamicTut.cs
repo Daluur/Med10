@@ -119,14 +119,14 @@ public class DynamicTut : Singleton<DynamicTut> {
 			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, attacker = ElementalTypes.Water });
 			DataGathering.Instance.WasToldAboutShadow();
 			if (isDynamic) {
-				TutorialHandler.instance.ShadowUnitDyn();
+				//TutorialHandler.instance.ShadowUnitDyn();
 			}
 		}
 		else if (dynamicTut) {
 			DataGathering.Instance.AddCombatTrade(new CombatTrades() { initiator = Team.NONE, attacker = ElementalTypes.Nature });
 			DataGathering.Instance.WasToldAboutTypes();
 			if (isDynamic) {
-				TutorialHandler.instance.TypeTUTDyn();
+				//TutorialHandler.instance.TypeTUTDyn();
 			}
 		}
 	}

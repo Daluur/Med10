@@ -89,7 +89,7 @@ namespace SimplDynTut {
 				yield return new WaitForEndOfFrame();
 			}
 			if (!PlayerData.Instance.hasMovedInCW) {
-				Debug.Log("Player has not moved in a time after selecting unit");
+				TutorialHandler.instance.WorldTrigger(13);
 			}
 		}
 
@@ -114,16 +114,16 @@ namespace SimplDynTut {
 			if (unitStandingNextToTowerBeingAbleToAttackButNotAttacking >=
 			    amountOfTimesUnitStandingNextToTowerDoesNotAttackTriggerWin) {
 				hasShownWin = true;
-				Debug.Log("Win condition triggered based on the amount of times a player unit stood next to a tower without hitting it");
+				TutorialHandler.instance.WorldTrigger(15);
 			}
 		}
 
 		public void CheckForTurnInfo() {
 			if (currentTurn == turnBeforeCameraTut - 1 && CombatCameraController.instance.playerMovementAmount < limitForHowMuchPlayerHasMovedCamera) {
-				Debug.Log("Show the how to control the camera tut!!!");
+				TutorialHandler.instance.WorldTrigger(10);
 			}
 			if (currentTurn == turnBeforeZoomTut - 1 && !CombatCameraController.instance.hasZoomed) {
-				Debug.Log("Show the how to control the zoom tut!!!");
+				TutorialHandler.instance.WorldTrigger(14);
 			}
 		}
 
@@ -162,7 +162,7 @@ namespace SimplDynTut {
 			}
 			if (GameController.instance.stillPlayerTurn){
 				PlayerData.Instance.hasShownEndTurn = true;
-				Debug.Log("End turn trigger, triggered show the end turn tut information");
+				TutorialHandler.instance.WorldTrigger(6);
 			}
 		}
 
@@ -176,7 +176,7 @@ namespace SimplDynTut {
 				yield return new WaitForEndOfFrame();
 			}
 			if (!PlayerData.Instance.GetHasEverSummonedAUnit())
-				Debug.Log("Summon display triggered Put in tutorial to show");
+				TutorialHandler.instance.WorldTrigger(5);
 		}
 
 		public void StartUnitSelectionTimer() {
@@ -198,7 +198,7 @@ namespace SimplDynTut {
 				yield return new WaitForEndOfFrame();
 			}
 			if (!PlayerData.Instance.GetHasEverSelectedAUnit())
-				Debug.Log("Show the unit selection tutorial tut");
+				TutorialHandler.instance.WorldTrigger(11);
 			GameController.instance.isLookingForUnitSelection = false;
 		}
 
@@ -258,7 +258,7 @@ namespace SimplDynTut {
 
 		private void DisplaySummonSicknessTut() {
 			PlayerData.Instance.timesTryingToSelectSummon = 0;
-			Debug.Log("Show the summon sickness, the player tried to select units multiple times that still has summon sickness");
+			TutorialHandler.instance.WorldTrigger(7);
 		}
 
 		public void TryingToAttackFromRangeTut() {
@@ -287,7 +287,7 @@ namespace SimplDynTut {
 
 		private void DisplayAttackingTut() {
 			PlayerData.Instance.timesTryingToAttack = 0;
-			Debug.Log("Show the attacking, the player tried to attack units multiple times without being in proximity");
+			TutorialHandler.instance.WorldTrigger(12);
 		}
 
 		public void TryingToSelectEnemyUnits() {
