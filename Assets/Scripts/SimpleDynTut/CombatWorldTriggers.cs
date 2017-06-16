@@ -107,7 +107,8 @@ namespace SimplDynTut {
 			if(hasShownWin)
 				return;
 			if (( GameController.instance.GettAllUnitsOfTeam(Team.Player).Count -
-			      GameController.instance.GettAllUnitsOfTeam(Team.AI).Count ) >= offsetUnitAmount && !GameController.instance.GetTowersForTeam((Team.AI)).Any(e => e.GetTower().GetHealth() < 50)) {
+			      GameController.instance.GettAllUnitsOfTeam(Team.AI).Count ) >= offsetUnitAmount && !GameController.instance.GetTowersForTeam((Team.AI)).Any(e => e.GetTower().GetHealth() < 50) 
+			    && GameController.instance.GetTowersForTeam(Team.AI).Count != 2) {
 				TutorialHandler.instance.WorldTrigger(15);
 				return;
 			}
