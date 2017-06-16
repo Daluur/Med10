@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4430583, g: 0.4922613, b: 0.57197666, a: 1}
+  m_IndirectSpecularColor: {r: 0.44305816, g: 0.49226034, b: 0.57197624, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -15450,12 +15450,12 @@ Prefab:
     - target: {fileID: 224807318188038394, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.9894737
+      value: 0.98947376
       objectReference: {fileID: 0}
     - target: {fileID: 224811624101169312, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -31209.7
+      value: -31259.566
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -15480,7 +15480,7 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -19.414635
+      value: -19.682743
       objectReference: {fileID: 0}
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -15490,12 +15490,12 @@ Prefab:
     - target: {fileID: 224354846350697632, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 14.829269
+      value: 15.365486
       objectReference: {fileID: 0}
     - target: {fileID: 224281435399214366, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 38.82927
+      value: 39.365486
       objectReference: {fileID: 0}
     - target: {fileID: 224530130432817520, guid: bd7b17105770b244c9807ad7623c75c9,
         type: 2}
@@ -39781,9 +39781,9 @@ MonoBehaviour:
   meClicked: 0
   hasGeneralConfirmationBox: 0
   type: 2
-  deckIDs: 00000000
+  deckIDs: 01000000
   currencyForWinning: 50
-  StaticEncounterID: 0
+  StaticEncounterID: 1
   spawnPoints:
   - {fileID: 1514759232}
   - {fileID: 2110436344}
@@ -48040,9 +48040,9 @@ MonoBehaviour:
   meClicked: 0
   hasGeneralConfirmationBox: 0
   type: 2
-  deckIDs: 00000000
+  deckIDs: 02000000
   currencyForWinning: 50
-  StaticEncounterID: 0
+  StaticEncounterID: 2
   spawnPoints:
   - {fileID: 1514759232}
   - {fileID: 2110436344}
