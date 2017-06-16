@@ -103,7 +103,7 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		}
 
 		if(id == 2) { //shop
-			GeneralConfirmationBox.instance.ShowPopUp("Click on the summon tower to open the unit shop.", "CONTINUE");
+			GeneralConfirmationBox.instance.ShowPopUp("Click on the summon tower to open the unit shop.\nYou can buy new unit types here.", "CONTINUE");
 		}
 
 		if(id == 3) { //encounter
@@ -163,11 +163,11 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 		}
 
 		if(id == 17) { //attack
-			GeneralConfirmationBox.instance.ShowPopUp("You can only attack units that are on a spot next to your unit.", "CONTINUE");
+			GeneralConfirmationBox.instance.ShowPopUp("You can attack an enemy unit when your unit is on a spot next to it.", "CONTINUE");
 		}
 
 		if(id == 18) { //enemy unit
-			GeneralConfirmationBox.instance.ShowPopUp("You can only move or attack once with a unit per turn.", "CONTINUE");
+			GeneralConfirmationBox.instance.ShowPopUp("You cannot select an enemy unit.", "CONTINUE");
 		}
 	}
 
@@ -185,8 +185,8 @@ public class TutorialHandler : Singleton<TutorialHandler> {
 			case OWTUTTRIGGERS.types:
 					GeneralConfirmationBox.instance.ShowPopUp("The units you will use in combat have different types, these can be strong or weak to another type.", "CONTINUE",
 					() => GeneralConfirmationBox.instance.PartOfMultiPage("Attacking with a type that is strong against another deals double damage.\nAttacking with a type that is weak deals half damage.", "CONTINUE",
-					() => GeneralConfirmationBox.instance.PartOfMultiPage("FIRE is strong against NATURE\nNATURE is strong against LIGHTNING", "CONTINUE",
-						() => GeneralConfirmationBox.instance.PartOfMultiPage("LIGHTNING is strong against WATER\nWATER is strong against FIRE", "CONTINUE"))));
+					() => GeneralConfirmationBox.instance.PartOfMultiPage("FIRE is strong against NATURE\n\nNATURE is strong against LIGHTNING", "CONTINUE",
+						() => GeneralConfirmationBox.instance.PartOfMultiPage("LIGHTNING is strong against WATER\n\nWATER is strong against FIRE", "CONTINUE"))));
 				break;
 			case OWTUTTRIGGERS.concede:
 				GeneralConfirmationBox.instance.ShowPopUp("If you want to leave a combat, press the 'ESC' key and use the concede option in the menu.", "CONTINUE");
